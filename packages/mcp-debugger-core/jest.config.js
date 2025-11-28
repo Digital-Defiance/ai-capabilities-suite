@@ -1,24 +1,24 @@
 /* eslint-disable */
-const { readFileSync } = require('fs');
+const { readFileSync } = require("fs");
 
 // Reading the SWC compilation config for the spec files
 const swcJestConfig = JSON.parse(
-  readFileSync(`${__dirname}/.spec.swcrc`, 'utf-8'),
+  readFileSync(`${__dirname}/.spec.swcrc`, "utf-8")
 );
 
 // Disable .swcrc look-up by SWC core because we're passing in swcJestConfig ourselves
 swcJestConfig.swcrc = false;
 
 module.exports = {
-  displayName: '@digitaldefiance/ts-mcp-core',
-  testEnvironment: 'node',
-  roots: ['<rootDir>/src'],
-  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
+  displayName: "@ai-capabilities-suite/mcp-core",
+  testEnvironment: "node",
+  roots: ["<rootDir>/src"],
+  testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
   transform: {
-    '^.+\\.(t|j)sx?$': ['@swc/jest', swcJestConfig],
+    "^.+\\.(t|j)sx?$": ["@swc/jest", swcJestConfig],
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: 'test-output/jest/coverage',
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
+  coverageDirectory: "test-output/jest/coverage",
   // Explicitly disable babel
   transformIgnorePatterns: [],
   // Timeout and resource management for coverage runs
@@ -36,10 +36,10 @@ module.exports = {
   restoreMocks: true,
   // Coverage configuration
   collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.spec.ts',
-    '!src/**/*.test.ts',
-    '!src/test-utils/**',
+    "src/**/*.ts",
+    "!src/**/*.spec.ts",
+    "!src/**/*.test.ts",
+    "!src/test-utils/**",
   ],
   coverageThreshold: {
     global: {
@@ -49,5 +49,5 @@ module.exports = {
       statements: 90,
     },
   },
-  coverageReporters: ['text', 'lcov', 'json-summary', 'html'],
+  coverageReporters: ["text", "lcov", "json-summary", "html"],
 };

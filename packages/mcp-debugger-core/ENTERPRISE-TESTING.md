@@ -155,26 +155,26 @@ Measures and tracks performance metrics for key operations.
 ### Run All Enterprise Tests
 
 ```bash
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="(load|chaos|compatibility|security|performance)" --forceExit
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="(load|chaos|compatibility|security|performance)" --forceExit
 ```
 
 ### Run Individual Test Suites
 
 ```bash
 # Load testing
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="load-testing" --forceExit
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="load-testing" --forceExit
 
 # Chaos testing
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="chaos-testing" --forceExit
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="chaos-testing" --forceExit
 
 # Compatibility testing
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="compatibility-testing" --forceExit
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="compatibility-testing" --forceExit
 
 # Security testing
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="security-testing" --forceExit
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="security-testing" --forceExit
 
 # Performance benchmarks
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="performance-benchmarks" --forceExit
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="performance-benchmarks" --forceExit
 ```
 
 ## Performance Baseline

@@ -53,14 +53,14 @@
   ],
   "author": "Digital Defiance <info@digitaldefiance.org>, Jessica Mulein <jessica@digitaldefiance.org>",
   "license": "MIT",
-  "homepage": "https://github.com/digitaldefiance/ai-capability-suite#readme",
+  "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitaldefiance/ai-capability-suite.git",
+    "url": "git+https://github.com/digitaldefiance/ai-capabilities-suite.git",
     "directory": "packages/mcp-debugger-server"
   },
   "bugs": {
-    "url": "https://github.com/digitaldefiance/ai-capability-suite/issues"
+    "url": "https://github.com/digitaldefiance/ai-capabilities-suite/issues"
   },
   "engines": {
     "node": ">=18.0.0"

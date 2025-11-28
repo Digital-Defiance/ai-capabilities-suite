@@ -7,7 +7,7 @@ Your new **AI Capability Extension Suite** monorepo has been created with Nx and
 ### 📁 Project Structure
 
 ```
-ai-capability-suite/
+ai-capabilities-suite/
 ├── packages/
 │   ├── mcp-core/              # Shared MCP infrastructure
 │   ├── mcp-screenshot/        # Screenshot and image operations

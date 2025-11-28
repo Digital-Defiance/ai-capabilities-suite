@@ -439,7 +439,7 @@ my-app/
   "mcp.servers": {
     "debugger": {
       "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@digitaldefiance/ts-mcp-server/dist/src/index.js"]
+      "args": ["${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-server/dist/src/index.js"]
     }
   },
   "mcp-debugger.defaultCommand": "node",
@@ -469,7 +469,7 @@ my-ts-app/
   "mcp.servers": {
     "debugger": {
       "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@digitaldefiance/ts-mcp-server/dist/src/index.js"]
+      "args": ["${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-server/dist/src/index.js"]
     }
   },
   "mcp-debugger.defaultCommand": "node",
@@ -511,7 +511,7 @@ my-app/
   "mcp.servers": {
     "debugger": {
       "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@digitaldefiance/ts-mcp-server/dist/src/index.js"]
+      "args": ["${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-server/dist/src/index.js"]
     }
   },
   "mcp-debugger.testFramework": "jest",
@@ -546,7 +546,7 @@ monorepo/
   "mcp.servers": {
     "debugger": {
       "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@digitaldefiance/ts-mcp-server/dist/src/index.js"]
+      "args": ["${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-server/dist/src/index.js"]
     }
   },
   "mcp-debugger.workspaceAware": true,
@@ -577,7 +577,7 @@ my-app/
         "-i",
         "my-app-container",
         "node",
-        "/app/node_modules/@digitaldefiance/ts-mcp-server/dist/src/index.js"
+        "/app/node_modules/@ai-capabilities-suite/mcp-server/dist/src/index.js"
       ]
     }
   }
@@ -636,7 +636,7 @@ Add these to your `keybindings.json`:
 
 **Solution:**
 1. Verify the path in settings.json
-2. Check that the server is built: `npx nx build @digitaldefiance/ts-mcp-server`
+2. Check that the server is built: `npx nx build @ai-capabilities-suite/mcp-server`
 3. Test the server manually: `node packages/mcp-server/dist/src/index.js`
 
 ### Issue: Breakpoints not hitting

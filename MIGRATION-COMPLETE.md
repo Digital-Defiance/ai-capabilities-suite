@@ -1,4 +1,4 @@
-# ✅ Migration Complete: ts-mcp → ai-capability-suite
+# ✅ Migration Complete: ts-mcp → ai-capabilities-suite
 
 **Status:** SUCCESS  
 **Date:** November 27, 2024  
@@ -20,7 +20,7 @@ Before (ts-mcp):
 │   ├── debugger-core/
 │   └── mcp-server/
 
-After (ai-capability-suite):
+After (ai-capabilities-suite):
 ├── packages/
 │   ├── mcp-core/                    # Shared infrastructure
 │   ├── mcp-debugger-core/           # From ts-mcp
@@ -33,7 +33,7 @@ After (ai-capability-suite):
 
 ### 3. Updated All References ✅
 - Package names: `@digitaldefiance/mcp-debugger-*`
-- Repository URLs: `ai-capability-suite`
+- Repository URLs: `ai-capabilities-suite`
 - Internal dependencies: `workspace:^`
 - TypeScript path mappings
 - Nx configuration
@@ -49,7 +49,7 @@ After (ai-capability-suite):
 
 ### Immediate (Do Now)
 ```bash
-cd /home/jessica/source/repos/ai-capability-suite
+cd /home/jessica/source/repos/ai-capabilities-suite
 
 # 1. Install dependencies
 yarn install
@@ -92,7 +92,7 @@ npx nx test mcp-debugger-server
 2. **Original Repository**
    - Archive ts-mcp repository
    - Add migration notice
-   - Redirect to ai-capability-suite
+   - Redirect to ai-capabilities-suite
 
 3. **Community**
    - Announce unified suite
@@ -147,13 +147,13 @@ git diff HEAD~1
 ### Package Names
 | Old | New |
 |-----|-----|
-| `@digitaldefiance/ts-mcp-core` | `@digitaldefiance/mcp-debugger-core` |
-| `@digitaldefiance/ts-mcp-server` | `@digitaldefiance/mcp-debugger-server` |
+| `@ai-capabilities-suite/mcp-core` | `@digitaldefiance/mcp-debugger-core` |
+| `@ai-capabilities-suite/mcp-server` | `@digitaldefiance/mcp-debugger-server` |
 
 ### Repository
 | Old | New |
 |-----|-----|
-| `github.com/digitaldefiance/ts-mcp` | `github.com/digitaldefiance/ai-capability-suite` |
+| `github.com/digitaldefiance/ts-mcp` | `github.com/digitaldefiance/ai-capabilities-suite` |
 
 ### Structure
 - Debugger is now **one capability** among many

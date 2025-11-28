@@ -431,7 +431,7 @@ This isn't just a debugging tool—it's a **debugging platform** designed from t
 
 ### **Option 1: NPM (Recommended)**
 ```bash
-npm install -g @digitaldefiance/ts-mcp-server
+npm install -g @ai-capabilities-suite/mcp-server
 ```
 
 ### **Option 2: Docker**
@@ -737,7 +737,7 @@ This project follows a spec-driven development approach:
 
 ```bash
 # Get started in 30 seconds
-npm install -g @digitaldefiance/ts-mcp-server
+npm install -g @ai-capabilities-suite/mcp-server
 
 # Or try with Docker
 docker run digitaldefiance/ts-mcp-server
@@ -818,7 +818,7 @@ We're building the foundation for AI-powered development. Join us:
 **Ready to debug like never before?**
 
 ```bash
-npm install -g @digitaldefiance/ts-mcp-server
+npm install -g @ai-capabilities-suite/mcp-server
 ```
 
 **Welcome to the future of debugging. 🚀**

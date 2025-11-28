@@ -1,5 +1,5 @@
 {
-  "name": "@ai-capability-suite/mcp-screenshot",
+  "name": "@ai-capabilities-suite/mcp-screenshot",
   "version": "0.0.1",
   "description": "MCP server for screen capture and image operations",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@ai-capability-suite/mcp-core": "workspace:*",
+    "@ai-capabilities-suite/mcp-core": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.23.0",
     "screenshot-desktop": "^1.12.0",
     "sharp": "^0.33.0",

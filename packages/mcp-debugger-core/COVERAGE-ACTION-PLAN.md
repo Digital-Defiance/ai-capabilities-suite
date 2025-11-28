@@ -107,13 +107,13 @@
 ### Problem:
 ```bash
 # Works ✅
-npx nx test @digitaldefiance/ts-mcp-core --no-coverage
+npx nx test @ai-capabilities-suite/mcp-core --no-coverage
 
 # Times out ❌
-npx nx test @digitaldefiance/ts-mcp-core --coverage
+npx nx test @ai-capabilities-suite/mcp-core --coverage
 
 # Works ✅
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="auth-manager" --coverage
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="auth-manager" --coverage
 ```
 
 ### Root Cause:
@@ -178,7 +178,7 @@ npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="auth-manager" --cove
 ### Measure progress:
 ```bash
 # Run coverage for specific file
-npx nx test @digitaldefiance/ts-mcp-core --testPathPattern="cdp-breakpoint" --coverage
+npx nx test @ai-capabilities-suite/mcp-core --testPathPattern="cdp-breakpoint" --coverage
 
 # Check coverage report
 cat packages/debugger-core/test-output/jest/coverage/coverage-summary.json | jq '.["path/to/file"]'
