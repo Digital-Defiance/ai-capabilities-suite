@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020"],
+    "paths": {
+      "@ai-capability-suite/mcp-core": ["packages/mcp-core/src/index.ts"],
+      "@ai-capability-suite/mcp-screenshot": ["packages/mcp-screenshot/src/index.ts"],
+      "@ai-capability-suite/mcp-recording": ["packages/mcp-recording/src/index.ts"],
+      "@ai-capability-suite/mcp-filesystem": ["packages/mcp-filesystem/src/index.ts"],
+      "@ai-capability-suite/mcp-process": ["packages/mcp-process/src/index.ts"]
+    }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist", "build"]
+}
