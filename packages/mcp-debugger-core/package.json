@@ -1,5 +1,5 @@
 {
-  "name": "@digitaldefiance/mcp-debugger-core",
+  "name": "@ai-capabilities-suite/mcp-debugger-core",
   "version": "0.0.1",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
@@ -36,8 +36,11 @@
     "ws": "^8.18.3"
   },
   "devDependencies": {
+    "@swc/core": "^1.15.3",
+    "@swc/jest": "^0.2.39",
     "@types/source-map": "^0.5.7",
     "@types/ws": "^8.18.1",
+    "fast-check": "^4.3.0",
     "mock-socket": "^9.3.1"
   },
   "author": "Digital Defiance <info@digitaldefiance.org>, Jessica Mulein <jessica@digitaldefiance.org>",

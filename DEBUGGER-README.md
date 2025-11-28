@@ -76,7 +76,7 @@ This isn't just a debugging tool—it's a **debugging platform** designed from t
               │
 ┌─────────────▼───────────────────────┐
 │        MCP Debugger Server          │  ← 25+ Professional debugging tools
-│     (@digitaldefiance/ts-mcp)       │
+│     (@ai-capabilities-suite/ts-mcp)       │
 └─────────────┬───────────────────────┘
               │ Chrome DevTools Protocol
               │

@@ -132,7 +132,7 @@ AI: "Type assertion on line 23 incorrect—actual runtime type is..."
 
 ```bash
 # NPM (Recommended)
-npm install -g @digitaldefiance/mcp-debugger-server
+npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 # Docker
 docker run digitaldefiance/mcp-debugger-server

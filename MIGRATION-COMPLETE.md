@@ -32,7 +32,7 @@ After (ai-capabilities-suite):
 ```
 
 ### 3. Updated All References ✅
-- Package names: `@digitaldefiance/mcp-debugger-*`
+- Package names: `@ai-capabilities-suite/mcp-debugger-*`
 - Repository URLs: `ai-capabilities-suite`
 - Internal dependencies: `workspace:^`
 - TypeScript path mappings
@@ -84,8 +84,8 @@ npx nx test mcp-debugger-server
 
 ### Medium-term (This Month)
 1. **Publishing**
-   - Publish `@digitaldefiance/mcp-debugger-core` to NPM
-   - Publish `@digitaldefiance/mcp-debugger-server` to NPM
+   - Publish `@ai-capabilities-suite/mcp-debugger-core` to NPM
+   - Publish `@ai-capabilities-suite/mcp-debugger-server` to NPM
    - Publish Docker images
    - Submit to MCP registry
 
@@ -147,8 +147,8 @@ git diff HEAD~1
 ### Package Names
 | Old | New |
 |-----|-----|
-| `@ai-capabilities-suite/mcp-core` | `@digitaldefiance/mcp-debugger-core` |
-| `@ai-capabilities-suite/mcp-server` | `@digitaldefiance/mcp-debugger-server` |
+| `@ai-capabilities-suite/mcp-core` | `@ai-capabilities-suite/mcp-debugger-core` |
+| `@ai-capabilities-suite/mcp-server` | `@ai-capabilities-suite/mcp-debugger-server` |
 
 ### Repository
 | Old | New |

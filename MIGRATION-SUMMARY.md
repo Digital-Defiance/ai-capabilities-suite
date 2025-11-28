@@ -20,8 +20,8 @@ Successfully migrated the ts-mcp debugger project into the ai-capabilities-suite
 
 | Original Path | New Path | New Package Name |
 |--------------|----------|------------------|
-| `packages/debugger-core` | `packages/mcp-debugger-core` | `@digitaldefiance/mcp-debugger-core` |
-| `packages/mcp-server` | `packages/mcp-debugger-server` | `@digitaldefiance/mcp-debugger-server` |
+| `packages/debugger-core` | `packages/mcp-debugger-core` | `@ai-capabilities-suite/mcp-debugger-core` |
+| `packages/mcp-server` | `packages/mcp-debugger-server` | `@ai-capabilities-suite/mcp-debugger-server` |
 
 ### Documentation & Assets Preserved
 
@@ -42,8 +42,8 @@ Successfully migrated the ts-mcp debugger project into the ai-capabilities-suite
 "@ai-capabilities-suite/mcp-server"
 
 // After
-"@digitaldefiance/mcp-debugger-core"
-"@digitaldefiance/mcp-debugger-server"
+"@ai-capabilities-suite/mcp-debugger-core"
+"@ai-capabilities-suite/mcp-debugger-server"
 ```
 
 ### 2. Repository URLs Updated
@@ -59,7 +59,7 @@ Successfully migrated the ts-mcp debugger project into the ai-capabilities-suite
 ```json
 // mcp-debugger-server/package.json
 "dependencies": {
-  "@digitaldefiance/mcp-debugger-core": "workspace:^"
+  "@ai-capabilities-suite/mcp-debugger-core": "workspace:^"
 }
 ```
 
