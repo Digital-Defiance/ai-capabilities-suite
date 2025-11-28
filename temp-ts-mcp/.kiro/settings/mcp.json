@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "debugger": {
+      "command": "node",
+      "args": [
+        "packages/mcp-server/dist/src/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
