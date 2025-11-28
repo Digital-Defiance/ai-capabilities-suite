@@ -1,5 +1,5 @@
 {
-  "name": "@digitaldefiance/ts-mcp-core",
+  "name": "@digitaldefiance/mcp-debugger-core",
   "version": "0.0.1",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
@@ -42,10 +42,10 @@
   },
   "author": "Digital Defiance <info@digitaldefiance.org>, Jessica Mulein <jessica@digitaldefiance.org>",
   "license": "MIT",
-  "homepage": "https://github.com/digitaldefiance/ts-mcp#readme",
+  "homepage": "https://github.com/digitaldefiance/ai-capability-suite#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitaldefiance/ts-mcp.git",
-    "directory": "packages/mcp-server"
+    "url": "git+https://github.com/digitaldefiance/ai-capability-suite.git",
+    "directory": "packages/mcp-debugger-core"
   }
 }

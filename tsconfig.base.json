@@ -20,6 +20,8 @@
     "lib": ["ES2020"],
     "paths": {
       "@ai-capability-suite/mcp-core": ["packages/mcp-core/src/index.ts"],
+      "@ai-capability-suite/mcp-debugger-core": ["packages/mcp-debugger-core/src/index.ts"],
+      "@ai-capability-suite/mcp-debugger-server": ["packages/mcp-debugger-server/src/index.ts"],
       "@ai-capability-suite/mcp-screenshot": ["packages/mcp-screenshot/src/index.ts"],
       "@ai-capability-suite/mcp-recording": ["packages/mcp-recording/src/index.ts"],
       "@ai-capability-suite/mcp-filesystem": ["packages/mcp-filesystem/src/index.ts"],
