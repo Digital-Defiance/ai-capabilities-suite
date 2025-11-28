@@ -821,41 +821,41 @@
     - Track performance regression in CI
     - _Requirements: Enterprise quality_
 
-- [-] 26. Developer experience enhancements
-  - [ ] 26.1 Add debugging configuration presets
+- [x] 26. Developer experience enhancements
+  - [x] 26.1 Add debugging configuration presets
     - Create presets for common scenarios (Node.js app, Jest tests, etc.)
     - Support custom preset definitions
     - Allow preset inheritance and composition
     - _Requirements: Enhanced DX_
 
-  - [ ] 26.2 Implement workspace-aware debugging
+  - [x] 26.2 Implement workspace-aware debugging
     - Support monorepo debugging
     - Auto-detect workspace structure
     - Handle multiple package.json files
     - Support workspace-relative paths
     - _Requirements: Enhanced DX_
 
-  - [ ] 26.3 Add multi-target debugging support
+  - [x] 26.3 Add multi-target debugging support
     - Debug multiple processes simultaneously
     - Coordinate breakpoints across targets
     - Aggregate logs from multiple targets
     - Support parent-child process debugging
     - _Requirements: Enhanced DX_
 
-  - [ ] 26.4 Implement smart breakpoint suggestions
+  - [x] 26.4 Implement smart breakpoint suggestions
     - Suggest breakpoint locations based on code analysis
     - Recommend breakpoints for common debugging scenarios
     - Suggest conditional breakpoints based on context
     - _Requirements: Enhanced DX_
 
-  - [ ] 26.5 Add variable formatting customization
+  - [x] 26.5 Add variable formatting customization
     - Support custom formatters for types
     - Add pretty-printing options
     - Support truncation and depth limits
     - Allow user-defined display rules
     - _Requirements: Enhanced DX_
 
-- [ ] 27. Final enterprise checkpoint
+- [x] 27. Final enterprise checkpoint
   - Ensure all enterprise features are tested
   - Verify security features are working correctly
   - Confirm observability and monitoring are operational
@@ -929,7 +929,7 @@
     - Add PowerShell installation scripts
     - _Requirements: Windows package management_
 
-  - [ ] 28.8 Create VS Code extension marketplace listing
+  - [-] 28.8 Create VS Code extension marketplace listing
     - [x] 28.8.1 Create VS Code extension project structure
     - [x] 28.8.2 Create extension manifest with proper metadata
     - [x] 28.8.3 Create extension activation and MCP server integration
@@ -951,7 +951,7 @@
     - [ ] 28.9.8 Manual: Test all installation methods on clean systems
     - _Requirements: User onboarding, Reduced support burden_
 
-- [ ] 29. Prepare for Docker MCP Registry contribution
+- [x] 29. Prepare for Docker MCP Registry contribution
   - [ ] 28.1 Review Docker MCP Registry contribution guidelines
     - Read https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
     - Understand submission requirements and format
@@ -1055,33 +1055,33 @@
     - _Requirements: VS Code/Copilot integration, LSP compliance, DAP support, AI agent compatibility_
 
 - [ ] 30. VS Code and GitHub Copilot integration
-  - [ ] 29.1 Research VS Code MCP integration
+  - [x] 29.1 Research VS Code MCP integration
     - Investigate VS Code extension requirements for MCP
     - Review VS Code debugging API compatibility
     - Understand how to integrate with VS Code's debug adapter protocol
     - _Requirements: VS Code integration_
 
-  - [ ] 29.2 Create VS Code extension
+  - [x] 29.2 Create VS Code extension
     - Set up VS Code extension project structure
     - Implement MCP client for VS Code
     - Create debug configuration provider
     - Add commands for debugger operations
     - _Requirements: VS Code integration_
 
-  - [ ] 29.3 Research GitHub Copilot integration
+  - [x] 29.3 Research GitHub Copilot integration
     - Investigate GitHub Copilot extension points
     - Understand how Copilot can use MCP servers
     - Review Copilot's debugging assistance capabilities
     - _Requirements: Copilot integration_
 
-  - [ ] 29.4 Document VS Code/Copilot usage
+  - [x] 29.4 Document VS Code/Copilot usage
     - Write guide for using debugger with VS Code
     - Document Copilot integration patterns
     - Provide example debugging workflows
     - Include configuration examples
     - _Requirements: VS Code/Copilot integration_
 
-  - [ ] 29.5 Test VS Code/Copilot integration
+  - [x] 29.5 Test VS Code/Copilot integration
     - Test debugger functionality in VS Code
     - Verify Copilot can use debugging tools
     - Test common debugging scenarios
@@ -1359,7 +1359,7 @@
     - Add 100+ tests to cover all code paths
     - _Requirements: Enterprise quality, 2.1-2.6, 8.2_
   
-  - [ ] 36.4.4 Complete test-runner and shutdown-handler coverage
+  - [x] 36.4.4 Complete test-runner and shutdown-handler coverage
     - **test-runner.ts (74.47% → 90%):**
       - Add tests for uncovered parsing edge cases (lines 72-105)
       - Test inspector attachment with actual WebSocket URL parsing

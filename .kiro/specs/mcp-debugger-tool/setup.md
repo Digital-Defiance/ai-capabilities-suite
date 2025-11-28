@@ -123,7 +123,7 @@ npx nx g @nx/node:application cli \
 
 ```json
 {
-  "name": "@digitaldefiance/ts-mcp-source",
+  "name": "@ai-capabilities-suite/ts-mcp-source",
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
@@ -397,7 +397,7 @@ yarn format
 
 - **@ai-capabilities-suite/mcp-core** - Core debugging functionality
 - **@ai-capabilities-suite/mcp-server** - MCP server implementation
-- **@digitaldefiance/ts-mcp-cli** - Command-line interface (optional)
+- **@ai-capabilities-suite/ts-mcp-cli** - Command-line interface (optional)
 
 ## License
 
