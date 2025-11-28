@@ -1,5 +1,5 @@
 {
-  "name": "@ai-capability-suite/mcp-core",
+  "name": "@ai-capabilities-suite/mcp-core",
   "version": "0.0.1",
   "description": "Shared infrastructure for AI Capability Extension Suite MCP servers",
   "main": "dist/index.js",

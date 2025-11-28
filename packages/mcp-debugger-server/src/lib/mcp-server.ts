@@ -1,12 +1,12 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
 import {
   SessionManager,
   HangDetector,
   DebugSessionConfig,
   GracefulShutdownHandler,
-} from '@digitaldefiance/ts-mcp-core';
+} from "@ai-capabilities-suite/mcp-core";
 
 /**
  * MCP Debugger Server
@@ -22,14 +22,14 @@ export class McpDebuggerServer {
   constructor() {
     this.server = new McpServer(
       {
-        name: 'debugger-server',
-        version: '1.0.0',
+        name: "debugger-server",
+        version: "1.0.0",
       },
       {
         capabilities: {
           tools: {},
         },
-      },
+      }
     );
 
     this.sessionManager = new SessionManager();
@@ -45,14 +45,14 @@ export class McpDebuggerServer {
    */
   private setupShutdownHandlers(): void {
     // Register cleanup for session manager
-    this.shutdownHandler.registerCleanup('sessions', async () => {
-      console.log('Cleaning up all debug sessions...');
+    this.shutdownHandler.registerCleanup("sessions", async () => {
+      console.log("Cleaning up all debug sessions...");
       await this.sessionManager.cleanupAll();
     });
 
     // Register cleanup for MCP server
-    this.shutdownHandler.registerCleanup('mcp-server', async () => {
-      console.log('Closing MCP server...');
+    this.shutdownHandler.registerCleanup("mcp-server", async () => {
+      console.log("Closing MCP server...");
       await this.server.close();
     });
 
@@ -104,10 +104,10 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStart(): void {
     this.server.registerTool(
-      'debugger_start',
+      "debugger_start",
       {
         description:
-          'Start a new debug session with a Node.js process. The process will be paused at the start.',
+          "Start a new debug session with a Node.js process. The process will be paused at the start.",
         inputSchema: {
           command: z
             .string()
@@ -119,11 +119,11 @@ export class McpDebuggerServer {
           cwd: z
             .string()
             .optional()
-            .describe('Working directory for the process'),
+            .describe("Working directory for the process"),
           timeout: z
             .number()
             .optional()
-            .describe('Timeout in milliseconds (default: 30000)'),
+            .describe("Timeout in milliseconds (default: 30000)"),
         },
       },
       async (args) => {
@@ -140,16 +140,16 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     sessionId: session.id,
                     state: session.getState(),
                     pid: session.getProcess()?.pid,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -158,23 +158,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'SESSION_START_FAILED',
+                    status: "error",
+                    code: "SESSION_START_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -185,14 +185,14 @@ export class McpDebuggerServer {
    */
   private registerDebuggerSetBreakpoint(): void {
     this.server.registerTool(
-      'debugger_set_breakpoint',
+      "debugger_set_breakpoint",
       {
         description:
-          'Set a breakpoint at a specific file and line number. Optionally provide a condition.',
+          "Set a breakpoint at a specific file and line number. Optionally provide a condition.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
-          file: z.string().describe('The file path (absolute or relative)'),
-          line: z.number().describe('The line number (1-indexed)'),
+          sessionId: z.string().describe("The debug session ID"),
+          file: z.string().describe("The file path (absolute or relative)"),
+          line: z.number().describe("The line number (1-indexed)"),
           condition: z
             .string()
             .optional()
@@ -206,15 +206,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -225,16 +225,16 @@ export class McpDebuggerServer {
           const breakpoint = await session.setBreakpoint(
             args.file,
             args.line,
-            args.condition,
+            args.condition
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     breakpointId: breakpoint.id,
                     file: breakpoint.file,
                     line: breakpoint.line,
@@ -243,7 +243,7 @@ export class McpDebuggerServer {
                     verified: !!breakpoint.cdpBreakpointId,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -252,23 +252,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'BREAKPOINT_SET_FAILED',
+                    status: "error",
+                    code: "BREAKPOINT_SET_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -279,12 +279,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerContinue(): void {
     this.server.registerTool(
-      'debugger_continue',
+      "debugger_continue",
       {
         description:
-          'Resume execution of a paused debug session until the next breakpoint or program termination.',
+          "Resume execution of a paused debug session until the next breakpoint or program termination.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -294,15 +294,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -315,14 +315,14 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     state: session.getState(),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -331,23 +331,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'CONTINUE_FAILED',
+                    status: "error",
+                    code: "CONTINUE_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -358,12 +358,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStepOver(): void {
     this.server.registerTool(
-      'debugger_step_over',
+      "debugger_step_over",
       {
         description:
-          'Execute the current line and pause at the next line in the same scope.',
+          "Execute the current line and pause at the next line in the same scope.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -373,15 +373,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -403,15 +403,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     state: session.getState(),
                     location,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -420,23 +420,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'STEP_OVER_FAILED',
+                    status: "error",
+                    code: "STEP_OVER_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -447,12 +447,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerInspect(): void {
     this.server.registerTool(
-      'debugger_inspect',
+      "debugger_inspect",
       {
         description:
-          'Evaluate a JavaScript expression in the current execution context and return the result with type information.',
+          "Evaluate a JavaScript expression in the current execution context and return the result with type information.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           expression: z
             .string()
             .describe('The JavaScript expression to evaluate (e.g., "x + 1")'),
@@ -465,15 +465,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -486,17 +486,17 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     expression: args.expression,
                     value: result.value,
                     type: result.type,
                     objectId: result.objectId,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -505,23 +505,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'INSPECT_FAILED',
+                    status: "error",
+                    code: "INSPECT_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -532,12 +532,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerGetStack(): void {
     this.server.registerTool(
-      'debugger_get_stack',
+      "debugger_get_stack",
       {
         description:
-          'Get the current call stack with function names, file locations (absolute paths), and line numbers.',
+          "Get the current call stack with function names, file locations (absolute paths), and line numbers.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -547,15 +547,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -568,10 +568,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     stack: stack.map((frame) => ({
                       function: frame.functionName,
                       file: frame.file,
@@ -580,7 +580,7 @@ export class McpDebuggerServer {
                     })),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -589,23 +589,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'GET_STACK_FAILED',
+                    status: "error",
+                    code: "GET_STACK_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -616,10 +616,10 @@ export class McpDebuggerServer {
    */
   private registerDebuggerDetectHang(): void {
     this.server.registerTool(
-      'debugger_detect_hang',
+      "debugger_detect_hang",
       {
         description:
-          'Run a command and detect if it hangs or enters an infinite loop. Returns hang status, location, and stack trace if hung.',
+          "Run a command and detect if it hangs or enters an infinite loop. Returns hang status, location, and stack trace if hung.",
         inputSchema: {
           command: z
             .string()
@@ -631,13 +631,13 @@ export class McpDebuggerServer {
           cwd: z
             .string()
             .optional()
-            .describe('Working directory for the process'),
-          timeout: z.number().describe('Timeout in milliseconds (e.g., 5000)'),
+            .describe("Working directory for the process"),
+          timeout: z.number().describe("Timeout in milliseconds (e.g., 5000)"),
           sampleInterval: z
             .number()
             .optional()
             .describe(
-              'Sample interval in milliseconds for infinite loop detection (e.g., 100)',
+              "Sample interval in milliseconds for infinite loop detection (e.g., 100)"
             ),
         },
       },
@@ -655,10 +655,10 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'success',
+                      status: "success",
                       hung: true,
                       location: result.location,
                       stack: result.stack,
@@ -666,7 +666,7 @@ export class McpDebuggerServer {
                       duration: result.duration,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -675,17 +675,17 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'success',
+                      status: "success",
                       hung: false,
                       completed: result.completed,
                       exitCode: result.exitCode,
                       duration: result.duration,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -695,23 +695,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'HANG_DETECTION_FAILED',
+                    status: "error",
+                    code: "HANG_DETECTION_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -722,12 +722,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStepInto(): void {
     this.server.registerTool(
-      'debugger_step_into',
+      "debugger_step_into",
       {
         description:
-          'Execute the current line and pause at the first line inside any called function.',
+          "Execute the current line and pause at the first line inside any called function.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -737,15 +737,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -767,15 +767,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     state: session.getState(),
                     location,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -784,23 +784,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'STEP_INTO_FAILED',
+                    status: "error",
+                    code: "STEP_INTO_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -811,12 +811,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStepOut(): void {
     this.server.registerTool(
-      'debugger_step_out',
+      "debugger_step_out",
       {
         description:
-          'Execute until the current function returns and pause at the calling location.',
+          "Execute until the current function returns and pause at the calling location.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -826,15 +826,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -856,15 +856,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     state: session.getState(),
                     location,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -873,23 +873,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'STEP_OUT_FAILED',
+                    status: "error",
+                    code: "STEP_OUT_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -900,12 +900,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerPause(): void {
     this.server.registerTool(
-      'debugger_pause',
+      "debugger_pause",
       {
         description:
-          'Pause a running debug session and return the current execution location.',
+          "Pause a running debug session and return the current execution location.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -915,15 +915,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -942,15 +942,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     state: session.getState(),
                     location,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -959,23 +959,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'PAUSE_FAILED',
+                    status: "error",
+                    code: "PAUSE_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -986,12 +986,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerRemoveBreakpoint(): void {
     this.server.registerTool(
-      'debugger_remove_breakpoint',
+      "debugger_remove_breakpoint",
       {
-        description: 'Remove a breakpoint from the debug session.',
+        description: "Remove a breakpoint from the debug session.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
-          breakpointId: z.string().describe('The breakpoint ID to remove'),
+          sessionId: z.string().describe("The debug session ID"),
+          breakpointId: z.string().describe("The breakpoint ID to remove"),
         },
       },
       async (args) => {
@@ -1001,15 +1001,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1023,15 +1023,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'BREAKPOINT_NOT_FOUND',
+                      status: "error",
+                      code: "BREAKPOINT_NOT_FOUND",
                       message: `Breakpoint ${args.breakpointId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1042,15 +1042,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     breakpointId: args.breakpointId,
                     removed: true,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1059,23 +1059,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'REMOVE_BREAKPOINT_FAILED',
+                    status: "error",
+                    code: "REMOVE_BREAKPOINT_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1086,12 +1086,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerToggleBreakpoint(): void {
     this.server.registerTool(
-      'debugger_toggle_breakpoint',
+      "debugger_toggle_breakpoint",
       {
-        description: 'Toggle a breakpoint between enabled and disabled states.',
+        description: "Toggle a breakpoint between enabled and disabled states.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
-          breakpointId: z.string().describe('The breakpoint ID to toggle'),
+          sessionId: z.string().describe("The debug session ID"),
+          breakpointId: z.string().describe("The breakpoint ID to toggle"),
         },
       },
       async (args) => {
@@ -1101,15 +1101,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1123,15 +1123,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'BREAKPOINT_NOT_FOUND',
+                      status: "error",
+                      code: "BREAKPOINT_NOT_FOUND",
                       message: `Breakpoint ${args.breakpointId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1142,10 +1142,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     breakpointId: breakpoint.id,
                     file: breakpoint.file,
                     line: breakpoint.line,
@@ -1153,7 +1153,7 @@ export class McpDebuggerServer {
                     enabled: breakpoint.enabled,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1162,23 +1162,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'TOGGLE_BREAKPOINT_FAILED',
+                    status: "error",
+                    code: "TOGGLE_BREAKPOINT_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1189,12 +1189,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerListBreakpoints(): void {
     this.server.registerTool(
-      'debugger_list_breakpoints',
+      "debugger_list_breakpoints",
       {
         description:
-          'Get all breakpoints for a debug session with their file, line, condition, and enabled state.',
+          "Get all breakpoints for a debug session with their file, line, condition, and enabled state.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -1204,15 +1204,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1225,10 +1225,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     breakpoints: breakpoints.map((bp) => ({
                       id: bp.id,
                       file: bp.file,
@@ -1239,7 +1239,7 @@ export class McpDebuggerServer {
                     })),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1248,23 +1248,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'LIST_BREAKPOINTS_FAILED',
+                    status: "error",
+                    code: "LIST_BREAKPOINTS_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1275,12 +1275,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerGetLocalVariables(): void {
     this.server.registerTool(
-      'debugger_get_local_variables',
+      "debugger_get_local_variables",
       {
         description:
-          'Get all local variables in the current scope with their names, values, and types.',
+          "Get all local variables in the current scope with their names, values, and types.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -1290,15 +1290,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1310,15 +1310,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'NOT_PAUSED',
-                      message: 'Process must be paused to get local variables',
+                      status: "error",
+                      code: "NOT_PAUSED",
+                      message: "Process must be paused to get local variables",
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1331,14 +1331,14 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'success',
+                      status: "success",
                       variables: [],
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1350,21 +1350,21 @@ export class McpDebuggerServer {
 
           // Get local scope (first scope in chain is usually local)
           const localScope = scopeChain.find(
-            (scope: any) => scope.type === 'local',
+            (scope: any) => scope.type === "local"
           );
 
           if (!localScope || !localScope.object?.objectId) {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'success',
+                      status: "success",
                       variables: [],
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1372,16 +1372,16 @@ export class McpDebuggerServer {
           }
 
           const properties = await session.getObjectProperties(
-            localScope.object.objectId,
+            localScope.object.objectId
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     variables: properties.map((prop) => ({
                       name: prop.name,
                       value: prop.value,
@@ -1389,7 +1389,7 @@ export class McpDebuggerServer {
                     })),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1398,23 +1398,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'GET_LOCAL_VARIABLES_FAILED',
+                    status: "error",
+                    code: "GET_LOCAL_VARIABLES_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1425,12 +1425,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerGetGlobalVariables(): void {
     this.server.registerTool(
-      'debugger_get_global_variables',
+      "debugger_get_global_variables",
       {
         description:
-          'Get global variables accessible from the current scope with their names, values, and types.',
+          "Get global variables accessible from the current scope with their names, values, and types.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -1440,15 +1440,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1460,15 +1460,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'NOT_PAUSED',
-                      message: 'Process must be paused to get global variables',
+                      status: "error",
+                      code: "NOT_PAUSED",
+                      message: "Process must be paused to get global variables",
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1481,14 +1481,14 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'success',
+                      status: "success",
                       variables: [],
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1500,21 +1500,21 @@ export class McpDebuggerServer {
 
           // Get global scope (last scope in chain is usually global)
           const globalScope = scopeChain.find(
-            (scope: any) => scope.type === 'global',
+            (scope: any) => scope.type === "global"
           );
 
           if (!globalScope || !globalScope.object?.objectId) {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'success',
+                      status: "success",
                       variables: [],
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1522,24 +1522,24 @@ export class McpDebuggerServer {
           }
 
           const properties = await session.getObjectProperties(
-            globalScope.object.objectId,
+            globalScope.object.objectId
           );
 
           // Filter out built-in globals to reduce noise
           const userGlobals = properties.filter(
             (prop) =>
-              !['console', 'process', 'Buffer', 'global', 'require'].includes(
-                prop.name,
-              ),
+              !["console", "process", "Buffer", "global", "require"].includes(
+                prop.name
+              )
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     variables: userGlobals.map((prop) => ({
                       name: prop.name,
                       value: prop.value,
@@ -1547,7 +1547,7 @@ export class McpDebuggerServer {
                     })),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1556,23 +1556,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'GET_GLOBAL_VARIABLES_FAILED',
+                    status: "error",
+                    code: "GET_GLOBAL_VARIABLES_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1583,21 +1583,21 @@ export class McpDebuggerServer {
    */
   private registerDebuggerInspectObject(): void {
     this.server.registerTool(
-      'debugger_inspect_object',
+      "debugger_inspect_object",
       {
         description:
-          'Inspect an object by its object reference, returning properties with values. Handles nested objects and arrays up to a specified depth.',
+          "Inspect an object by its object reference, returning properties with values. Handles nested objects and arrays up to a specified depth.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           objectId: z
             .string()
             .describe(
-              'The object ID (from a previous inspection or evaluation)',
+              "The object ID (from a previous inspection or evaluation)"
             ),
           maxDepth: z
             .number()
             .optional()
-            .describe('Maximum depth to traverse (default: 2)'),
+            .describe("Maximum depth to traverse (default: 2)"),
         },
       },
       async (args) => {
@@ -1607,15 +1607,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1627,15 +1627,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'NOT_PAUSED',
-                      message: 'Process must be paused to inspect objects',
+                      status: "error",
+                      code: "NOT_PAUSED",
+                      message: "Process must be paused to inspect objects",
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1646,22 +1646,22 @@ export class McpDebuggerServer {
           const maxDepth = args.maxDepth || 2;
           const objectData = await session.inspectObject(
             args.objectId,
-            maxDepth,
+            maxDepth
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     objectId: args.objectId,
                     properties: objectData,
                     maxDepth,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1670,23 +1670,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'INSPECT_OBJECT_FAILED',
+                    status: "error",
+                    code: "INSPECT_OBJECT_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1697,12 +1697,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerAddWatch(): void {
     this.server.registerTool(
-      'debugger_add_watch',
+      "debugger_add_watch",
       {
         description:
-          'Add an expression to the watch list. The expression will be evaluated each time the process pauses.',
+          "Add an expression to the watch list. The expression will be evaluated each time the process pauses.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           expression: z
             .string()
             .describe('The expression to watch (e.g., "x", "obj.prop")'),
@@ -1715,15 +1715,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1742,15 +1742,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     watchId,
                     expression: args.expression,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1759,23 +1759,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'ADD_WATCH_FAILED',
+                    status: "error",
+                    code: "ADD_WATCH_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1786,12 +1786,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerRemoveWatch(): void {
     this.server.registerTool(
-      'debugger_remove_watch',
+      "debugger_remove_watch",
       {
-        description: 'Remove an expression from the watch list.',
+        description: "Remove an expression from the watch list.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
-          watchId: z.string().describe('The watch ID (expression) to remove'),
+          sessionId: z.string().describe("The debug session ID"),
+          watchId: z.string().describe("The watch ID (expression) to remove"),
         },
       },
       async (args) => {
@@ -1801,15 +1801,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1823,15 +1823,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'WATCH_NOT_FOUND',
+                      status: "error",
+                      code: "WATCH_NOT_FOUND",
                       message: `Watch ${args.watchId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1842,15 +1842,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     watchId: args.watchId,
                     removed: true,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1859,23 +1859,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'REMOVE_WATCH_FAILED',
+                    status: "error",
+                    code: "REMOVE_WATCH_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1886,12 +1886,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerGetWatches(): void {
     this.server.registerTool(
-      'debugger_get_watches',
+      "debugger_get_watches",
       {
         description:
-          'Get all watched expressions with their current values. Reports value changes since the last pause.',
+          "Get all watched expressions with their current values. Reports value changes since the last pause.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -1901,15 +1901,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -1923,10 +1923,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     watches: watches.map((watch) => ({
                       watchId: watch.name,
                       expression: watch.expression,
@@ -1937,7 +1937,7 @@ export class McpDebuggerServer {
                     })),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -1946,23 +1946,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'GET_WATCHES_FAILED',
+                    status: "error",
+                    code: "GET_WATCHES_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -1973,15 +1973,15 @@ export class McpDebuggerServer {
    */
   private registerDebuggerSwitchStackFrame(): void {
     this.server.registerTool(
-      'debugger_switch_stack_frame',
+      "debugger_switch_stack_frame",
       {
         description:
-          'Switch the execution context to a specific stack frame by index. Frame 0 is the top frame (current location).',
+          "Switch the execution context to a specific stack frame by index. Frame 0 is the top frame (current location).",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           frameIndex: z
             .number()
-            .describe('The frame index (0 = top frame, 1 = caller, etc.)'),
+            .describe("The frame index (0 = top frame, 1 = caller, etc.)"),
         },
       },
       async (args) => {
@@ -1991,15 +1991,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2015,10 +2015,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     frameIndex: args.frameIndex,
                     frame: frame
                       ? {
@@ -2030,7 +2030,7 @@ export class McpDebuggerServer {
                       : null,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2039,23 +2039,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'SWITCH_FRAME_FAILED',
+                    status: "error",
+                    code: "SWITCH_FRAME_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2066,12 +2066,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStopSession(): void {
     this.server.registerTool(
-      'debugger_stop_session',
+      "debugger_stop_session",
       {
         description:
-          'Stop a debug session, cleanup all resources, and kill the process if still running.',
+          "Stop a debug session, cleanup all resources, and kill the process if still running.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -2081,15 +2081,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2102,15 +2102,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     sessionId: args.sessionId,
                     stopped: true,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2119,23 +2119,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'STOP_SESSION_FAILED',
+                    status: "error",
+                    code: "STOP_SESSION_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2145,18 +2145,18 @@ export class McpDebuggerServer {
    */
   private registerDebuggerSetLogpoint(): void {
     this.server.registerTool(
-      'debugger_set_logpoint',
+      "debugger_set_logpoint",
       {
         description:
-          'Set a logpoint that logs a message without pausing execution. Use {variable} syntax for interpolation.',
+          "Set a logpoint that logs a message without pausing execution. Use {variable} syntax for interpolation.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
-          file: z.string().describe('The file path (absolute or relative)'),
-          line: z.number().describe('The line number (1-indexed)'),
+          sessionId: z.string().describe("The debug session ID"),
+          file: z.string().describe("The file path (absolute or relative)"),
+          line: z.number().describe("The line number (1-indexed)"),
           logMessage: z
             .string()
             .describe(
-              'Log message template with {variable} interpolation (e.g., "Value is {x}")',
+              'Log message template with {variable} interpolation (e.g., "Value is {x}")'
             ),
         },
       },
@@ -2167,15 +2167,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2186,16 +2186,16 @@ export class McpDebuggerServer {
           const logpoint = await session.setLogpoint(
             args.file,
             args.line,
-            args.logMessage,
+            args.logMessage
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     logpointId: logpoint.id,
                     file: logpoint.file,
                     line: logpoint.line,
@@ -2204,7 +2204,7 @@ export class McpDebuggerServer {
                     verified: !!logpoint.cdpBreakpointId,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2213,23 +2213,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'LOGPOINT_SET_FAILED',
+                    status: "error",
+                    code: "LOGPOINT_SET_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2239,23 +2239,23 @@ export class McpDebuggerServer {
    */
   private registerDebuggerSetExceptionBreakpoint(): void {
     this.server.registerTool(
-      'debugger_set_exception_breakpoint',
+      "debugger_set_exception_breakpoint",
       {
         description:
-          'Set an exception breakpoint to pause on caught and/or uncaught exceptions.',
+          "Set an exception breakpoint to pause on caught and/or uncaught exceptions.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           breakOnCaught: z
             .boolean()
-            .describe('Whether to break on caught exceptions'),
+            .describe("Whether to break on caught exceptions"),
           breakOnUncaught: z
             .boolean()
-            .describe('Whether to break on uncaught exceptions'),
+            .describe("Whether to break on uncaught exceptions"),
           exceptionFilter: z
             .string()
             .optional()
             .describe(
-              'Optional regex pattern to filter exceptions by type/message',
+              "Optional regex pattern to filter exceptions by type/message"
             ),
         },
       },
@@ -2266,15 +2266,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2285,16 +2285,16 @@ export class McpDebuggerServer {
           const exceptionBreakpoint = await session.setExceptionBreakpoint(
             args.breakOnCaught,
             args.breakOnUncaught,
-            args.exceptionFilter,
+            args.exceptionFilter
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     exceptionBreakpointId: exceptionBreakpoint.id,
                     breakOnCaught: exceptionBreakpoint.breakOnCaught,
                     breakOnUncaught: exceptionBreakpoint.breakOnUncaught,
@@ -2302,7 +2302,7 @@ export class McpDebuggerServer {
                     enabled: exceptionBreakpoint.enabled,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2311,23 +2311,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'EXCEPTION_BREAKPOINT_SET_FAILED',
+                    status: "error",
+                    code: "EXCEPTION_BREAKPOINT_SET_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2337,15 +2337,15 @@ export class McpDebuggerServer {
    */
   private registerDebuggerSetFunctionBreakpoint(): void {
     this.server.registerTool(
-      'debugger_set_function_breakpoint',
+      "debugger_set_function_breakpoint",
       {
         description:
-          'Set a function breakpoint to pause when a function with the given name is called.',
+          "Set a function breakpoint to pause when a function with the given name is called.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           functionName: z
             .string()
-            .describe('Function name or regex pattern to match'),
+            .describe("Function name or regex pattern to match"),
         },
       },
       async (args) => {
@@ -2355,15 +2355,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2372,23 +2372,23 @@ export class McpDebuggerServer {
           }
 
           const functionBreakpoint = await session.setFunctionBreakpoint(
-            args.functionName,
+            args.functionName
           );
 
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     functionBreakpointId: functionBreakpoint.id,
                     functionName: functionBreakpoint.functionName,
                     enabled: functionBreakpoint.enabled,
                     verified: !!functionBreakpoint.cdpBreakpointId,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2397,23 +2397,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'FUNCTION_BREAKPOINT_SET_FAILED',
+                    status: "error",
+                    code: "FUNCTION_BREAKPOINT_SET_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2423,17 +2423,17 @@ export class McpDebuggerServer {
    */
   private registerDebuggerSetHitCountCondition(): void {
     this.server.registerTool(
-      'debugger_set_hit_count_condition',
+      "debugger_set_hit_count_condition",
       {
         description:
-          'Set a hit count condition for a breakpoint. The breakpoint will only pause when the condition is met.',
+          "Set a hit count condition for a breakpoint. The breakpoint will only pause when the condition is met.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
-          breakpointId: z.string().describe('The breakpoint ID'),
+          sessionId: z.string().describe("The debug session ID"),
+          breakpointId: z.string().describe("The breakpoint ID"),
           operator: z
-            .enum(['==', '>', '>=', '<', '<=', '%'])
-            .describe('Hit count operator (==, >, >=, <, <=, % for modulo)'),
-          value: z.number().describe('Hit count value to compare against'),
+            .enum(["==", ">", ">=", "<", "<=", "%"])
+            .describe("Hit count operator (==, >, >=, <, <=, % for modulo)"),
+          value: z.number().describe("Hit count value to compare against"),
         },
       },
       async (args) => {
@@ -2443,15 +2443,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2464,22 +2464,22 @@ export class McpDebuggerServer {
             {
               operator: args.operator as any,
               value: args.value,
-            },
+            }
           );
 
           if (!breakpoint) {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'BREAKPOINT_NOT_FOUND',
+                      status: "error",
+                      code: "BREAKPOINT_NOT_FOUND",
                       message: `Breakpoint ${args.breakpointId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2490,16 +2490,16 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     breakpointId: breakpoint.id,
                     hitCountCondition: breakpoint.hitCountCondition,
                     currentHitCount: breakpoint.hitCount,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2508,23 +2508,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'HIT_COUNT_CONDITION_SET_FAILED',
+                    status: "error",
+                    code: "HIT_COUNT_CONDITION_SET_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2534,12 +2534,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStartCPUProfile(): void {
     this.server.registerTool(
-      'debugger_start_cpu_profile',
+      "debugger_start_cpu_profile",
       {
         description:
-          'Start CPU profiling for a debug session. Collects CPU profile data for performance analysis.',
+          "Start CPU profiling for a debug session. Collects CPU profile data for performance analysis.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -2549,15 +2549,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2570,15 +2570,15 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
-                    message: 'CPU profiling started',
+                    status: "success",
+                    message: "CPU profiling started",
                     sessionId: args.sessionId,
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2587,23 +2587,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'CPU_PROFILE_START_FAILED',
+                    status: "error",
+                    code: "CPU_PROFILE_START_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2613,12 +2613,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerStopCPUProfile(): void {
     this.server.registerTool(
-      'debugger_stop_cpu_profile',
+      "debugger_stop_cpu_profile",
       {
         description:
-          'Stop CPU profiling and return the profile data with bottleneck analysis.',
+          "Stop CPU profiling and return the profile data with bottleneck analysis.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -2628,15 +2628,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2651,10 +2651,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     profile: {
                       startTime: profile.startTime,
                       endTime: profile.endTime,
@@ -2670,7 +2670,7 @@ export class McpDebuggerServer {
                     formattedAnalysis: cpuProfiler?.formatAnalysis(analysis),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2679,23 +2679,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'CPU_PROFILE_STOP_FAILED',
+                    status: "error",
+                    code: "CPU_PROFILE_STOP_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2705,12 +2705,12 @@ export class McpDebuggerServer {
    */
   private registerDebuggerTakeHeapSnapshot(): void {
     this.server.registerTool(
-      'debugger_take_heap_snapshot',
+      "debugger_take_heap_snapshot",
       {
         description:
-          'Take a heap snapshot for memory analysis. Returns memory usage report.',
+          "Take a heap snapshot for memory analysis. Returns memory usage report.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
         },
       },
       async (args) => {
@@ -2720,15 +2720,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2743,10 +2743,10 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'success',
+                    status: "success",
                     snapshot: {
                       nodeCount: snapshot.snapshot.node_count,
                       edgeCount: snapshot.snapshot.edge_count,
@@ -2761,7 +2761,7 @@ export class McpDebuggerServer {
                     formattedReport: memoryProfiler?.formatMemoryReport(report),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
@@ -2770,23 +2770,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'HEAP_SNAPSHOT_FAILED',
+                    status: "error",
+                    code: "HEAP_SNAPSHOT_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 
@@ -2796,22 +2796,22 @@ export class McpDebuggerServer {
    */
   private registerDebuggerGetPerformanceMetrics(): void {
     this.server.registerTool(
-      'debugger_get_performance_metrics',
+      "debugger_get_performance_metrics",
       {
         description:
-          'Get performance metrics including current memory usage, performance timeline, and leak detection.',
+          "Get performance metrics including current memory usage, performance timeline, and leak detection.",
         inputSchema: {
-          sessionId: z.string().describe('The debug session ID'),
+          sessionId: z.string().describe("The debug session ID"),
           includeLeakDetection: z
             .boolean()
             .optional()
             .describe(
-              'Whether to run memory leak detection (takes 10 seconds)',
+              "Whether to run memory leak detection (takes 10 seconds)"
             ),
           includePerformanceTimeline: z
             .boolean()
             .optional()
-            .describe('Whether to include performance timeline data'),
+            .describe("Whether to include performance timeline data"),
         },
       },
       async (args) => {
@@ -2821,15 +2821,15 @@ export class McpDebuggerServer {
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: JSON.stringify(
                     {
-                      status: 'error',
-                      code: 'SESSION_NOT_FOUND',
+                      status: "error",
+                      code: "SESSION_NOT_FOUND",
                       message: `Session ${args.sessionId} not found`,
                     },
                     null,
-                    2,
+                    2
                   ),
                 },
               ],
@@ -2839,7 +2839,7 @@ export class McpDebuggerServer {
 
           const memoryUsage = await session.getMemoryUsage();
           const result: any = {
-            status: 'success',
+            status: "success",
             memoryUsage: {
               usedSize: memoryUsage.usedSize,
               totalSize: memoryUsage.totalSize,
@@ -2876,7 +2876,7 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(result, null, 2),
               },
             ],
@@ -2885,23 +2885,23 @@ export class McpDebuggerServer {
           return {
             content: [
               {
-                type: 'text',
+                type: "text",
                 text: JSON.stringify(
                   {
-                    status: 'error',
-                    code: 'PERFORMANCE_METRICS_FAILED',
+                    status: "error",
+                    code: "PERFORMANCE_METRICS_FAILED",
                     message:
                       error instanceof Error ? error.message : String(error),
                   },
                   null,
-                  2,
+                  2
                 ),
               },
             ],
             isError: true,
           };
         }
-      },
+      }
     );
   }
 

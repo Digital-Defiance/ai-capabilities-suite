@@ -15,7 +15,7 @@ This document provides comprehensive instructions for running and troubleshootin
 Before running E2E tests, ensure you have:
 
 1. **Node.js 16+** installed
-2. **Built packages**: Run `npx nx build @digitaldefiance/ts-mcp-server` to build both the core and server packages
+2. **Built packages**: Run `npx nx build @ai-capabilities-suite/mcp-server` to build both the core and server packages
 3. **Test fixtures**: The test fixtures are located in `packages/debugger-core/test-fixtures/`
 
 ## Running E2E Tests
@@ -26,13 +26,13 @@ The E2E test suite validates the MCP protocol implementation and all debugging t
 
 ```bash
 # Run all E2E tests
-npx nx test @digitaldefiance/ts-mcp-server --testPathPattern=e2e
+npx nx test @ai-capabilities-suite/mcp-server --testPathPattern=e2e
 
 # Run with increased timeout (recommended)
-npx nx test @digitaldefiance/ts-mcp-server --testPathPattern=e2e --testTimeout=60000
+npx nx test @ai-capabilities-suite/mcp-server --testPathPattern=e2e --testTimeout=60000
 
 # Run a specific test
-npx nx test @digitaldefiance/ts-mcp-server --testPathPattern="should detect a hanging process"
+npx nx test @ai-capabilities-suite/mcp-server --testPathPattern="should detect a hanging process"
 ```
 
 ### Test Coverage
@@ -187,8 +187,8 @@ npm install -g @modelcontextprotocol/inspector
 ```bash
 # Clean and rebuild
 rm -rf packages/*/dist
-npx nx build @digitaldefiance/ts-mcp-core
-npx nx build @digitaldefiance/ts-mcp-server
+npx nx build @ai-capabilities-suite/mcp-core
+npx nx build @ai-capabilities-suite/mcp-server
 ```
 
 #### 2. Test Timeouts
@@ -233,7 +233,7 @@ Enable debug logging to see detailed server output:
 
 ```bash
 # Run tests with server stderr visible
-npx nx test @digitaldefiance/ts-mcp-server --testPathPattern=e2e 2>&1 | grep -A 5 "Server stderr"
+npx nx test @ai-capabilities-suite/mcp-server --testPathPattern=e2e 2>&1 | grep -A 5 "Server stderr"
 ```
 
 ### Checking Server Health
@@ -279,8 +279,8 @@ For CI/CD pipelines, use:
 
 ```bash
 # Build and test in one command
-npx nx build @digitaldefiance/ts-mcp-server && \
-npx nx test @digitaldefiance/ts-mcp-server --testPathPattern=e2e --testTimeout=60000
+npx nx build @ai-capabilities-suite/mcp-server && \
+npx nx test @ai-capabilities-suite/mcp-server --testPathPattern=e2e --testTimeout=60000
 ```
 
 ### CI Best Practices
@@ -309,7 +309,7 @@ Expected test execution times (approximate):
 
 After E2E tests pass:
 
-1. Run unit tests: `npx nx test @digitaldefiance/ts-mcp-core`
+1. Run unit tests: `npx nx test @ai-capabilities-suite/mcp-core`
 2. Run property-based tests (if implemented)
 3. Test with real-world debugging scenarios
 4. Integrate with MCP clients (Kiro, VS Code, etc.)

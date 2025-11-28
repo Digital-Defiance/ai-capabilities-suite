@@ -1,4 +1,4 @@
-# Migration Summary: ts-mcp → ai-capability-suite
+# Migration Summary: ts-mcp → ai-capabilities-suite
 
 **Date:** November 27, 2024  
 **Migration Method:** Git Subtree (with history preservation)  
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Successfully migrated the ts-mcp debugger project into the ai-capability-suite monorepo, preserving full commit history while restructuring for unified development.
+Successfully migrated the ts-mcp debugger project into the ai-capabilities-suite monorepo, preserving full commit history while restructuring for unified development.
 
 ## What Was Migrated
 
@@ -38,8 +38,8 @@ Successfully migrated the ts-mcp debugger project into the ai-capability-suite m
 ### 1. Package Renaming
 ```json
 // Before
-"@digitaldefiance/ts-mcp-core"
-"@digitaldefiance/ts-mcp-server"
+"@ai-capabilities-suite/mcp-core"
+"@ai-capabilities-suite/mcp-server"
 
 // After
 "@digitaldefiance/mcp-debugger-core"
@@ -52,7 +52,7 @@ Successfully migrated the ts-mcp debugger project into the ai-capability-suite m
 "url": "git+https://github.com/digitaldefiance/ts-mcp.git"
 
 // After
-"url": "git+https://github.com/digitaldefiance/ai-capability-suite.git"
+"url": "git+https://github.com/digitaldefiance/ai-capabilities-suite.git"
 ```
 
 ### 3. Internal Dependencies Fixed
@@ -72,7 +72,7 @@ Successfully migrated the ts-mcp debugger project into the ai-capability-suite m
 ## Unified Structure
 
 ```
-ai-capability-suite/
+ai-capabilities-suite/
 ├── packages/
 │   ├── mcp-core/                    # Shared MCP infrastructure
 │   ├── mcp-debugger-core/           # Debugging engine (from ts-mcp)
@@ -184,17 +184,17 @@ cat tsconfig.base.json | grep paths -A 10
 ## Original Repository
 
 The original ts-mcp repository can be:
-- Archived with a redirect to ai-capability-suite
+- Archived with a redirect to ai-capabilities-suite
 - Maintained as a mirror for standalone distribution
 - Deprecated in favor of the unified suite
 
-**Recommendation:** Archive with clear migration notice pointing to ai-capability-suite.
+**Recommendation:** Archive with clear migration notice pointing to ai-capabilities-suite.
 
 ## Contact
 
 For questions about the migration:
 - **Email:** info@digitaldefiance.org
-- **GitHub:** https://github.com/digitaldefiance/ai-capability-suite
+- **GitHub:** https://github.com/digitaldefiance/ai-capabilities-suite
 - **Original Repo:** https://github.com/digitaldefiance/ts-mcp
 
 ---

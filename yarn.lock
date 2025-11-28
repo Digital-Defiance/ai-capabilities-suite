@@ -2652,9 +2652,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai-capability-suite@workspace:.":
+"ai-capabilities-suite@workspace:.":
   version: 0.0.0-use.local
-  resolution: "ai-capability-suite@workspace:."
+  resolution: "ai-capabilities-suite@workspace:."
   dependencies:
     "@modelcontextprotocol/sdk": "npm:^1.23.0"
     "@nx/jest": "npm:^22.1.3"

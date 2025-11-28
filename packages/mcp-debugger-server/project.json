@@ -1,5 +1,5 @@
 {
-  "name": "@digitaldefiance/ts-mcp-server",
+  "name": "@ai-capabilities-suite/mcp-server",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/mcp-server/src",
   "projectType": "library",

@@ -31,8 +31,8 @@ cd <repository-directory>
 npm install
 
 # Build the packages
-npx nx build @digitaldefiance/ts-mcp-core
-npx nx build @digitaldefiance/ts-mcp-server
+npx nx build @ai-capabilities-suite/mcp-core
+npx nx build @ai-capabilities-suite/mcp-server
 ```
 
 ### Configuration
@@ -534,8 +534,8 @@ Detect if a process hangs or enters an infinite loop.
 **Cause**: The packages haven't been built.
 **Solution**:
 ```bash
-npx nx build @digitaldefiance/ts-mcp-core
-npx nx build @digitaldefiance/ts-mcp-server
+npx nx build @ai-capabilities-suite/mcp-core
+npx nx build @ai-capabilities-suite/mcp-server
 ```
 
 ### Issue: WebSocket connection errors
@@ -568,13 +568,13 @@ The server returns structured error responses with the following codes:
 
 ### Run Unit Tests
 ```bash
-npx nx test @digitaldefiance/ts-mcp-core
-npx nx test @digitaldefiance/ts-mcp-server
+npx nx test @ai-capabilities-suite/mcp-core
+npx nx test @ai-capabilities-suite/mcp-server
 ```
 
 ### Run E2E Tests
 ```bash
-npx nx test @digitaldefiance/ts-mcp-server --testPathPattern=e2e --testTimeout=60000
+npx nx test @ai-capabilities-suite/mcp-server --testPathPattern=e2e --testTimeout=60000
 ```
 
 ### Manual Testing

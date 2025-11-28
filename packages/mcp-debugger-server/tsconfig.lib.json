@@ -12,7 +12,7 @@
       "node"
     ],
     "paths": {
-      "@digitaldefiance/ts-mcp-core": [
+      "@ai-capabilities-suite/mcp-core": [
         "../debugger-core/dist/index.d.ts"
       ]
     }

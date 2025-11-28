@@ -1,5 +1,5 @@
 {
-  "name": "@digitaldefiance/ts-mcp-core",
+  "name": "@ai-capabilities-suite/mcp-core",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/debugger-core/src",
   "projectType": "library",

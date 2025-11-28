@@ -283,8 +283,8 @@ AI: "Reorganized 247 files into proper architecture..."
 
 ```bash
 # Clone the repository
-git clone https://github.com/digitaldefiance/ai-capability-suite.git
-cd ai-capability-suite
+git clone https://github.com/digitaldefiance/ai-capabilities-suite.git
+cd ai-capabilities-suite
 
 # Install dependencies
 yarn install
@@ -458,8 +458,8 @@ By giving AI agents professional-grade capabilities, we're creating a future whe
 **Ready to give your AI agent superpowers? 🚀**
 
 ```bash
-git clone https://github.com/digitaldefiance/ai-capability-suite.git
-cd ai-capability-suite
+git clone https://github.com/digitaldefiance/ai-capabilities-suite.git
+cd ai-capabilities-suite
 yarn install && yarn build && yarn test
 ```
 
