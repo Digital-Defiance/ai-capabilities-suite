@@ -1,0 +1,99 @@
+{
+  "name": "@digitaldefiance/ts-mcp-server",
+  "version": "1.0.0",
+  "description": "Advanced debugging capabilities for Node.js and TypeScript applications with 25+ debugging tools including breakpoints, variable inspection, execution control, performance profiling, and hang detection",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": "./dist/src/cli.js",
+  "pkg": {
+    "scripts": [
+      "dist/src/**/*.js",
+      "../debugger-core/dist/**/*.js"
+    ],
+    "assets": [
+      "dist/**/*",
+      "../debugger-core/dist/**/*"
+    ],
+    "targets": [
+      "node18-linux-x64",
+      "node18-macos-x64",
+      "node18-win-x64"
+    ],
+    "outputPath": "../../binaries"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@ts-mcp/source": "./src/index.ts",
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "!**/*.tsbuildinfo"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "debugging",
+    "typescript",
+    "nodejs",
+    "breakpoints",
+    "profiling",
+    "inspector-protocol",
+    "development-tools",
+    "ai-agent",
+    "kiro",
+    "amazon-q"
+  ],
+  "author": "Digital Defiance <info@digitaldefiance.org>, Jessica Mulein <jessica@digitaldefiance.org>",
+  "license": "MIT",
+  "homepage": "https://github.com/digitaldefiance/ts-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitaldefiance/ts-mcp.git",
+    "directory": "packages/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/digitaldefiance/ts-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "mcp": {
+    "server": {
+      "name": "ts-mcp",
+      "description": "Advanced debugging capabilities for Node.js and TypeScript applications",
+      "version": "1.0.0",
+      "command": "ts-mcp-server",
+      "args": [],
+      "capabilities": [
+        "debugging",
+        "breakpoints",
+        "variable-inspection",
+        "execution-control",
+        "performance-profiling",
+        "hang-detection",
+        "source-maps"
+      ],
+      "tools": 25
+    }
+  },
+  "dependencies": {
+    "@digitaldefiance/ts-mcp-core": "workspace:^",
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "tslib": "^2.3.0",
+    "zod": "^4.1.13"
+  },
+  "peerDependencies": {
+    "node": ">=18.0.0"
+  }
+}

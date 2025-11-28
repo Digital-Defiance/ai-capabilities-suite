@@ -1,0 +1,19 @@
+{
+  "name": "@digitaldefiance/ts-mcp-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/mcp-server/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "packages/mcp-server/dist",
+        "main": "packages/mcp-server/src/index.ts",
+        "tsConfig": "packages/mcp-server/tsconfig.lib.json",
+        "assets": []
+      },
+      "dependsOn": ["^build"]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@digitaldefiance/ts-mcp-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/debugger-core/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "packages/debugger-core/dist",
+        "main": "packages/debugger-core/src/index.ts",
+        "tsConfig": "packages/debugger-core/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/debugger-core/jest.config.js",
+        "passWithNoTests": false
+      },
+      "configurations": {
+        "coverage": {
+          "codeCoverage": true,
+          "coverageReporters": ["text", "lcov", "json-summary"]
+        }
+      }
+    }
+  }
+}
