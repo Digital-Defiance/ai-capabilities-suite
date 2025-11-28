@@ -1,5 +1,5 @@
 {
-  "name": "@digitaldefiance/ts-mcp-server",
+  "name": "@digitaldefiance/mcp-debugger-server",
   "version": "1.0.0",
   "description": "Advanced debugging capabilities for Node.js and TypeScript applications with 25+ debugging tools including breakpoints, variable inspection, execution control, performance profiling, and hang detection",
   "main": "./dist/src/index.js",
@@ -53,14 +53,14 @@
   ],
   "author": "Digital Defiance <info@digitaldefiance.org>, Jessica Mulein <jessica@digitaldefiance.org>",
   "license": "MIT",
-  "homepage": "https://github.com/digitaldefiance/ts-mcp#readme",
+  "homepage": "https://github.com/digitaldefiance/ai-capability-suite#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitaldefiance/ts-mcp.git",
-    "directory": "packages/mcp-server"
+    "url": "git+https://github.com/digitaldefiance/ai-capability-suite.git",
+    "directory": "packages/mcp-debugger-server"
   },
   "bugs": {
-    "url": "https://github.com/digitaldefiance/ts-mcp/issues"
+    "url": "https://github.com/digitaldefiance/ai-capability-suite/issues"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -88,7 +88,7 @@
     }
   },
   "dependencies": {
-    "@digitaldefiance/ts-mcp-core": "workspace:^",
+    "@digitaldefiance/mcp-debugger-core": "workspace:^",
     "@modelcontextprotocol/sdk": "^1.23.0",
     "tslib": "^2.3.0",
     "zod": "^4.1.13"
