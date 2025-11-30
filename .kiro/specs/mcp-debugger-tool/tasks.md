@@ -885,21 +885,21 @@
     - [x] 28.2.7 Manual: Push first image with `docker push digitaldefiance/ts-mcp-server`
     - _Requirements: Containerized deployment, Easy scaling_
 
-  - [-] 28.3 Submit to official MCP Registry
-    - [ ] 28.3.1 Create MCP registry submission metadata file
-    - [ ] 28.3.2 Create comprehensive server description with all 25+ tools
-    - [ ] 28.3.3 Create usage examples and configuration templates
-    - [ ] 28.3.4 Create submission documentation with PR template
-    - [ ] 28.3.5 Manual: Fork MCP registry repository and submit PR
-    - [ ] 28.3.6 Manual: Respond to review feedback and merge PR
+  - [x] 28.3 Submit to official MCP Registry
+    - [x] 28.3.1 Create MCP registry submission metadata file
+    - [x] 28.3.2 Create comprehensive server description with all 25+ tools
+    - [x] 28.3.3 Create usage examples and configuration templates
+    - [x] 28.3.4 Create submission documentation with PR template
+    - [x] 28.3.5 Manual: Fork MCP registry repository and submit PR
+    - [x] 28.3.6 Manual: Respond to review feedback and merge PR
     - _Requirements: Official discovery, Community visibility_
 
-  - [ ] 28.4 Create GitHub Releases with binaries
-    - [ ] 28.4.1 Create GitHub Actions workflow for automated releases
-    - [ ] 28.4.2 Configure pkg to create standalone executables
-    - [ ] 28.4.3 Create release notes template and changelog automation
-    - [ ] 28.4.4 Create installation scripts for each platform
-    - [ ] 28.4.5 Create release documentation with download instructions
+  - [x] 28.4 Create GitHub Releases with binaries
+    - [x] 28.4.1 Create GitHub Actions workflow for automated releases
+    - [x] 28.4.2 Configure pkg to create standalone executables
+    - [x] 28.4.3 Create release notes template and changelog automation
+    - [x] 28.4.4 Create installation scripts for each platform
+    - [x] 28.4.5 Create release documentation with download instructions
     - [ ] 28.4.6 Manual: Create GitHub release and upload binaries
     - [ ] 28.4.7 Manual: Test binaries on each target platform
     - _Requirements: No-install deployment, Cross-platform support_

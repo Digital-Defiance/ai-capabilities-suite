@@ -2,6 +2,7 @@
 node_modules
 dist
 build
+binaries
 
 # IDE
 .vscode
@@ -25,3 +26,8 @@ coverage
 # Environment
 .env
 .env.local
+
+# Secrets and tokens
+*_token
+*.token
+.mcpregistry_*
