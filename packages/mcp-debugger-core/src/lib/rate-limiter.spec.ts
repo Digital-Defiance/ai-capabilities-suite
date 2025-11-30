@@ -414,5 +414,200 @@ describe("RateLimiter", () => {
       expect(status!.count).toBe(0);
       expect(status!.limit).toBe(10);
     });
+
+    it("should use default identifier when not provided", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_operation", { maxRequests: 2, windowMs: 1000 });
+
+      // Call without identifier - should use 'default'
+      limiter.checkLimitOrThrow("test_operation");
+      limiter.checkLimitOrThrow("test_operation");
+
+      // Third call should fail
+      expect(() => limiter.checkLimitOrThrow("test_operation")).toThrow(
+        RateLimitError
+      );
+
+      // Verify it used 'default' identifier
+      const status = limiter.getStatus("test_operation", "default");
+      expect(status!.count).toBe(3);
+    });
+
+    it("should return allowed when no default config and checking with single arg", () => {
+      const limiter = new RateLimiter(); // No default config
+
+      // Call with single argument and no default config
+      const result = limiter.checkLimit("some-identifier");
+      expect(result.allowed).toBe(true);
+      expect(result.retryAfter).toBeUndefined();
+    });
+
+    it("should handle checkLimit with null identifier", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_operation", { maxRequests: 2, windowMs: 1000 });
+
+      // Call with null identifier - should use 'default'
+      const result1 = limiter.checkLimit("test_operation", null as any);
+      expect(result1.allowed).toBe(true);
+
+      const result2 = limiter.checkLimit("test_operation", null as any);
+      expect(result2.allowed).toBe(true);
+
+      const result3 = limiter.checkLimit("test_operation", null as any);
+      expect(result3.allowed).toBe(false);
+    });
+
+    it("should handle checkLimit with empty string identifier", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_operation", { maxRequests: 2, windowMs: 1000 });
+
+      // Call with empty string identifier - should use 'default'
+      const result1 = limiter.checkLimit("test_operation", "");
+      expect(result1.allowed).toBe(true);
+
+      const result2 = limiter.checkLimit("test_operation", "");
+      expect(result2.allowed).toBe(true);
+
+      const result3 = limiter.checkLimit("test_operation", "");
+      expect(result3.allowed).toBe(false);
+    });
+
+    it("should handle checkLimit with undefined identifier explicitly", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_operation", { maxRequests: 2, windowMs: 1000 });
+
+      // Call with undefined identifier - should use 'default'
+      const result1 = limiter.checkLimit("test_operation", undefined);
+      expect(result1.allowed).toBe(true);
+
+      const result2 = limiter.checkLimit("test_operation", undefined);
+      expect(result2.allowed).toBe(true);
+
+      const result3 = limiter.checkLimit("test_operation", undefined);
+      expect(result3.allowed).toBe(false);
+    });
+
+    it("should handle window reset correctly", async () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_operation", { maxRequests: 2, windowMs: 100 });
+
+      // Use up the limit
+      limiter.checkLimit("test_operation", "user1");
+      limiter.checkLimit("test_operation", "user1");
+
+      const result1 = limiter.checkLimit("test_operation", "user1");
+      expect(result1.allowed).toBe(false);
+
+      // Wait for window to reset
+      await new Promise((resolve) => setTimeout(resolve, 150));
+
+      // Should be allowed again
+      const result2 = limiter.checkLimit("test_operation", "user1");
+      expect(result2.allowed).toBe(true);
+    });
+
+    it("should handle clear operation", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("op1", { maxRequests: 5, windowMs: 1000 });
+      limiter.setLimit("op2", { maxRequests: 10, windowMs: 2000 });
+
+      limiter.checkLimit("op1", "user1");
+      limiter.checkLimit("op2", "user1");
+
+      expect(limiter.hasLimit("op1")).toBe(true);
+      expect(limiter.hasLimit("op2")).toBe(true);
+
+      limiter.clear();
+
+      expect(limiter.hasLimit("op1")).toBe(false);
+      expect(limiter.hasLimit("op2")).toBe(false);
+      expect(limiter.getOperationTypes()).toHaveLength(0);
+    });
+
+    it("should handle resetAll for operation", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_op", { maxRequests: 1, windowMs: 1000 });
+
+      limiter.checkLimit("test_op", "user1");
+      limiter.checkLimit("test_op", "user2");
+      limiter.checkLimit("test_op", "user3");
+
+      // All users should be at limit
+      expect(limiter.checkLimit("test_op", "user1").allowed).toBe(false);
+      expect(limiter.checkLimit("test_op", "user2").allowed).toBe(false);
+      expect(limiter.checkLimit("test_op", "user3").allowed).toBe(false);
+
+      // Reset all
+      const result = limiter.resetAll("test_op");
+      expect(result).toBe(true);
+
+      // All users should be allowed again
+      expect(limiter.checkLimit("test_op", "user1").allowed).toBe(true);
+      expect(limiter.checkLimit("test_op", "user2").allowed).toBe(true);
+      expect(limiter.checkLimit("test_op", "user3").allowed).toBe(true);
+    });
+
+    it("should handle reset for specific identifier", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_op", { maxRequests: 1, windowMs: 1000 });
+
+      limiter.checkLimit("test_op", "user1");
+      limiter.checkLimit("test_op", "user2");
+
+      // Both at limit
+      expect(limiter.checkLimit("test_op", "user1").allowed).toBe(false);
+      expect(limiter.checkLimit("test_op", "user2").allowed).toBe(false);
+
+      // Reset only user1
+      const result = limiter.reset("test_op", "user1");
+      expect(result).toBe(true);
+
+      // user1 should be allowed, user2 still blocked
+      expect(limiter.checkLimit("test_op", "user1").allowed).toBe(true);
+      expect(limiter.checkLimit("test_op", "user2").allowed).toBe(false);
+    });
+
+    it("should handle clear operation", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("op1", { maxRequests: 5, windowMs: 1000 });
+      limiter.setLimit("op2", { maxRequests: 10, windowMs: 2000 });
+
+      limiter.checkLimit("op1", "user1");
+      limiter.checkLimit("op2", "user1");
+
+      expect(limiter.getOperationTypes()).toHaveLength(2);
+
+      limiter.clear();
+
+      expect(limiter.getOperationTypes()).toHaveLength(0);
+      expect(limiter.hasLimit("op1")).toBe(false);
+      expect(limiter.hasLimit("op2")).toBe(false);
+    });
+
+    it("should handle removeMetric for non-existent metric", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("test_op", { maxRequests: 5, windowMs: 1000 });
+
+      // Try to get metrics for non-existent operation
+      const metrics = limiter.getMetrics("non_existent");
+      expect(metrics).toBeNull();
+    });
+
+    it("should handle multiple identifiers with same operation", () => {
+      const limiter = new RateLimiter();
+      limiter.setLimit("api", { maxRequests: 2, windowMs: 1000 });
+
+      // Different users
+      limiter.checkLimit("api", "user1");
+      limiter.checkLimit("api", "user1");
+      limiter.checkLimit("api", "user2");
+      limiter.checkLimit("api", "user2");
+      limiter.checkLimit("api", "user3");
+
+      // user1 and user2 should be at limit, user3 should have 1 more
+      expect(limiter.checkLimit("api", "user1").allowed).toBe(false);
+      expect(limiter.checkLimit("api", "user2").allowed).toBe(false);
+      expect(limiter.checkLimit("api", "user3").allowed).toBe(true);
+    });
   });
 });

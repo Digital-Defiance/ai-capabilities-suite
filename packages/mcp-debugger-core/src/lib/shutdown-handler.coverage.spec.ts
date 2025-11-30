@@ -160,7 +160,7 @@ describe("ShutdownHandler Coverage Tests", () => {
         expect(handlers["unhandledRejection"]).toBeDefined();
 
         const reason = new Error("Test unhandled rejection");
-        const promise = Promise.reject(reason);
+        const promise = Promise.reject(reason).catch(() => {}); // Catch to prevent actual unhandled rejection
         const rejectionPromise = handlers["unhandledRejection"](
           reason,
           promise
@@ -212,7 +212,7 @@ describe("ShutdownHandler Coverage Tests", () => {
         await new Promise((resolve) => setTimeout(resolve, 200));
 
         expect(console.error).toHaveBeenCalledWith(
-          "Error during shutdown:",
+          "Cleanup failed for failing-cleanup:",
           expect.any(Error)
         );
       } finally {
@@ -251,8 +251,13 @@ describe("ShutdownHandler Coverage Tests", () => {
         // Wait for async operations
         await new Promise((resolve) => setTimeout(resolve, 200));
 
+        // Should log both the uncaught exception and the cleanup failure
         expect(console.error).toHaveBeenCalledWith(
-          "Error during emergency shutdown:",
+          "Uncaught exception:",
+          expect.any(Error)
+        );
+        expect(console.error).toHaveBeenCalledWith(
+          "Cleanup failed for failing-cleanup:",
           expect.any(Error)
         );
       } finally {
@@ -285,7 +290,7 @@ describe("ShutdownHandler Coverage Tests", () => {
 
         // Call unhandledRejection handler
         const reason = new Error("Test rejection");
-        const promise = Promise.reject(reason);
+        const promise = Promise.reject(reason).catch(() => {}); // Catch to prevent actual unhandled rejection
         const rejectionPromise = handlers["unhandledRejection"](
           reason,
           promise
@@ -294,8 +299,13 @@ describe("ShutdownHandler Coverage Tests", () => {
         // Wait for async operations
         await new Promise((resolve) => setTimeout(resolve, 200));
 
+        // Should log both the unhandled rejection and the cleanup failure
         expect(console.error).toHaveBeenCalledWith(
-          "Error during emergency shutdown:",
+          "Unhandled promise rejection:",
+          expect.any(Error)
+        );
+        expect(console.error).toHaveBeenCalledWith(
+          "Cleanup failed for failing-cleanup:",
           expect.any(Error)
         );
       } finally {

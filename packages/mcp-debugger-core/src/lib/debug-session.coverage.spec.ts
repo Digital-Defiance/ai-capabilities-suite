@@ -9,19 +9,19 @@ import {
   SessionState,
   BreakpointType,
   HitCountOperator,
-} from './debug-session';
-import * as path from 'path';
-import * as fs from 'fs';
+} from "./debug-session";
+import * as path from "path";
+import * as fs from "fs";
 
-describe('DebugSession - Coverage Tests', () => {
+describe("DebugSession - Coverage Tests", () => {
   let session: DebugSession | null = null;
-  const fixtureDir = path.join(__dirname, '../../test-fixtures');
+  const fixtureDir = path.join(__dirname, "../../test-fixtures");
 
-  const simpleFixture = path.join(fixtureDir, 'simple-debug.js');
-  const loopFixture = path.join(fixtureDir, 'loop-debug.js');
-  const nestedFixture = path.join(fixtureDir, 'nested-functions.js');
-  const objectFixture = path.join(fixtureDir, 'object-inspection.js');
-  const crashFixture = path.join(fixtureDir, 'crash-test.js');
+  const simpleFixture = path.join(fixtureDir, "simple-debug.js");
+  const loopFixture = path.join(fixtureDir, "loop-debug.js");
+  const nestedFixture = path.join(fixtureDir, "nested-functions.js");
+  const objectFixture = path.join(fixtureDir, "object-inspection.js");
+  const crashFixture = path.join(fixtureDir, "crash-test.js");
 
   beforeAll(() => {
     if (!fs.existsSync(fixtureDir)) {
@@ -36,7 +36,7 @@ let y = 20;
 let z = x + y;
 console.log('Result:', z);
 process.exit(0);
-`,
+`
     );
 
     fs.writeFileSync(
@@ -52,7 +52,7 @@ for (let i = 0; i < 1000; i++) {
 }
 console.log('Sum:', sum);
 process.exit(0);
-`,
+`
     );
 
     fs.writeFileSync(
@@ -69,7 +69,7 @@ function outer(a) {
 const result = outer(5);
 console.log('Result:', result);
 process.exit(0);
-`,
+`
     );
 
     fs.writeFileSync(
@@ -85,7 +85,7 @@ const obj = {
 };
 console.log('Object:', obj);
 process.exit(0);
-`,
+`
     );
 
     fs.writeFileSync(
@@ -97,7 +97,7 @@ while (Date.now() - start < 100) {
   // Busy wait
 }
 throw new Error('Intentional crash');
-`,
+`
     );
   });
 
@@ -111,10 +111,10 @@ throw new Error('Intentional crash');
   // Helper function to create session
   const createSession = async (
     fixture: string,
-    timeout = 10000,
+    timeout = 10000
   ): Promise<DebugSession> => {
     const config: DebugSessionConfig = {
-      command: 'node',
+      command: "node",
       args: [fixture],
       cwd: fixtureDir,
       timeout,
@@ -124,8 +124,8 @@ throw new Error('Intentional crash');
     return s;
   };
 
-  describe('1. Session Lifecycle', () => {
-    it('should create and start session', async () => {
+  describe("1. Session Lifecycle", () => {
+    it("should create and start session", async () => {
       session = await createSession(simpleFixture);
 
       expect(session).toBeDefined();
@@ -137,7 +137,7 @@ throw new Error('Intentional crash');
       expect(session.isPaused()).toBe(true);
     }, 15000);
 
-    it('should cleanup session resources', async () => {
+    it("should cleanup session resources", async () => {
       session = await createSession(simpleFixture);
       await session.cleanup();
 
@@ -147,7 +147,7 @@ throw new Error('Intentional crash');
       expect(session.isActive()).toBe(false);
     }, 15000);
 
-    it('should handle cleanup when already terminated', async () => {
+    it("should handle cleanup when already terminated", async () => {
       session = await createSession(simpleFixture);
       await session.cleanup();
       await session.cleanup(); // Should not throw
@@ -156,8 +156,8 @@ throw new Error('Intentional crash');
     }, 15000);
   });
 
-  describe('2. Execution Control', () => {
-    it('should pause and resume execution', async () => {
+  describe("2. Execution Control", () => {
+    it("should pause and resume execution", async () => {
       session = await createSession(loopFixture);
 
       await session.resume();
@@ -171,21 +171,21 @@ throw new Error('Intentional crash');
       expect(session.getState()).toBe(SessionState.PAUSED);
     }, 15000);
 
-    it('should step over current line', async () => {
+    it("should step over current line", async () => {
       session = await createSession(loopFixture);
       await session.stepOver();
       await new Promise((resolve) => setTimeout(resolve, 200));
       expect(session.getState()).toBe(SessionState.PAUSED);
     }, 15000);
 
-    it('should step into function', async () => {
+    it("should step into function", async () => {
       session = await createSession(nestedFixture);
       await session.stepInto();
       await new Promise((resolve) => setTimeout(resolve, 200));
       expect(session.getState()).toBe(SessionState.PAUSED);
     }, 15000);
 
-    it('should step out of function', async () => {
+    it("should step out of function", async () => {
       session = await createSession(nestedFixture);
       // Step into a function first
       await session.stepInto();
@@ -198,19 +198,19 @@ throw new Error('Intentional crash');
       expect(session.getState()).toBe(SessionState.PAUSED);
     }, 15000);
 
-    it('should throw error when pausing non-running session', async () => {
+    it("should throw error when pausing non-running session", async () => {
       session = await createSession(simpleFixture);
       await expect(session.pause()).rejects.toThrow();
     }, 15000);
 
-    it('should throw error when resuming non-paused session', async () => {
+    it("should throw error when resuming non-paused session", async () => {
       session = await createSession(simpleFixture);
       await session.resume();
       await new Promise((resolve) => setTimeout(resolve, 100));
       await expect(session.resume()).rejects.toThrow();
     }, 15000);
 
-    it('should throw error when stepping in non-paused session', async () => {
+    it("should throw error when stepping in non-paused session", async () => {
       session = await createSession(simpleFixture);
       await session.resume();
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -220,8 +220,8 @@ throw new Error('Intentional crash');
     }, 15000);
   });
 
-  describe('3. Breakpoint Management', () => {
-    it('should set and retrieve breakpoint', async () => {
+  describe("3. Breakpoint Management", () => {
+    it("should set and retrieve breakpoint", async () => {
       session = await createSession(simpleFixture);
       const bp = await session.setBreakpoint(simpleFixture, 3);
 
@@ -234,13 +234,13 @@ throw new Error('Intentional crash');
       expect(retrieved).toEqual(bp);
     }, 15000);
 
-    it('should set conditional breakpoint', async () => {
+    it("should set conditional breakpoint", async () => {
       session = await createSession(loopFixture);
-      const bp = await session.setBreakpoint(loopFixture, 3, 'i > 2');
-      expect(bp.condition).toBe('i > 2');
+      const bp = await session.setBreakpoint(loopFixture, 3, "i > 2");
+      expect(bp.condition).toBe("i > 2");
     }, 15000);
 
-    it('should get all breakpoints', async () => {
+    it("should get all breakpoints", async () => {
       session = await createSession(simpleFixture);
       await session.setBreakpoint(simpleFixture, 2);
       await session.setBreakpoint(simpleFixture, 3);
@@ -250,7 +250,7 @@ throw new Error('Intentional crash');
       expect(breakpoints.length).toBe(3);
     }, 15000);
 
-    it('should remove breakpoint', async () => {
+    it("should remove breakpoint", async () => {
       session = await createSession(simpleFixture);
       const bp = await session.setBreakpoint(simpleFixture, 3);
       const removed = await session.removeBreakpoint(bp.id);
@@ -259,13 +259,13 @@ throw new Error('Intentional crash');
       expect(session.getBreakpoint(bp.id)).toBeUndefined();
     }, 15000);
 
-    it('should return false when removing non-existent breakpoint', async () => {
+    it("should return false when removing non-existent breakpoint", async () => {
       session = await createSession(simpleFixture);
-      const removed = await session.removeBreakpoint('non-existent-id');
+      const removed = await session.removeBreakpoint("non-existent-id");
       expect(removed).toBe(false);
     }, 15000);
 
-    it('should toggle breakpoint enabled state', async () => {
+    it("should toggle breakpoint enabled state", async () => {
       session = await createSession(simpleFixture);
       const bp = await session.setBreakpoint(simpleFixture, 3);
       expect(bp.enabled).toBe(true);
@@ -277,43 +277,43 @@ throw new Error('Intentional crash');
       expect(toggledAgain?.enabled).toBe(true);
     }, 15000);
 
-    it('should return undefined when toggling non-existent breakpoint', async () => {
+    it("should return undefined when toggling non-existent breakpoint", async () => {
       session = await createSession(simpleFixture);
-      const result = await session.toggleBreakpoint('non-existent-id');
+      const result = await session.toggleBreakpoint("non-existent-id");
       expect(result).toBeUndefined();
     }, 15000);
 
-    it('should get breakpoint manager', async () => {
+    it("should get breakpoint manager", async () => {
       session = await createSession(simpleFixture);
       const manager = session.getBreakpointManager();
       expect(manager).toBeDefined();
     }, 15000);
   });
 
-  describe('4. Advanced Breakpoints', () => {
-    it('should set logpoint', async () => {
+  describe("4. Advanced Breakpoints", () => {
+    it("should set logpoint", async () => {
       session = await createSession(simpleFixture);
       const logpoint = await session.setLogpoint(
         simpleFixture,
         3,
-        'Value: {x}',
+        "Value: {x}"
       );
 
       expect(logpoint).toBeDefined();
       expect(logpoint.type).toBe(BreakpointType.LOGPOINT);
-      expect(logpoint.logMessage).toBe('Value: {x}');
+      expect(logpoint.logMessage).toBe("Value: {x}");
     }, 15000);
 
-    it('should set function breakpoint', async () => {
+    it("should set function breakpoint", async () => {
       session = await createSession(nestedFixture);
-      const bp = await session.setFunctionBreakpoint('outer');
+      const bp = await session.setFunctionBreakpoint("outer");
 
       expect(bp).toBeDefined();
       expect(bp.type).toBe(BreakpointType.FUNCTION);
-      expect(bp.functionName).toBe('outer');
+      expect(bp.functionName).toBe("outer");
     }, 15000);
 
-    it('should set hit count condition', async () => {
+    it("should set hit count condition", async () => {
       session = await createSession(loopFixture);
       const bp = await session.setBreakpoint(loopFixture, 3);
       const updated = session.setBreakpointHitCountCondition(bp.id, {
@@ -323,12 +323,12 @@ throw new Error('Intentional crash');
 
       expect(updated?.hitCountCondition).toBeDefined();
       expect(updated?.hitCountCondition?.operator).toBe(
-        HitCountOperator.GREATER,
+        HitCountOperator.GREATER
       );
       expect(updated?.hitCountCondition?.value).toBe(2);
     }, 15000);
 
-    it('should set exception breakpoint', async () => {
+    it("should set exception breakpoint", async () => {
       session = await createSession(simpleFixture);
       const exceptionBp = await session.setExceptionBreakpoint(true, true);
 
@@ -337,18 +337,18 @@ throw new Error('Intentional crash');
       expect(exceptionBp.breakOnUncaught).toBe(true);
     }, 15000);
 
-    it('should set exception breakpoint with filter', async () => {
+    it("should set exception breakpoint with filter", async () => {
       session = await createSession(simpleFixture);
       const exceptionBp = await session.setExceptionBreakpoint(
         false,
         true,
-        'TypeError.*',
+        "TypeError.*"
       );
 
-      expect(exceptionBp.exceptionFilter).toBe('TypeError.*');
+      expect(exceptionBp.exceptionFilter).toBe("TypeError.*");
     }, 15000);
 
-    it('should get and remove exception breakpoint', async () => {
+    it("should get and remove exception breakpoint", async () => {
       session = await createSession(simpleFixture);
       const exceptionBp = await session.setExceptionBreakpoint(true, true);
       const retrieved = session.getExceptionBreakpoint(exceptionBp.id);
@@ -359,7 +359,7 @@ throw new Error('Intentional crash');
       expect(session.getExceptionBreakpoint(exceptionBp.id)).toBeUndefined();
     }, 15000);
 
-    it('should get all exception breakpoints', async () => {
+    it("should get all exception breakpoints", async () => {
       session = await createSession(simpleFixture);
       await session.setExceptionBreakpoint(true, false);
       await session.setExceptionBreakpoint(false, true);
@@ -368,31 +368,31 @@ throw new Error('Intentional crash');
       expect(breakpoints.length).toBe(2);
     }, 15000);
 
-    it('should return false when removing non-existent exception breakpoint', async () => {
+    it("should return false when removing non-existent exception breakpoint", async () => {
       session = await createSession(simpleFixture);
-      const removed = await session.removeExceptionBreakpoint('non-existent');
+      const removed = await session.removeExceptionBreakpoint("non-existent");
       expect(removed).toBe(false);
     }, 15000);
   });
 
-  describe('5. Variable Inspection', () => {
-    it('should evaluate expression', async () => {
+  describe("5. Variable Inspection", () => {
+    it("should evaluate expression", async () => {
       session = await createSession(simpleFixture);
-      const result = await session.evaluateExpression('2 + 2');
+      const result = await session.evaluateExpression("2 + 2");
 
       expect(result).toBeDefined();
       expect(result.value).toBe(4);
     }, 15000);
 
-    it('should throw error when evaluating in non-paused session', async () => {
+    it("should throw error when evaluating in non-paused session", async () => {
       session = await createSession(simpleFixture);
       await session.resume();
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      await expect(session.evaluateExpression('2 + 2')).rejects.toThrow();
+      await expect(session.evaluateExpression("2 + 2")).rejects.toThrow();
     }, 15000);
 
-    it('should get object properties', async () => {
+    it("should get object properties", async () => {
       session = await createSession(objectFixture);
 
       // Step forward to get past the object definition
@@ -401,18 +401,21 @@ throw new Error('Intentional crash');
       await session.stepOver();
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const evalResult = await session.evaluateExpression('obj');
+      // Ensure session is paused
+      expect(session.getState()).toBe("paused");
+
+      const evalResult = await session.evaluateExpression("obj");
 
       if (evalResult.objectId) {
         const properties = await session.getObjectProperties(
-          evalResult.objectId,
+          evalResult.objectId
         );
         expect(properties).toBeDefined();
         expect(Array.isArray(properties)).toBe(true);
       }
     }, 15000);
 
-    it('should inspect object with depth', async () => {
+    it("should inspect object with depth", async () => {
       session = await createSession(objectFixture);
 
       // Step forward to get past the object definition
@@ -421,7 +424,10 @@ throw new Error('Intentional crash');
       await session.stepOver();
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const evalResult = await session.evaluateExpression('obj');
+      // Ensure session is paused
+      expect(session.getState()).toBe("paused");
+
+      const evalResult = await session.evaluateExpression("obj");
 
       if (evalResult.objectId) {
         const inspected = await session.inspectObject(evalResult.objectId, 2);
@@ -430,37 +436,37 @@ throw new Error('Intentional crash');
     }, 15000);
   });
 
-  describe('6. Watched Variables', () => {
-    it('should add and get watched variable', async () => {
+  describe("6. Watched Variables", () => {
+    it("should add and get watched variable", async () => {
       session = await createSession(simpleFixture);
-      session.addWatchedVariable({ name: 'x', expression: 'x' });
+      session.addWatchedVariable({ name: "x", expression: "x" });
 
-      const watched = session.getWatchedVariable('x');
+      const watched = session.getWatchedVariable("x");
       expect(watched).toBeDefined();
-      expect(watched?.name).toBe('x');
+      expect(watched?.name).toBe("x");
     }, 15000);
 
-    it('should get all watched variables', async () => {
+    it("should get all watched variables", async () => {
       session = await createSession(simpleFixture);
-      session.addWatchedVariable({ name: 'x', expression: 'x' });
-      session.addWatchedVariable({ name: 'y', expression: 'y' });
+      session.addWatchedVariable({ name: "x", expression: "x" });
+      session.addWatchedVariable({ name: "y", expression: "y" });
 
       const watched = session.getAllWatchedVariables();
       expect(watched.length).toBe(2);
     }, 15000);
 
-    it('should remove watched variable', async () => {
+    it("should remove watched variable", async () => {
       session = await createSession(simpleFixture);
-      session.addWatchedVariable({ name: 'x', expression: 'x' });
-      const removed = session.removeWatchedVariable('x');
+      session.addWatchedVariable({ name: "x", expression: "x" });
+      const removed = session.removeWatchedVariable("x");
 
       expect(removed).toBe(true);
-      expect(session.getWatchedVariable('x')).toBeUndefined();
+      expect(session.getWatchedVariable("x")).toBeUndefined();
     }, 15000);
 
-    it('should evaluate watched variables on pause', async () => {
+    it("should evaluate watched variables on pause", async () => {
       session = await createSession(loopFixture);
-      session.addWatchedVariable({ name: 'sum', expression: 'sum' });
+      session.addWatchedVariable({ name: "sum", expression: "sum" });
 
       await session.stepOver();
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -469,9 +475,9 @@ throw new Error('Intentional crash');
       expect(changes).toBeDefined();
     }, 15000);
 
-    it('should clear watched variable changes', async () => {
+    it("should clear watched variable changes", async () => {
       session = await createSession(simpleFixture);
-      session.addWatchedVariable({ name: 'x', expression: 'x' });
+      session.addWatchedVariable({ name: "x", expression: "x" });
       session.clearWatchedVariableChanges();
 
       const changes = session.getWatchedVariableChanges();
@@ -479,8 +485,8 @@ throw new Error('Intentional crash');
     }, 15000);
   });
 
-  describe('7. Call Stack', () => {
-    it('should get call stack with absolute paths', async () => {
+  describe("7. Call Stack", () => {
+    it("should get call stack with absolute paths", async () => {
       session = await createSession(nestedFixture);
       const stack = await session.getCallStack();
 
@@ -493,7 +499,7 @@ throw new Error('Intentional crash');
       });
     }, 15000);
 
-    it('should get call stack synchronously', async () => {
+    it("should get call stack synchronously", async () => {
       session = await createSession(nestedFixture);
       const stack = session.getCallStackSync();
 
@@ -501,14 +507,14 @@ throw new Error('Intentional crash');
       expect(Array.isArray(stack)).toBe(true);
     }, 15000);
 
-    it('should get current call frames', async () => {
+    it("should get current call frames", async () => {
       session = await createSession(nestedFixture);
       const frames = session.getCurrentCallFrames();
       expect(frames).toBeDefined();
       expect(Array.isArray(frames)).toBe(true);
     }, 15000);
 
-    it('should switch to different stack frame', async () => {
+    it("should switch to different stack frame", async () => {
       session = await createSession(nestedFixture);
       const frames = session.getCurrentCallFrames();
       if (frames.length > 1) {
@@ -517,12 +523,12 @@ throw new Error('Intentional crash');
       }
     }, 15000);
 
-    it('should throw error when switching to invalid frame', async () => {
+    it("should throw error when switching to invalid frame", async () => {
       session = await createSession(simpleFixture);
       expect(() => session.switchToFrame(999)).toThrow();
     }, 15000);
 
-    it('should get current frame index and call frame ID', async () => {
+    it("should get current frame index and call frame ID", async () => {
       session = await createSession(nestedFixture);
       expect(session.getCurrentFrameIndex()).toBe(0);
 
@@ -531,28 +537,28 @@ throw new Error('Intentional crash');
     }, 15000);
   });
 
-  describe('8. Source Maps', () => {
-    it('should get source map manager', async () => {
+  describe("8. Source Maps", () => {
+    it("should get source map manager", async () => {
       session = await createSession(simpleFixture);
       const manager = session.getSourceMapManager();
       expect(manager).toBeDefined();
     }, 15000);
 
-    it('should map source to compiled location', async () => {
+    it("should map source to compiled location", async () => {
       session = await createSession(simpleFixture);
       const result = await session.mapSourceToCompiled(simpleFixture, 3, 0);
       expect(result).toBeDefined();
     }, 15000);
 
-    it('should map compiled to source location', async () => {
+    it("should map compiled to source location", async () => {
       session = await createSession(simpleFixture);
       const result = await session.mapCompiledToSource(simpleFixture, 3, 0);
       expect(result).toBeDefined();
     }, 15000);
   });
 
-  describe('9. Crash Detection', () => {
-    it('should detect process crash', async () => {
+  describe("9. Crash Detection", () => {
+    it("should detect process crash", async () => {
       session = await createSession(simpleFixture);
 
       let crashDetected = false;
@@ -562,7 +568,7 @@ throw new Error('Intentional crash');
 
       const proc = session.getProcess();
       // Kill with exit code 1 to simulate crash
-      proc?.kill('SIGKILL');
+      proc?.kill("SIGKILL");
 
       await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -571,7 +577,7 @@ throw new Error('Intentional crash');
       expect(session.getCrashError()).toBeDefined();
     }, 15000);
 
-    it('should handle multiple crash handlers', async () => {
+    it("should handle multiple crash handlers", async () => {
       session = await createSession(simpleFixture);
 
       let handler1Called = false;
@@ -585,7 +591,7 @@ throw new Error('Intentional crash');
       });
 
       const proc = session.getProcess();
-      proc?.kill('SIGKILL');
+      proc?.kill("SIGKILL");
 
       await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -593,7 +599,7 @@ throw new Error('Intentional crash');
       expect(handler2Called).toBe(true);
     }, 15000);
 
-    it('should handle process exit with signal', async () => {
+    it("should handle process exit with signal", async () => {
       session = await createSession(simpleFixture);
 
       let crashDetected = false;
@@ -602,14 +608,14 @@ throw new Error('Intentional crash');
       });
 
       const proc = session.getProcess();
-      proc?.kill('SIGTERM');
+      proc?.kill("SIGTERM");
 
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       expect(crashDetected).toBe(true);
     }, 15000);
 
-    it('should not detect crash on normal exit', async () => {
+    it("should not detect crash on normal exit", async () => {
       session = await createSession(simpleFixture);
 
       let crashDetected = false;
@@ -625,8 +631,8 @@ throw new Error('Intentional crash');
     }, 15000);
   });
 
-  describe('10. Profiling Operations', () => {
-    it('should start and stop CPU profiling', async () => {
+  describe("10. Profiling Operations", () => {
+    it("should start and stop CPU profiling", async () => {
       session = await createSession(loopFixture);
 
       await session.startCPUProfile();
@@ -641,7 +647,7 @@ throw new Error('Intentional crash');
       expect(session.isCPUProfiling()).toBe(false);
     }, 15000);
 
-    it('should analyze CPU profile', async () => {
+    it("should analyze CPU profile", async () => {
       session = await createSession(loopFixture);
 
       await session.startCPUProfile();
@@ -654,13 +660,13 @@ throw new Error('Intentional crash');
       expect(analysis).toBeDefined();
     }, 15000);
 
-    it('should take heap snapshot', async () => {
+    it("should take heap snapshot", async () => {
       session = await createSession(objectFixture);
       const snapshot = await session.takeHeapSnapshot();
       expect(snapshot).toBeDefined();
     }, 15000);
 
-    it('should get memory usage', async () => {
+    it("should get memory usage", async () => {
       session = await createSession(simpleFixture);
       const usage = await session.getMemoryUsage();
       expect(usage).toBeDefined();
@@ -671,7 +677,7 @@ throw new Error('Intentional crash');
       expect(session.getMemoryProfiler()).toBeDefined();
     }, 15000);
 
-    it('should start and stop tracking heap objects', async () => {
+    it("should start and stop tracking heap objects", async () => {
       session = await createSession(objectFixture);
 
       await session.startTrackingHeapObjects(1024);
@@ -681,7 +687,7 @@ throw new Error('Intentional crash');
       expect(snapshot).toBeDefined();
     }, 15000);
 
-    it('should detect memory leaks', async () => {
+    it("should detect memory leaks", async () => {
       session = await createSession(objectFixture);
       // Use shorter intervals and handle potential timeout
       try {
@@ -691,21 +697,21 @@ throw new Error('Intentional crash');
       } catch (error: any) {
         // HeapProfiler.collectGarbage can timeout in some environments
         // This is acceptable as long as the method exists and can be called
-        if (error.message?.includes('timed out')) {
-          expect(error.message).toContain('HeapProfiler.collectGarbage');
+        if (error.message?.includes("timed out")) {
+          expect(error.message).toContain("HeapProfiler.collectGarbage");
         } else {
           throw error;
         }
       }
     }, 30000);
 
-    it('should generate memory report', async () => {
+    it("should generate memory report", async () => {
       session = await createSession(objectFixture);
       const report = await session.generateMemoryReport();
       expect(report).toBeDefined();
     }, 15000);
 
-    it('should start and stop performance recording', async () => {
+    it("should start and stop performance recording", async () => {
       session = await createSession(loopFixture);
 
       await session.startPerformanceRecording();
@@ -720,59 +726,59 @@ throw new Error('Intentional crash');
       expect(session.isPerformanceRecording()).toBe(false);
     }, 15000);
 
-    it('should record function call', async () => {
+    it("should record function call", async () => {
       session = await createSession(nestedFixture);
 
       await session.startPerformanceRecording();
-      session.recordFunctionCall('testFunc', nestedFixture, 5, 1000);
+      session.recordFunctionCall("testFunc", nestedFixture, 5, 1000);
 
       const report = await session.stopPerformanceRecording();
       expect(report).toBeDefined();
     }, 15000);
   });
 
-  describe('11. Error Conditions', () => {
-    it('should throw error when operations without session', async () => {
+  describe("11. Error Conditions", () => {
+    it("should throw error when operations without session", async () => {
       session = await createSession(simpleFixture);
 
       (session as any).cdpBreakpointOps = null;
       await expect(session.setBreakpoint(simpleFixture, 3)).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(
-        session.setLogpoint(simpleFixture, 3, 'msg'),
-      ).rejects.toThrow('Session not started');
-      await expect(session.setFunctionBreakpoint('func')).rejects.toThrow(
-        'Session not started',
+        session.setLogpoint(simpleFixture, 3, "msg")
+      ).rejects.toThrow("Session not started");
+      await expect(session.setFunctionBreakpoint("func")).rejects.toThrow(
+        "Session not started"
       );
 
       (session as any).inspector = null;
       await expect(session.setExceptionBreakpoint(true, true)).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
 
       (session as any).variableInspector = null;
-      await expect(session.evaluateExpression('x')).rejects.toThrow(
-        'Session not started',
+      await expect(session.evaluateExpression("x")).rejects.toThrow(
+        "Session not started"
       );
-      await expect(session.getObjectProperties('obj-id')).rejects.toThrow(
-        'Session not started',
+      await expect(session.getObjectProperties("obj-id")).rejects.toThrow(
+        "Session not started"
       );
-      await expect(session.inspectObject('obj-id')).rejects.toThrow(
-        'Session not started',
+      await expect(session.inspectObject("obj-id")).rejects.toThrow(
+        "Session not started"
       );
     }, 15000);
 
-    it('should throw error when evaluating without call frames', async () => {
+    it("should throw error when evaluating without call frames", async () => {
       session = await createSession(simpleFixture);
       (session as any).currentCallFrames = [];
 
-      await expect(session.evaluateExpression('x')).rejects.toThrow(
-        'No call frames available',
+      await expect(session.evaluateExpression("x")).rejects.toThrow(
+        "No call frames available"
       );
     }, 15000);
 
-    it('should throw error when profiling without session', async () => {
+    it("should throw error when profiling without session", async () => {
       session = await createSession(simpleFixture);
 
       (session as any).cpuProfiler = null;
@@ -780,46 +786,46 @@ throw new Error('Intentional crash');
       (session as any).performanceTimeline = null;
 
       await expect(session.startCPUProfile()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.stopCPUProfile()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.takeHeapSnapshot()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.getMemoryUsage()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.startTrackingHeapObjects()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.stopTrackingHeapObjects()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.detectMemoryLeaks()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.generateMemoryReport()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.startPerformanceRecording()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
       await expect(session.stopPerformanceRecording()).rejects.toThrow(
-        'Session not started',
+        "Session not started"
       );
-      expect(() => session.recordFunctionCall('test', 'file', 1, 100)).toThrow(
-        'Session not started',
+      expect(() => session.recordFunctionCall("test", "file", 1, 100)).toThrow(
+        "Session not started"
       );
 
       const mockProfile = { nodes: [], startTime: 0, endTime: 1000 };
       expect(() => session.analyzeCPUProfile(mockProfile)).toThrow(
-        'Session not started',
+        "Session not started"
       );
     }, 15000);
 
-    it('should return false/null for profiling status when profiler is null', async () => {
+    it("should return false/null for profiling status when profiler is null", async () => {
       session = await createSession(simpleFixture);
 
       (session as any).cpuProfiler = null;
@@ -833,14 +839,14 @@ throw new Error('Intentional crash');
       expect(session.getPerformanceTimeline()).toBeNull();
     }, 15000);
 
-    it('should return undefined for current call frame ID when no frames', async () => {
+    it("should return undefined for current call frame ID when no frames", async () => {
       session = await createSession(simpleFixture);
       (session as any).currentCallFrames = [];
 
       expect(session.getCurrentCallFrameId()).toBeUndefined();
     }, 15000);
 
-    it('should return empty array for call stack when no frames', async () => {
+    it("should return empty array for call stack when no frames", async () => {
       session = await createSession(simpleFixture);
       (session as any).currentCallFrames = [];
 

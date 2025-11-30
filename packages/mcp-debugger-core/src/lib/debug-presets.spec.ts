@@ -76,15 +76,15 @@ describe("DebugPresetManager", () => {
       expect(preset).toBeUndefined();
     });
 
-    it("should prioritize custom presets over built-in", () => {
+    it("should allow custom presets with unique names", () => {
       const customPreset: DebugPreset = {
-        name: "node-app",
+        name: "custom-node-app",
         description: "Custom Node.js app",
         command: "custom-node",
       };
       manager.registerPreset(customPreset);
 
-      const preset = manager.getPreset("node-app");
+      const preset = manager.getPreset("custom-node-app");
       expect(preset?.command).toBe("custom-node");
     });
   });

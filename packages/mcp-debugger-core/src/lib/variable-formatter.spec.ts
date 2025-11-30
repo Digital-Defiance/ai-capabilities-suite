@@ -345,5 +345,40 @@ describe("VariableFormatter", () => {
 
       expect(result.value).toBe("Set(0) {}");
     });
+
+    it("should use multiline formatting for large objects", () => {
+      const obj = {
+        property1: "value1",
+        property2: "value2",
+        property3: "value3",
+        property4: "value4",
+        property5: "value5",
+      };
+      const result = formatter.format(obj);
+
+      // Should use multiline format (more than 3 properties)
+      expect(result.value).toContain("\n");
+    });
+
+    it("should use single-line formatting for small objects", () => {
+      const obj = { a: 1, b: 2 };
+      const result = formatter.format(obj);
+
+      // Should use single-line format
+      expect(result.value).not.toContain("\n");
+      expect(result.value).toContain("{ ");
+      expect(result.value).toContain(" }");
+    });
+
+    it("should handle Map with many entries", () => {
+      const map = new Map();
+      for (let i = 0; i < 10; i++) {
+        map.set(`key${i}`, `value${i}`);
+      }
+      const result = formatter.format(map);
+
+      expect(result.value).toContain("Map(10)");
+      expect(result.type).toBe("Map");
+    });
   });
 });

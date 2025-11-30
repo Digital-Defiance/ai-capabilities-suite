@@ -328,4 +328,79 @@ describe("InspectorClient", () => {
       expect(error.message).toBeDefined();
     }
   }, 10000);
+
+  it("should handle response for non-existent request ID", async () => {
+    const testScript = path.join(
+      __dirname,
+      "../../test-fixtures/simple-script.js"
+    );
+    const { process: proc, wsUrl } = await spawnWithInspector("node", [
+      testScript,
+    ]);
+    testProcess = proc;
+
+    client = new InspectorClient(wsUrl);
+    await client.connect();
+
+    // Simulate receiving a response for a request ID that doesn't exist
+    const handleMessage = (client as any).handleMessage.bind(client);
+    handleMessage(JSON.stringify({ id: 99999, result: {} }));
+
+    // Should not throw, just ignore the response
+    expect(client.isConnected()).toBe(true);
+  }, 10000);
+
+  it("should handle event without method field", async () => {
+    const testScript = path.join(
+      __dirname,
+      "../../test-fixtures/simple-script.js"
+    );
+    const { process: proc, wsUrl } = await spawnWithInspector("node", [
+      testScript,
+    ]);
+    testProcess = proc;
+
+    client = new InspectorClient(wsUrl);
+    await client.connect();
+
+    // Simulate receiving a message without id or method
+    const handleMessage = (client as any).handleMessage.bind(client);
+    handleMessage(JSON.stringify({ someField: "value" }));
+
+    // Should not throw
+    expect(client.isConnected()).toBe(true);
+  }, 10000);
+
+  it("should handle CDP error with code and data", async () => {
+    const testScript = path.join(
+      __dirname,
+      "../../test-fixtures/simple-script.js"
+    );
+    const { process: proc, wsUrl } = await spawnWithInspector("node", [
+      testScript,
+    ]);
+    testProcess = proc;
+
+    client = new InspectorClient(wsUrl);
+    await client.connect();
+
+    await client.send("Debugger.enable");
+
+    // Try to set an invalid breakpoint to trigger an error
+    try {
+      await client.send("Debugger.setBreakpointByUrl", {
+        lineNumber: -1,
+        url: "invalid://url",
+      });
+      // May or may not throw depending on CDP version
+    } catch (error: any) {
+      // If it throws, verify error structure
+      expect(error).toBeDefined();
+      expect(error.message).toBeDefined();
+      // CDP errors may have code and data properties
+      if (error.code !== undefined) {
+        expect(typeof error.code).toBe("number");
+      }
+    }
+  }, 10000);
 });

@@ -1,15 +1,15 @@
-import { SessionTimeoutManager } from './session-timeout-manager';
+import { SessionTimeoutManager } from "./session-timeout-manager";
 
-describe('SessionTimeoutManager', () => {
-  describe('Configuration', () => {
-    it('should create with default configuration', () => {
+describe("SessionTimeoutManager", () => {
+  describe("Configuration", () => {
+    it("should create with default configuration", () => {
       const manager = new SessionTimeoutManager();
 
       expect(manager.isEnabled()).toBe(false);
       expect(manager.getSessionCount()).toBe(0);
     });
 
-    it('should create with custom configuration', () => {
+    it("should create with custom configuration", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
@@ -22,7 +22,7 @@ describe('SessionTimeoutManager', () => {
       expect(config.warningMs).toBe(1000);
     });
 
-    it('should update configuration', () => {
+    it("should update configuration", () => {
       const manager = new SessionTimeoutManager({
         enabled: false,
         timeoutMs: 5000,
@@ -36,74 +36,74 @@ describe('SessionTimeoutManager', () => {
     });
   });
 
-  describe('Session Registration', () => {
-    it('should register a session', () => {
+  describe("Session Registration", () => {
+    it("should register a session", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
-      expect(manager.hasSession('session1')).toBe(true);
+      expect(manager.hasSession("session1")).toBe(true);
       expect(manager.getSessionCount()).toBe(1);
     });
 
-    it('should not register sessions when disabled', () => {
+    it("should not register sessions when disabled", () => {
       const manager = new SessionTimeoutManager({
         enabled: false,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
-      expect(manager.hasSession('session1')).toBe(false);
+      expect(manager.hasSession("session1")).toBe(false);
       expect(manager.getSessionCount()).toBe(0);
     });
 
-    it('should register multiple sessions', () => {
+    it("should register multiple sessions", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
-      manager.registerSession('session2');
-      manager.registerSession('session3');
+      manager.registerSession("session1");
+      manager.registerSession("session2");
+      manager.registerSession("session3");
 
       expect(manager.getSessionCount()).toBe(3);
       expect(manager.getAllSessionIds()).toEqual([
-        'session1',
-        'session2',
-        'session3',
+        "session1",
+        "session2",
+        "session3",
       ]);
     });
 
-    it('should unregister a session', () => {
+    it("should unregister a session", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
-      expect(manager.hasSession('session1')).toBe(true);
+      manager.registerSession("session1");
+      expect(manager.hasSession("session1")).toBe(true);
 
-      manager.unregisterSession('session1');
-      expect(manager.hasSession('session1')).toBe(false);
+      manager.unregisterSession("session1");
+      expect(manager.hasSession("session1")).toBe(false);
       expect(manager.getSessionCount()).toBe(0);
     });
   });
 
-  describe('Session Information', () => {
-    it('should get session information', () => {
+  describe("Session Information", () => {
+    it("should get session information", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
-      const info = manager.getSessionInfo('session1');
+      const info = manager.getSessionInfo("session1");
       expect(info).not.toBeNull();
       expect(info!.createdAt).toBeInstanceOf(Date);
       expect(info!.lastActivityAt).toBeInstanceOf(Date);
@@ -112,103 +112,103 @@ describe('SessionTimeoutManager', () => {
       expect(info!.remainingMs).toBeLessThanOrEqual(5000);
     });
 
-    it('should return null for non-existent session', () => {
+    it("should return null for non-existent session", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      const info = manager.getSessionInfo('non-existent');
+      const info = manager.getSessionInfo("non-existent");
       expect(info).toBeNull();
     });
 
-    it('should get remaining time', () => {
+    it("should get remaining time", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
-      const remaining = manager.getRemainingTime('session1');
+      const remaining = manager.getRemainingTime("session1");
       expect(remaining).not.toBeNull();
       expect(remaining!).toBeGreaterThan(0);
       expect(remaining!).toBeLessThanOrEqual(5000);
     });
 
-    it('should return null remaining time for non-existent session', () => {
+    it("should return null remaining time for non-existent session", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      const remaining = manager.getRemainingTime('non-existent');
+      const remaining = manager.getRemainingTime("non-existent");
       expect(remaining).toBeNull();
     });
   });
 
-  describe('Activity Updates', () => {
-    it('should update activity and reset timeout', async () => {
+  describe("Activity Updates", () => {
+    it("should update activity and reset timeout", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 1000,
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait a bit
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const remainingBefore = manager.getRemainingTime('session1');
+      const remainingBefore = manager.getRemainingTime("session1");
 
       // Update activity
-      manager.updateActivity('session1');
+      manager.updateActivity("session1");
 
-      const remainingAfter = manager.getRemainingTime('session1');
+      const remainingAfter = manager.getRemainingTime("session1");
 
       // After update, remaining time should be close to the full timeout
       expect(remainingAfter).toBeGreaterThan(remainingBefore!);
       expect(remainingAfter).toBeGreaterThan(900);
     });
 
-    it('should not update activity when disabled', () => {
+    it("should not update activity when disabled", () => {
       const manager = new SessionTimeoutManager({
         enabled: false,
         timeoutMs: 5000,
       });
 
-      manager.updateActivity('session1');
+      manager.updateActivity("session1");
 
-      expect(manager.hasSession('session1')).toBe(false);
+      expect(manager.hasSession("session1")).toBe(false);
     });
   });
 
-  describe('Timeout Handling', () => {
-    it('should call timeout handler when session times out', async () => {
+  describe("Timeout Handling", () => {
+    it("should call timeout handler when session times out", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 100,
       });
 
       let timeoutCalled = false;
-      let timeoutSessionId = '';
+      let timeoutSessionId = "";
 
       manager.onTimeout((sessionId) => {
         timeoutCalled = true;
         timeoutSessionId = sessionId;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for timeout
       await new Promise((resolve) => setTimeout(resolve, 150));
 
       expect(timeoutCalled).toBe(true);
-      expect(timeoutSessionId).toBe('session1');
-      expect(manager.hasSession('session1')).toBe(false);
+      expect(timeoutSessionId).toBe("session1");
+      expect(manager.hasSession("session1")).toBe(false);
     });
 
-    it('should call multiple timeout handlers', async () => {
+    it("should call multiple timeout handlers", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 100,
@@ -224,7 +224,7 @@ describe('SessionTimeoutManager', () => {
         handler2Called = true;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for timeout
       await new Promise((resolve) => setTimeout(resolve, 150));
@@ -233,7 +233,7 @@ describe('SessionTimeoutManager', () => {
       expect(handler2Called).toBe(true);
     });
 
-    it('should not timeout if activity is updated', async () => {
+    it("should not timeout if activity is updated", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 200,
@@ -245,22 +245,22 @@ describe('SessionTimeoutManager', () => {
         timeoutCalled = true;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Update activity before timeout
       await new Promise((resolve) => setTimeout(resolve, 100));
-      manager.updateActivity('session1');
+      manager.updateActivity("session1");
 
       // Wait past original timeout
       await new Promise((resolve) => setTimeout(resolve, 150));
 
       expect(timeoutCalled).toBe(false);
-      expect(manager.hasSession('session1')).toBe(true);
+      expect(manager.hasSession("session1")).toBe(true);
     });
   });
 
-  describe('Warning Handling', () => {
-    it('should call warning handler before timeout', async () => {
+  describe("Warning Handling", () => {
+    it("should call warning handler before timeout", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 200,
@@ -268,7 +268,7 @@ describe('SessionTimeoutManager', () => {
       });
 
       let warningCalled = false;
-      let warningSessionId = '';
+      let warningSessionId = "";
       let warningRemainingMs = 0;
 
       manager.onWarning((sessionId, remainingMs) => {
@@ -277,18 +277,18 @@ describe('SessionTimeoutManager', () => {
         warningRemainingMs = remainingMs;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for warning
       await new Promise((resolve) => setTimeout(resolve, 120));
 
       expect(warningCalled).toBe(true);
-      expect(warningSessionId).toBe('session1');
+      expect(warningSessionId).toBe("session1");
       expect(warningRemainingMs).toBeGreaterThan(0);
       expect(warningRemainingMs).toBeLessThanOrEqual(100);
     });
 
-    it('should call multiple warning handlers', async () => {
+    it("should call multiple warning handlers", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 200,
@@ -305,7 +305,7 @@ describe('SessionTimeoutManager', () => {
         handler2Called = true;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for warning
       await new Promise((resolve) => setTimeout(resolve, 120));
@@ -314,7 +314,7 @@ describe('SessionTimeoutManager', () => {
       expect(handler2Called).toBe(true);
     });
 
-    it('should not call warning if no warningMs configured', async () => {
+    it("should not call warning if no warningMs configured", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 100,
@@ -326,7 +326,7 @@ describe('SessionTimeoutManager', () => {
         warningCalled = true;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for timeout
       await new Promise((resolve) => setTimeout(resolve, 150));
@@ -335,28 +335,28 @@ describe('SessionTimeoutManager', () => {
     });
   });
 
-  describe('Cleanup', () => {
-    it('should clear all sessions', () => {
+  describe("Cleanup", () => {
+    it("should clear all sessions", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      manager.registerSession('session1');
-      manager.registerSession('session2');
-      manager.registerSession('session3');
+      manager.registerSession("session1");
+      manager.registerSession("session2");
+      manager.registerSession("session3");
 
       expect(manager.getSessionCount()).toBe(3);
 
       manager.clear();
 
       expect(manager.getSessionCount()).toBe(0);
-      expect(manager.hasSession('session1')).toBe(false);
-      expect(manager.hasSession('session2')).toBe(false);
-      expect(manager.hasSession('session3')).toBe(false);
+      expect(manager.hasSession("session1")).toBe(false);
+      expect(manager.hasSession("session2")).toBe(false);
+      expect(manager.hasSession("session3")).toBe(false);
     });
 
-    it('should clear timers when clearing sessions', async () => {
+    it("should clear timers when clearing sessions", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 100,
@@ -368,7 +368,7 @@ describe('SessionTimeoutManager', () => {
         timeoutCalled = true;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Clear before timeout
       manager.clear();
@@ -380,26 +380,26 @@ describe('SessionTimeoutManager', () => {
     });
   });
 
-  describe('Edge Cases', () => {
-    it('should handle unregistering non-existent session', () => {
+  describe("Edge Cases", () => {
+    it("should handle unregistering non-existent session", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      expect(() => manager.unregisterSession('non-existent')).not.toThrow();
+      expect(() => manager.unregisterSession("non-existent")).not.toThrow();
     });
 
-    it('should handle updating activity for non-existent session', () => {
+    it("should handle updating activity for non-existent session", () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 5000,
       });
 
-      expect(() => manager.updateActivity('non-existent')).not.toThrow();
+      expect(() => manager.updateActivity("non-existent")).not.toThrow();
     });
 
-    it('should handle warning without configured warningMs', async () => {
+    it("should handle warning without configured warningMs", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 200,
@@ -412,7 +412,7 @@ describe('SessionTimeoutManager', () => {
         warningCalled = true;
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for timeout
       await new Promise((resolve) => setTimeout(resolve, 250));
@@ -421,26 +421,26 @@ describe('SessionTimeoutManager', () => {
       expect(warningCalled).toBe(false);
     });
 
-    it('should handle errors in timeout handlers gracefully', async () => {
+    it("should handle errors in timeout handlers gracefully", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 100,
       });
 
       manager.onTimeout(() => {
-        throw new Error('Handler error');
+        throw new Error("Handler error");
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for timeout - should not throw
       await new Promise((resolve) => setTimeout(resolve, 150));
 
       // Session should still be removed despite handler error
-      expect(manager.hasSession('session1')).toBe(false);
+      expect(manager.hasSession("session1")).toBe(false);
     });
 
-    it('should handle errors in warning handlers gracefully', async () => {
+    it("should handle errors in warning handlers gracefully", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 200,
@@ -448,36 +448,61 @@ describe('SessionTimeoutManager', () => {
       });
 
       manager.onWarning(() => {
-        throw new Error('Warning handler error');
+        throw new Error("Warning handler error");
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait for warning - should not throw
       await new Promise((resolve) => setTimeout(resolve, 120));
 
       // Session should still exist
-      expect(manager.hasSession('session1')).toBe(true);
+      expect(manager.hasSession("session1")).toBe(true);
     });
 
-    it('should handle activity update with new timers', async () => {
+    it("should handle activity update with new timers", async () => {
       const manager = new SessionTimeoutManager({
         enabled: true,
         timeoutMs: 200,
         warningMs: 100,
       });
 
-      manager.registerSession('session1');
+      manager.registerSession("session1");
 
       // Wait a bit
       await new Promise((resolve) => setTimeout(resolve, 50));
 
       // Update activity - should reset both timers
-      manager.updateActivity('session1');
+      manager.updateActivity("session1");
 
-      const info = manager.getSessionInfo('session1');
+      const info = manager.getSessionInfo("session1");
       expect(info).not.toBeNull();
       expect(info!.remainingMs).toBeGreaterThan(150);
+    });
+
+    it("should handle updateActivity when session does not exist", () => {
+      const manager = new SessionTimeoutManager({
+        enabled: true,
+        timeoutMs: 1000,
+      });
+
+      // Try to update activity for non-existent session
+      manager.updateActivity("non-existent");
+
+      // Should not throw
+      expect(manager.hasSession("non-existent")).toBe(false);
+    });
+
+    it("should handle registerSession without warning configured", () => {
+      const manager = new SessionTimeoutManager({
+        enabled: true,
+        timeoutMs: 1000,
+        // No warningMs configured
+      });
+
+      manager.registerSession("session1");
+
+      expect(manager.hasSession("session1")).toBe(true);
     });
   });
 });

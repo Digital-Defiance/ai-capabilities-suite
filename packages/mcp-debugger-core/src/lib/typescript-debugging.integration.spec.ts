@@ -1,16 +1,32 @@
-import { SessionManager } from './session-manager';
-import { BreakpointManager } from './breakpoint-manager';
-import { SourceMapManager } from './source-map-manager';
-import * as path from 'path';
+import { SessionManager } from "./session-manager";
+import { BreakpointManager } from "./breakpoint-manager";
+import { SourceMapManager } from "./source-map-manager";
+import * as path from "path";
+import { execSync } from "child_process";
 
 /**
  * Integration tests for TypeScript debugging
  * Tests the full workflow of debugging TypeScript files with source maps
  * Requirements: 7.1, 7.2, 7.3, 7.4
  */
-describe('TypeScript Debugging Integration', () => {
+describe("TypeScript Debugging Integration", () => {
   let sessionManager: SessionManager;
   let sourceMapManager: SourceMapManager;
+
+  beforeAll(() => {
+    // Compile TypeScript test fixtures before running tests
+    try {
+      execSync(
+        "npx tsc test-fixtures/typescript-sample.ts --sourceMap --target ES2020 --module commonjs --skipLibCheck",
+        {
+          cwd: path.resolve(__dirname, "../.."),
+          stdio: "ignore",
+        }
+      );
+    } catch (error) {
+      console.error("Failed to compile test fixtures:", error);
+    }
+  });
 
   beforeEach(() => {
     sessionManager = new SessionManager();
@@ -26,14 +42,14 @@ describe('TypeScript Debugging Integration', () => {
    * Test setting breakpoints in TypeScript files
    * Requirement 7.1, 7.2
    */
-  it('should set breakpoint in TypeScript file and map to JavaScript', async () => {
+  it("should set breakpoint in TypeScript file and map to JavaScript", async () => {
     const tsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.ts',
+      "../../test-fixtures/typescript-sample.ts"
     );
     const jsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.js',
+      "../../test-fixtures/typescript-sample.js"
     );
 
     // Create breakpoint manager
@@ -47,7 +63,7 @@ describe('TypeScript Debugging Integration', () => {
     expect(breakpoint.enabled).toBe(true);
 
     // The breakpoint should be set in the TypeScript file
-    expect(breakpoint.file).toContain('typescript-sample.ts');
+    expect(breakpoint.file).toContain("typescript-sample.ts");
     expect(breakpoint.line).toBe(3);
 
     // Verify we can retrieve it
@@ -60,14 +76,14 @@ describe('TypeScript Debugging Integration', () => {
    * Test source map location mapping during debugging
    * Requirement 7.2, 7.3
    */
-  it('should map JavaScript execution location back to TypeScript', async () => {
+  it("should map JavaScript execution location back to TypeScript", async () => {
     const tsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.ts',
+      "../../test-fixtures/typescript-sample.ts"
     );
     const jsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.js',
+      "../../test-fixtures/typescript-sample.js"
     );
 
     // Test mapping from JavaScript to TypeScript
@@ -80,7 +96,7 @@ describe('TypeScript Debugging Integration', () => {
     expect(sourceLocation).not.toBeNull();
     if (sourceLocation) {
       // Should map back to the TypeScript file
-      expect(sourceLocation.file).toContain('typescript-sample.ts');
+      expect(sourceLocation.file).toContain("typescript-sample.ts");
       expect(sourceLocation.line).toBeGreaterThan(0);
       expect(sourceLocation.column).toBeGreaterThanOrEqual(0);
     }
@@ -90,10 +106,10 @@ describe('TypeScript Debugging Integration', () => {
    * Test variable inspection with TypeScript names
    * Requirement 7.4
    */
-  it('should preserve TypeScript variable names during inspection', async () => {
+  it("should preserve TypeScript variable names during inspection", async () => {
     const jsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.js',
+      "../../test-fixtures/typescript-sample.js"
     );
 
     // Load the source map
@@ -104,7 +120,7 @@ describe('TypeScript Debugging Integration', () => {
     const names = await sourceMapManager.getVariableNamesAtLocation(
       jsFile,
       4,
-      0,
+      0
     );
 
     expect(Array.isArray(names)).toBe(true);
@@ -116,14 +132,14 @@ describe('TypeScript Debugging Integration', () => {
    * Test full debugging workflow with TypeScript
    * Requirements: 7.1, 7.2, 7.3, 7.4
    */
-  it('should support full debugging workflow with TypeScript files', async () => {
+  it("should support full debugging workflow with TypeScript files", async () => {
     const tsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.ts',
+      "../../test-fixtures/typescript-sample.ts"
     );
     const jsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.js',
+      "../../test-fixtures/typescript-sample.js"
     );
 
     // 1. Verify source map exists
@@ -142,7 +158,7 @@ describe('TypeScript Debugging Integration', () => {
 
     expect(compiledLocation).not.toBeNull();
     if (compiledLocation) {
-      expect(compiledLocation.file).toContain('typescript-sample.js');
+      expect(compiledLocation.file).toContain("typescript-sample.js");
       expect(compiledLocation.line).toBeGreaterThan(0);
 
       // 4. Map back to TypeScript (round-trip)
@@ -154,7 +170,7 @@ describe('TypeScript Debugging Integration', () => {
 
       expect(roundTripLocation).not.toBeNull();
       if (roundTripLocation) {
-        expect(roundTripLocation.file).toContain('typescript-sample.ts');
+        expect(roundTripLocation.file).toContain("typescript-sample.ts");
         // Line should be close to original (within 2 lines due to source map granularity)
         expect(Math.abs(roundTripLocation.line - 2)).toBeLessThanOrEqual(2);
       }
@@ -165,14 +181,14 @@ describe('TypeScript Debugging Integration', () => {
    * Test debugging TypeScript class with methods
    * Requirements: 7.1, 7.2, 7.3, 7.4
    */
-  it('should debug TypeScript class methods correctly', async () => {
+  it("should debug TypeScript class methods correctly", async () => {
     const tsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.ts',
+      "../../test-fixtures/typescript-sample.ts"
     );
     const jsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/typescript-sample.js',
+      "../../test-fixtures/typescript-sample.js"
     );
 
     // Map a location in the Calculator class (around line 15 in TypeScript)
@@ -186,7 +202,7 @@ describe('TypeScript Debugging Integration', () => {
     // This is expected behavior for source maps - not all lines have mappings
     if (compiledLocation) {
       // Should map to the compiled JavaScript
-      expect(compiledLocation.file).toContain('typescript-sample.js');
+      expect(compiledLocation.file).toContain("typescript-sample.js");
 
       // Map back to verify
       const sourceLocation = await sourceMapManager.mapCompiledToSource({
@@ -197,7 +213,7 @@ describe('TypeScript Debugging Integration', () => {
 
       expect(sourceLocation).not.toBeNull();
       if (sourceLocation) {
-        expect(sourceLocation.file).toContain('typescript-sample.ts');
+        expect(sourceLocation.file).toContain("typescript-sample.ts");
       }
     } else {
       // If no mapping exists, that's ok - just verify the source map is loaded
@@ -210,10 +226,10 @@ describe('TypeScript Debugging Integration', () => {
    * Test handling of TypeScript files without source maps
    * Requirement 7.1
    */
-  it('should handle TypeScript files without source maps gracefully', async () => {
+  it("should handle TypeScript files without source maps gracefully", async () => {
     const jsFile = path.resolve(
       __dirname,
-      '../../test-fixtures/simple-script.js',
+      "../../test-fixtures/simple-script.js"
     );
 
     // This file doesn't have a source map

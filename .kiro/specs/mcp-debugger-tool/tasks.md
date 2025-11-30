@@ -1373,7 +1373,7 @@
       - Add 10+ tests to reach 90% coverage
     - _Requirements: Enterprise quality, 6.1-6.5, Production readiness_
 
-  - [ ] 36.5 Improve branch coverage across all modules (P2 - Medium Priority)
+  - [x] 36.5 Improve branch coverage across all modules (P2 - Medium Priority)
     - Target 85% branch coverage for all modules
     - Focus on conditional logic and error paths
     - Add edge case tests
