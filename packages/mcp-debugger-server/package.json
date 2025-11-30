@@ -1,11 +1,14 @@
 {
   "name": "@ai-capabilities-suite/mcp-debugger-server",
   "version": "1.0.0",
-  "description": "Advanced debugging capabilities for Node.js and TypeScript applications with 25+ debugging tools including breakpoints, variable inspection, execution control, performance profiling, and hang detection",
+  "description": "Enterprise-grade MCP server providing advanced debugging capabilities for Node.js and TypeScript applications. Features 25+ debugging tools including breakpoints, variable inspection, execution control, CPU/memory profiling, hang detection, source map support, and comprehensive observability.",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
-  "bin": "./dist/src/cli.js",
+  "bin": {
+    "ts-mcp-server": "./dist/src/cli.js",
+    "mcp-debugger": "./dist/src/cli.js"
+  },
   "pkg": {
     "scripts": [
       "dist/src/**/*.js",
@@ -35,38 +38,116 @@
     "dist",
     "README.md",
     "LICENSE",
-    "!**/*.tsbuildinfo"
+    "API.md",
+    "TOOL-REFERENCE.md",
+    "AI-AGENT-INTEGRATION.md",
+    "VSCODE-INTEGRATION.md",
+    "TESTING.md",
+    "PUBLISHING.md",
+    "NPM-SETUP-GUIDE.md",
+    "NPM-TROUBLESHOOTING.md",
+    "!**/*.tsbuildinfo",
+    "!**/*.spec.js",
+    "!**/*.test.js"
   ],
   "keywords": [
     "mcp",
+    "mcp-server",
     "model-context-protocol",
     "debugging",
+    "debugger",
     "typescript",
+    "typescript-debugging",
     "nodejs",
+    "node-debugger",
     "breakpoints",
+    "conditional-breakpoints",
+    "logpoints",
     "profiling",
+    "cpu-profiling",
+    "memory-profiling",
+    "performance",
     "inspector-protocol",
+    "chrome-devtools-protocol",
+    "cdp",
     "development-tools",
+    "developer-tools",
+    "devtools",
     "ai-agent",
+    "ai-debugging",
     "kiro",
-    "amazon-q"
+    "amazon-q",
+    "github-copilot",
+    "vscode",
+    "vscode-extension",
+    "hang-detection",
+    "infinite-loop-detection",
+    "source-maps",
+    "sourcemap",
+    "variable-inspection",
+    "execution-control",
+    "call-stack",
+    "stack-trace",
+    "test-debugging",
+    "jest",
+    "mocha",
+    "vitest",
+    "test-runner",
+    "enterprise",
+    "observability",
+    "monitoring",
+    "metrics",
+    "prometheus",
+    "audit-logging",
+    "security",
+    "authentication",
+    "rate-limiting",
+    "circuit-breaker",
+    "production-ready"
   ],
-  "author": "Digital Defiance <info@digitaldefiance.org>, Jessica Mulein <jessica@digitaldefiance.org>",
+  "author": {
+    "name": "Digital Defiance",
+    "email": "info@digitaldefiance.org",
+    "url": "https://digitaldefiance.org"
+  },
+  "contributors": [
+    {
+      "name": "Jessica Mulein",
+      "email": "jessica@digitaldefiance.org",
+      "url": "https://github.com/JessicaMulein"
+    }
+  ],
   "license": "MIT",
-  "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite#readme",
+  "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/digitaldefiance/ai-capabilities-suite.git",
     "directory": "packages/mcp-debugger-server"
   },
   "bugs": {
-    "url": "https://github.com/digitaldefiance/ai-capabilities-suite/issues"
+    "url": "https://github.com/digitaldefiance/ai-capabilities-suite/issues",
+    "email": "info@digitaldefiance.org"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/digitaldefiance"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "mcp": {
     "server": {
@@ -82,9 +163,18 @@
         "execution-control",
         "performance-profiling",
         "hang-detection",
-        "source-maps"
+        "source-maps",
+        "test-debugging",
+        "enterprise-features"
       ],
-      "tools": 25
+      "tools": 25,
+      "categories": [
+        "debugging",
+        "development-tools",
+        "testing",
+        "performance",
+        "observability"
+      ]
     }
   },
   "dependencies": {

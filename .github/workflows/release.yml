@@ -1,0 +1,115 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version bump type"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      package:
+        description: "Package to release"
+        required: true
+        type: choice
+        options:
+          - mcp-debugger-server
+          - mcp-debugger-core
+          - all
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Bump version - mcp-debugger-core
+        if: github.event.inputs.package == 'all' || github.event.inputs.package == 'mcp-debugger-core'
+        run: |
+          cd packages/mcp-debugger-core
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          echo "CORE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Bump version - mcp-debugger-server
+        if: github.event.inputs.package == 'all' || github.event.inputs.package == 'mcp-debugger-server'
+        run: |
+          cd packages/mcp-debugger-server
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          echo "SERVER_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Update CLI version
+        if: github.event.inputs.package == 'all' || github.event.inputs.package == 'mcp-debugger-server'
+        run: |
+          cd packages/mcp-debugger-server/src
+          sed -i "s/const VERSION = '[^']*'/const VERSION = '${{ env.SERVER_VERSION }}'/" cli.ts
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Run tests
+        run: yarn test
+        env:
+          CI: true
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Simple changelog generation - can be enhanced with conventional-changelog
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          echo "## Changes" >> $GITHUB_ENV
+          git log --pretty=format:"- %s (%h)" $(git describe --tags --abbrev=0 2>/dev/null || echo "")..HEAD >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: bump version to ${{ env.SERVER_VERSION || env.CORE_VERSION }}"
+          branch: release/${{ github.event.inputs.package }}-${{ env.SERVER_VERSION || env.CORE_VERSION }}
+          title: "Release ${{ github.event.inputs.package }} v${{ env.SERVER_VERSION || env.CORE_VERSION }}"
+          body: |
+            ## Release ${{ github.event.inputs.package }} v${{ env.SERVER_VERSION || env.CORE_VERSION }}
+
+            This PR bumps the version for ${{ github.event.inputs.package }}.
+
+            ### Version Bump
+            - Type: ${{ github.event.inputs.version }}
+            - New Version: ${{ env.SERVER_VERSION || env.CORE_VERSION }}
+
+            ### Checklist
+            - [ ] Review changelog
+            - [ ] Verify version numbers
+            - [ ] Check documentation updates
+            - [ ] Merge this PR
+            - [ ] Create GitHub release
+            - [ ] NPM publish will trigger automatically
+
+            ${{ env.CHANGELOG }}
+          labels: release
+          assignees: ${{ github.actor }}
