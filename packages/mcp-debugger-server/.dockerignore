@@ -1,0 +1,114 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+.pnpm-store
+
+# Build outputs
+dist
+build
+out
+*.tsbuildinfo
+
+# Test files
+**/*.spec.ts
+**/*.spec.js
+**/*.test.ts
+**/*.test.js
+**/__tests__
+**/__mocks__
+test-fixtures
+test-output
+coverage
+.nyc_output
+*.lcov
+
+# Development files
+.git
+.gitignore
+.gitattributes
+.github
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Documentation (will be copied separately)
+*.md
+!README.md
+!LICENSE
+!API.md
+!TOOL-REFERENCE.md
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+azure-pipelines.yml
+.circleci
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+tmp
+temp
+*.tmp
+*.temp
+
+# Docker files (avoid recursion)
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+# Scripts
+scripts
+*.sh
+!setup.sh
+
+# Configuration files
+.eslintrc*
+.prettierrc*
+.editorconfig
+jest.config.*
+tsconfig.*.json
+!tsconfig.json
+
+# Package manager files
+.yarn
+.pnp.*
+.npmrc
+.yarnrc
+.yarnrc.yml
+
+# Binaries
+binaries
+
+# Misc
+*.bak
+*.orig
+*.rej
+.cache

@@ -15,12 +15,33 @@ A Model Context Protocol (MCP) server that provides comprehensive debugging capa
 
 ## Installation
 
-### Prerequisites
+### From NPM (Recommended)
 
-- Node.js 16 or higher
-- npm or yarn
+```bash
+# Install globally
+npm install -g @ai-capabilities-suite/mcp-debugger-server
 
-### Build from Source
+# Or install locally in your project
+npm install @ai-capabilities-suite/mcp-debugger-server
+
+# Verify installation
+npx ts-mcp-server --version
+```
+
+### Using Docker
+
+```bash
+# Pull and run the Docker image
+docker pull digitaldefiance/ts-mcp-server:latest
+docker run -d --name mcp-debugger digitaldefiance/ts-mcp-server:latest
+
+# Or use docker-compose
+docker-compose up -d
+
+# See DOCKER-DEPLOYMENT.md for full documentation
+```
+
+### From Source
 
 ```bash
 # Clone the repository
@@ -31,9 +52,15 @@ cd <repository-directory>
 npm install
 
 # Build the packages
-npx nx build @ai-capabilities-suite/mcp-core
-npx nx build @ai-capabilities-suite/mcp-server
+npx nx build @ai-capabilities-suite/mcp-debugger-core
+npx nx build @ai-capabilities-suite/mcp-debugger-server
 ```
+
+### For Package Publishers
+
+If you want to publish this package to NPM:
+- **Quick Start**: See [NPM-SETUP-GUIDE.md](./NPM-SETUP-GUIDE.md) for a 5-minute setup
+- **Full Documentation**: See [PUBLISHING.md](./PUBLISHING.md) for comprehensive publishing guide
 
 ### Configuration
 
@@ -624,15 +651,36 @@ Contributions are welcome! Please follow these guidelines:
 4. Run the test suite
 5. Submit a pull request
 
+### Publishing to NPM
+
+If you're a maintainer publishing updates:
+
+- **Quick Setup**: [NPM-SETUP-GUIDE.md](./NPM-SETUP-GUIDE.md) - 5-minute first-time setup
+- **Full Guide**: [PUBLISHING.md](./PUBLISHING.md) - Comprehensive publishing documentation
+- **Automated**: GitHub Actions workflow handles publishing on release
+
+## Documentation
+
+- **[README.md](./README.md)** - This file, main documentation
+- **[API.md](./API.md)** - Detailed API documentation
+- **[TOOL-REFERENCE.md](./TOOL-REFERENCE.md)** - Complete tool reference
+- **[AI-AGENT-INTEGRATION.md](./AI-AGENT-INTEGRATION.md)** - AI agent integration guide
+- **[VSCODE-INTEGRATION.md](./VSCODE-INTEGRATION.md)** - VS Code integration guide
+- **[TESTING.md](./TESTING.md)** - Testing documentation
+- **[PUBLISHING.md](./PUBLISHING.md)** - NPM publishing guide
+- **[NPM-SETUP-GUIDE.md](./NPM-SETUP-GUIDE.md)** - Quick setup for publishers
+
 ## License
 
-[Add your license information here]
+MIT License - See [LICENSE](./LICENSE) file for details
 
 ## Support
 
-For issues, questions, or contributions, please visit:
-- GitHub Issues: [Add your repository URL]
-- Documentation: [Add documentation URL]
+For issues, questions, or contributions:
+- **GitHub Issues**: [ai-capabilities-suite/issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- **Documentation**: [GitHub Repository](https://github.com/digitaldefiance/ai-capabilities-suite)
+- **NPM Package**: [@ai-capabilities-suite/mcp-debugger-server](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
+- **Email**: info@digitaldefiance.org
 
 ## Changelog
 

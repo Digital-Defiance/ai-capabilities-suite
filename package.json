@@ -9,7 +9,11 @@
   "scripts": {
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",
-    "lint": "nx run-many -t lint"
+    "lint": "nx run-many -t lint",
+    "publish:core": "cd packages/mcp-debugger-core && npm publish --access public",
+    "publish:server": "cd packages/mcp-debugger-server && npm publish --access public",
+    "publish:debugger": "npm run publish:core && npm run publish:server",
+    "publish:debugger:check": "npm run build && npm run test && npm run publish:debugger"
   },
   "devDependencies": {
     "@nx/jest": "^22.1.3",

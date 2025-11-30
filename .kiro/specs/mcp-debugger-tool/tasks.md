@@ -871,44 +871,44 @@
     - [x] 28.1.3 Create .npmignore file to exclude unnecessary files
     - [x] 28.1.4 Create GitHub Actions workflow for automated NPM publishing
     - [x] 28.1.5 Create NPM publishing documentation and setup guide
-    - [ ] 28.1.6 Manual: Create NPM account and configure NPM_TOKEN secret
-    - [ ] 28.1.7 Manual: Run first publish with `npm publish --access public`
+    - [x] 28.1.6 Manual: Create NPM account and configure NPM_TOKEN secret
+    - [x] 28.1.7 Manual: Run first publish with `npm publish --access public`
     - _Requirements: Easy installation, Global availability_
 
-  - [ ] 28.2 Create Docker image for containerized deployment
+  - [x] 28.2 Create Docker image for containerized deployment
     - [x] 28.2.1 Create optimized Dockerfile with multi-stage build
     - [x] 28.2.2 Create docker-compose.yml for easy deployment
     - [x] 28.2.3 Create .dockerignore file to optimize build context
     - [x] 28.2.4 Create GitHub Actions workflow for Docker Hub publishing
     - [x] 28.2.5 Create Docker deployment documentation
-    - [ ] 28.2.6 Manual: Create Docker Hub account and configure DOCKER_TOKEN
-    - [ ] 28.2.7 Manual: Push first image with `docker push digitaldefiance/ts-mcp-server`
+    - [x] 28.2.6 Manual: Create Docker Hub account and configure DOCKER_TOKEN
+    - [x] 28.2.7 Manual: Push first image with `docker push digitaldefiance/ts-mcp-server`
     - _Requirements: Containerized deployment, Easy scaling_
 
-  - [ ] 28.3 Submit to official MCP Registry
-    - [x] 28.3.1 Create MCP registry submission metadata file
-    - [x] 28.3.2 Create comprehensive server description with all 25+ tools
-    - [x] 28.3.3 Create usage examples and configuration templates
-    - [x] 28.3.4 Create submission documentation with PR template
+  - [-] 28.3 Submit to official MCP Registry
+    - [ ] 28.3.1 Create MCP registry submission metadata file
+    - [ ] 28.3.2 Create comprehensive server description with all 25+ tools
+    - [ ] 28.3.3 Create usage examples and configuration templates
+    - [ ] 28.3.4 Create submission documentation with PR template
     - [ ] 28.3.5 Manual: Fork MCP registry repository and submit PR
     - [ ] 28.3.6 Manual: Respond to review feedback and merge PR
     - _Requirements: Official discovery, Community visibility_
 
   - [ ] 28.4 Create GitHub Releases with binaries
-    - [x] 28.4.1 Create GitHub Actions workflow for automated releases
-    - [x] 28.4.2 Configure pkg to create standalone executables
-    - [x] 28.4.3 Create release notes template and changelog automation
-    - [x] 28.4.4 Create installation scripts for each platform
-    - [x] 28.4.5 Create release documentation with download instructions
+    - [ ] 28.4.1 Create GitHub Actions workflow for automated releases
+    - [ ] 28.4.2 Configure pkg to create standalone executables
+    - [ ] 28.4.3 Create release notes template and changelog automation
+    - [ ] 28.4.4 Create installation scripts for each platform
+    - [ ] 28.4.5 Create release documentation with download instructions
     - [ ] 28.4.6 Manual: Create GitHub release and upload binaries
     - [ ] 28.4.7 Manual: Test binaries on each target platform
     - _Requirements: No-install deployment, Cross-platform support_
 
   - [ ] 28.5 Create Homebrew formula (macOS)
-    - [x] 28.5.1 Create Homebrew formula template
-    - [x] 28.5.2 Create homebrew tap repository structure
-    - [x] 28.5.3 Create launchd service plist for background service
-    - [x] 28.5.4 Create Homebrew installation documentation
+    - [ ] 28.5.1 Create Homebrew formula template
+    - [ ] 28.5.2 Create homebrew tap repository structure
+    - [ ] 28.5.3 Create launchd service plist for background service
+    - [ ] 28.5.4 Create Homebrew installation documentation
     - [ ] 28.5.5 Manual: Create GitHub repository for homebrew tap
     - [ ] 28.5.6 Manual: Test formula installation locally
     - [ ] 28.5.7 Manual: Submit to homebrew-core (optional)
@@ -930,12 +930,12 @@
     - _Requirements: Windows package management_
 
   - [-] 28.8 Create VS Code extension marketplace listing
-    - [x] 28.8.1 Create VS Code extension project structure
-    - [x] 28.8.2 Create extension manifest with proper metadata
-    - [x] 28.8.3 Create extension activation and MCP server integration
-    - [x] 28.8.4 Create debugging configuration templates
-    - [x] 28.8.5 Create GitHub Actions workflow for VSIX publishing
-    - [x] 28.8.6 Create VS Code extension documentation
+    - [ ] 28.8.1 Create VS Code extension project structure
+    - [ ] 28.8.2 Create extension manifest with proper metadata
+    - [ ] 28.8.3 Create extension activation and MCP server integration
+    - [ ] 28.8.4 Create debugging configuration templates
+    - [ ] 28.8.5 Create GitHub Actions workflow for VSIX publishing
+    - [ ] 28.8.6 Create VS Code extension documentation
     - [ ] 28.8.7 Manual: Create VS Code publisher account
     - [ ] 28.8.8 Manual: Publish extension with `vsce publish`
     - _Requirements: IDE integration, Zero-config setup_
@@ -951,7 +951,7 @@
     - [ ] 28.9.8 Manual: Test all installation methods on clean systems
     - _Requirements: User onboarding, Reduced support burden_
 
-- [x] 29. Prepare for Docker MCP Registry contribution
+- [ ] 29. Prepare for Docker MCP Registry contribution
   - [ ] 28.1 Review Docker MCP Registry contribution guidelines
     - Read https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
     - Understand submission requirements and format
