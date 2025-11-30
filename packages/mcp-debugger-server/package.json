@@ -1,6 +1,7 @@
 {
   "name": "@ai-capabilities-suite/mcp-debugger-server",
-  "version": "1.0.0",
+  "version": "1.0.2",
+  "mcpName": "io.github.DigitalDefiance/ts-mcp-debugger",
   "description": "Enterprise-grade MCP server providing advanced debugging capabilities for Node.js and TypeScript applications. Features 25+ debugging tools including breakpoints, variable inspection, execution control, CPU/memory profiling, hang detection, source map support, and comprehensive observability.",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
@@ -12,11 +13,12 @@
   "pkg": {
     "scripts": [
       "dist/src/**/*.js",
-      "../debugger-core/dist/**/*.js"
+      "../mcp-debugger-core/dist/**/*.js"
     ],
     "assets": [
       "dist/**/*",
-      "../debugger-core/dist/**/*"
+      "../mcp-debugger-core/dist/**/*",
+      "node_modules/@modelcontextprotocol/sdk/**/*"
     ],
     "targets": [
       "node18-linux-x64",
@@ -178,7 +180,7 @@
     }
   },
   "dependencies": {
-    "@ai-capabilities-suite/mcp-debugger-core": "workspace:^",
+    "@ai-capabilities-suite/mcp-debugger-core": "^1.0.1",
     "@modelcontextprotocol/sdk": "^1.23.0",
     "tslib": "^2.3.0",
     "zod": "^4.1.13"
