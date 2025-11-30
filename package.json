@@ -4,7 +4,9 @@
   "description": "AI Capability Extension Suite - MCP servers for AI agent capabilities",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/mcp-debugger-core",
+    "packages/mcp-debugger-server",
+    "packages/vscode-mcp-debugger"
   ],
   "scripts": {
     "build": "nx run-many -t build",
