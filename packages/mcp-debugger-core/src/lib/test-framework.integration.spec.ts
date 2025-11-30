@@ -1,14 +1,14 @@
-import { executeTests, TestExecutionConfig } from './test-runner';
-import { SessionManager } from './session-manager';
-import * as path from 'path';
-import * as fs from 'fs';
+import { executeTests, TestExecutionConfig } from "./test-runner";
+import { SessionManager } from "./session-manager";
+import * as path from "path";
+import * as fs from "fs";
 
 /**
  * Integration tests for test framework integration
  * Tests running Jest, Mocha, and Vitest with debugger attached
  * Requirements: 6.1, 6.4, 6.5
  */
-describe('Test Framework Integration', () => {
+describe("Test Framework Integration", () => {
   let sessionManager: SessionManager;
 
   beforeEach(() => {
@@ -23,26 +23,26 @@ describe('Test Framework Integration', () => {
    * Test running Jest tests with debugger
    * Requirement 6.1, 6.4, 6.5
    */
-  describe('Jest Integration', () => {
+  describe("Jest Integration", () => {
     const jestTestFile = path.join(
       __dirname,
-      '../../test-fixtures/jest-sample.test.js',
+      "../../test-fixtures/jest-sample.test.js"
     );
 
     beforeAll(() => {
       // Skip all tests if fixture doesn't exist
       if (!fs.existsSync(jestTestFile)) {
-        console.log('Skipping Jest integration tests - fixture not found');
+        console.log("Skipping Jest integration tests - fixture not found");
       }
     });
 
-    it('should run Jest tests and capture output', async () => {
+    it("should run Jest tests and capture output", async () => {
       if (!fs.existsSync(jestTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'jest',
+        framework: "jest",
         testFile: jestTestFile,
         timeout: 20000,
         attachInspector: false, // Run without inspector for basic test
@@ -51,14 +51,14 @@ describe('Test Framework Integration', () => {
       const result = await executeTests(config);
 
       // Verify basic execution
-      expect(result.framework).toBe('jest');
+      expect(result.framework).toBe("jest");
       expect(result.exitCode).toBeDefined();
 
       // Verify output capture (Requirement 6.4)
       expect(result.stdout).toBeDefined();
       expect(result.stderr).toBeDefined();
-      expect(typeof result.stdout).toBe('string');
-      expect(typeof result.stderr).toBe('string');
+      expect(typeof result.stdout).toBe("string");
+      expect(typeof result.stderr).toBe("string");
 
       // Should have some output
       const combinedOutput = result.stdout + result.stderr;
@@ -66,21 +66,21 @@ describe('Test Framework Integration', () => {
 
       // Output should contain test-related information
       const hasTestInfo =
-        combinedOutput.includes('test') ||
-        combinedOutput.includes('pass') ||
-        combinedOutput.includes('fail') ||
-        combinedOutput.includes('PASS') ||
-        combinedOutput.includes('FAIL');
+        combinedOutput.includes("test") ||
+        combinedOutput.includes("pass") ||
+        combinedOutput.includes("fail") ||
+        combinedOutput.includes("PASS") ||
+        combinedOutput.includes("FAIL");
       expect(hasTestInfo).toBe(true);
     }, 30000);
 
-    it('should capture Jest test failures', async () => {
+    it("should capture Jest test failures", async () => {
       if (!fs.existsSync(jestTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'jest',
+        framework: "jest",
         testFile: jestTestFile,
         timeout: 20000,
         attachInspector: false,
@@ -98,25 +98,25 @@ describe('Test Framework Integration', () => {
       // Should contain test-related information (case-insensitive)
       const lowerOutput = combinedOutput.toLowerCase();
       const hasTestInfo =
-        lowerOutput.includes('test') ||
-        lowerOutput.includes('pass') ||
-        lowerOutput.includes('fail') ||
-        lowerOutput.includes('expected') ||
-        lowerOutput.includes('received') ||
-        lowerOutput.includes('error');
+        lowerOutput.includes("test") ||
+        lowerOutput.includes("pass") ||
+        lowerOutput.includes("fail") ||
+        lowerOutput.includes("expected") ||
+        lowerOutput.includes("received") ||
+        lowerOutput.includes("error");
       expect(hasTestInfo).toBe(true);
 
       // Exit code should indicate failure (non-zero)
       expect(result.exitCode).not.toBe(0);
     }, 30000);
 
-    it('should run Jest tests with inspector attached', async () => {
+    it("should run Jest tests with inspector attached", async () => {
       if (!fs.existsSync(jestTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'jest',
+        framework: "jest",
         testFile: jestTestFile,
         timeout: 30000,
         attachInspector: true, // Attach inspector
@@ -125,7 +125,7 @@ describe('Test Framework Integration', () => {
       const result = await executeTests(config);
 
       // Should complete successfully with inspector
-      expect(result.framework).toBe('jest');
+      expect(result.framework).toBe("jest");
       expect(result.exitCode).toBeDefined();
 
       // Should still capture output
@@ -138,25 +138,25 @@ describe('Test Framework Integration', () => {
    * Test running Mocha tests with debugger
    * Requirement 6.2, 6.4, 6.5
    */
-  describe('Mocha Integration', () => {
+  describe("Mocha Integration", () => {
     const mochaTestFile = path.join(
       __dirname,
-      '../../test-fixtures/mocha-sample.test.js',
+      "../../test-fixtures/mocha-sample.test.js"
     );
 
     beforeAll(() => {
       if (!fs.existsSync(mochaTestFile)) {
-        console.log('Skipping Mocha integration tests - fixture not found');
+        console.log("Skipping Mocha integration tests - fixture not found");
       }
     });
 
-    it('should run Mocha tests and capture output', async () => {
+    it("should run Mocha tests and capture output", async () => {
       if (!fs.existsSync(mochaTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'mocha',
+        framework: "mocha",
         testFile: mochaTestFile,
         timeout: 20000,
         attachInspector: false,
@@ -165,7 +165,7 @@ describe('Test Framework Integration', () => {
       const result = await executeTests(config);
 
       // Verify basic execution
-      expect(result.framework).toBe('mocha');
+      expect(result.framework).toBe("mocha");
       expect(result.exitCode).toBeDefined();
 
       // Verify output capture (Requirement 6.4)
@@ -176,13 +176,13 @@ describe('Test Framework Integration', () => {
       expect(combinedOutput.length).toBeGreaterThan(0);
     }, 30000);
 
-    it('should run Mocha tests with inspector attached', async () => {
+    it("should run Mocha tests with inspector attached", async () => {
       if (!fs.existsSync(mochaTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'mocha',
+        framework: "mocha",
         testFile: mochaTestFile,
         timeout: 30000,
         attachInspector: true,
@@ -190,7 +190,7 @@ describe('Test Framework Integration', () => {
 
       const result = await executeTests(config);
 
-      expect(result.framework).toBe('mocha');
+      expect(result.framework).toBe("mocha");
       expect(result.exitCode).toBeDefined();
 
       const combinedOutput = result.stdout + result.stderr;
@@ -202,25 +202,25 @@ describe('Test Framework Integration', () => {
    * Test running Vitest tests with debugger
    * Requirement 6.3, 6.4, 6.5
    */
-  describe('Vitest Integration', () => {
+  describe("Vitest Integration", () => {
     const vitestTestFile = path.join(
       __dirname,
-      '../../test-fixtures/vitest-sample.test.js',
+      "../../test-fixtures/vitest-sample.test.js"
     );
 
     beforeAll(() => {
       if (!fs.existsSync(vitestTestFile)) {
-        console.log('Skipping Vitest integration tests - fixture not found');
+        console.log("Skipping Vitest integration tests - fixture not found");
       }
     });
 
-    it('should run Vitest tests and capture output', async () => {
+    it("should run Vitest tests and capture output", async () => {
       if (!fs.existsSync(vitestTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'vitest',
+        framework: "vitest",
         testFile: vitestTestFile,
         timeout: 20000,
         attachInspector: false,
@@ -229,7 +229,7 @@ describe('Test Framework Integration', () => {
       const result = await executeTests(config);
 
       // Verify basic execution
-      expect(result.framework).toBe('vitest');
+      expect(result.framework).toBe("vitest");
       expect(result.exitCode).toBeDefined();
 
       // Verify output capture (Requirement 6.4)
@@ -240,13 +240,13 @@ describe('Test Framework Integration', () => {
       expect(combinedOutput.length).toBeGreaterThan(0);
     }, 30000);
 
-    it('should run Vitest tests with inspector attached', async () => {
+    it("should run Vitest tests with inspector attached", async () => {
       if (!fs.existsSync(vitestTestFile)) {
         return;
       }
 
       const config: TestExecutionConfig = {
-        framework: 'vitest',
+        framework: "vitest",
         testFile: vitestTestFile,
         timeout: 30000,
         attachInspector: true,
@@ -254,7 +254,7 @@ describe('Test Framework Integration', () => {
 
       const result = await executeTests(config);
 
-      expect(result.framework).toBe('vitest');
+      expect(result.framework).toBe("vitest");
       expect(result.exitCode).toBeDefined();
 
       const combinedOutput = result.stdout + result.stderr;
@@ -266,12 +266,12 @@ describe('Test Framework Integration', () => {
    * Test output capture completeness across frameworks
    * Requirement 6.4
    */
-  describe('Output Capture Completeness', () => {
-    it('should capture all stdout and stderr from test execution', async () => {
+  describe("Output Capture Completeness", () => {
+    it("should capture all stdout and stderr from test execution", async () => {
       // Use Jest as the test framework
       const config: TestExecutionConfig = {
-        framework: 'jest',
-        args: ['--version'],
+        framework: "jest",
+        args: ["--version"],
         timeout: 10000,
         attachInspector: false,
       };
@@ -281,8 +281,8 @@ describe('Test Framework Integration', () => {
       // Verify both stdout and stderr are captured
       expect(result.stdout).toBeDefined();
       expect(result.stderr).toBeDefined();
-      expect(typeof result.stdout).toBe('string');
-      expect(typeof result.stderr).toBe('string');
+      expect(typeof result.stdout).toBe("string");
+      expect(typeof result.stderr).toBe("string");
 
       // At least one should have content
       const totalOutput = result.stdout.length + result.stderr.length;
@@ -294,11 +294,11 @@ describe('Test Framework Integration', () => {
    * Test failure information completeness
    * Requirement 6.5
    */
-  describe('Failure Information Completeness', () => {
-    it('should capture complete failure information', async () => {
+  describe("Failure Information Completeness", () => {
+    it("should capture complete failure information", async () => {
       const jestTestFile = path.join(
         __dirname,
-        '../../test-fixtures/jest-sample.test.js',
+        "../../test-fixtures/jest-sample.test.js"
       );
 
       if (!fs.existsSync(jestTestFile)) {
@@ -306,7 +306,7 @@ describe('Test Framework Integration', () => {
       }
 
       const config: TestExecutionConfig = {
-        framework: 'jest',
+        framework: "jest",
         testFile: jestTestFile,
         timeout: 20000,
         attachInspector: false,
@@ -322,17 +322,17 @@ describe('Test Framework Integration', () => {
 
       // Should have test-related output
       const hasTestOutput =
-        combinedOutput.includes('test') ||
-        combinedOutput.includes('Test') ||
-        combinedOutput.includes('PASS') ||
-        combinedOutput.includes('FAIL');
+        combinedOutput.includes("test") ||
+        combinedOutput.includes("Test") ||
+        combinedOutput.includes("PASS") ||
+        combinedOutput.includes("FAIL");
       expect(hasTestOutput).toBe(true);
     }, 30000);
 
-    it('should report exit code for failed tests', async () => {
+    it("should report exit code for failed tests", async () => {
       const jestTestFile = path.join(
         __dirname,
-        '../../test-fixtures/jest-sample.test.js',
+        "../../test-fixtures/jest-sample.test.js"
       );
 
       if (!fs.existsSync(jestTestFile)) {
@@ -340,7 +340,7 @@ describe('Test Framework Integration', () => {
       }
 
       const config: TestExecutionConfig = {
-        framework: 'jest',
+        framework: "jest",
         testFile: jestTestFile,
         timeout: 20000,
         attachInspector: false,
@@ -350,11 +350,11 @@ describe('Test Framework Integration', () => {
 
       // Exit code should be defined
       expect(result.exitCode).toBeDefined();
-      expect(typeof result.exitCode).toBe('number');
+      expect(typeof result.exitCode).toBe("number");
 
       // Success flag should be defined
       expect(result.success).toBeDefined();
-      expect(typeof result.success).toBe('boolean');
+      expect(typeof result.success).toBe("boolean");
     }, 30000);
   });
 
@@ -362,11 +362,11 @@ describe('Test Framework Integration', () => {
    * Test debugging test files with breakpoints
    * Requirements: 6.1, 6.2, 6.3
    */
-  describe('Debugging Test Files', () => {
-    it('should allow debugging Jest tests with breakpoints', async () => {
+  describe("Debugging Test Files", () => {
+    it("should allow debugging Jest tests with breakpoints", async () => {
       const jestTestFile = path.join(
         __dirname,
-        '../../test-fixtures/jest-sample.test.js',
+        "../../test-fixtures/jest-sample.test.js"
       );
 
       if (!fs.existsSync(jestTestFile)) {
@@ -375,13 +375,13 @@ describe('Test Framework Integration', () => {
 
       // Start a debug session for the test file
       const session = await sessionManager.createSession({
-        command: 'node',
+        command: "node",
         args: [
-          '--inspect-brk=0',
-          require.resolve('jest/bin/jest'),
+          "--inspect-brk=0",
+          require.resolve("jest/bin/jest"),
           jestTestFile,
-          '--runInBand',
-          '--no-coverage',
+          "--runInBand",
+          "--no-coverage",
         ],
         cwd: path.dirname(jestTestFile),
       });

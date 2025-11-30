@@ -73,7 +73,7 @@ describe("TestRunner Coverage Tests", () => {
       expect(result.suites).toHaveLength(1);
       expect(result.suites![0].name).toBe("Unknown Suite");
       // Name can be empty string or undefined when missing
-      expect(result.suites![0].tests[0].name || "").toBe("");
+      expect(result.suites![0].tests[0].name ?? "").toBe("");
     });
 
     it("should parse Jest text output when JSON is not available", () => {

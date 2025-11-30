@@ -541,5 +541,206 @@ describe("WorkspaceManager", () => {
       expect(result).not.toBeNull();
       expect(result?.packages).toHaveLength(1);
     });
+
+    it("should handle pnpm workspace detection", async () => {
+      const packageJson = {
+        name: "my-workspace",
+        workspaces: ["packages/*"],
+      };
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify(packageJson)
+      );
+      fs.writeFileSync(
+        path.join(tempDir, "pnpm-workspace.yaml"),
+        "packages:\n  - 'packages/*'"
+      );
+
+      const pkgDir = path.join(tempDir, "packages", "pkg1");
+      fs.mkdirSync(pkgDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(pkgDir, "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      const result = await manager.detectWorkspace(tempDir);
+      expect(result).not.toBeNull();
+      expect(result?.root).toBe(tempDir);
+    });
+
+    it("should traverse up to find workspace root", async () => {
+      // Create workspace root
+      const rootPackageJson = {
+        name: "my-workspace",
+        workspaces: ["packages/*"],
+      };
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify(rootPackageJson)
+      );
+
+      // Create nested package
+      const nestedDir = path.join(tempDir, "packages", "pkg1", "src");
+      fs.mkdirSync(nestedDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(tempDir, "packages", "pkg1", "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      // Detect from nested directory
+      const result = await manager.detectWorkspace(nestedDir);
+      expect(result).not.toBeNull();
+      expect(result?.root).toBe(tempDir);
+    });
+
+    it("should return null when no workspace found", async () => {
+      // Create a directory with no workspace indicators
+      const noWorkspaceDir = path.join(tempDir, "no-workspace");
+      fs.mkdirSync(noWorkspaceDir, { recursive: true });
+
+      const result = await manager.detectWorkspace(noWorkspaceDir);
+      expect(result).toBeNull();
+    });
+
+    it("should handle lerna.json workspace detection", async () => {
+      fs.writeFileSync(
+        path.join(tempDir, "lerna.json"),
+        JSON.stringify({ packages: ["packages/*"] })
+      );
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify({ name: "my-workspace" })
+      );
+
+      const pkgDir = path.join(tempDir, "packages", "pkg1");
+      fs.mkdirSync(pkgDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(pkgDir, "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      const result = await manager.detectWorkspace(tempDir);
+      expect(result).not.toBeNull();
+      expect(result?.root).toBe(tempDir);
+      expect(result?.type).toBe("lerna");
+    });
+
+    it("should detect yarn workspaces when yarn.lock exists", async () => {
+      const packageJson = {
+        name: "my-workspace",
+        workspaces: ["packages/*"],
+      };
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify(packageJson)
+      );
+      fs.writeFileSync(path.join(tempDir, "yarn.lock"), "");
+
+      const pkgDir = path.join(tempDir, "packages", "pkg1");
+      fs.mkdirSync(pkgDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(pkgDir, "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      const result = await manager.detectWorkspace(tempDir);
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("yarn-workspaces");
+    });
+
+    it("should detect npm workspaces when no yarn.lock exists", async () => {
+      const packageJson = {
+        name: "my-workspace",
+        workspaces: ["packages/*"],
+      };
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify(packageJson)
+      );
+
+      const pkgDir = path.join(tempDir, "packages", "pkg1");
+      fs.mkdirSync(pkgDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(pkgDir, "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      const result = await manager.detectWorkspace(tempDir);
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("npm-workspaces");
+    });
+
+    it("should detect nx workspace", async () => {
+      fs.writeFileSync(
+        path.join(tempDir, "nx.json"),
+        JSON.stringify({ npmScope: "my-org" })
+      );
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify({ name: "my-workspace" })
+      );
+      fs.writeFileSync(
+        path.join(tempDir, "workspace.json"),
+        JSON.stringify({
+          projects: {
+            pkg1: "packages/pkg1",
+          },
+        })
+      );
+
+      const pkgDir = path.join(tempDir, "packages", "pkg1");
+      fs.mkdirSync(pkgDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(pkgDir, "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      const result = await manager.detectWorkspace(tempDir);
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("nx");
+    });
+
+    it("should handle pnpm-workspace.yaml with various formats", async () => {
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify({ name: "my-workspace" })
+      );
+      fs.writeFileSync(
+        path.join(tempDir, "pnpm-workspace.yaml"),
+        "packages:\n  - 'packages/*'\n  - 'apps/*'"
+      );
+
+      const pkgDir = path.join(tempDir, "packages", "pkg1");
+      fs.mkdirSync(pkgDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(pkgDir, "package.json"),
+        JSON.stringify({ name: "pkg1" })
+      );
+
+      const result = await manager.detectWorkspace(tempDir);
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("pnpm-workspaces");
+    });
+
+    it("should handle directory without package.json during traversal", async () => {
+      // Create a nested directory structure without package.json at intermediate levels
+      const deepDir = path.join(tempDir, "level1", "level2", "level3");
+      fs.mkdirSync(deepDir, { recursive: true });
+
+      // Create workspace root above
+      const rootPackageJson = {
+        name: "my-workspace",
+        workspaces: ["**/level3"],
+      };
+      fs.writeFileSync(
+        path.join(tempDir, "package.json"),
+        JSON.stringify(rootPackageJson)
+      );
+
+      // Detect from deep directory
+      const result = await manager.detectWorkspace(deepDir);
+      expect(result).not.toBeNull();
+      expect(result?.root).toBe(tempDir);
+    });
   });
 });
