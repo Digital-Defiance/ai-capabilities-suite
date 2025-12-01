@@ -99,6 +99,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
+  "type": "commonjs",
   "dependencies": {
     "source-map": "^0.7.4",
     "tslib": "^2.3.0",

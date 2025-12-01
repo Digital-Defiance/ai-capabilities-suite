@@ -6,6 +6,7 @@
     "outDir": "dist",
     "composite": true,
     "declaration": true,
+    "module": "CommonJS",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
