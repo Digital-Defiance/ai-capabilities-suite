@@ -21,7 +21,7 @@ export class MCPDebuggerClient {
     } else {
       // Use bundled server or npx
       command = "npx";
-      args = ["@mcp-debugger/server"];
+      args = ["@ai-capabilities-suite/mcp-debugger-server"];
     }
 
     this.outputChannel.appendLine(

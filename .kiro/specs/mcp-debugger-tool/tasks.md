@@ -951,21 +951,21 @@
     - [ ] 28.9.8 Manual: Test all installation methods on clean systems
     - _Requirements: User onboarding, Reduced support burden_
 
-- [ ] 29. Prepare for Docker MCP Registry contribution
-  - [ ] 28.1 Review Docker MCP Registry contribution guidelines
+- [-] 29. Prepare for Docker MCP Registry contribution
+  - [ ] 29.1 Review Docker MCP Registry contribution guidelines
     - Read https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
     - Understand submission requirements and format
     - Review existing MCP server examples in the registry
     - _Requirements: Community contribution_
 
-  - [ ] 28.2 Create MCP server package metadata
+  - [x] 29.2 Create MCP server package metadata
     - Create package.json with proper metadata (name, description, keywords)
     - Add repository, homepage, and bugs URLs
     - Include proper licensing information (MIT)
     - Add MCP server category tags (debugging, development-tools)
     - _Requirements: Registry submission_
 
-  - [ ] 28.3 Write comprehensive README for registry
+  - [x] 29.3 Write comprehensive README for registry
     - Document installation instructions
     - Provide usage examples with code snippets
     - List all available tools and their parameters
@@ -974,21 +974,21 @@
     - Document system requirements (Node.js version, etc.)
     - _Requirements: Registry submission_
 
-  - [ ] 28.4 Create MCP server configuration examples
+  - [x] 29.4 Create MCP server configuration examples
     - Provide example mcp.json configuration for Kiro
     - Create configuration examples for other MCP clients
     - Document environment variables and options
     - Include common use case configurations
     - _Requirements: Registry submission_
 
-  - [ ] 28.5 Prepare Docker MCP Registry submission
+  - [x] 29.5 Prepare Docker MCP Registry submission
     - Create registry submission PR following guidelines
     - Include server metadata in proper format
     - Add server to appropriate category
     - Provide clear description and use cases
     - _Requirements: Registry submission_
 
-  - [ ] 28.6 Create VS Code Language Server Extension for LSP/MCP Integration
+  - [ ] 29.6 Create VS Code Language Server Extension for LSP/MCP Integration
     - **Overview**: Package the MCP debugger server as a VS Code extension to enable integration with VS Code and GitHub Copilot
     - **Architecture**: Implement Language Server Protocol (LSP) wrapper around MCP server for editor communication
     - **Setup Extension Project**:
@@ -1054,14 +1054,14 @@
       - Test AI agent tool discovery and usage
     - _Requirements: VS Code/Copilot integration, LSP compliance, DAP support, AI agent compatibility_
 
-- [ ] 30. VS Code and GitHub Copilot integration
+- [x] 30. VS Code and GitHub Copilot integration
   - [x] 29.1 Research VS Code MCP integration
     - Investigate VS Code extension requirements for MCP
     - Review VS Code debugging API compatibility
     - Understand how to integrate with VS Code's debug adapter protocol
     - _Requirements: VS Code integration_
 
-  - [-] 29.2 Create VS Code extension
+  - [x] 29.2 Create VS Code extension
     - Set up VS Code extension project structure
     - Implement MCP client for VS Code
     - Create debug configuration provider
