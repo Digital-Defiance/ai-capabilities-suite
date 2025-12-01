@@ -42,7 +42,7 @@ Add the MCP Debugger server to your workspace settings (`.vscode/settings.json`)
   "mcp.servers": {
     "debugger": {
       "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@mcp-debugger/server/dist/index.js"],
+      "args": ["${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-debugger-server/dist/src/index.js"],
       "transport": "stdio"
     }
   }
@@ -56,7 +56,7 @@ Or use the global MCP server if installed:
   "mcp.servers": {
     "debugger": {
       "command": "npx",
-      "args": ["@mcp-debugger/server"],
+      "args": ["@ai-capabilities-suite/mcp-debugger-server"],
       "transport": "stdio"
     }
   }
@@ -632,7 +632,7 @@ Copilot: [Runs CPU profiling and analyzes results]
   "mcp.servers": {
     "debugger": {
       "command": "npx",
-      "args": ["@mcp-debugger/server"]
+      "args": ["@ai-capabilities-suite/mcp-debugger-server"]
     }
   }
 }
@@ -645,7 +645,7 @@ Copilot: [Runs CPU profiling and analyzes results]
   "mcp.servers": {
     "debugger": {
       "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@mcp-debugger/server/dist/index.js"],
+      "args": ["${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-debugger-server/dist/src/index.js"],
       "transport": "stdio",
       "env": {
         "NODE_ENV": "development"
@@ -679,7 +679,7 @@ Copilot: [Runs CPU profiling and analyzes results]
       "command": "node",
       "args": [
         "--enable-source-maps",
-        "${workspaceFolder}/node_modules/@mcp-debugger/server/dist/index.js"
+        "${workspaceFolder}/node_modules/@ai-capabilities-suite/mcp-debugger-server/dist/src/index.js"
       ]
     }
   }

@@ -988,7 +988,7 @@
     - Provide clear description and use cases
     - _Requirements: Registry submission_
 
-  - [ ] 29.6 Create VS Code Language Server Extension for LSP/MCP Integration
+  - [x] 29.6 Create VS Code Language Server Extension for LSP/MCP Integration
     - **Overview**: Package the MCP debugger server as a VS Code extension to enable integration with VS Code and GitHub Copilot
     - **Architecture**: Implement Language Server Protocol (LSP) wrapper around MCP server for editor communication
     - **Setup Extension Project**:
