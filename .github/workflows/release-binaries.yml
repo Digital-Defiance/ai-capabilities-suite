@@ -53,24 +53,23 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build packages
-        run: |
-          yarn nx build @ai-capabilities-suite/mcp-debugger-core
-          yarn nx build @ai-capabilities-suite/mcp-server
-
       - name: Install pkg globally
         run: npm install -g pkg
 
       - name: Create binaries directory
         run: mkdir -p binaries
 
-      - name: Build binary for ${{ matrix.os }}
-        working-directory: packages/mcp-debugger-server
+      - name: Install mcp-debugger-server from NPM
         run: |
-          pkg . --target ${{ matrix.target }} --output ../../binaries/${{ matrix.artifact }}
+          mkdir -p temp-install
+          cd temp-install
+          npm install @ai-capabilities-suite/mcp-debugger-server@1.0.2
+          cd ..
+
+      - name: Build binary for ${{ matrix.os }}
+        run: |
+          cd temp-install/node_modules/@ai-capabilities-suite/mcp-debugger-server
+          pkg . --target ${{ matrix.target }} --output ../../../../binaries/${{ matrix.artifact }}
 
       - name: Test binary (Linux/macOS)
         if: matrix.os != 'windows'
