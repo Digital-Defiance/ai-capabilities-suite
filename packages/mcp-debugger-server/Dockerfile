@@ -37,8 +37,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 LABEL org.opencontainers.image.title="MCP Debugger Server" \
       org.opencontainers.image.description="Enterprise-grade MCP server for Node.js and TypeScript debugging" \
       org.opencontainers.image.version="1.0.3" \
-      org.opencontainers.image.vendor="Digital Defiance" \
+      org.opencontainers.image.vendor="DigiDefiance" \
       org.opencontainers.image.authors="Jessica Mulein <jessica@digitaldefiance.org>" \
-      org.opencontainers.image.url="https://github.com/digitaldefiance/ai-capabilities-suite" \
-      org.opencontainers.image.source="https://github.com/digitaldefiance/ai-capabilities-suite" \
+      org.opencontainers.image.url="https://github.com/digital-defiance/ai-capabilities-suite" \
+      org.opencontainers.image.source="https://github.com/digital-defiance/ai-capabilities-suite" \
       org.opencontainers.image.licenses="MIT"

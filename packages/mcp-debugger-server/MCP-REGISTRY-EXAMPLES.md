@@ -66,7 +66,7 @@ Add to `.vscode/settings.json`:
 version: '3.8'
 services:
   mcp-debugger:
-    image: digitaldefiance/ts-mcp-server:latest
+    image: digidefiance/mcp-debugger-server:latest
     container_name: mcp-debugger
     restart: unless-stopped
     ports:
@@ -656,5 +656,5 @@ node --enable-source-maps dist/app.js
 - **Full Documentation**: See README.md for comprehensive documentation
 - **API Reference**: See API.md for detailed API documentation
 - **Tool Reference**: See TOOL-REFERENCE.md for complete tool reference
-- **GitHub**: https://github.com/digitaldefiance/ai-capabilities-suite
+- **GitHub**: https://github.com/digital-defiance/ai-capabilities-suite
 - **NPM**: https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server

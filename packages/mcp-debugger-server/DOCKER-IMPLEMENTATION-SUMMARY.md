@@ -146,7 +146,7 @@ Updated files:
 
 ### Image Information
 
-- **Repository:** `digitaldefiance/ts-mcp-server`
+- **Repository:** `digidefiance/mcp-debugger-server`
 - **Base Image:** `node:18-alpine`
 - **Size:** ~150MB (optimized)
 - **Platforms:** linux/amd64, linux/arm64
@@ -178,8 +178,8 @@ Updated files:
 
 ```bash
 # Pull and run
-docker pull digitaldefiance/ts-mcp-server:latest
-docker run -d --name mcp-debugger digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
+docker run -d --name mcp-debugger digidefiance/mcp-debugger-server:latest
 
 # Using docker-compose
 docker-compose up -d
@@ -197,7 +197,7 @@ docker run -d \
   -v $(pwd)/workspace:/workspace:ro \
   -v $(pwd)/logs:/app/logs \
   -p 3000:3000 \
-  digitaldefiance/ts-mcp-server:latest
+  digidefiance/mcp-debugger-server:latest
 ```
 
 ### With Monitoring
@@ -229,7 +229,7 @@ docker-compose --profile monitoring up -d
 
 ### For Users
 
-1. Pull the image: `docker pull digitaldefiance/ts-mcp-server:latest`
+1. Pull the image: `docker pull digidefiance/mcp-debugger-server:latest`
 2. Read [DOCKER-DEPLOYMENT.md](./DOCKER-DEPLOYMENT.md)
 3. Configure environment variables
 4. Deploy using docker-compose or Kubernetes
@@ -324,9 +324,9 @@ docker-compose down
 
 ### Links
 
-- **Docker Hub:** https://hub.docker.com/r/digitaldefiance/ts-mcp-server
-- **GitHub:** https://github.com/digitaldefiance/ai-capabilities-suite
-- **Issues:** https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **Docker Hub:** https://hub.docker.com/r/digidefiance/mcp-debugger-server
+- **GitHub:** https://github.com/digital-defiance/ai-capabilities-suite
+- **Issues:** https://github.com/digital-defiance/ai-capabilities-suite/issues
 
 ### Contact
 

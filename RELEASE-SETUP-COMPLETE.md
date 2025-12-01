@@ -76,13 +76,13 @@ npm run changelog 1.0.0
 **Usage:**
 ```bash
 # Linux
-curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
+curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
 
 # macOS
-curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
+curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
 
 # Windows (PowerShell as Administrator)
-iwr -useb https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
 ```
 
 ### 5. Comprehensive Documentation ✅
@@ -120,7 +120,7 @@ Complete installation guide covering:
 
 **Option 2: Manual Workflow Dispatch**
 
-1. Go to GitHub Actions: https://github.com/digitaldefiance/ai-capabilities-suite/actions
+1. Go to GitHub Actions: https://github.com/digital-defiance/ai-capabilities-suite/actions
 2. Select "Build and Release Binaries" workflow
 3. Click "Run workflow"
 4. Enter the version (e.g., `1.0.0`)
@@ -135,7 +135,7 @@ Complete installation guide covering:
    ```
 
 2. Create release on GitHub:
-   - Go to: https://github.com/digitaldefiance/ai-capabilities-suite/releases/new
+   - Go to: https://github.com/digital-defiance/ai-capabilities-suite/releases/new
    - Tag: `v1.0.0`
    - Title: `MCP Debugger Server v1.0.0`
    - Description: Use content from `npm run changelog 1.0.0`
@@ -155,7 +155,7 @@ After creating a release, test the binaries on each platform:
 **Linux:**
 ```bash
 # Download and test
-wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/download/v1.0.0/ts-mcp-server-linux-x64.tar.gz
+wget https://github.com/digital-defiance/ai-capabilities-suite/releases/download/v1.0.0/ts-mcp-server-linux-x64.tar.gz
 tar -xzf ts-mcp-server-linux-x64.tar.gz
 chmod +x ts-mcp-server-linux-x64
 ./ts-mcp-server-linux-x64 --version
@@ -165,7 +165,7 @@ chmod +x ts-mcp-server-linux-x64
 **macOS:**
 ```bash
 # Download and test
-wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/download/v1.0.0/ts-mcp-server-macos-x64.tar.gz
+wget https://github.com/digital-defiance/ai-capabilities-suite/releases/download/v1.0.0/ts-mcp-server-macos-x64.tar.gz
 tar -xzf ts-mcp-server-macos-x64.tar.gz
 chmod +x ts-mcp-server-macos-x64
 xattr -d com.apple.quarantine ts-mcp-server-macos-x64
@@ -176,7 +176,7 @@ xattr -d com.apple.quarantine ts-mcp-server-macos-x64
 **Windows (PowerShell):**
 ```powershell
 # Download and test
-Invoke-WebRequest -Uri https://github.com/digitaldefiance/ai-capabilities-suite/releases/download/v1.0.0/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
+Invoke-WebRequest -Uri https://github.com/digital-defiance/ai-capabilities-suite/releases/download/v1.0.0/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
 Expand-Archive -Path ts-mcp-server.zip -DestinationPath .
 .\ts-mcp-server-win-x64.exe --version
 .\ts-mcp-server-win-x64.exe --help
@@ -286,7 +286,7 @@ Before creating a real release, you can test the workflow:
 If you encounter any issues:
 - Check the [Troubleshooting](#troubleshooting) section in INSTALLATION.md
 - Review GitHub Actions logs for workflow failures
-- Open an issue: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- Open an issue: https://github.com/digital-defiance/ai-capabilities-suite/issues
 
 ---
 

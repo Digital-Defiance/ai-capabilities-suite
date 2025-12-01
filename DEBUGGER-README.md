@@ -436,13 +436,13 @@ npm install -g @ai-capabilities-suite/mcp-server
 
 ### **Option 2: Docker**
 ```bash
-docker run digitaldefiance/ts-mcp-server
+docker run digidefiance/mcp-debugger-server
 ```
 
 ### **Option 3: Direct Download**
 ```bash
 # Linux/macOS
-curl -L https://github.com/digitaldefiance/ts-mcp/releases/latest/download/ts-mcp-server-linux-x64 -o ts-mcp-server
+curl -L https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64 -o ts-mcp-server
 chmod +x ts-mcp-server
 ```
 
@@ -451,8 +451,8 @@ Add to your MCP configuration:
 ```json
 {
   "servers": {
-    "ts-debugger": {
-      "command": "ts-mcp-server"
+    "debugger": {
+      "command": "mcp-debugger-server"
     }
   }
 }
@@ -740,7 +740,7 @@ This project follows a spec-driven development approach:
 npm install -g @ai-capabilities-suite/mcp-server
 
 # Or try with Docker
-docker run digitaldefiance/ts-mcp-server
+docker run digidefiance/mcp-debugger-server
 ```
 
 ### **💬 What Developers Are Saying**
@@ -793,18 +793,17 @@ We're building the foundation for AI-powered development. Join us:
 - [Kiro](https://kiro.ai) - Advanced AI development assistant
 
 ### **Documentation & Support**
-- 📚 [Complete Documentation](https://github.com/digitaldefiance/ts-mcp/tree/main/docs)
+- 📚 [Complete Documentation](https://github.com/digital-defiance/ts-mcp/tree/main/docs)
 - 🚀 [Quick Start Guide](./QUICK-START.md)
 - 🔧 [Installation Guide](./INSTALLATION.md)
-- 🐛 [Issue Tracker](https://github.com/digitaldefiance/ts-mcp/issues)
-- 💬 [Community Discussions](https://github.com/digitaldefiance/ts-mcp/discussions)
+- 🐛 [Issue Tracker](https://github.com/digitald-efiance/ts-mcp/issues)
+- 💬 [Community Discussions](https://github.com/digital-defiance/ts-mcp/discussions)
 
 ## 📞 **Get in Touch**
 
 **Digital Defiance Team**
 - 📧 Email: [info@digitaldefiance.org](mailto:info@digitaldefiance.org)
-- 🐦 Twitter: [@digitaldefiance](https://twitter.com/digitaldefiance)
-- 🔗 LinkedIn: [Digital Defiance](https://linkedin.com/company/digitaldefiance)
+- 🔗 LinkedIn: [Digital Defiance](https://www.linkedin.com/company/digital-defiance)
 - 🌐 Website: [digitaldefiance.org](https://digitaldefiance.org)
 
 ---

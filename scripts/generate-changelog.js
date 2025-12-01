@@ -88,7 +88,7 @@ function formatCommit(commit) {
     /^(feat|fix|docs|perf|refactor|test|chore)(\(.+\))?:\s*/i,
     ""
   );
-  return `- ${subject} ([${commit.hash}](https://github.com/digitaldefiance/ai-capabilities-suite/commit/${commit.hash}))`;
+  return `- ${subject} ([${commit.hash}](https://github.com/digital-defiance/ai-capabilities-suite/commit/${commit.hash}))`;
 }
 
 function generateChangelog(version, previousTag) {

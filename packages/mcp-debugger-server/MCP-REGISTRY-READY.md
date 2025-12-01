@@ -153,13 +153,13 @@ Before manual publication, verify:
 - **MCP Registry**: https://registry.modelcontextprotocol.io/
 - **MCP Registry Docs**: https://github.com/modelcontextprotocol/registry/tree/main/docs
 - **MCP Registry API**: https://registry.modelcontextprotocol.io/docs
-- **Package Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
+- **Package Repository**: https://github.com/digital-defiance/ai-capabilities-suite
 - **NPM Package**: https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server
 
 ## Support
 
 For questions or issues:
-- **GitHub Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **GitHub Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **Email**: info@digitaldefiance.org
 - **MCP Registry Discord**: https://discord.com/channels/1358869848138059966/1369487942862504016
 

@@ -64,7 +64,7 @@ Or use it directly in their MCP configuration:
 ### Server Metadata
 - **Name**: `io.github.DigitalDefiance/ts-mcp-debugger`
 - **Description**: Enterprise debugging for Node.js/TypeScript with 25+ tools: breakpoints, profiling, hang detection
-- **Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
+- **Repository**: https://github.com/digital-defiance/ai-capabilities-suite
 - **License**: MIT
 - **Categories**: debugging, development-tools, testing, performance, observability
 
@@ -166,13 +166,13 @@ Now that the NPM package is published with the correct dependencies, you can bui
 ```bash
 # Build Docker image
 docker build -f packages/mcp-debugger-server/Dockerfile \
-  -t digitaldefiance/ts-mcp-server:latest \
-  -t digitaldefiance/ts-mcp-server:1.0.2 \
+  -t digidefiance/mcp-debugger-server:latest \
+  -t digidefiance/mcp-debugger-server:1.0.2 \
   .
 
 # Push to Docker Hub
-docker push digitaldefiance/ts-mcp-server:latest
-docker push digitaldefiance/ts-mcp-server:1.0.2
+docker push digidefiance/mcp-debugger-server:latest
+docker push digidefiance/mcp-debugger-server:1.0.2
 ```
 
 See `DOCKER-BUILD-INSTRUCTIONS.md` for details.
@@ -180,7 +180,7 @@ See `DOCKER-BUILD-INSTRUCTIONS.md` for details.
 ## Support
 
 For issues or questions:
-- **GitHub Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **GitHub Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **MCP Registry**: https://registry.modelcontextprotocol.io/
 - **Email**: info@digitaldefiance.org
 

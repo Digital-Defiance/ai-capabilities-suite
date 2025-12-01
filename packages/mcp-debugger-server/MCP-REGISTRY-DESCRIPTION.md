@@ -114,7 +114,7 @@ npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 ### Docker
 ```bash
-docker pull digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
 ```
 
 ### Configuration
@@ -142,8 +142,8 @@ Add to your MCP configuration file (`.kiro/settings/mcp.json`):
 
 ## Support & Community
 
-- **GitHub Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
-- **Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **GitHub Repository**: https://github.com/digital-defiance/ai-capabilities-suite
+- **Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **NPM Package**: https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server
 - **Email**: info@digitaldefiance.org
 
@@ -156,7 +156,7 @@ MIT License - See LICENSE file for details
 **Digital Defiance**
 - Website: https://digitaldefiance.org
 - Email: info@digitaldefiance.org
-- GitHub: https://github.com/digitaldefiance
+- GitHub: https://github.com/digital-defiance
 
 ## Version
 

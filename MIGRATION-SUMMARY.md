@@ -11,7 +11,7 @@ Successfully migrated the ts-mcp debugger project into the ai-capabilities-suite
 ## What Was Migrated
 
 ### Source Repository
-- **Original:** `https://github.com/digitaldefiance/ts-mcp`
+- **Original:** `https://github.com/digital-defiance/ts-mcp`
 - **Branch:** `main`
 - **Last Commit:** `666c6c0` - "final updates"
 - **Commit History:** 20+ commits preserved via git subtree
@@ -49,10 +49,10 @@ Successfully migrated the ts-mcp debugger project into the ai-capabilities-suite
 ### 2. Repository URLs Updated
 ```json
 // Before
-"url": "git+https://github.com/digitaldefiance/ts-mcp.git"
+"url": "git+https://github.com/digital-defiance/ts-mcp.git"
 
 // After
-"url": "git+https://github.com/digitaldefiance/ai-capabilities-suite.git"
+"url": "git+https://github.com/digital-defiance/ai-capabilities-suite.git"
 ```
 
 ### 3. Internal Dependencies Fixed
@@ -194,8 +194,8 @@ The original ts-mcp repository can be:
 
 For questions about the migration:
 - **Email:** info@digitaldefiance.org
-- **GitHub:** https://github.com/digitaldefiance/ai-capabilities-suite
-- **Original Repo:** https://github.com/digitaldefiance/ts-mcp
+- **GitHub:** https://github.com/digital-defiance/ai-capabilities-suite
+- **Original Repo:** https://github.com/digital-defiance/ts-mcp
 
 ---
 

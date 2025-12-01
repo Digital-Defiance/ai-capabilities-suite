@@ -18,7 +18,7 @@ Before submitting to the MCP Registry, ensure:
 - ✅ MCP name: `org.digitaldefiance/ts-mcp-debugger`
 - ✅ Version: 1.0.0
 - ✅ License: MIT
-- ✅ Repository: https://github.com/digitaldefiance/ai-capabilities-suite
+- ✅ Repository: https://github.com/digital-defiance/ai-capabilities-suite
 - ✅ server.json: Created and validated
 - ⏳ NPM publish: Pending (manual step)
 - ⏳ Registry submission: Pending (manual step)
@@ -89,7 +89,7 @@ Expected output:
 ```
 @ai-capabilities-suite/mcp-debugger-server@1.0.0 | MIT | deps: 3 | versions: 1
 Enterprise-grade MCP server providing advanced debugging capabilities...
-https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme
+https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme
 ```
 
 ### Step 5: Install mcp-publisher CLI
@@ -340,7 +340,7 @@ If you encounter issues during submission:
 
 - **MCP Registry Issues**: https://github.com/modelcontextprotocol/registry/issues
 - **MCP Registry Discord**: https://discord.com/channels/1358869848138059966/1369487942862504016
-- **Package Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **Package Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **Email**: info@digitaldefiance.org
 
 ## Additional Resources

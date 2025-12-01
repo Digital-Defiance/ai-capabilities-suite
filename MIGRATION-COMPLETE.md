@@ -153,7 +153,7 @@ git diff HEAD~1
 ### Repository
 | Old | New |
 |-----|-----|
-| `github.com/digitaldefiance/ts-mcp` | `github.com/digitaldefiance/ai-capabilities-suite` |
+| `github.com/digital-defiance/ts-mcp` | `github.com/digital-defiance/ai-capabilities-suite` |
 
 ### Structure
 - Debugger is now **one capability** among many

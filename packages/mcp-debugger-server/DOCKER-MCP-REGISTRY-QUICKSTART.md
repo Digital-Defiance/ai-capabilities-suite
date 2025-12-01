@@ -44,8 +44,8 @@ Add ts-mcp-debugger: Enterprise Node.js/TypeScript debugging
 - **Name**: ts-mcp-debugger
 - **Category**: debugging
 - **Type**: Local (containerized)
-- **Image**: digitaldefiance/ts-mcp-server:latest
-- **Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
+- **Image**: digidefiance/mcp-debugger-server:latest
+- **Repository**: https://github.com/digital-defiance/ai-capabilities-suite
 
 ## Description
 
@@ -80,8 +80,8 @@ Enterprise-grade MCP server providing comprehensive debugging capabilities for N
 ## Links
 
 - **NPM**: https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server
-- **Docker Hub**: https://hub.docker.com/r/digitaldefiance/ts-mcp-server
-- **Docs**: https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
+- **Docker Hub**: https://hub.docker.com/r/digidefiance/mcp-debugger-server
+- **Docs**: https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
 - **License**: MIT
 ```
 

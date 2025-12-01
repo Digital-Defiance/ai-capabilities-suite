@@ -19,7 +19,7 @@ Download the appropriate binary for your platform:
 #### Linux
 
 ```bash
-wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/download/v{VERSION}/ts-mcp-server-linux-x64.tar.gz
+wget https://github.com/digital-defiance/ai-capabilities-suite/releases/download/v{VERSION}/ts-mcp-server-linux-x64.tar.gz
 tar -xzf ts-mcp-server-linux-x64.tar.gz
 chmod +x ts-mcp-server-linux-x64
 sudo mv ts-mcp-server-linux-x64 /usr/local/bin/ts-mcp-server
@@ -28,7 +28,7 @@ sudo mv ts-mcp-server-linux-x64 /usr/local/bin/ts-mcp-server
 #### macOS
 
 ```bash
-wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/download/v{VERSION}/ts-mcp-server-macos-x64.tar.gz
+wget https://github.com/digital-defiance/ai-capabilities-suite/releases/download/v{VERSION}/ts-mcp-server-macos-x64.tar.gz
 tar -xzf ts-mcp-server-macos-x64.tar.gz
 chmod +x ts-mcp-server-macos-x64
 sudo mv ts-mcp-server-macos-x64 /usr/local/bin/ts-mcp-server
@@ -37,7 +37,7 @@ sudo mv ts-mcp-server-macos-x64 /usr/local/bin/ts-mcp-server
 #### Windows (PowerShell)
 
 ```powershell
-Invoke-WebRequest -Uri https://github.com/digitaldefiance/ai-capabilities-suite/releases/download/v{VERSION}/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
+Invoke-WebRequest -Uri https://github.com/digital-defiance/ai-capabilities-suite/releases/download/v{VERSION}/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
 Expand-Archive -Path ts-mcp-server.zip -DestinationPath .
 Move-Item ts-mcp-server-win-x64.exe C:\Windows\System32\ts-mcp-server.exe
 ```
@@ -45,8 +45,8 @@ Move-Item ts-mcp-server-win-x64.exe C:\Windows\System32\ts-mcp-server.exe
 ### Docker
 
 ```bash
-docker pull digitaldefiance/ts-mcp-server:{VERSION}
-docker run -it digitaldefiance/ts-mcp-server:{VERSION}
+docker pull digidefiance/mcp-debugger-server:{VERSION}
+docker run -it digidefiance/mcp-debugger-server:{VERSION}
 ```
 
 ## 🚀 Quick Start
@@ -115,11 +115,11 @@ Add to your Amazon Q configuration:
 
 ## 📚 Documentation
 
-- [README](https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme)
-- [API Documentation](https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/API.md)
-- [Tool Reference](https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/TOOL-REFERENCE.md)
-- [AI Agent Integration](https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/AI-AGENT-INTEGRATION.md)
-- [VS Code Integration](https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/VSCODE-INTEGRATION.md)
+- [README](https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme)
+- [API Documentation](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/API.md)
+- [Tool Reference](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/TOOL-REFERENCE.md)
+- [AI Agent Integration](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/AI-AGENT-INTEGRATION.md)
+- [VS Code Integration](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/VSCODE-INTEGRATION.md)
 
 ## 🔐 Checksums
 
@@ -131,18 +131,18 @@ Verify your download with SHA256 checksums (included in release assets):
 
 ## 🐛 Bug Reports
 
-Found a bug? Please [open an issue](https://github.com/digitaldefiance/ai-capabilities-suite/issues/new).
+Found a bug? Please [open an issue](https://github.com/digital-defiance/ai-capabilities-suite/issues/new).
 
 ## 💬 Support
 
-- [GitHub Discussions](https://github.com/digitaldefiance/ai-capabilities-suite/discussions)
-- [Issue Tracker](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
+- [Issue Tracker](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - Email: info@digitaldefiance.org
 
 ## 📄 License
 
-MIT License - see [LICENSE](https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/LICENSE) for details.
+MIT License - see [LICENSE](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/LICENSE) for details.
 
 ---
 
-**Full Changelog**: https://github.com/digitaldefiance/ai-capabilities-suite/compare/v{PREVIOUS_VERSION}...v{VERSION}
+**Full Changelog**: https://github.com/digital-defiance/ai-capabilities-suite/compare/v{PREVIOUS_VERSION}...v{VERSION}

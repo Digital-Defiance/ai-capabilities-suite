@@ -1,11 +1,21 @@
-import { createMCPServer } from "@ai-capabilities-suite/mcp-core";
-import { screenshotTool } from "./tools/screenshot";
+/**
+ * MCP Screenshot Server
+ * Main entry point
+ */
 
-const server = createMCPServer({
-  name: "screenshot-server",
-  version: "0.0.1",
-  description: "MCP server for screen capture and image operations",
-  tools: [screenshotTool],
-});
+// Export types
+export * from "./types";
 
-server.start().catch(console.error);
+// Export interfaces
+export * from "./interfaces";
+
+// Export errors
+export * from "./errors";
+
+// Export implementations
+export * from "./capture";
+export * from "./processing";
+export * from "./privacy";
+export * from "./security";
+
+// Server will be implemented in later tasks

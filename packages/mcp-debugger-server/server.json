@@ -3,11 +3,11 @@
   "name": "io.github.DigitalDefiance/ts-mcp-debugger",
   "description": "Enterprise debugging for Node.js/TypeScript with 25+ tools: breakpoints, profiling, hang detection",
   "repository": {
-    "url": "https://github.com/digitaldefiance/ai-capabilities-suite",
+    "url": "https://github.com/digital-defiance/ai-capabilities-suite",
     "source": "github"
   },
   "version": "1.0.3",
-  "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme",
+  "homepage": "https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme",
   "license": "MIT",
   "author": {
     "name": "Digital Defiance",
