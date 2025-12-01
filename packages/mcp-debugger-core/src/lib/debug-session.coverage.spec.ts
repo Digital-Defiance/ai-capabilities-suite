@@ -361,11 +361,17 @@ throw new Error('Intentional crash');
 
     it("should get all exception breakpoints", async () => {
       session = await createSession(simpleFixture);
-      await session.setExceptionBreakpoint(true, false);
-      await session.setExceptionBreakpoint(false, true);
+      const bp1 = await session.setExceptionBreakpoint(true, false);
+
+      // Note: CDP setPauseOnExceptions is global, so setting a second exception breakpoint
+      // will update the global state. Both breakpoints are tracked, but CDP state is shared.
+      const bp2 = await session.setExceptionBreakpoint(false, true);
 
       const breakpoints = session.getAllExceptionBreakpoints();
+      // Both breakpoints should be tracked even though CDP state is global
       expect(breakpoints.length).toBe(2);
+      expect(breakpoints).toContainEqual(bp1);
+      expect(breakpoints).toContainEqual(bp2);
     }, 15000);
 
     it("should return false when removing non-existent exception breakpoint", async () => {

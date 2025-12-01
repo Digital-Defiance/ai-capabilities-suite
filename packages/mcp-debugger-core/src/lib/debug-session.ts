@@ -1,49 +1,49 @@
-import { ChildProcess } from 'child_process';
-import * as path from 'path';
-import { InspectorClient } from './inspector-client';
-import { spawnWithInspector } from './process-spawner';
-import { BreakpointManager } from './breakpoint-manager';
-import { CdpBreakpointOperations } from './cdp-breakpoint-operations';
+import { ChildProcess } from "child_process";
+import * as path from "path";
+import { InspectorClient } from "./inspector-client";
+import { spawnWithInspector } from "./process-spawner";
+import { BreakpointManager } from "./breakpoint-manager";
+import { CdpBreakpointOperations } from "./cdp-breakpoint-operations";
 import {
   VariableInspector,
   EvaluationResult,
   PropertyDescriptor,
-} from './variable-inspector';
-import { SourceMapManager } from './source-map-manager';
-import { CPUProfiler, CPUProfile, ProfileAnalysis } from './cpu-profiler';
+} from "./variable-inspector";
+import { SourceMapManager } from "./source-map-manager";
+import { CPUProfiler, CPUProfile, ProfileAnalysis } from "./cpu-profiler";
 import {
   MemoryProfiler,
   HeapSnapshot,
   MemoryUsage,
   MemoryLeakAnalysis,
   MemoryReport,
-} from './memory-profiler';
+} from "./memory-profiler";
 import {
   PerformanceTimeline,
   PerformanceReport,
   PerformanceEvent,
-} from './performance-timeline';
+} from "./performance-timeline";
 
 /**
  * Breakpoint type enumeration
  */
 export enum BreakpointType {
-  STANDARD = 'standard',
-  LOGPOINT = 'logpoint',
-  EXCEPTION = 'exception',
-  FUNCTION = 'function',
+  STANDARD = "standard",
+  LOGPOINT = "logpoint",
+  EXCEPTION = "exception",
+  FUNCTION = "function",
 }
 
 /**
  * Hit count operator for hit count breakpoints
  */
 export enum HitCountOperator {
-  EQUAL = '==',
-  GREATER = '>',
-  GREATER_EQUAL = '>=',
-  LESS = '<',
-  LESS_EQUAL = '<=',
-  MODULO = '%',
+  EQUAL = "==",
+  GREATER = ">",
+  GREATER_EQUAL = ">=",
+  LESS = "<",
+  LESS_EQUAL = "<=",
+  MODULO = "%",
 }
 
 /**
@@ -109,10 +109,10 @@ export interface StackFrame {
  * Debug session state
  */
 export enum SessionState {
-  STARTING = 'starting',
-  PAUSED = 'paused',
-  RUNNING = 'running',
-  TERMINATED = 'terminated',
+  STARTING = "starting",
+  PAUSED = "paused",
+  RUNNING = "running",
+  TERMINATED = "terminated",
 }
 
 /**
@@ -170,7 +170,7 @@ export class DebugSession {
 
     // Validate file exists if args contain a file path
     // Skip validation for npx, npm, yarn, etc. as they take package names
-    const skipValidationCommands = ['npx', 'npm', 'yarn', 'pnpm', 'bun'];
+    const skipValidationCommands = ["npx", "npm", "yarn", "pnpm", "bun"];
     if (
       this.config.args &&
       this.config.args.length > 0 &&
@@ -178,8 +178,8 @@ export class DebugSession {
     ) {
       const firstArg = this.config.args[0];
       // Check if it looks like a file path (not a flag starting with - and has file extension)
-      if (!firstArg.startsWith('-') && /\.(js|ts|mjs|cjs)$/.test(firstArg)) {
-        const fs = await import('fs');
+      if (!firstArg.startsWith("-") && /\.(js|ts|mjs|cjs)$/.test(firstArg)) {
+        const fs = await import("fs");
         const filePath = path.isAbsolute(firstArg)
           ? firstArg
           : path.resolve(this.config.cwd || process.cwd(), firstArg);
@@ -192,7 +192,7 @@ export class DebugSession {
 
     // Validate working directory exists
     if (this.config.cwd) {
-      const fs = await import('fs');
+      const fs = await import("fs");
       if (!fs.existsSync(this.config.cwd)) {
         throw new Error(`Working directory not found: ${this.config.cwd}`);
       }
@@ -203,7 +203,7 @@ export class DebugSession {
       const { process: proc, wsUrl } = await spawnWithInspector(
         this.config.command,
         this.config.args || [],
-        this.config.cwd,
+        this.config.cwd
       );
 
       this.process = proc;
@@ -229,11 +229,11 @@ export class DebugSession {
       this.performanceTimeline = new PerformanceTimeline(this.inspector);
 
       // Enable debugging domains
-      await this.inspector.send('Debugger.enable');
-      await this.inspector.send('Runtime.enable');
+      await this.inspector.send("Debugger.enable");
+      await this.inspector.send("Runtime.enable");
 
       // Set up event handlers BEFORE calling runIfWaitingForDebugger
-      this.inspector.on('Debugger.paused', async (params: any) => {
+      this.inspector.on("Debugger.paused", async (params: any) => {
         this.state = SessionState.PAUSED;
         this.currentCallFrames = params?.callFrames || [];
         this.currentFrameIndex = 0; // Reset to top frame when paused
@@ -249,25 +249,25 @@ export class DebugSession {
         }
       });
 
-      this.inspector.on('Debugger.resumed', () => {
+      this.inspector.on("Debugger.resumed", () => {
         this.state = SessionState.RUNNING;
         this.currentCallFrames = [];
         this.currentFrameIndex = 0; // Reset frame index when resumed
       });
 
       // Handle process exit
-      this.process.on('exit', (code: number | null, signal: string | null) => {
+      this.process.on("exit", (code: number | null, signal: string | null) => {
         this.handleProcessExit(code, signal);
       });
 
       // Handle process errors
-      this.process.on('error', (error: Error) => {
+      this.process.on("error", (error: Error) => {
         this.handleProcessError(error);
       });
 
       // Tell the runtime to run if it's waiting for debugger
       // This will trigger a Debugger.paused event at the first line
-      await this.inspector.send('Runtime.runIfWaitingForDebugger');
+      await this.inspector.send("Runtime.runIfWaitingForDebugger");
 
       // Wait for the initial pause from --inspect-brk
       // The process should pause at the first line after runIfWaitingForDebugger
@@ -278,7 +278,7 @@ export class DebugSession {
           resolve();
         }, 1000);
 
-        this.inspector!.once('Debugger.paused', () => {
+        this.inspector!.once("Debugger.paused", () => {
           clearTimeout(timeout);
           this.state = SessionState.PAUSED;
           resolve();
@@ -297,7 +297,7 @@ export class DebugSession {
    */
   async pause(): Promise<void> {
     if (!this.inspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.RUNNING) {
@@ -305,7 +305,7 @@ export class DebugSession {
     }
 
     // Send the pause command
-    await this.inspector.send('Debugger.pause');
+    await this.inspector.send("Debugger.pause");
 
     // Wait for the Debugger.paused event with a reasonable timeout
     // This ensures call frames are populated before we return
@@ -323,7 +323,7 @@ export class DebugSession {
         resolve();
       };
 
-      this.inspector!.once('Debugger.paused', handler);
+      this.inspector!.once("Debugger.paused", handler);
     });
   }
 
@@ -332,14 +332,14 @@ export class DebugSession {
    */
   async resume(): Promise<void> {
     if (!this.inspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
       throw new Error(`Cannot resume session in state: ${this.state}`);
     }
 
-    await this.inspector.send('Debugger.resume');
+    await this.inspector.send("Debugger.resume");
     this.state = SessionState.RUNNING;
   }
 
@@ -349,14 +349,14 @@ export class DebugSession {
    */
   async stepOver(): Promise<void> {
     if (!this.inspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
       throw new Error(`Cannot step over in state: ${this.state}`);
     }
 
-    await this.inspector.send('Debugger.stepOver');
+    await this.inspector.send("Debugger.stepOver");
     // State will be updated by Debugger.paused event
   }
 
@@ -366,14 +366,14 @@ export class DebugSession {
    */
   async stepInto(): Promise<void> {
     if (!this.inspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
       throw new Error(`Cannot step into in state: ${this.state}`);
     }
 
-    await this.inspector.send('Debugger.stepInto');
+    await this.inspector.send("Debugger.stepInto");
     // State will be updated by Debugger.paused event
   }
 
@@ -383,14 +383,14 @@ export class DebugSession {
    */
   async stepOut(): Promise<void> {
     if (!this.inspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
       throw new Error(`Cannot step out in state: ${this.state}`);
     }
 
-    await this.inspector.send('Debugger.stepOut');
+    await this.inspector.send("Debugger.stepOut");
     // State will be updated by Debugger.paused event
   }
 
@@ -408,7 +408,7 @@ export class DebugSession {
         if (breakpoint.cdpBreakpointId) {
           try {
             await this.cdpBreakpointOps.removeBreakpoint(
-              breakpoint.cdpBreakpointId,
+              breakpoint.cdpBreakpointId
             );
           } catch (error) {
             // Ignore errors during cleanup
@@ -470,17 +470,17 @@ export class DebugSession {
   async setBreakpoint(
     file: string,
     line: number,
-    condition?: string,
+    condition?: string
   ): Promise<Breakpoint> {
     if (!this.cdpBreakpointOps) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     // Try to map TypeScript location to JavaScript if it's a TypeScript file
     let targetFile = file;
     let targetLine = line;
 
-    if (file.endsWith('.ts') || file.endsWith('.tsx')) {
+    if (file.endsWith(".ts") || file.endsWith(".tsx")) {
       const compiledLocation = await this.sourceMapManager.mapSourceToCompiled({
         file,
         line,
@@ -498,7 +498,7 @@ export class DebugSession {
     const breakpoint = this.breakpointManager.createBreakpoint(
       file,
       line,
-      condition,
+      condition
     );
 
     // Set breakpoint via CDP using the compiled location if enabled
@@ -510,12 +510,13 @@ export class DebugSession {
         line: targetLine,
       };
 
-      const cdpBreakpointId =
-        await this.cdpBreakpointOps.setBreakpoint(cdpBreakpoint);
+      const cdpBreakpointId = await this.cdpBreakpointOps.setBreakpoint(
+        cdpBreakpoint
+      );
       if (cdpBreakpointId) {
         this.breakpointManager.updateCdpBreakpointId(
           breakpoint.id,
-          cdpBreakpointId,
+          cdpBreakpointId
         );
       }
     }
@@ -534,17 +535,17 @@ export class DebugSession {
   async setLogpoint(
     file: string,
     line: number,
-    logMessage: string,
+    logMessage: string
   ): Promise<Breakpoint> {
     if (!this.cdpBreakpointOps) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     // Try to map TypeScript location to JavaScript if it's a TypeScript file
     let targetFile = file;
     let targetLine = line;
 
-    if (file.endsWith('.ts') || file.endsWith('.tsx')) {
+    if (file.endsWith(".ts") || file.endsWith(".tsx")) {
       const compiledLocation = await this.sourceMapManager.mapSourceToCompiled({
         file,
         line,
@@ -561,7 +562,7 @@ export class DebugSession {
     const logpoint = this.breakpointManager.createLogpoint(
       file,
       line,
-      logMessage,
+      logMessage
     );
 
     // Set logpoint via CDP using the compiled location if enabled
@@ -572,12 +573,13 @@ export class DebugSession {
         line: targetLine,
       };
 
-      const cdpBreakpointId =
-        await this.cdpBreakpointOps.setBreakpoint(cdpLogpoint);
+      const cdpBreakpointId = await this.cdpBreakpointOps.setBreakpoint(
+        cdpLogpoint
+      );
       if (cdpBreakpointId) {
         this.breakpointManager.updateCdpBreakpointId(
           logpoint.id,
-          cdpBreakpointId,
+          cdpBreakpointId
         );
       }
     }
@@ -593,7 +595,7 @@ export class DebugSession {
    */
   async setFunctionBreakpoint(functionName: string): Promise<Breakpoint> {
     if (!this.cdpBreakpointOps) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     // Create function breakpoint in manager
@@ -602,12 +604,13 @@ export class DebugSession {
 
     // Set function breakpoint via CDP if enabled
     if (breakpoint.enabled) {
-      const cdpBreakpointId =
-        await this.cdpBreakpointOps.setBreakpoint(breakpoint);
+      const cdpBreakpointId = await this.cdpBreakpointOps.setBreakpoint(
+        breakpoint
+      );
       if (cdpBreakpointId) {
         this.breakpointManager.updateCdpBreakpointId(
           breakpoint.id,
-          cdpBreakpointId,
+          cdpBreakpointId
         );
       }
     }
@@ -623,7 +626,7 @@ export class DebugSession {
    */
   setBreakpointHitCountCondition(
     id: string,
-    condition: HitCountCondition,
+    condition: HitCountCondition
   ): Breakpoint | undefined {
     return this.breakpointManager.setHitCountCondition(id, condition);
   }
@@ -646,13 +649,15 @@ export class DebugSession {
   async setExceptionBreakpoint(
     breakOnCaught: boolean,
     breakOnUncaught: boolean,
-    exceptionFilter?: string,
+    exceptionFilter?: string
   ): Promise<ExceptionBreakpoint> {
     if (!this.inspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
-    const id = `exception_${Date.now()}`;
+    const id = `exception_${Date.now()}_${Math.random()
+      .toString(36)
+      .substring(2, 11)}`;
     const exceptionBreakpoint: ExceptionBreakpoint = {
       id,
       breakOnCaught,
@@ -664,14 +669,14 @@ export class DebugSession {
     this.exceptionBreakpoints.set(id, exceptionBreakpoint);
 
     // Configure CDP to pause on exceptions
-    await this.inspector.send('Debugger.setPauseOnExceptions', {
+    await this.inspector.send("Debugger.setPauseOnExceptions", {
       state: breakOnUncaught
         ? breakOnCaught
-          ? 'all'
-          : 'uncaught'
+          ? "all"
+          : "uncaught"
         : breakOnCaught
-          ? 'all'
-          : 'none',
+        ? "all"
+        : "none",
     });
 
     return exceptionBreakpoint;
@@ -692,8 +697,8 @@ export class DebugSession {
 
     // If no more exception breakpoints, disable exception pausing
     if (this.exceptionBreakpoints.size === 0 && this.inspector) {
-      await this.inspector.send('Debugger.setPauseOnExceptions', {
-        state: 'none',
+      await this.inspector.send("Debugger.setPauseOnExceptions", {
+        state: "none",
       });
     }
 
@@ -761,19 +766,20 @@ export class DebugSession {
 
     // If now enabled, set via CDP
     if (breakpoint.enabled && !breakpoint.cdpBreakpointId) {
-      const cdpBreakpointId =
-        await this.cdpBreakpointOps.setBreakpoint(breakpoint);
+      const cdpBreakpointId = await this.cdpBreakpointOps.setBreakpoint(
+        breakpoint
+      );
       if (cdpBreakpointId) {
         this.breakpointManager.updateCdpBreakpointId(
           breakpoint.id,
-          cdpBreakpointId,
+          cdpBreakpointId
         );
       }
     }
     // If now disabled, remove from CDP
     else if (!breakpoint.enabled && breakpoint.cdpBreakpointId) {
       await this.cdpBreakpointOps.removeBreakpoint(breakpoint.cdpBreakpointId);
-      this.breakpointManager.updateCdpBreakpointId(breakpoint.id, '');
+      this.breakpointManager.updateCdpBreakpointId(breakpoint.id, "");
     }
 
     return breakpoint;
@@ -838,14 +844,14 @@ export class DebugSession {
    */
   async evaluateExpression(
     expression: string,
-    callFrameId?: string,
+    callFrameId?: string
   ): Promise<EvaluationResult> {
     if (!this.variableInspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
-      throw new Error('Process must be paused to evaluate expressions');
+      throw new Error("Process must be paused to evaluate expressions");
     }
 
     // If no callFrameId provided, use the current frame
@@ -853,7 +859,7 @@ export class DebugSession {
       callFrameId ||
       this.currentCallFrames[this.currentFrameIndex]?.callFrameId;
     if (!frameId) {
-      throw new Error('No call frames available');
+      throw new Error("No call frames available");
     }
 
     return this.variableInspector.evaluateExpression(expression, frameId);
@@ -866,11 +872,11 @@ export class DebugSession {
    */
   async getObjectProperties(objectId: string): Promise<PropertyDescriptor[]> {
     if (!this.variableInspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
-      throw new Error('Process must be paused to inspect objects');
+      throw new Error("Process must be paused to inspect objects");
     }
 
     return this.variableInspector.getObjectProperties(objectId);
@@ -884,14 +890,14 @@ export class DebugSession {
    */
   async inspectObject(
     objectId: string,
-    maxDepth: number = 2,
+    maxDepth: number = 2
   ): Promise<Record<string, any>> {
     if (!this.variableInspector) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     if (this.state !== SessionState.PAUSED) {
-      throw new Error('Process must be paused to inspect objects');
+      throw new Error("Process must be paused to inspect objects");
     }
 
     return this.variableInspector.inspectObject(objectId, maxDepth);
@@ -912,7 +918,7 @@ export class DebugSession {
    */
   async getCallStack(): Promise<StackFrame[]> {
     if (this.state !== SessionState.PAUSED) {
-      throw new Error('Process must be paused to get call stack');
+      throw new Error("Process must be paused to get call stack");
     }
 
     if (!this.currentCallFrames || this.currentCallFrames.length === 0) {
@@ -924,16 +930,16 @@ export class DebugSession {
     for (const frame of this.currentCallFrames) {
       // Extract file path from the URL
       // CDP returns file URLs like "file:///absolute/path/to/file.js"
-      let filePath = frame.url || '';
+      let filePath = frame.url || "";
 
       // Convert file:// URL to absolute path
-      if (filePath.startsWith('file://')) {
+      if (filePath.startsWith("file://")) {
         filePath = filePath.substring(7); // Remove 'file://'
       }
 
       // Ensure the path is absolute
       // If it's not already absolute, make it absolute relative to cwd
-      if (!filePath.startsWith('/')) {
+      if (!filePath.startsWith("/")) {
         filePath = path.resolve(this.config.cwd || process.cwd(), filePath);
       }
 
@@ -954,7 +960,7 @@ export class DebugSession {
       }
 
       frames.push({
-        functionName: frame.functionName || '(anonymous)',
+        functionName: frame.functionName || "(anonymous)",
         file: filePath,
         line: line,
         column: column,
@@ -972,7 +978,7 @@ export class DebugSession {
    */
   getCallStackSync(): StackFrame[] {
     if (this.state !== SessionState.PAUSED) {
-      throw new Error('Process must be paused to get call stack');
+      throw new Error("Process must be paused to get call stack");
     }
 
     if (!this.currentCallFrames || this.currentCallFrames.length === 0) {
@@ -982,21 +988,21 @@ export class DebugSession {
     return this.currentCallFrames.map((frame: any) => {
       // Extract file path from the URL
       // CDP returns file URLs like "file:///absolute/path/to/file.js"
-      let filePath = frame.url || '';
+      let filePath = frame.url || "";
 
       // Convert file:// URL to absolute path
-      if (filePath.startsWith('file://')) {
+      if (filePath.startsWith("file://")) {
         filePath = filePath.substring(7); // Remove 'file://'
       }
 
       // Ensure the path is absolute
       // If it's not already absolute, make it absolute relative to cwd
-      if (!filePath.startsWith('/')) {
+      if (!filePath.startsWith("/")) {
         filePath = path.resolve(this.config.cwd || process.cwd(), filePath);
       }
 
       return {
-        functionName: frame.functionName || '(anonymous)',
+        functionName: frame.functionName || "(anonymous)",
         file: filePath,
         line: frame.location.lineNumber + 1, // CDP uses 0-indexed lines
         column: frame.location.columnNumber,
@@ -1058,16 +1064,18 @@ export class DebugSession {
    */
   switchToFrame(frameIndex: number): void {
     if (this.state !== SessionState.PAUSED) {
-      throw new Error('Process must be paused to switch frames');
+      throw new Error("Process must be paused to switch frames");
     }
 
     if (!this.currentCallFrames || this.currentCallFrames.length === 0) {
-      throw new Error('No call frames available');
+      throw new Error("No call frames available");
     }
 
     if (frameIndex < 0 || frameIndex >= this.currentCallFrames.length) {
       throw new Error(
-        `Frame index ${frameIndex} out of range (0-${this.currentCallFrames.length - 1})`,
+        `Frame index ${frameIndex} out of range (0-${
+          this.currentCallFrames.length - 1
+        })`
       );
     }
 
@@ -1138,7 +1146,9 @@ export class DebugSession {
     // this is a crash
     if (code !== 0 || signal !== null) {
       const error = new Error(
-        `Process crashed with ${signal ? `signal ${signal}` : `exit code ${code}`}`,
+        `Process crashed with ${
+          signal ? `signal ${signal}` : `exit code ${code}`
+        }`
       );
       this.crashError = error;
 
@@ -1221,7 +1231,7 @@ export class DebugSession {
    */
   async startCPUProfile(): Promise<void> {
     if (!this.cpuProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     await this.cpuProfiler.start();
@@ -1233,7 +1243,7 @@ export class DebugSession {
    */
   async stopCPUProfile(): Promise<CPUProfile> {
     if (!this.cpuProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.cpuProfiler.stop();
@@ -1260,7 +1270,7 @@ export class DebugSession {
    */
   analyzeCPUProfile(profile: CPUProfile): ProfileAnalysis {
     if (!this.cpuProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return this.cpuProfiler.analyzeProfile(profile);
@@ -1272,7 +1282,7 @@ export class DebugSession {
    */
   async takeHeapSnapshot(): Promise<HeapSnapshot> {
     if (!this.memoryProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.memoryProfiler.takeHeapSnapshot();
@@ -1284,7 +1294,7 @@ export class DebugSession {
    */
   async getMemoryUsage(): Promise<MemoryUsage> {
     if (!this.memoryProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.memoryProfiler.getMemoryUsage();
@@ -1296,7 +1306,7 @@ export class DebugSession {
    */
   async startTrackingHeapObjects(samplingInterval?: number): Promise<void> {
     if (!this.memoryProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     await this.memoryProfiler.startTrackingHeapObjects(samplingInterval);
@@ -1308,7 +1318,7 @@ export class DebugSession {
    */
   async stopTrackingHeapObjects(): Promise<HeapSnapshot> {
     if (!this.memoryProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.memoryProfiler.stopTrackingHeapObjects();
@@ -1322,10 +1332,10 @@ export class DebugSession {
    */
   async detectMemoryLeaks(
     durationMs?: number,
-    intervalMs?: number,
+    intervalMs?: number
   ): Promise<MemoryLeakAnalysis> {
     if (!this.memoryProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.memoryProfiler.detectMemoryLeaks(durationMs, intervalMs);
@@ -1338,7 +1348,7 @@ export class DebugSession {
    */
   async generateMemoryReport(snapshot?: HeapSnapshot): Promise<MemoryReport> {
     if (!this.memoryProfiler) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.memoryProfiler.generateMemoryReport(snapshot);
@@ -1356,7 +1366,7 @@ export class DebugSession {
    */
   async startPerformanceRecording(): Promise<void> {
     if (!this.performanceTimeline) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     await this.performanceTimeline.startRecording();
@@ -1368,7 +1378,7 @@ export class DebugSession {
    */
   async stopPerformanceRecording(): Promise<PerformanceReport> {
     if (!this.performanceTimeline) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     return await this.performanceTimeline.stopRecording();
@@ -1392,17 +1402,17 @@ export class DebugSession {
     functionName: string,
     file: string,
     line: number,
-    duration: number,
+    duration: number
   ): void {
     if (!this.performanceTimeline) {
-      throw new Error('Session not started');
+      throw new Error("Session not started");
     }
 
     this.performanceTimeline.recordFunctionCall(
       functionName,
       file,
       line,
-      duration,
+      duration
     );
   }
 
