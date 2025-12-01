@@ -74,7 +74,7 @@ jobs:
 
           # Build binary from global installation using the CLI entry point
           cd "$PACKAGE_PATH"
-          pkg dist/src/cli.js --target ${{ matrix.target }} --output $GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
+          pkg dist/cli.js --target ${{ matrix.target }} --output $GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
 
       - name: Test binary (Linux/macOS)
         if: matrix.os != 'windows'
