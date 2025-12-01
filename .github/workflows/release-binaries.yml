@@ -82,6 +82,9 @@ jobs:
           }
           EOF
 
+          # Update package.json to specify ES module type
+          node -e "const pkg = require('./package.json'); pkg.type = 'module'; require('fs').writeFileSync('./package.json', JSON.stringify(pkg, null, 2));"
+
           # Build binary with proper bundling
           pkg dist/cli.js --config pkg-config.json --target ${{ matrix.target }} --output $GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
 
@@ -107,6 +110,11 @@ jobs:
             targets = @("node18-win-x64")
           } | ConvertTo-Json
           $pkgConfig | Out-File -FilePath "pkg-config.json" -Encoding utf8
+
+          # Update package.json to specify ES module type
+          $pkgJson = Get-Content "package.json" | ConvertFrom-Json
+          $pkgJson | Add-Member -NotePropertyName "type" -NotePropertyValue "module" -Force
+          $pkgJson | ConvertTo-Json -Depth 100 | Set-Content "package.json"
 
           # Build binary with proper bundling
           pkg dist/cli.js --config pkg-config.json --target ${{ matrix.target }} --output $env:GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
