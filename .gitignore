@@ -28,6 +28,12 @@ coverage
 .env.local
 
 # Secrets and tokens
+.mcpregistry_github_token
+.mcpregistry_registry_token
+**/mcpregistry_github_token
+**/mcpregistry_registry_token
+
+# Secrets and tokens
 *_token
 *.token
 .mcpregistry_*
