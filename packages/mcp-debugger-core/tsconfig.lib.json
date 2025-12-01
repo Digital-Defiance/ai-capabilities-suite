@@ -5,9 +5,11 @@
     "rootDir": "src",
     "outDir": "dist",
     "incremental": true,
+    "declaration": true,
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
     "emitDeclarationOnly": false,
     "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "types": [
       "node"
     ]

@@ -4,7 +4,7 @@
  */
 
 import { EventEmitter } from "events";
-import { DebugSession } from "./debug-session";
+import { DebugSession, Breakpoint } from "./debug-session";
 
 export interface DebugTarget {
   id: string;
@@ -149,7 +149,7 @@ export class MultiTargetDebugger extends EventEmitter {
   ): Promise<string> {
     const breakpointId = `bp-${Date.now()}-${Math.random()
       .toString(36)
-      .substr(2, 9)}`;
+      .substring(2, 11)}`;
 
     const breakpoint: MultiTargetBreakpoint = {
       file,
@@ -202,15 +202,15 @@ export class MultiTargetDebugger extends EventEmitter {
 
       try {
         // Find and remove the breakpoint
-        const breakpoints = await target.session.listBreakpoints();
+        const breakpoints = target.session.getAllBreakpoints();
         const matchingBp = breakpoints.find(
-          (bp) => bp.file === breakpoint.file && bp.line === breakpoint.line
+          (bp: Breakpoint) =>
+            bp.file === breakpoint.file && bp.line === breakpoint.line
         );
-
         if (matchingBp) {
           await target.session.removeBreakpoint(matchingBp.id);
         }
-      } catch (error) {
+      } catch (error: any) {
         this.emit("breakpoint-error", {
           targetId,
           error,
@@ -239,10 +239,10 @@ export class MultiTargetDebugger extends EventEmitter {
 
     for (const target of this.targets.values()) {
       promises.push(
-        target.session.continue().catch((error) => {
+        target.session.resume().catch((error: Error) => {
           this.emit("target-error", {
             targetId: target.id,
-            operation: "continue",
+            operation: "resume",
             error,
           });
         })
@@ -265,10 +265,10 @@ export class MultiTargetDebugger extends EventEmitter {
       }
 
       promises.push(
-        target.session.continue().catch((error) => {
+        target.session.resume().catch((error: Error) => {
           this.emit("target-error", {
             targetId,
-            operation: "continue",
+            operation: "resume",
             error,
           });
         })
@@ -346,38 +346,40 @@ export class MultiTargetDebugger extends EventEmitter {
    * Set up log aggregation for a target
    */
   private setupLogAggregation(target: DebugTarget): void {
+    // Get the process from the session
+    const process = target.session.getProcess();
+    if (!process) {
+      return;
+    }
+
     // Listen for stdout
-    target.session.on("stdout", (data: string) => {
-      this.addLog({
-        timestamp: Date.now(),
-        targetId: target.id,
-        targetName: target.name,
-        level: "stdout",
-        message: data,
+    if (process.stdout) {
+      process.stdout.on("data", (data: Buffer) => {
+        this.addLog({
+          timestamp: Date.now(),
+          targetId: target.id,
+          targetName: target.name,
+          level: "stdout",
+          message: data.toString(),
+        });
       });
-    });
+    }
 
     // Listen for stderr
-    target.session.on("stderr", (data: string) => {
-      this.addLog({
-        timestamp: Date.now(),
-        targetId: target.id,
-        targetName: target.name,
-        level: "stderr",
-        message: data,
+    if (process.stderr) {
+      process.stderr.on("data", (data: Buffer) => {
+        this.addLog({
+          timestamp: Date.now(),
+          targetId: target.id,
+          targetName: target.name,
+          level: "stderr",
+          message: data.toString(),
+        });
       });
-    });
+    }
 
-    // Listen for debug messages
-    target.session.on("debug", (data: string) => {
-      this.addLog({
-        timestamp: Date.now(),
-        targetId: target.id,
-        targetName: target.name,
-        level: "debug",
-        message: data,
-      });
-    });
+    // Note: Debug-level logs would require inspector integration
+    // which is not exposed through the DebugSession API
   }
 
   /**
@@ -436,10 +438,10 @@ export class MultiTargetDebugger extends EventEmitter {
 
     for (const target of this.targets.values()) {
       promises.push(
-        target.session.stop().catch((error) => {
+        target.session.cleanup().catch((error: Error) => {
           this.emit("target-error", {
             targetId: target.id,
-            operation: "stop",
+            operation: "cleanup",
             error,
           });
         })

@@ -6,7 +6,7 @@ import {
   HangDetector,
   DebugSessionConfig,
   GracefulShutdownHandler,
-} from "@ai-capabilities-suite/mcp-core";
+} from "@ai-capabilities-suite/mcp-debugger-core";
 
 /**
  * MCP Debugger Server
@@ -572,7 +572,7 @@ export class McpDebuggerServer {
                 text: JSON.stringify(
                   {
                     status: "success",
-                    stack: stack.map((frame) => ({
+                    stack: stack.map((frame: any) => ({
                       function: frame.functionName,
                       file: frame.file,
                       line: frame.line,
@@ -1229,7 +1229,7 @@ export class McpDebuggerServer {
                 text: JSON.stringify(
                   {
                     status: "success",
-                    breakpoints: breakpoints.map((bp) => ({
+                    breakpoints: breakpoints.map((bp: any) => ({
                       id: bp.id,
                       file: bp.file,
                       line: bp.line,
@@ -1382,7 +1382,7 @@ export class McpDebuggerServer {
                 text: JSON.stringify(
                   {
                     status: "success",
-                    variables: properties.map((prop) => ({
+                    variables: properties.map((prop: any) => ({
                       name: prop.name,
                       value: prop.value,
                       type: prop.type,
@@ -1527,7 +1527,7 @@ export class McpDebuggerServer {
 
           // Filter out built-in globals to reduce noise
           const userGlobals = properties.filter(
-            (prop) =>
+            (prop: any) =>
               !["console", "process", "Buffer", "global", "require"].includes(
                 prop.name
               )
@@ -1540,7 +1540,7 @@ export class McpDebuggerServer {
                 text: JSON.stringify(
                   {
                     status: "success",
-                    variables: userGlobals.map((prop) => ({
+                    variables: userGlobals.map((prop: any) => ({
                       name: prop.name,
                       value: prop.value,
                       type: prop.type,
@@ -1927,7 +1927,7 @@ export class McpDebuggerServer {
                 text: JSON.stringify(
                   {
                     status: "success",
-                    watches: watches.map((watch) => ({
+                    watches: watches.map((watch: any) => ({
                       watchId: watch.name,
                       expression: watch.expression,
                       value: watch.lastValue,

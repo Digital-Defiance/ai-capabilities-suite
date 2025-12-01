@@ -900,7 +900,7 @@
     - [x] 28.4.3 Create release notes template and changelog automation
     - [x] 28.4.4 Create installation scripts for each platform
     - [x] 28.4.5 Create release documentation with download instructions
-    - [ ] 28.4.6 Manual: Create GitHub release and upload binaries
+    - [x] 28.4.6 Manual: Create GitHub release and upload binaries
     - [ ] 28.4.7 Manual: Test binaries on each target platform
     - _Requirements: No-install deployment, Cross-platform support_
 

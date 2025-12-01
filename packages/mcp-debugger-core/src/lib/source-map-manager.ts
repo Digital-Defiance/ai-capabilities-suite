@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { SourceMapConsumer, RawSourceMap } from "source-map";
+import { SourceMapConsumer } from "source-map";
+import type { RawSourceMap } from "source-map";
 
 /**
  * Source location in original source code (TypeScript)
