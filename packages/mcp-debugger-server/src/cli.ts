@@ -50,11 +50,11 @@ ENVIRONMENT VARIABLES:
   MCP_HOST                Host to bind to (overridden by --host)
 
 DOCUMENTATION:
-  Homepage: https://github.com/digitaldefiance/ai-capabilities-suite
-  Issues:   https://github.com/digitaldefiance/ai-capabilities-suite/issues
+  Homepage: https://github.com/digital-defiance/ai-capabilities-suite
+  Issues:   https://github.com/digital-defiance/ai-capabilities-suite/issues
 
 For more information, visit the documentation at:
-https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
+https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
 `);
 }
 

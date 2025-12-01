@@ -30,17 +30,17 @@ npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 **Linux:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
+curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
 ```
 
 **macOS:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
+curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
 ```
 
 **Windows (PowerShell as Administrator):**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
 ```
 
 ## Installation Methods
@@ -73,7 +73,7 @@ Standalone binaries are self-contained executables that don't require Node.js to
 
 **Download from GitHub Releases:**
 
-Visit the [latest release page](https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest) and download the appropriate binary for your platform:
+Visit the [latest release page](https://github.com/digital-defiance/ai-capabilities-suite/releases/latest) and download the appropriate binary for your platform:
 
 - `ts-mcp-server-linux-x64.tar.gz` - Linux (x64)
 - `ts-mcp-server-macos-x64.tar.gz` - macOS (x64)
@@ -95,13 +95,13 @@ Run the MCP Debugger Server in a Docker container:
 
 ```bash
 # Pull the latest image
-docker pull digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
 
 # Run the server
-docker run -it --rm digitaldefiance/ts-mcp-server:latest
+docker run -it --rm digidefiance/mcp-debugger-server:latest
 
 # Run with volume mount for debugging local files
-docker run -it --rm -v $(pwd):/workspace digitaldefiance/ts-mcp-server:latest
+docker run -it --rm -v $(pwd):/workspace digidefiance/mcp-debugger-server:latest
 ```
 
 **Advantages:**
@@ -143,19 +143,19 @@ sudo apt install ts-mcp-server
 #### Method 1: Automated Script
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
+curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
 ```
 
 #### Method 2: Manual Installation
 
 1. Download the binary:
    ```bash
-   wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64.tar.gz
+   wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64.tar.gz
    ```
 
 2. Download the checksum:
    ```bash
-   wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64.tar.gz.sha256
+   wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64.tar.gz.sha256
    ```
 
 3. Verify the checksum:
@@ -188,19 +188,19 @@ curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-sui
 #### Method 1: Automated Script
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
+curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
 ```
 
 #### Method 2: Manual Installation
 
 1. Download the binary:
    ```bash
-   wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-macos-x64.tar.gz
+   wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-macos-x64.tar.gz
    ```
 
 2. Download the checksum:
    ```bash
-   wget https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-macos-x64.tar.gz.sha256
+   wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-macos-x64.tar.gz.sha256
    ```
 
 3. Verify the checksum:
@@ -243,19 +243,19 @@ curl -fsSL https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-sui
 #### Method 1: Automated Script (PowerShell as Administrator)
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/digitaldefiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
 ```
 
 #### Method 2: Manual Installation
 
 1. Download the binary:
    ```powershell
-   Invoke-WebRequest -Uri https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
+   Invoke-WebRequest -Uri https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
    ```
 
 2. Download the checksum:
    ```powershell
-   Invoke-WebRequest -Uri https://github.com/digitaldefiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-win-x64.zip.sha256 -OutFile ts-mcp-server.zip.sha256
+   Invoke-WebRequest -Uri https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-win-x64.zip.sha256 -OutFile ts-mcp-server.zip.sha256
    ```
 
 3. Verify the checksum:
@@ -454,20 +454,20 @@ sudo rm /usr/local/bin/ts-mcp-server
 
 **Windows:**
 ```powershell
-Remove-Item C:\Windows\System32\ts-mcp-server.exe
+Remove-Item C:\Windows\System32\mcp-debugger-server.exe
 ```
 
 ### Docker
 
 ```bash
-docker rmi digitaldefiance/ts-mcp-server
+docker rmi digidefiance/mcp-debugger-server
 ```
 
 ## Getting Help
 
 - **Documentation:** [README.md](packages/mcp-debugger-server/README.md)
-- **Issues:** [GitHub Issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/digitaldefiance/ai-capabilities-suite/discussions)
+- **Issues:** [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
 - **Email:** info@digitaldefiance.org
 
 ## Next Steps

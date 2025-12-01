@@ -548,7 +548,7 @@ async function profilePerformance() {
 
 ## Contributing
 
-Contributions are welcome! Please see the [main repository](https://github.com/digitaldefiance/ai-capabilities-suite) for contribution guidelines.
+Contributions are welcome! Please see the [main repository](https://github.com/digital-defiance/ai-capabilities-suite) for contribution guidelines.
 
 ## License
 
@@ -556,7 +556,7 @@ MIT License - See [LICENSE](./LICENSE) file for details.
 
 ## Support
 
-- **GitHub Issues**: [ai-capabilities-suite/issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- **GitHub Issues**: [ai-capabilities-suite/issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - **NPM Package**: [@ai-capabilities-suite/mcp-debugger-core](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-core)
 - **Email**: info@digitaldefiance.org
 

@@ -224,7 +224,7 @@ Use Docker container for Amazon Q:
           "--rm",
           "-v",
           "${workspaceFolder}:/workspace",
-          "digitaldefiance/ts-mcp-server:latest"
+          "digidefiance/mcp-debugger-server:latest"
         ],
         "transport": "stdio"
       }
@@ -620,7 +620,7 @@ version: '3.8'
 
 services:
   mcp-debugger:
-    image: digitaldefiance/ts-mcp-server:latest
+    image: digidefiance/mcp-debugger-server:latest
     stdin_open: true
     tty: true
     volumes:
@@ -677,7 +677,7 @@ spec:
     spec:
       containers:
       - name: mcp-debugger
-        image: digitaldefiance/ts-mcp-server:latest
+        image: digidefiance/mcp-debugger-server:latest
         env:
         - name: MCP_LOG_LEVEL
           value: "info"
@@ -844,6 +844,6 @@ export MCP_AUTH_TOKEN=your-secret-token
 
 For configuration help:
 
-- **Documentation**: [Full documentation](https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server)
-- **Issues**: [GitHub Issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- **Documentation**: [Full documentation](https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server)
+- **Issues**: [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - **Email**: info@digitaldefiance.org

@@ -14,12 +14,12 @@ There are **two separate MCP registries**:
 Before submitting to the Docker MCP Registry, ensure:
 
 1. ✅ **Docker Image Published**: Image must be available on Docker Hub
-   - Current image: `digitaldefiance/ts-mcp-server:latest`
-   - Verified: https://hub.docker.com/r/digitaldefiance/ts-mcp-server
+   - Current image: `digidefiance/mcp-debugger-server:latest`
+   - Verified: https://hub.docker.com/r/digidefiance/mcp-debugger-server
 
 2. ✅ **Dockerfile in Repository**: Dockerfile must be in the GitHub repository
    - Location: `packages/mcp-debugger-server/Dockerfile`
-   - Repository: https://github.com/digitaldefiance/ai-capabilities-suite
+   - Repository: https://github.com/digital-defiance/ai-capabilities-suite
 
 3. ✅ **Submission Files Created**: Required files for Docker MCP Registry
    - `server.yaml` - Server configuration ✅
@@ -32,10 +32,10 @@ Before submitting to the Docker MCP Registry, ensure:
 ## Current Status
 
 - ✅ Package name: `@ai-capabilities-suite/mcp-debugger-server`
-- ✅ Docker image: `digitaldefiance/ts-mcp-server:latest`
+- ✅ Docker image: `digidefiance/mcp-debugger-server:latest`
 - ✅ Version: 1.0.3
 - ✅ License: MIT
-- ✅ Repository: https://github.com/digitaldefiance/ai-capabilities-suite
+- ✅ Repository: https://github.com/digital-defiance/ai-capabilities-suite
 - ✅ Submission files: Created in `docker-mcp-registry/` directory
 - ⏳ Fork docker/mcp-registry: Pending (manual step)
 - ⏳ Submit PR: Pending (manual step)
@@ -157,8 +157,8 @@ Add ts-mcp-debugger: Enterprise Node.js/TypeScript debugging
 - **Name**: ts-mcp-debugger
 - **Category**: debugging
 - **Type**: Local (containerized)
-- **Image**: digitaldefiance/ts-mcp-server:latest
-- **Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
+- **Image**: digidefiance/mcp-debugger-server:latest
+- **Repository**: https://github.com/digital-defiance/ai-capabilities-suite
 
 ## Description
 
@@ -213,8 +213,8 @@ Enterprise-grade MCP server providing comprehensive debugging capabilities for N
 ## Additional Information
 
 - **NPM Package**: https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server
-- **Docker Hub**: https://hub.docker.com/r/digitaldefiance/ts-mcp-server
-- **Documentation**: https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
+- **Docker Hub**: https://hub.docker.com/r/digidefiance/mcp-debugger-server
+- **Documentation**: https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
 - **License**: MIT
 - **Maintainer**: Digital Defiance (info@digitaldefiance.org)
 ```
@@ -277,7 +277,7 @@ In your PR, request that Docker build and maintain the image. They will:
 ### Option B: Self-Provided Image (Current)
 
 **Current setup:**
-- Image: `digitaldefiance/ts-mcp-server:latest`
+- Image: `digidefiance/mcp-debugger-server:latest`
 - Built and maintained by Digital Defiance
 - Still benefits from container isolation
 
@@ -305,7 +305,7 @@ In your PR, request that Docker build and maintain the image. They will:
 **Solution**:
 ```bash
 # Verify image is public
-docker pull digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
 
 # If not public, make it public on Docker Hub
 ```
@@ -358,7 +358,7 @@ To publish updates:
 If you encounter issues during submission:
 
 - **Docker MCP Registry Issues**: https://github.com/docker/mcp-registry/issues
-- **Package Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **Package Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **Email**: info@digitaldefiance.org
 
 ## Additional Resources

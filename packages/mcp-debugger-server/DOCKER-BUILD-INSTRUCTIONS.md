@@ -44,8 +44,8 @@ Once the package is published to NPM, build the Docker image:
 ```bash
 # From repository root
 docker build -f packages/mcp-debugger-server/Dockerfile \
-  -t digitaldefiance/ts-mcp-server:latest \
-  -t digitaldefiance/ts-mcp-server:1.0.1 \
+  -t digidefiance/mcp-debugger-server:latest \
+  -t digidefiance/mcp-debugger-server:1.0.1 \
   .
 ```
 
@@ -55,10 +55,10 @@ Test the image locally:
 
 ```bash
 # Run the container
-docker run --rm digitaldefiance/ts-mcp-server:latest --help
+docker run --rm digidefiance/mcp-debugger-server:latest --help
 
 # Test with a simple script
-echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}' | docker run -i --rm digitaldefiance/ts-mcp-server:latest
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}' | docker run -i --rm digidefiance/mcp-debugger-server:latest
 ```
 
 ### Step 4: Push to Docker Hub
@@ -70,8 +70,8 @@ Login and push:
 docker login
 
 # Push both tags
-docker push digitaldefiance/ts-mcp-server:latest
-docker push digitaldefiance/ts-mcp-server:1.0.1
+docker push digidefiance/mcp-debugger-server:latest
+docker push digidefiance/mcp-debugger-server:1.0.1
 ```
 
 ## Files Updated
@@ -111,8 +111,8 @@ After pushing, verify the image:
 
 ```bash
 # Pull and test
-docker pull digitaldefiance/ts-mcp-server:latest
-docker run --rm digitaldefiance/ts-mcp-server:latest --version
+docker pull digidefiance/mcp-debugger-server:latest
+docker run --rm digidefiance/mcp-debugger-server:latest --version
 ```
 
 ## Troubleshooting

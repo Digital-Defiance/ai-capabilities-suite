@@ -23,7 +23,7 @@ All required files have been created in `packages/mcp-debugger-server/docker-mcp
 - **Location**: `docker-mcp-registry/server.yaml`
 - **Contents**:
   - Server name: `ts-mcp-debugger`
-  - Docker image: `digitaldefiance/ts-mcp-server`
+  - Docker image: `digidefiance/mcp-debugger-server`
   - Category: debugging
   - Tags: debugging, development-tools, typescript, nodejs, profiling, testing
   - Configuration parameters for NODE_ENV and LOG_LEVEL
@@ -74,9 +74,9 @@ All required files have been created in `packages/mcp-debugger-server/docker-mcp
 
 ## Prerequisites Verified
 
-- ✅ **Docker Image Published**: `digitaldefiance/ts-mcp-server:latest` on Docker Hub
+- ✅ **Docker Image Published**: `digidefiance/mcp-debugger-server:latest` on Docker Hub
 - ✅ **Dockerfile in Repository**: `packages/mcp-debugger-server/Dockerfile`
-- ✅ **GitHub Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
+- ✅ **GitHub Repository**: https://github.com/digital-defiance/ai-capabilities-suite
 - ✅ **License**: MIT (allows consumption)
 - ✅ **Submission Files**: All three required files created
 - ✅ **Documentation**: Comprehensive and complete
@@ -159,7 +159,7 @@ Request in the PR that Docker build and maintain the image for enhanced security
 
 ### Option B: Self-Provided Image (Current)
 
-Use our existing image: `digitaldefiance/ts-mcp-server:latest`
+Use our existing image: `digidefiance/mcp-debugger-server:latest`
 - Still benefits from container isolation
 - No automatic security updates from Docker
 
@@ -167,7 +167,7 @@ Use our existing image: `digitaldefiance/ts-mcp-server:latest`
 
 ### Server Information
 - **Name**: ts-mcp-debugger
-- **Image**: digitaldefiance/ts-mcp-server:latest
+- **Image**: digidefiance/mcp-debugger-server:latest
 - **Version**: 1.0.3
 - **Category**: debugging
 - **Type**: Local (containerized)
@@ -215,13 +215,13 @@ Before manual submission, verify:
 - **Docker MCP Registry**: https://github.com/docker/mcp-registry
 - **Contributing Guide**: https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
 - **Docker Hub MCP Catalog**: https://hub.docker.com/mcp
-- **Our Repository**: https://github.com/digitaldefiance/ai-capabilities-suite
-- **Our Docker Image**: https://hub.docker.com/r/digitaldefiance/ts-mcp-server
+- **Our Repository**: https://github.com/digital-defiance/ai-capabilities-suite
+- **Our Docker Image**: https://hub.docker.com/r/digidefiance/mcp-debugger-server
 
 ## Support
 
 For questions or issues:
-- **GitHub Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **GitHub Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **Email**: info@digitaldefiance.org
 - **Docker MCP Registry Issues**: https://github.com/docker/mcp-registry/issues
 

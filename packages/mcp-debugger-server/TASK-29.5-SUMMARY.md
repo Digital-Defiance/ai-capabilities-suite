@@ -26,7 +26,7 @@ All files are in `packages/mcp-debugger-server/docker-mcp-registry/`:
 ### 1. server.yaml (Required)
 Server configuration file for Docker MCP Registry:
 - Server name: `ts-mcp-debugger`
-- Docker image: `digitaldefiance/ts-mcp-server`
+- Docker image: `digidefiance/mcp-debugger-server`
 - Category: debugging
 - Configuration parameters (NODE_ENV, LOG_LEVEL)
 - Metadata and source information

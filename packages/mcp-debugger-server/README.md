@@ -3,7 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-debugger-server)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/digitaldefiance/ts-mcp-server)](https://hub.docker.com/r/digitaldefiance/ts-mcp-server)
+[![Docker Pulls](https://img.shields.io/docker/pulls/digidefiance/mcp-debugger-server)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
 
 An enterprise-grade Model Context Protocol (MCP) server that provides comprehensive debugging capabilities for Node.js and TypeScript applications. This server enables AI agents (Kiro, Amazon Q, GitHub Copilot) to interactively debug code with 25+ specialized tools, offering everything from basic breakpoint management to advanced CPU/memory profiling and hang detection.
 
@@ -58,8 +58,8 @@ npx @ai-capabilities-suite/mcp-debugger-server
 #### Using Docker
 ```bash
 # Pull and run the Docker image
-docker pull digitaldefiance/ts-mcp-server:latest
-docker run -d --name mcp-debugger digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
+docker run -d --name mcp-debugger digidefiance/mcp-debugger-server:latest
 
 # Or use docker-compose (see DOCKER-DEPLOYMENT.md)
 docker-compose up -d
@@ -68,7 +68,7 @@ docker-compose up -d
 #### From Source
 ```bash
 # Clone the repository
-git clone https://github.com/digitaldefiance/ai-capabilities-suite.git
+git clone https://github.com/digital-defiance/ai-capabilities-suite.git
 cd ai-capabilities-suite
 
 # Install dependencies
@@ -807,7 +807,7 @@ npm install -g @ai-capabilities-suite/mcp-debugger-server
 If you encounter issues not covered here:
 
 1. **Check the logs**: Enable debug logging with `DEBUG=mcp:*`
-2. **Search existing issues**: [GitHub Issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+2. **Search existing issues**: [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 3. **Create a new issue**: Include:
    - Node.js version (`node --version`)
    - Server version (`ts-mcp-server --version`)
@@ -1095,12 +1095,12 @@ SOFTWARE.
 ## 🔗 Links
 
 - **Homepage**: https://digitaldefiance.org
-- **GitHub**: https://github.com/digitaldefiance/ai-capabilities-suite
+- **GitHub**: https://github.com/digital-defiance/ai-capabilities-suite
 - **NPM**: https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server
-- **Docker Hub**: https://hub.docker.com/r/digitaldefiance/ts-mcp-server
-- **Documentation**: https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
-- **Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
-- **Discussions**: https://github.com/digitaldefiance/ai-capabilities-suite/discussions
+- **Docker Hub**: https://hub.docker.com/r/digidefiance/mcp-debugger-server
+- **Documentation**: https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
+- **Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
+- **Discussions**: https://github.com/digital-defiance/ai-capabilities-suite/discussions
 
 ---
 
@@ -1108,11 +1108,11 @@ SOFTWARE.
 
 **Made with ❤️ by [Digital Defiance](https://digitaldefiance.org)**
 
-[![GitHub Stars](https://img.shields.io/github/stars/digitaldefiance/ai-capabilities-suite?style=social)](https://github.com/digitaldefiance/ai-capabilities-suite)
+[![GitHub Stars](https://img.shields.io/github/stars/digitaldefiance/ai-capabilities-suite?style=social)](https://github.com/digital-defiance/ai-capabilities-suite)
 [![NPM Downloads](https://img.shields.io/npm/dm/@ai-capabilities-suite/mcp-debugger-server)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
-[![Docker Pulls](https://img.shields.io/docker/pulls/digitaldefiance/ts-mcp-server)](https://hub.docker.com/r/digitaldefiance/ts-mcp-server)
+[![Docker Pulls](https://img.shields.io/docker/pulls/digidefiance/mcp-debugger-server)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
 
-[⭐ Star us on GitHub](https://github.com/digitaldefiance/ai-capabilities-suite) | [📦 View on NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server) | [🐳 View on Docker Hub](https://hub.docker.com/r/digitaldefiance/ts-mcp-server)
+[⭐ Star us on GitHub](https://github.com/digital-defiance/ai-capabilities-suite) | [📦 View on NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server) | [🐳 View on Docker Hub](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
 
 </div>
 
@@ -1222,17 +1222,17 @@ A: Yes! The server has built-in support for all major test frameworks. Just star
 
 ### Getting Help
 
-- **📖 Documentation**: [Full documentation](https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server)
-- **🐛 Bug Reports**: [GitHub Issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
-- **💡 Feature Requests**: [GitHub Discussions](https://github.com/digitaldefiance/ai-capabilities-suite/discussions)
+- **📖 Documentation**: [Full documentation](https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server)
+- **🐛 Bug Reports**: [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
+- **💡 Feature Requests**: [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
 - **📧 Email Support**: info@digitaldefiance.org
 - **💬 Community Chat**: [Join our Discord](https://discord.gg/digitaldefiance) *(coming soon)*
 
 ### Resources
 
 - **NPM Package**: [@ai-capabilities-suite/mcp-debugger-server](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
-- **Docker Hub**: [digitaldefiance/ts-mcp-server](https://hub.docker.com/r/digitaldefiance/ts-mcp-server)
-- **GitHub Repository**: [ai-capabilities-suite](https://github.com/digitaldefiance/ai-capabilities-suite)
+- **Docker Hub**: [digidefiance/mcp-debugger-server](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
+- **GitHub Repository**: [ai-capabilities-suite](https://github.com/digital-defiance/ai-capabilities-suite)
 - **API Documentation**: [API.md](./API.md)
 - **Tool Reference**: [TOOL-REFERENCE.md](./TOOL-REFERENCE.md)
 
@@ -1334,4 +1334,4 @@ Support the project:
 - [ ] Advanced AI-powered debugging assistance
 - [ ] Real-time collaboration features
 
-**Want to influence the roadmap?** [Share your ideas](https://github.com/digitaldefiance/ai-capabilities-suite/discussions)
+**Want to influence the roadmap?** [Share your ideas](https://github.com/digital-defiance/ai-capabilities-suite/discussions)

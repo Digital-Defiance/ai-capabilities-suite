@@ -7,7 +7,8 @@
   "workspaces": [
     "packages/mcp-debugger-core",
     "packages/mcp-debugger-server",
-    "packages/vscode-mcp-debugger"
+    "packages/vscode-mcp-debugger",
+    "packages/mcp-screenshot"
   ],
   "scripts": {
     "build": "nx run-many -t build",

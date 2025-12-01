@@ -5,10 +5,10 @@ Enterprise-grade debugging for Node.js and TypeScript applications with 25+ spec
 ## Documentation
 
 For complete documentation, visit:
-- **Main Documentation**: https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme
-- **Tool Reference**: https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/TOOL-REFERENCE.md
-- **AI Agent Integration**: https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/AI-AGENT-INTEGRATION.md
-- **VS Code Integration**: https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/VSCODE-INTEGRATION.md
+- **Main Documentation**: https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme
+- **Tool Reference**: https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/TOOL-REFERENCE.md
+- **AI Agent Integration**: https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/AI-AGENT-INTEGRATION.md
+- **VS Code Integration**: https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/VSCODE-INTEGRATION.md
 
 ## Features
 
@@ -46,7 +46,7 @@ docker run -d \
   --name mcp-debugger \
   -e NODE_ENV=production \
   -e LOG_LEVEL=info \
-  digitaldefiance/ts-mcp-server:latest
+  digidefiance/mcp-debugger-server:latest
 ```
 
 ### Using Docker Compose
@@ -55,7 +55,7 @@ docker run -d \
 version: '3.8'
 services:
   mcp-debugger:
-    image: digitaldefiance/ts-mcp-server:latest
+    image: digidefiance/mcp-debugger-server:latest
     environment:
       - NODE_ENV=production
       - LOG_LEVEL=info
@@ -149,17 +149,17 @@ The server provides 25 debugging tools:
 
 ## Support
 
-- **GitHub Issues**: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- **GitHub Issues**: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - **Email**: info@digitaldefiance.org
-- **Documentation**: https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
+- **Documentation**: https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server
 
 ## License
 
-MIT License - See [LICENSE](https://github.com/digitaldefiance/ai-capabilities-suite/blob/main/LICENSE) for details.
+MIT License - See [LICENSE](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/LICENSE) for details.
 
 ## Author
 
 **Digital Defiance**
 - Website: https://digitaldefiance.org
-- GitHub: https://github.com/digitaldefiance
+- GitHub: https://github.com/digital-defiance
 - Email: info@digitaldefiance.org

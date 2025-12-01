@@ -25,7 +25,7 @@ on:
         default: "latest"
 
 env:
-  DOCKER_IMAGE: digitaldefiance/ts-mcp-server
+  DOCKER_IMAGE: digidefiance/mcp-debugger-server
   PLATFORMS: linux/amd64,linux/arm64
 
 jobs:

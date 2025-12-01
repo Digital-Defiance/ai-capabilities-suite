@@ -21,14 +21,14 @@ This guide covers deploying the MCP Debugger Server using Docker for containeriz
 
 ```bash
 # Pull the latest image
-docker pull digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
 
 # Run the container
 docker run -d \
   --name mcp-debugger \
   -p 3000:3000 \
   -v $(pwd)/workspace:/workspace:ro \
-  digitaldefiance/ts-mcp-server:latest
+  digidefiance/mcp-debugger-server:latest
 ```
 
 ### Using Docker Compose
@@ -87,7 +87,7 @@ version: '3.8'
 
 services:
   mcp-debugger:
-    image: digitaldefiance/ts-mcp-server:latest
+    image: digidefiance/mcp-debugger-server:latest
     container_name: mcp-debugger-server
     restart: unless-stopped
     ports:
@@ -133,7 +133,7 @@ docker-compose --profile monitoring up -d
 ```yaml
 services:
   mcp-debugger:
-    image: digitaldefiance/ts-mcp-server:latest
+    image: digidefiance/mcp-debugger-server:latest
     environment:
       - MCP_AUTH_ENABLED=true
       - MCP_AUTH_TOKEN=${MCP_AUTH_TOKEN}  # Set in .env file
@@ -375,7 +375,7 @@ Run container in debug mode:
 docker run -it --rm \
   -e LOG_LEVEL=debug \
   -e NODE_ENV=development \
-  digitaldefiance/ts-mcp-server:latest
+  digidefiance/mcp-debugger-server:latest
 ```
 
 ## Production Deployment
@@ -401,7 +401,7 @@ spec:
     spec:
       containers:
       - name: mcp-debugger
-        image: digitaldefiance/ts-mcp-server:latest
+        image: digidefiance/mcp-debugger-server:latest
         ports:
         - containerPort: 3000
         env:
@@ -447,7 +447,7 @@ docker stack deploy -c docker-compose.yml mcp-stack
 docker service scale mcp-stack_mcp-debugger=3
 
 # Update service
-docker service update --image digitaldefiance/ts-mcp-server:v1.1.0 mcp-stack_mcp-debugger
+docker service update --image digidefiance/mcp-debugger-server:v1.1.0 mcp-stack_mcp-debugger
 ```
 
 ### High Availability
@@ -504,9 +504,9 @@ deploy:
 
 For issues and questions:
 
-- GitHub Issues: https://github.com/digitaldefiance/ai-capabilities-suite/issues
+- GitHub Issues: https://github.com/digital-defiance/ai-capabilities-suite/issues
 - Email: info@digitaldefiance.org
-- Documentation: https://github.com/digitaldefiance/ai-capabilities-suite
+- Documentation: https://github.com/digital-defiance/ai-capabilities-suite
 
 ## License
 

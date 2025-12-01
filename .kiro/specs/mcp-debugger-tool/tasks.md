@@ -882,7 +882,7 @@
     - [x] 28.2.4 Create GitHub Actions workflow for Docker Hub publishing
     - [x] 28.2.5 Create Docker deployment documentation
     - [x] 28.2.6 Manual: Create Docker Hub account and configure DOCKER_TOKEN
-    - [x] 28.2.7 Manual: Push first image with `docker push digitaldefiance/ts-mcp-server`
+    - [x] 28.2.7 Manual: Push first image with `docker push digidefiance/mcp-debugger-server`
     - _Requirements: Containerized deployment, Easy scaling_
 
   - [x] 28.3 Submit to official MCP Registry

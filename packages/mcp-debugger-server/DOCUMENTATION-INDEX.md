@@ -108,8 +108,8 @@ Complete documentation for the MCP Debugger Server package.
 npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 # Or use Docker
-docker pull digitaldefiance/ts-mcp-server:latest
-docker run -d --name mcp-debugger digitaldefiance/ts-mcp-server:latest
+docker pull digidefiance/mcp-debugger-server:latest
+docker run -d --name mcp-debugger digidefiance/mcp-debugger-server:latest
 
 # Verify installation
 npx ts-mcp-server --version
@@ -165,7 +165,7 @@ To improve documentation:
 
 For documentation issues:
 
-- **GitHub Issues**: [Report documentation issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- **GitHub Issues**: [Report documentation issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - **Pull Requests**: Submit documentation improvements
 - **Email**: info@digitaldefiance.org
 

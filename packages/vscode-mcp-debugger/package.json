@@ -270,12 +270,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitaldefiance/ai-capabilities-suite.git",
+    "url": "https://github.com/digital-defiance/ai-capabilities-suite.git",
     "directory": "packages/vscode-mcp-debugger"
   },
   "bugs": {
-    "url": "https://github.com/digitaldefiance/ai-capabilities-suite/issues"
+    "url": "https://github.com/digital-defiance/ai-capabilities-suite/issues"
   },
-  "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/vscode-mcp-debugger#readme",
+  "homepage": "https://github.com/digital-defiance/ai-capabilities-suite/tree/main/packages/vscode-mcp-debugger#readme",
   "license": "MIT"
 }

@@ -204,7 +204,7 @@ For comprehensive publishing documentation:
 ## Support
 
 For publishing issues:
-- GitHub Issues: [ai-capabilities-suite/issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- GitHub Issues: [ai-capabilities-suite/issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - Email: info@digitaldefiance.org
 
 ---

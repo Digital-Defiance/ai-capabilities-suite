@@ -215,7 +215,7 @@ git push --tags
 ## Getting Help
 
 - 📖 **Full Documentation**: [PUBLISHING.md](./PUBLISHING.md)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/digitaldefiance/ai-capabilities-suite/issues)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - 📚 **NPM Docs**: [docs.npmjs.com](https://docs.npmjs.com/)
 - 💬 **Support**: Contact package maintainers
 
