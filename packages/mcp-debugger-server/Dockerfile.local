@@ -18,7 +18,9 @@ COPY nx.json tsconfig.base.json ./
 COPY packages ./packages
 
 # Remove source files, keep only package.json and necessary configs
-RUN find packages -type f ! -name 'package.json' ! -name 'project.json' ! -name 'tsconfig*.json' -delete
+RUN find packages -type f ! -name 'package.json' ! -name 'project.json' ! -name 'tsconfig*.json' -delete && \
+    # Remove vscode-mcp-debugger entirely (not needed for server build)
+    rm -rf packages/vscode-mcp-debugger
 
 # Install dependencies
 RUN corepack enable && yarn install
