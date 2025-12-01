@@ -31,13 +31,27 @@ Advanced debugging for Node.js and TypeScript applications with AI-powered featu
 
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
-3. Search for "MCP Debugger"
+3. Search for "TypeScript MCP Debugger"
 4. Click Install
+
+### Install the MCP Debugger Server
+
+The extension requires the MCP debugger server to function. Install it globally:
+
+```bash
+npm install -g @ai-capabilities-suite/mcp-debugger-server
+```
+
+Or install it in your project:
+
+```bash
+npm install --save-dev @ai-capabilities-suite/mcp-debugger-server
+```
 
 ### From VSIX File
 
 ```bash
-code --install-extension mcp-debugger-1.0.0.vsix
+code --install-extension ts-mcp-debugger-1.0.0.vsix
 ```
 
 ## Quick Start

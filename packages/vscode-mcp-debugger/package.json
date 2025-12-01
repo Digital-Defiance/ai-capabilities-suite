@@ -1,9 +1,9 @@
 {
-  "name": "mcp-debugger",
-  "displayName": "MCP Debugger",
+  "name": "ts-mcp-debugger",
+  "displayName": "TypeScript MCP Debugger",
   "description": "Advanced debugging for Node.js and TypeScript with MCP integration",
-  "version": "1.0.0",
-  "publisher": "mcp-debugger",
+  "version": "1.0.1",
+  "publisher": "DigitalDefiance",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.85.0"
@@ -26,9 +26,7 @@
   "activationEvents": [
     "onDebug",
     "onLanguage:javascript",
-    "onLanguage:typescript",
-    "onCommand:mcp-debugger.start",
-    "onCommand:mcp-debugger.detectHang"
+    "onLanguage:typescript"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -256,17 +254,19 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@ai-capabilities-suite/mcp-debugger-server": "^1.0.3",
     "@modelcontextprotocol/sdk": "^0.5.0",
     "@vscode/debugadapter": "^1.65.0",
     "@vscode/debugprotocol": "^1.65.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/mcp-debugger"
+    "url": "https://github.com/digitaldefiance/ai-capabilities-suite.git",
+    "directory": "packages/vscode-mcp-debugger"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/mcp-debugger/issues"
+    "url": "https://github.com/digitaldefiance/ai-capabilities-suite/issues"
   },
-  "homepage": "https://github.com/yourusername/mcp-debugger#readme",
+  "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/vscode-mcp-debugger#readme",
   "license": "MIT"
 }
