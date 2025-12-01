@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { SourceMapConsumer, RawSourceMap } from 'source-map';
+import * as fs from "fs";
+import * as path from "path";
+import { SourceMapConsumer, RawSourceMap } from "source-map";
 
 /**
  * Source location in original source code (TypeScript)
@@ -69,7 +69,7 @@ export class SourceMapManager {
    * Internal method to load and parse a source map
    */
   private async loadSourceMapInternal(
-    jsFile: string,
+    jsFile: string
   ): Promise<SourceMapConsumer | null> {
     try {
       // Try to find the .map file
@@ -81,7 +81,7 @@ export class SourceMapManager {
       }
 
       // Read and parse the source map
-      const mapContent = fs.readFileSync(mapFile, 'utf8');
+      const mapContent = fs.readFileSync(mapFile, "utf8");
       const rawSourceMap: RawSourceMap = JSON.parse(mapContent);
 
       // Create a SourceMapConsumer
@@ -146,7 +146,7 @@ export class SourceMapManager {
    * @returns Compiled JavaScript location or null if mapping fails
    */
   async mapSourceToCompiled(
-    sourceLocation: SourceLocation,
+    sourceLocation: SourceLocation
   ): Promise<CompiledLocation | null> {
     try {
       // We need to find the JavaScript file that corresponds to this TypeScript file
@@ -167,7 +167,7 @@ export class SourceMapManager {
       // We need to find all generated positions for this source location
       const generatedPositions: Array<{ line: number; column: number }> = [];
 
-      consumer.eachMapping((mapping) => {
+      consumer.eachMapping((mapping: any) => {
         // Check if this mapping corresponds to our source location
         if (
           mapping.source &&
@@ -208,7 +208,7 @@ export class SourceMapManager {
    * @returns Original TypeScript location or null if mapping fails
    */
   async mapCompiledToSource(
-    compiledLocation: CompiledLocation,
+    compiledLocation: CompiledLocation
   ): Promise<SourceLocation | null> {
     try {
       // Load the source map for the JavaScript file
@@ -233,7 +233,7 @@ export class SourceMapManager {
       // The source path in the source map is usually relative
       const sourceFile = this.resolveSourcePath(
         compiledLocation.file,
-        original.source,
+        original.source
       );
 
       return {
@@ -255,10 +255,10 @@ export class SourceMapManager {
   private findCompiledFile(sourceFile: string): string | null {
     // Try common patterns
     const patterns = [
-      sourceFile.replace(/\.ts$/, '.js'),
-      sourceFile.replace(/\.tsx$/, '.jsx'),
-      sourceFile.replace(/\.ts$/, '.js').replace('/src/', '/dist/'),
-      sourceFile.replace(/\.tsx$/, '.jsx').replace('/src/', '/dist/'),
+      sourceFile.replace(/\.ts$/, ".js"),
+      sourceFile.replace(/\.tsx$/, ".jsx"),
+      sourceFile.replace(/\.ts$/, ".js").replace("/src/", "/dist/"),
+      sourceFile.replace(/\.tsx$/, ".jsx").replace("/src/", "/dist/"),
     ];
 
     for (const pattern of patterns) {
@@ -301,7 +301,7 @@ export class SourceMapManager {
     jsFile: string,
     jsVariableName: string,
     line: number,
-    column: number,
+    column: number
   ): Promise<string | null> {
     try {
       // Load the source map
@@ -341,7 +341,7 @@ export class SourceMapManager {
   async getVariableNamesAtLocation(
     jsFile: string,
     line: number,
-    column: number,
+    column: number
   ): Promise<string[]> {
     try {
       const consumer = await this.loadSourceMap(jsFile);
@@ -352,7 +352,7 @@ export class SourceMapManager {
       const names: string[] = [];
 
       // Look for all mappings near this location
-      consumer.eachMapping((mapping) => {
+      consumer.eachMapping((mapping: any) => {
         if (
           mapping.generatedLine === line &&
           Math.abs(mapping.generatedColumn - column) < 10 && // Within 10 columns

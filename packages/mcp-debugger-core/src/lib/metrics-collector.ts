@@ -2,11 +2,11 @@
  * Metric types for tracking different aspects of the debugger
  */
 export enum MetricType {
-  SESSION_DURATION = 'session_duration',
-  SESSION_COUNT = 'session_count',
-  BREAKPOINT_HIT = 'breakpoint_hit',
-  OPERATION_LATENCY = 'operation_latency',
-  ERROR_RATE = 'error_rate',
+  SESSION_DURATION = "session_duration",
+  SESSION_COUNT = "session_count",
+  BREAKPOINT_HIT = "breakpoint_hit",
+  OPERATION_LATENCY = "operation_latency",
+  ERROR_RATE = "error_rate",
 }
 
 /**
@@ -57,7 +57,7 @@ export class MetricsCollector {
    */
   recordSessionStart(sessionId: string): void {
     this.sessionStartTimes.set(sessionId, Date.now());
-    this.recordMetric(MetricType.SESSION_COUNT, 1, { action: 'start' });
+    this.recordMetric(MetricType.SESSION_COUNT, 1, { action: "start" });
   }
 
   /**
@@ -70,7 +70,7 @@ export class MetricsCollector {
       this.recordMetric(MetricType.SESSION_DURATION, duration, { sessionId });
       this.sessionStartTimes.delete(sessionId);
     }
-    this.recordMetric(MetricType.SESSION_COUNT, 1, { action: 'end' });
+    this.recordMetric(MetricType.SESSION_COUNT, 1, { action: "end" });
   }
 
   /**
@@ -82,7 +82,7 @@ export class MetricsCollector {
 
     const labels: Record<string, string> = { breakpointId };
     if (sessionId) {
-      labels.sessionId = sessionId;
+      labels["sessionId"] = sessionId;
     }
 
     this.recordMetric(MetricType.BREAKPOINT_HIT, 1, labels);
@@ -101,7 +101,7 @@ export class MetricsCollector {
   endOperation(
     operationId: string,
     operationType: string,
-    success: boolean = true,
+    success: boolean = true
   ): void {
     const startTime = this.operationStartTimes.get(operationId);
     if (startTime) {
@@ -133,7 +133,7 @@ export class MetricsCollector {
   private recordMetric(
     type: MetricType,
     value: number,
-    labels?: Record<string, string>,
+    labels?: Record<string, string>
   ): void {
     const entry: MetricEntry = {
       type,
@@ -169,7 +169,7 @@ export class MetricsCollector {
    */
   getMetricsInRange(startTime: number, endTime: number): MetricEntry[] {
     return this.metrics.filter(
-      (m) => m.timestamp >= startTime && m.timestamp <= endTime,
+      (m) => m.timestamp >= startTime && m.timestamp <= endTime
     );
   }
 
