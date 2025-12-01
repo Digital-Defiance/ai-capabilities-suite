@@ -64,11 +64,10 @@ jobs:
           mkdir -p temp-install
           cd temp-install
           npm install @ai-capabilities-suite/mcp-debugger-server@1.0.2
-          cd ..
 
       - name: Build binary for ${{ matrix.os }}
+        working-directory: temp-install/node_modules/@ai-capabilities-suite/mcp-debugger-server
         run: |
-          cd temp-install/node_modules/@ai-capabilities-suite/mcp-debugger-server
           pkg . --target ${{ matrix.target }} --output ../../../../binaries/${{ matrix.artifact }}
 
       - name: Test binary (Linux/macOS)
