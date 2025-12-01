@@ -66,8 +66,17 @@ jobs:
           cd temp-install
           npm install @ai-capabilities-suite/mcp-debugger-server@1.0.2
 
-          # Verify installation
-          ls -la node_modules/@ai-capabilities-suite/
+          # Debug: Show directory structure
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Contents ==="
+          ls -la
+          echo "=== node_modules contents ==="
+          ls -la node_modules/ 2>/dev/null || echo "node_modules not found"
+          echo "=== Looking for @ai-capabilities-suite ==="
+          ls -la node_modules/@ai-capabilities-suite/ 2>/dev/null || echo "@ai-capabilities-suite not found"
+          echo "=== Find mcp-debugger-server ==="
+          find . -name "*mcp-debugger-server*" -type d 2>/dev/null || echo "Not found"
 
           # Build binary
           cd node_modules/@ai-capabilities-suite/mcp-debugger-server
