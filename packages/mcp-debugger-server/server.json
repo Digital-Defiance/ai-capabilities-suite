@@ -6,7 +6,7 @@
     "url": "https://github.com/digitaldefiance/ai-capabilities-suite",
     "source": "github"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/digitaldefiance/ai-capabilities-suite/tree/main/packages/mcp-debugger-server#readme",
   "license": "MIT",
   "author": {
@@ -45,7 +45,7 @@
     {
       "registryType": "npm",
       "identifier": "@ai-capabilities-suite/mcp-debugger-server",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "transport": {
         "type": "stdio"
       },
