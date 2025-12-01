@@ -6,6 +6,7 @@
     "outDir": "dist",
     "incremental": true,
     "declaration": true,
+    "module": "CommonJS",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
     "emitDeclarationOnly": false,
     "allowSyntheticDefaultImports": true,
