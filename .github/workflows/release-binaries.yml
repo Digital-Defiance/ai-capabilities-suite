@@ -59,15 +59,18 @@ jobs:
       - name: Create binaries directory
         run: mkdir -p binaries
 
-      - name: Install mcp-debugger-server from NPM
+      - name: Install and build binary for ${{ matrix.os }}
         run: |
+          # Install the package from NPM
           mkdir -p temp-install
           cd temp-install
           npm install @ai-capabilities-suite/mcp-debugger-server@1.0.2
 
-      - name: Build binary for ${{ matrix.os }}
-        working-directory: temp-install/node_modules/@ai-capabilities-suite/mcp-debugger-server
-        run: |
+          # Verify installation
+          ls -la node_modules/@ai-capabilities-suite/
+
+          # Build binary
+          cd node_modules/@ai-capabilities-suite/mcp-debugger-server
           pkg . --target ${{ matrix.target }} --output ../../../../binaries/${{ matrix.artifact }}
 
       - name: Test binary (Linux/macOS)
