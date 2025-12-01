@@ -26,8 +26,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Lint
         run: yarn lint
@@ -64,8 +67,11 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build all packages
         run: yarn build
