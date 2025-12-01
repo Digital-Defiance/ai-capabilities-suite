@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: packages/mcp-debugger-server/Dockerfile
+          file: packages/mcp-debugger-server/Dockerfile.local
           push: false
           load: true
           tags: ${{ env.DOCKER_IMAGE }}:test
