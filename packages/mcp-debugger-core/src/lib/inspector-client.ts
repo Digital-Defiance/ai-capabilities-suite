@@ -1,5 +1,5 @@
-import WebSocket from 'ws';
-import { EventEmitter } from 'events';
+import WebSocket from "ws";
+import { EventEmitter } from "events";
 
 /**
  * CDP (Chrome DevTools Protocol) message types
@@ -51,27 +51,45 @@ export class InspectorClient extends EventEmitter {
    * Connect to the Inspector Protocol WebSocket endpoint
    */
   async connect(): Promise<void> {
+    const maxRetries = 3;
+    const retryDelay = 200;
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        await this.attemptConnect();
+        return;
+      } catch (error) {
+        if (attempt === maxRetries - 1) {
+          throw error;
+        }
+        // Wait before retrying
+        await new Promise((resolve) => setTimeout(resolve, retryDelay));
+      }
+    }
+  }
+
+  private attemptConnect(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.ws = new WebSocket(this.wsUrl);
 
-      this.ws.on('open', () => {
+      this.ws.on("open", () => {
         this.connected = true;
-        this.emit('connected');
+        this.emit("connected");
         resolve();
       });
 
-      this.ws.on('message', (data: WebSocket.Data) => {
+      this.ws.on("message", (data: WebSocket.Data) => {
         this.handleMessage(data.toString());
       });
 
-      this.ws.on('error', (error: Error) => {
-        this.emit('error', error);
+      this.ws.on("error", (error: Error) => {
+        this.emit("error", error);
         reject(error);
       });
 
-      this.ws.on('close', () => {
+      this.ws.on("close", () => {
         this.connected = false;
-        this.emit('disconnected');
+        this.emit("disconnected");
         this.cleanup();
       });
     });
@@ -85,7 +103,7 @@ export class InspectorClient extends EventEmitter {
       const message = JSON.parse(data);
 
       // Check if it's a response to a request
-      if ('id' in message) {
+      if ("id" in message) {
         const pending = this.pendingRequests.get(message.id);
         if (pending) {
           this.pendingRequests.delete(message.id);
@@ -99,13 +117,13 @@ export class InspectorClient extends EventEmitter {
             pending.resolve(message.result);
           }
         }
-      } else if ('method' in message) {
+      } else if ("method" in message) {
         // It's an event
-        this.emit('event', message as CDPEvent);
+        this.emit("event", message as CDPEvent);
         this.emit(message.method, message.params);
       }
     } catch (error) {
-      this.emit('error', error);
+      this.emit("error", error);
     }
   }
 
@@ -118,10 +136,10 @@ export class InspectorClient extends EventEmitter {
   async send(
     method: string,
     params?: Record<string, any>,
-    timeout: number = 5000,
+    timeout: number = 5000
   ): Promise<any> {
     if (!this.connected || !this.ws) {
-      throw new Error('Inspector client is not connected');
+      throw new Error("Inspector client is not connected");
     }
 
     const id = ++this.messageId;
@@ -132,7 +150,7 @@ export class InspectorClient extends EventEmitter {
       const timeoutId = setTimeout(() => {
         this.pendingRequests.delete(id);
         reject(
-          new Error(`CDP command '${method}' timed out after ${timeout}ms`),
+          new Error(`CDP command '${method}' timed out after ${timeout}ms`)
         );
       }, timeout);
 
@@ -181,7 +199,7 @@ export class InspectorClient extends EventEmitter {
   private cleanup(): void {
     // Reject all pending requests
     for (const [id, pending] of this.pendingRequests.entries()) {
-      pending.reject(new Error('Inspector client disconnected'));
+      pending.reject(new Error("Inspector client disconnected"));
     }
     this.pendingRequests.clear();
     this.connected = false;
