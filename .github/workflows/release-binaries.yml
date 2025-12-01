@@ -68,10 +68,13 @@ jobs:
           PACKAGE_PATH=$(npm root -g)/@ai-capabilities-suite/mcp-debugger-server
           echo "Package installed at: $PACKAGE_PATH"
           ls -la "$PACKAGE_PATH"
+          echo "=== Checking dist directory ==="
+          ls -la "$PACKAGE_PATH/dist" || echo "dist not found"
+          ls -la "$PACKAGE_PATH/dist/src" || echo "dist/src not found"
 
-          # Build binary from global installation
+          # Build binary from global installation using the CLI entry point
           cd "$PACKAGE_PATH"
-          pkg . --target ${{ matrix.target }} --output $GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
+          pkg dist/src/cli.js --target ${{ matrix.target }} --output $GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
 
       - name: Test binary (Linux/macOS)
         if: matrix.os != 'windows'
