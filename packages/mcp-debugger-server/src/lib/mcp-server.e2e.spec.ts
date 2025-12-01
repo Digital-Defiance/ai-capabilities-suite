@@ -15,14 +15,24 @@ describe("MCP Debugger Server - E2E", () => {
   async function startServer(): Promise<void> {
     return new Promise((resolve, reject) => {
       // Build the server first
+      // Use npx.cmd on Windows, npx on Unix
+      const isWindows = process.platform === "win32";
+      const npxCommand = isWindows ? "npx.cmd" : "npx";
+
       const buildProcess = spawn(
-        "npx",
+        npxCommand,
         ["nx", "build", "@ai-capabilities-suite/mcp-server"],
         {
           cwd: path.join(__dirname, "../../../.."),
           stdio: "inherit",
+          shell: isWindows, // Use shell on Windows for better compatibility
         }
       );
+
+      buildProcess.on("error", (error) => {
+        console.error("Build process error:", error);
+        reject(new Error(`Build process failed to start: ${error.message}`));
+      });
 
       buildProcess.on("exit", (code) => {
         if (code !== 0) {
@@ -36,6 +46,13 @@ describe("MCP Debugger Server - E2E", () => {
           stdio: ["pipe", "pipe", "pipe"],
         });
 
+        if (!serverProcess || !serverProcess.stdout || !serverProcess.stdin) {
+          reject(
+            new Error("Failed to start server process or stdio not available")
+          );
+          return;
+        }
+
         // Log stderr for debugging
         serverProcess.stderr?.on("data", (data) => {
           console.error("Server stderr:", data.toString());
@@ -48,7 +65,7 @@ describe("MCP Debugger Server - E2E", () => {
         });
 
         // Wait for server to be ready
-        setTimeout(() => resolve(), 1000);
+        setTimeout(() => resolve(), 2000); // Increased wait time for Windows
       });
     });
   }
@@ -115,7 +132,7 @@ describe("MCP Debugger Server - E2E", () => {
 
   beforeAll(async () => {
     await startServer();
-  }, 30000); // 30 second timeout for build
+  }, 60000); // 60 second timeout for build (Windows can be slower)
 
   afterAll(() => {
     stopServer();
