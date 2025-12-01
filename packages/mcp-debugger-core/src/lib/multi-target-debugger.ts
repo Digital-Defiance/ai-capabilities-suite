@@ -322,8 +322,8 @@ export class MultiTargetDebugger extends EventEmitter {
     }
 
     // Filter by timestamp
-    if (options?.since) {
-      logs = logs.filter((log) => log.timestamp >= options.since);
+    if (options?.since !== undefined) {
+      logs = logs.filter((log) => log.timestamp >= options.since!);
     }
 
     // Apply limit

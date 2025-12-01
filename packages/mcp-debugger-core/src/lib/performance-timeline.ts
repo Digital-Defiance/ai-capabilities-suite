@@ -1,15 +1,15 @@
-import { InspectorClient } from './inspector-client';
+import { InspectorClient } from "./inspector-client";
 
 /**
  * Performance event types
  */
 export enum PerformanceEventType {
-  FUNCTION_CALL = 'FunctionCall',
-  SCRIPT_EVALUATION = 'ScriptEvaluation',
-  GARBAGE_COLLECTION = 'GarbageCollection',
-  COMPILE_SCRIPT = 'CompileScript',
-  PARSE_SCRIPT = 'ParseScript',
-  OTHER = 'Other',
+  FUNCTION_CALL = "FunctionCall",
+  SCRIPT_EVALUATION = "ScriptEvaluation",
+  GARBAGE_COLLECTION = "GarbageCollection",
+  COMPILE_SCRIPT = "CompileScript",
+  PARSE_SCRIPT = "ParseScript",
+  OTHER = "Other",
 }
 
 /**
@@ -81,7 +81,7 @@ export class PerformanceTimeline {
    */
   async startRecording(): Promise<void> {
     if (this.recording) {
-      throw new Error('Performance recording is already active');
+      throw new Error("Performance recording is already active");
     }
 
     // Clear previous data
@@ -90,15 +90,15 @@ export class PerformanceTimeline {
     this.startTime = Date.now();
 
     // Enable Runtime domain for console timing
-    await this.inspector.send('Runtime.enable');
+    await this.inspector.send("Runtime.enable");
 
     // Enable Profiler domain for precise timing
-    await this.inspector.send('Profiler.enable');
+    await this.inspector.send("Profiler.enable");
 
     // Set up event listeners
     this.inspector.on(
-      'Runtime.consoleAPICalled',
-      this.handleConsoleAPI.bind(this),
+      "Runtime.consoleAPICalled",
+      this.handleConsoleAPI.bind(this)
     );
 
     this.recording = true;
@@ -110,19 +110,19 @@ export class PerformanceTimeline {
    */
   async stopRecording(): Promise<PerformanceReport> {
     if (!this.recording) {
-      throw new Error('Performance recording is not active');
+      throw new Error("Performance recording is not active");
     }
 
     this.recording = false;
 
     // Remove event listeners
     this.inspector.off(
-      'Runtime.consoleAPICalled',
-      this.handleConsoleAPI.bind(this),
+      "Runtime.consoleAPICalled",
+      this.handleConsoleAPI.bind(this)
     );
 
     // Disable profiler
-    await this.inspector.send('Profiler.disable');
+    await this.inspector.send("Profiler.disable");
 
     // Generate report
     return this.generateReport();
@@ -135,7 +135,7 @@ export class PerformanceTimeline {
     if (!this.recording) return;
 
     // Track console.time and console.timeEnd calls
-    if (params.type === 'timeEnd' && params.args && params.args.length > 0) {
+    if (params.type === "timeEnd" && params.args && params.args.length > 0) {
       const label = params.args[0].value;
       // This would need more sophisticated tracking to match time/timeEnd pairs
       // For now, we just record the event
@@ -160,7 +160,7 @@ export class PerformanceTimeline {
 
     // Track function timings
     if (event.type === PerformanceEventType.FUNCTION_CALL && event.details) {
-      const key = `${event.name}:${event.details.file}:${event.details.line}`;
+      const key = `${event.name}:${event.details["file"]}:${event.details["line"]}`;
       const existing = this.functionTimings.get(key);
 
       if (existing) {
@@ -174,8 +174,8 @@ export class PerformanceTimeline {
           totalTime: event.duration,
           minTime: event.duration,
           maxTime: event.duration,
-          file: event.details.file || '',
-          line: event.details.line || 0,
+          file: event.details["file"] || "",
+          line: event.details["line"] || 0,
         });
       }
     }
@@ -192,7 +192,7 @@ export class PerformanceTimeline {
     functionName: string,
     file: string,
     line: number,
-    duration: number,
+    duration: number
   ): void {
     const now = Date.now();
     this.recordEvent({
@@ -213,7 +213,7 @@ export class PerformanceTimeline {
     const now = Date.now();
     this.recordEvent({
       type: PerformanceEventType.GARBAGE_COLLECTION,
-      name: 'GC',
+      name: "GC",
       startTime: now - duration / 1000,
       endTime: now,
       duration: duration / 1000, // Convert to milliseconds
@@ -234,16 +234,16 @@ export class PerformanceTimeline {
 
     // Calculate GC statistics
     const gcEvents = this.events.filter(
-      (event) => event.type === PerformanceEventType.GARBAGE_COLLECTION,
+      (event) => event.type === PerformanceEventType.GARBAGE_COLLECTION
     );
     const gcTime = gcEvents.reduce((sum, event) => sum + event.duration, 0);
     const gcCount = gcEvents.length;
 
     // Convert function timings to array
     const functionTimings: FunctionTiming[] = Array.from(
-      this.functionTimings.entries(),
+      this.functionTimings.entries()
     ).map(([key, data]) => {
-      const [functionName] = key.split(':');
+      const [functionName] = key.split(":");
       return {
         functionName,
         file: data.file,
@@ -278,31 +278,33 @@ export class PerformanceTimeline {
   formatReport(report: PerformanceReport): string {
     const lines: string[] = [];
 
-    lines.push('Performance Report');
-    lines.push('==================');
+    lines.push("Performance Report");
+    lines.push("==================");
     lines.push(`Total Duration: ${report.totalDuration.toFixed(2)}ms`);
     lines.push(`Total Events: ${report.eventCount}`);
     lines.push(
-      `GC Time: ${report.gcTime.toFixed(2)}ms (${report.gcCount} collections)`,
+      `GC Time: ${report.gcTime.toFixed(2)}ms (${report.gcCount} collections)`
     );
-    lines.push('');
+    lines.push("");
 
     if (report.slowOperations.length > 0) {
-      lines.push('Slow Operations (>100ms):');
+      lines.push("Slow Operations (>100ms):");
       for (const op of report.slowOperations.slice(0, 10)) {
         lines.push(`  ${op.duration.toFixed(2)}ms - ${op.name} (${op.type})`);
-        if (op.details?.file) {
-          lines.push(`    at ${op.details.file}:${op.details.line}`);
+        if (op.details?.["file"]) {
+          lines.push(`    at ${op.details["file"]}:${op.details["line"]}`);
         }
       }
-      lines.push('');
+      lines.push("");
     }
 
     if (report.functionTimings.length > 0) {
-      lines.push('Top Functions by Total Time:');
+      lines.push("Top Functions by Total Time:");
       for (const fn of report.functionTimings.slice(0, 10)) {
         lines.push(
-          `  ${fn.totalTime.toFixed(2)}ms - ${fn.functionName} (${fn.callCount} calls, avg: ${fn.averageTime.toFixed(2)}ms)`,
+          `  ${fn.totalTime.toFixed(2)}ms - ${fn.functionName} (${
+            fn.callCount
+          } calls, avg: ${fn.averageTime.toFixed(2)}ms)`
         );
         if (fn.file) {
           lines.push(`    at ${fn.file}:${fn.line}`);
@@ -310,7 +312,7 @@ export class PerformanceTimeline {
       }
     }
 
-    return lines.join('\n');
+    return lines.join("\n");
   }
 
   /**
@@ -340,7 +342,7 @@ export class PerformanceTimeline {
    */
   getFunctionTimings(): FunctionTiming[] {
     return Array.from(this.functionTimings.entries()).map(([key, data]) => {
-      const [functionName] = key.split(':');
+      const [functionName] = key.split(":");
       return {
         functionName,
         file: data.file,
