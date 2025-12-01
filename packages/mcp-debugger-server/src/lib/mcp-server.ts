@@ -643,6 +643,7 @@ export class McpDebuggerServer {
       },
       async (args) => {
         try {
+          console.log("[MCP Server] debugger_detect_hang called with:", args);
           const result = await this.hangDetector.detectHang({
             command: args.command,
             args: args.args,
@@ -650,6 +651,7 @@ export class McpDebuggerServer {
             timeout: args.timeout,
             sampleInterval: args.sampleInterval,
           });
+          console.log("[MCP Server] detectHang completed:", result);
 
           if (result.hung) {
             return {

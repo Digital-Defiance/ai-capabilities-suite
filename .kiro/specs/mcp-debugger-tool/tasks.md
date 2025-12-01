@@ -1061,7 +1061,7 @@
     - Understand how to integrate with VS Code's debug adapter protocol
     - _Requirements: VS Code integration_
 
-  - [x] 29.2 Create VS Code extension
+  - [-] 29.2 Create VS Code extension
     - Set up VS Code extension project structure
     - Implement MCP client for VS Code
     - Create debug configuration provider

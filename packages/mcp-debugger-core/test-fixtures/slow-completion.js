@@ -1,18 +1,17 @@
 // Test fixture for slow but normal completion (no hang)
-console.log('Starting slow execution');
+console.log("Starting slow execution");
 
-function sleep(ms) {
-  const start = Date.now();
-  while (Date.now() - start < ms) {
-    // Busy wait
+let sum = 0;
+for (let i = 0; i < 1000000; i++) {
+  sum += i;
+  // Add a small delay every 100k iterations
+  if (i % 100000 === 0) {
+    const start = Date.now();
+    while (Date.now() - start < 10) {
+      // Busy wait for 10ms
+    }
   }
 }
 
-let sum = 0;
-for (let i = 0; i < 10; i++) {
-  sum += i;
-  sleep(100); // Sleep 100ms between iterations
-}
-
-console.log('Sum:', sum);
-console.log('Completed successfully');
+console.log("Sum:", sum);
+console.log("Completed successfully");

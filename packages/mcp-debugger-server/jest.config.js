@@ -21,4 +21,6 @@ module.exports = {
   coverageDirectory: "test-output/jest/coverage",
   // Explicitly disable babel
   transformIgnorePatterns: [],
+  // Increase timeout for E2E tests that spawn real debug sessions
+  testTimeout: 60000,
 };

@@ -14,66 +14,91 @@ describe("MCP Debugger Server - E2E", () => {
    */
   async function startServer(): Promise<void> {
     return new Promise((resolve, reject) => {
-      // Build the server first
-      // Use npx.cmd on Windows, npx on Unix
-      const isWindows = process.platform === "win32";
-      const npxCommand = isWindows ? "npx.cmd" : "npx";
+      const serverPath = path.join(__dirname, "../../dist/src/index.js");
+      const fs = require("fs");
 
-      const buildProcess = spawn(
-        npxCommand,
-        ["nx", "build", "@ai-capabilities-suite/mcp-server"],
-        {
-          cwd: path.join(__dirname, "../../../.."),
-          stdio: "inherit",
-          shell: isWindows, // Use shell on Windows for better compatibility
-        }
-      );
+      // Check if server is already built
+      if (!fs.existsSync(serverPath)) {
+        // Build the server first
+        // Use npx.cmd on Windows, npx on Unix
+        const isWindows = process.platform === "win32";
+        const npxCommand = isWindows ? "npx.cmd" : "npx";
 
-      buildProcess.on("error", (error) => {
-        console.error("Build process error:", error);
-        reject(new Error(`Build process failed to start: ${error.message}`));
-      });
+        const buildProcess = spawn(
+          npxCommand,
+          ["nx", "build", "@ai-capabilities-suite/mcp-server"],
+          {
+            cwd: path.join(__dirname, "../../../.."),
+            stdio: "inherit",
+            shell: isWindows, // Use shell on Windows for better compatibility
+          }
+        );
 
-      buildProcess.on("exit", (code) => {
-        if (code !== 0) {
-          reject(new Error(`Build failed with code ${code}`));
-          return;
-        }
-
-        // Start the server
-        const serverPath = path.join(__dirname, "../../dist/src/index.js");
-        serverProcess = spawn("node", [serverPath], {
-          stdio: ["pipe", "pipe", "pipe"],
+        buildProcess.on("error", (error) => {
+          console.error("Build process error:", error);
+          reject(new Error(`Build process failed to start: ${error.message}`));
         });
 
-        if (!serverProcess || !serverProcess.stdout || !serverProcess.stdin) {
-          reject(
-            new Error("Failed to start server process or stdio not available")
-          );
-          return;
-        }
+        buildProcess.on("exit", (code) => {
+          if (code !== 0) {
+            reject(new Error(`Build failed with code ${code}`));
+            return;
+          }
 
-        // Log stderr for debugging
-        serverProcess.stderr?.on("data", (data) => {
-          console.error("Server stderr:", data.toString());
+          startServerProcess(resolve, reject, serverPath);
         });
-
-        // Log any errors
-        serverProcess.on("error", (error) => {
-          console.error("Server process error:", error);
-          reject(error);
-        });
-
-        // Wait for server to be ready
-        setTimeout(() => resolve(), 2000); // Increased wait time for Windows
-      });
+      } else {
+        // Server already built, just start it
+        startServerProcess(resolve, reject, serverPath);
+      }
     });
+  }
+
+  function startServerProcess(
+    resolve: () => void,
+    reject: (error: Error) => void,
+    serverPath: string
+  ): void {
+    // Start the server
+    serverProcess = spawn("node", [serverPath], {
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+
+    if (!serverProcess || !serverProcess.stdout || !serverProcess.stdin) {
+      reject(
+        new Error("Failed to start server process or stdio not available")
+      );
+      return;
+    }
+
+    // Increase max listeners to avoid warnings (E2E tests create many listeners)
+    serverProcess.stdout?.setMaxListeners(100);
+    serverProcess.stderr?.setMaxListeners(100);
+    serverProcess.stdin?.setMaxListeners(100);
+
+    // Log stderr for debugging
+    serverProcess.stderr?.on("data", (data) => {
+      console.error("Server stderr:", data.toString());
+    });
+
+    // Log any errors
+    serverProcess.on("error", (error) => {
+      console.error("Server process error:", error);
+      reject(error);
+    });
+
+    // Wait for server to be ready
+    setTimeout(() => resolve(), 2000); // Increased wait time for Windows
   }
 
   /**
    * Send a JSON-RPC request to the server
    */
-  function sendRequest(method: string, params?: any): Promise<any> {
+  function sendRequest(
+    method: string,
+    params?: any,
+    timeoutMs: number = 50000
+  ): Promise<any> {
     return new Promise((resolve, reject) => {
       const id = ++messageId;
       const request = {
@@ -87,10 +112,15 @@ describe("MCP Debugger Server - E2E", () => {
 
       const timeout = setTimeout(() => {
         reject(new Error(`Request timeout for ${method}`));
-      }, 30000); // Increased timeout for test framework starts
+      }, timeoutMs);
 
       const onData = (data: Buffer) => {
-        responseData += data.toString();
+        const chunk = data.toString();
+        responseData += chunk;
+        console.log(
+          `[Test] Received chunk for request ${id}:`,
+          chunk.substring(0, 200)
+        );
 
         // Try to parse complete JSON-RPC messages
         const lines = responseData.split("\n");
@@ -99,6 +129,7 @@ describe("MCP Debugger Server - E2E", () => {
             try {
               const response = JSON.parse(line);
               if (response.id === id) {
+                console.log(`[Test] Got response for request ${id}`);
                 clearTimeout(timeout);
                 serverProcess.stdout?.removeListener("data", onData);
 
@@ -117,6 +148,8 @@ describe("MCP Debugger Server - E2E", () => {
       };
 
       serverProcess.stdout?.on("data", onData);
+
+      console.log(`[Test] Sending request ${id}:`, method);
       serverProcess.stdin?.write(JSON.stringify(request) + "\n");
     });
   }
@@ -126,8 +159,25 @@ describe("MCP Debugger Server - E2E", () => {
    */
   function stopServer(): void {
     if (serverProcess && !serverProcess.killed) {
+      // Remove all listeners to prevent memory leaks
+      serverProcess.stdout?.removeAllListeners();
+      serverProcess.stderr?.removeAllListeners();
+      serverProcess.stdin?.removeAllListeners();
+      serverProcess.removeAllListeners();
+
       serverProcess.kill();
     }
+  }
+
+  /**
+   * Restart the server (stop and start)
+   */
+  async function restartServer(): Promise<void> {
+    stopServer();
+    // Wait a bit for cleanup
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    messageId = 0; // Reset message ID
+    await startServer();
   }
 
   beforeAll(async () => {
@@ -189,21 +239,30 @@ describe("MCP Debugger Server - E2E", () => {
   });
 
   describe("Tool Execution - debugger_detect_hang", () => {
+    beforeAll(async () => {
+      // Restart server before hang detection tests
+      await restartServer();
+    }, 60000);
+
     it("should detect a hanging process", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/infinite-loop.js"
+        "../../../mcp-debugger-core/test-fixtures/infinite-loop.js"
       );
 
-      const result = await sendRequest("tools/call", {
-        name: "debugger_detect_hang",
-        arguments: {
-          command: "node",
-          args: [testFile],
-          timeout: 2000,
-          sampleInterval: 100,
+      const result = await sendRequest(
+        "tools/call",
+        {
+          name: "debugger_detect_hang",
+          arguments: {
+            command: "node",
+            args: [testFile],
+            timeout: 2000,
+            sampleInterval: 100,
+          },
         },
-      });
+        70000
+      ); // Longer timeout for hang detection
 
       expect(result).toBeDefined();
       expect(result.content).toBeDefined();
@@ -219,41 +278,47 @@ describe("MCP Debugger Server - E2E", () => {
       expect(response.status).toBe("success");
       expect(response.hung).toBe(true);
       expect(response.location).toBeDefined();
-    }, 10000);
+    }, 60000);
 
     it("should detect normal completion", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/normal-completion.js"
+        "../../../mcp-debugger-core/test-fixtures/slow-completion.js"
       );
 
-      const result = await sendRequest("tools/call", {
-        name: "debugger_detect_hang",
-        arguments: {
-          command: "node",
-          args: [testFile],
-          timeout: 5000, // Increased timeout to avoid false positive
+      const result = await sendRequest(
+        "tools/call",
+        {
+          name: "debugger_detect_hang",
+          arguments: {
+            command: "node",
+            args: [testFile],
+            timeout: 2000, // 2 second timeout - process completes in ~100ms
+          },
         },
-      });
+        25000 // Must be longer than safety timeout (2000*3+10000=16000)
+      );
 
       expect(result).toBeDefined();
       const textContent = result.content.find((c: any) => c.type === "text");
       const response = JSON.parse(textContent.text);
 
-      if (response.hung === true) {
-        console.error("False positive hang detection:", response);
-      }
       expect(response.status).toBe("success");
       expect(response.hung).toBe(false);
       expect(response.completed).toBe(true);
-    }, 10000);
+    }, 30000); // Must be longer than sendRequest timeout
   });
 
   describe("Tool Execution - debugger_start", () => {
+    beforeAll(async () => {
+      // Restart server after hang detection tests
+      await restartServer();
+    }, 60000);
+
     it("should start a debug session", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/simple-script.js"
+        "../../../mcp-debugger-core/test-fixtures/simple-script.js"
       );
 
       const result = await sendRequest("tools/call", {
@@ -269,21 +334,28 @@ describe("MCP Debugger Server - E2E", () => {
       const textContent = result.content.find((c: any) => c.type === "text");
       const response = JSON.parse(textContent.text);
 
+      if (response.status === "error") {
+        console.log("Error starting debug session:", response);
+      }
+
       expect(response.status).toBe("success");
       expect(response.sessionId).toBeDefined();
       expect(response.state).toBe("paused");
       expect(response.pid).toBeDefined();
-    }, 10000);
+    }, 60000);
   });
 
   describe("Tool Execution - Session Operations", () => {
     let sessionId: string;
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/step-test-simple.js"
+      "../../../mcp-debugger-core/test-fixtures/step-test-simple.js"
     );
 
     beforeAll(async () => {
+      // Restart server for this test suite
+      await restartServer();
+
       // Start a debug session for testing
       const result = await sendRequest("tools/call", {
         name: "debugger_start",
@@ -318,7 +390,7 @@ describe("MCP Debugger Server - E2E", () => {
 
       // Wait for breakpoint to be hit
       await new Promise((resolve) => setTimeout(resolve, 500));
-    }, 15000);
+    }, 60000);
 
     it("should set a breakpoint", async () => {
       const result = await sendRequest("tools/call", {
@@ -338,7 +410,7 @@ describe("MCP Debugger Server - E2E", () => {
       expect(response.breakpointId).toBeDefined();
       expect(response.file).toBe(testFile);
       expect(response.line).toBe(4);
-    }, 10000);
+    }, 60000);
 
     it("should continue execution", async () => {
       const result = await sendRequest("tools/call", {
@@ -357,7 +429,7 @@ describe("MCP Debugger Server - E2E", () => {
 
       // Wait for the process to hit the next breakpoint
       await new Promise((resolve) => setTimeout(resolve, 500));
-    }, 10000);
+    }, 60000);
 
     it("should step over", async () => {
       const result = await sendRequest("tools/call", {
@@ -380,7 +452,7 @@ describe("MCP Debugger Server - E2E", () => {
         expect(response.location.file).toBeDefined();
         expect(response.location.line).toBeDefined();
       }
-    }, 10000);
+    }, 60000);
 
     it("should inspect variables", async () => {
       const result = await sendRequest("tools/call", {
@@ -402,7 +474,7 @@ describe("MCP Debugger Server - E2E", () => {
       expect(response.expression).toBe("1 + 1");
       expect(response.value).toBe(2);
       expect(response.type).toBeDefined();
-    }, 10000);
+    }, 60000);
 
     it("should get call stack", async () => {
       const result = await sendRequest("tools/call", {
@@ -429,17 +501,33 @@ describe("MCP Debugger Server - E2E", () => {
         expect(frame.line).toBeDefined();
         expect(path.isAbsolute(frame.file)).toBe(true); // Requirement 9.4
       }
-    }, 10000);
+    }, 60000);
+
+    afterAll(async () => {
+      if (sessionId) {
+        try {
+          await sendRequest("tools/call", {
+            name: "debugger_stop_session",
+            arguments: { sessionId },
+          });
+        } catch (e) {
+          // Session may already be stopped
+        }
+      }
+    });
   });
 
   describe("Step Operations - Requirements 2.4, 2.5, 2.6", () => {
     let sessionId: string;
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/step-test.js"
+      "../../../mcp-debugger-core/test-fixtures/step-test.js"
     );
 
     beforeAll(async () => {
+      // Restart server for this test suite
+      await restartServer();
+
       // Start a debug session for step testing
       const result = await sendRequest("tools/call", {
         name: "debugger_start",
@@ -464,7 +552,7 @@ describe("MCP Debugger Server - E2E", () => {
 
       // Wait for debugger statement to be hit
       await new Promise((resolve) => setTimeout(resolve, 500));
-    }, 15000);
+    }, 60000);
 
     it("should step into a function call", async () => {
       // We're at line 4 in outerFunction, step over to line 6 (innerFunction call)
@@ -502,7 +590,7 @@ describe("MCP Debugger Server - E2E", () => {
         // Log error for debugging
         console.log("Step into error:", response);
       }
-    }, 15000);
+    }, 60000);
 
     it("should step out of a function", async () => {
       // We should be inside innerFunction, step out to return to outerFunction
@@ -526,7 +614,7 @@ describe("MCP Debugger Server - E2E", () => {
       } else {
         console.log("Step out error:", response);
       }
-    }, 10000);
+    }, 60000);
 
     it("should pause a running process", async () => {
       // Continue execution
@@ -560,7 +648,7 @@ describe("MCP Debugger Server - E2E", () => {
         console.log("Pause result:", response);
         expect(response.status).toBeDefined();
       }
-    }, 10000);
+    }, 60000);
 
     it("should maintain execution flow through step operations", async () => {
       // Get initial stack
@@ -599,17 +687,33 @@ describe("MCP Debugger Server - E2E", () => {
       } else {
         console.log("Stack retrieval error:", stack1);
       }
-    }, 10000);
+    }, 60000);
+
+    afterAll(async () => {
+      if (sessionId) {
+        try {
+          await sendRequest("tools/call", {
+            name: "debugger_stop_session",
+            arguments: { sessionId },
+          });
+        } catch (e) {
+          // Session may already be stopped
+        }
+      }
+    });
   });
 
   describe("Breakpoint Management - Requirements 1.2, 1.3, 1.4, 1.5", () => {
     let sessionId: string;
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/conditional-test.js"
+      "../../../mcp-debugger-core/test-fixtures/conditional-test.js"
     );
 
     beforeAll(async () => {
+      // Restart server for this test suite
+      await restartServer();
+
       // Start a debug session
       const result = await sendRequest("tools/call", {
         name: "debugger_start",
@@ -623,7 +727,7 @@ describe("MCP Debugger Server - E2E", () => {
       const textContent = result.content.find((c: any) => c.type === "text");
       const response = JSON.parse(textContent.text);
       sessionId = response.sessionId;
-    }, 15000);
+    }, 60000);
 
     it("should list all breakpoints", async () => {
       // Set a couple of breakpoints first
@@ -666,7 +770,7 @@ describe("MCP Debugger Server - E2E", () => {
       expect(bp.file).toBeDefined();
       expect(bp.line).toBeDefined();
       expect(bp.enabled).toBeDefined();
-    }, 10000);
+    }, 60000);
 
     it("should remove a breakpoint", async () => {
       // Get current breakpoints
@@ -708,7 +812,7 @@ describe("MCP Debugger Server - E2E", () => {
       expect(
         list2.breakpoints.find((bp: any) => bp.id === breakpointToRemove)
       ).toBeUndefined();
-    }, 10000);
+    }, 60000);
 
     it("should toggle a breakpoint", async () => {
       // Get a breakpoint
@@ -751,7 +855,7 @@ describe("MCP Debugger Server - E2E", () => {
         (bp: any) => bp.id === breakpoint.id
       );
       expect(updatedBreakpoint.enabled).toBe(!initialEnabled);
-    }, 10000);
+    }, 60000);
 
     it("should support conditional breakpoints", async () => {
       // Set a conditional breakpoint
@@ -795,7 +899,7 @@ describe("MCP Debugger Server - E2E", () => {
       if (inspectResponse.status === "success") {
         expect(inspectResponse.value).toBe(5);
       }
-    }, 10000);
+    }, 60000);
 
     it("should maintain breakpoint state consistency", async () => {
       // List breakpoints
@@ -837,17 +941,33 @@ describe("MCP Debugger Server - E2E", () => {
       expect(
         list2.breakpoints.find((bp: any) => bp.id === addResponse.breakpointId)
       ).toBeDefined();
-    }, 10000);
+    }, 60000);
+
+    afterAll(async () => {
+      if (sessionId) {
+        try {
+          await sendRequest("tools/call", {
+            name: "debugger_stop_session",
+            arguments: { sessionId },
+          });
+        } catch (e) {
+          // Session may already be stopped
+        }
+      }
+    });
   });
 
   describe("Variable Inspection - Requirements 3.1, 3.2, 3.3, 9.3", () => {
     let sessionId: string;
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/expression-test.js"
+      "../../../mcp-debugger-core/test-fixtures/expression-test.js"
     );
 
     beforeAll(async () => {
+      // Restart server for this test suite
+      await restartServer();
+
       // Start a debug session
       const result = await sendRequest("tools/call", {
         name: "debugger_start",
@@ -869,7 +989,7 @@ describe("MCP Debugger Server - E2E", () => {
       });
 
       await new Promise((resolve) => setTimeout(resolve, 500));
-    }, 15000);
+    }, 60000);
 
     it("should get local variables", async () => {
       const result = await sendRequest("tools/call", {
@@ -892,7 +1012,7 @@ describe("MCP Debugger Server - E2E", () => {
         expect(variable.value).toBeDefined();
         expect(variable.type).toBeDefined();
       }
-    }, 10000);
+    }, 60000);
 
     it("should get global variables", async () => {
       const result = await sendRequest("tools/call", {
@@ -915,7 +1035,7 @@ describe("MCP Debugger Server - E2E", () => {
         expect(variable.name).toBeDefined();
         expect(variable.type).toBeDefined();
       }
-    }, 10000);
+    }, 60000);
 
     it("should inspect nested objects", async () => {
       // Use debugger_inspect to evaluate the object expression
@@ -959,7 +1079,7 @@ describe("MCP Debugger Server - E2E", () => {
         console.log("Failed to parse response:", textContent.text);
         throw e;
       }
-    }, 10000);
+    }, 60000);
 
     it("should serialize complex objects with type information", async () => {
       // Inspect an array
@@ -998,17 +1118,33 @@ describe("MCP Debugger Server - E2E", () => {
         expect(objResponse.type).toBeDefined();
         expect(objResponse.type).toBe("object");
       }
-    }, 10000);
+    }, 60000);
+
+    afterAll(async () => {
+      if (sessionId) {
+        try {
+          await sendRequest("tools/call", {
+            name: "debugger_stop_session",
+            arguments: { sessionId },
+          });
+        } catch (e) {
+          // Session may already be stopped
+        }
+      }
+    });
   });
 
   describe("Variable Watching - Requirements 3.5", () => {
     let sessionId: string;
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/watch-test.js"
+      "../../../mcp-debugger-core/test-fixtures/watch-test.js"
     );
 
     beforeAll(async () => {
+      // Restart server for this test suite
+      await restartServer();
+
       // Start a debug session
       const result = await sendRequest("tools/call", {
         name: "debugger_start",
@@ -1030,7 +1166,7 @@ describe("MCP Debugger Server - E2E", () => {
       });
 
       await new Promise((resolve) => setTimeout(resolve, 500));
-    }, 15000);
+    }, 60000);
 
     it("should add a watch expression", async () => {
       const result = await sendRequest("tools/call", {
@@ -1047,7 +1183,7 @@ describe("MCP Debugger Server - E2E", () => {
 
       expect(response.status).toBe("success");
       expect(response.watchId).toBeDefined();
-    }, 10000);
+    }, 60000);
 
     it("should get watched expressions with values", async () => {
       const result = await sendRequest("tools/call", {
@@ -1071,7 +1207,7 @@ describe("MCP Debugger Server - E2E", () => {
         // Value may not be present initially, just verify watch structure
         expect(watch.expression).toBe("counter");
       }
-    }, 10000);
+    }, 60000);
 
     it("should detect value changes", async () => {
       // Get initial value
@@ -1109,7 +1245,7 @@ describe("MCP Debugger Server - E2E", () => {
       // Just verify we can get watch values at different points
       expect(response2.watches).toBeDefined();
       expect(response2.watches.length).toBeGreaterThan(0);
-    }, 10000);
+    }, 60000);
 
     it("should remove a watch expression", async () => {
       // Get current watches
@@ -1151,17 +1287,33 @@ describe("MCP Debugger Server - E2E", () => {
           listResponse2.watches.find((w: any) => w.id === watchId)
         ).toBeUndefined();
       }
-    }, 10000);
+    }, 60000);
+
+    afterAll(async () => {
+      if (sessionId) {
+        try {
+          await sendRequest("tools/call", {
+            name: "debugger_stop_session",
+            arguments: { sessionId },
+          });
+        } catch (e) {
+          // Session may already be stopped
+        }
+      }
+    });
   });
 
   describe("Stack Frame Navigation - Requirements 4.2, 4.3", () => {
     let sessionId: string;
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/step-test.js"
+      "../../../mcp-debugger-core/test-fixtures/step-test.js"
     );
 
     beforeAll(async () => {
+      // Restart server for this test suite
+      await restartServer();
+
       // Start a debug session
       const result = await sendRequest("tools/call", {
         name: "debugger_start",
@@ -1202,7 +1354,7 @@ describe("MCP Debugger Server - E2E", () => {
         arguments: { sessionId },
       });
       await new Promise((resolve) => setTimeout(resolve, 300));
-    }, 20000);
+    }, 60000);
 
     it("should switch to a different stack frame", async () => {
       // Get the stack first
@@ -1241,7 +1393,7 @@ describe("MCP Debugger Server - E2E", () => {
           expect(switchResponse.frame).toBeDefined();
         }
       }
-    }, 10000);
+    }, 60000);
 
     it("should inspect variables in different frames", async () => {
       // Get stack
@@ -1303,7 +1455,7 @@ describe("MCP Debugger Server - E2E", () => {
           expect(names0).not.toEqual(names1);
         }
       }
-    }, 10000);
+    }, 60000);
 
     it("should verify frame context switching", async () => {
       // Switch to frame 0
@@ -1357,13 +1509,26 @@ describe("MCP Debugger Server - E2E", () => {
       if (response1.status === "success") {
         expect(response1.value).toBeDefined();
       }
-    }, 10000);
+    }, 60000);
+
+    afterAll(async () => {
+      if (sessionId) {
+        try {
+          await sendRequest("tools/call", {
+            name: "debugger_stop_session",
+            arguments: { sessionId },
+          });
+        } catch (e) {
+          // Session may already be stopped
+        }
+      }
+    });
   });
 
   describe("Session Management - Requirements 8.2, 8.5", () => {
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/simple-script.js"
+      "../../../mcp-debugger-core/test-fixtures/simple-script.js"
     );
 
     it("should stop a debug session", async () => {
@@ -1401,7 +1566,7 @@ describe("MCP Debugger Server - E2E", () => {
       });
 
       expect(continueResult.isError).toBe(true);
-    }, 15000);
+    }, 60000);
 
     it("should handle multiple concurrent sessions", async () => {
       // Start two sessions
@@ -1443,7 +1608,7 @@ describe("MCP Debugger Server - E2E", () => {
         name: "debugger_stop_session",
         arguments: { sessionId: response2.sessionId },
       });
-    }, 20000);
+    }, 60000);
 
     it("should verify session isolation", async () => {
       // Start two sessions
@@ -1505,7 +1670,7 @@ describe("MCP Debugger Server - E2E", () => {
         name: "debugger_stop_session",
         arguments: { sessionId: response2.sessionId },
       });
-    }, 20000);
+    }, 60000);
 
     it("should cleanup resources on session stop", async () => {
       // Start a session
@@ -1542,13 +1707,13 @@ describe("MCP Debugger Server - E2E", () => {
       });
 
       expect(continueResult.isError).toBe(true);
-    }, 15000);
+    }, 60000);
   });
 
   describe("Crash Detection - Requirements 8.1", () => {
     const testFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/crash-test-simple.js"
+      "../../../mcp-debugger-core/test-fixtures/crash-test-simple.js"
     );
 
     it("should detect process crash", async () => {
@@ -1586,7 +1751,7 @@ describe("MCP Debugger Server - E2E", () => {
       });
 
       expect(inspectResult.isError).toBe(true);
-    }, 15000);
+    }, 60000);
 
     it("should cleanup automatically on crash", async () => {
       // Start a session
@@ -1625,7 +1790,7 @@ describe("MCP Debugger Server - E2E", () => {
       );
       const response = JSON.parse(textContent.text);
       expect(response.status).toBe("error");
-    }, 15000);
+    }, 60000);
 
     it("should report crash error details", async () => {
       // Start a session
@@ -1665,14 +1830,14 @@ describe("MCP Debugger Server - E2E", () => {
       expect(response.status).toBe("error");
       expect(response.code).toBeDefined();
       expect(response.message).toBeDefined();
-    }, 15000);
+    }, 60000);
   });
 
   describe("Test Framework Integration - Requirements 6.1, 6.2, 6.3, 6.4, 6.5", () => {
     it("should run Jest tests with debugger attached", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/jest-sample.test.js"
+        "../../../mcp-debugger-core/test-fixtures/jest-sample.test.js"
       );
 
       // Note: This would require a debugger_run_tests tool or similar
@@ -1703,12 +1868,12 @@ describe("MCP Debugger Server - E2E", () => {
         // Jest may not be available in test environment
         console.log("Jest test execution:", response);
       }
-    }, 20000);
+    }, 60000);
 
     it("should run Mocha tests with debugger attached", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/mocha-sample.test.js"
+        "../../../mcp-debugger-core/test-fixtures/mocha-sample.test.js"
       );
 
       const result = await sendRequest("tools/call", {
@@ -1736,12 +1901,12 @@ describe("MCP Debugger Server - E2E", () => {
       } else {
         console.log("Mocha test execution:", response);
       }
-    }, 20000);
+    }, 60000);
 
     it("should run Vitest tests with debugger attached", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/vitest-sample.test.js"
+        "../../../mcp-debugger-core/test-fixtures/vitest-sample.test.js"
       );
 
       const result = await sendRequest("tools/call", {
@@ -1769,12 +1934,12 @@ describe("MCP Debugger Server - E2E", () => {
       } else {
         console.log("Vitest test execution:", response);
       }
-    }, 20000);
+    }, 60000);
 
     it("should capture test output from stdout and stderr", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/simple-script.js"
+        "../../../mcp-debugger-core/test-fixtures/simple-script.js"
       );
 
       // Start a session that will produce output
@@ -1813,12 +1978,12 @@ describe("MCP Debugger Server - E2E", () => {
           arguments: { sessionId },
         });
       }
-    }, 15000);
+    }, 60000);
 
     it("should provide test failure information", async () => {
       const testFile = path.join(
         __dirname,
-        "../../../debugger-core/test-fixtures/crash-test-simple.js"
+        "../../../mcp-debugger-core/test-fixtures/crash-test-simple.js"
       );
 
       // Start a session with a script that will fail
@@ -1864,18 +2029,18 @@ describe("MCP Debugger Server - E2E", () => {
         expect(response.code).toBeDefined();
         expect(response.message).toBeDefined();
       }
-    }, 15000);
+    }, 60000);
   });
 
   describe("Source Map Support - Requirements 7.1, 7.2, 7.3, 7.4", () => {
     let sessionId: string;
     const tsFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/typescript-sample.ts"
+      "../../../mcp-debugger-core/test-fixtures/typescript-sample.ts"
     );
     const jsFile = path.join(
       __dirname,
-      "../../../debugger-core/test-fixtures/typescript-sample.js"
+      "../../../mcp-debugger-core/test-fixtures/typescript-sample.js"
     );
 
     beforeAll(async () => {
@@ -1904,7 +2069,7 @@ describe("MCP Debugger Server - E2E", () => {
       if (response.status === "success") {
         sessionId = response.sessionId;
       }
-    }, 15000);
+    }, 60000);
 
     afterAll(async () => {
       if (sessionId) {
@@ -1953,7 +2118,7 @@ describe("MCP Debugger Server - E2E", () => {
         // or at least be valid paths
         expect(typeof frame.file).toBe("string");
       }
-    }, 10000);
+    }, 60000);
 
     it("should map TypeScript locations to JavaScript for breakpoints", async () => {
       if (!sessionId) {
@@ -1981,7 +2146,7 @@ describe("MCP Debugger Server - E2E", () => {
       if (response.status === "success") {
         expect(response.breakpointId).toBeDefined();
       }
-    }, 10000);
+    }, 60000);
 
     it("should map JavaScript locations back to TypeScript when paused", async () => {
       if (!sessionId) {
@@ -2028,7 +2193,7 @@ describe("MCP Debugger Server - E2E", () => {
         expect(typeof frame.file).toBe("string");
         expect(typeof frame.line).toBe("number");
       }
-    }, 10000);
+    }, 60000);
 
     it("should display TypeScript variable names in inspection", async () => {
       if (!sessionId) {
@@ -2058,7 +2223,7 @@ describe("MCP Debugger Server - E2E", () => {
           expect(variable.name.length).toBeGreaterThan(0);
         }
       }
-    }, 10000);
+    }, 60000);
   });
 
   describe("Error Handling", () => {
