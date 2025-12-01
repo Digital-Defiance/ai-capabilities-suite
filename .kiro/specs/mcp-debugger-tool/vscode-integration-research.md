@@ -277,7 +277,7 @@ async start(): Promise<void> {
   } else {
     // Use npx if no server path configured
     command = 'npx';
-    args = ['@mcp-debugger/server'];
+    args = ['@ai-capabilities-suite/mcp-debugger-server'];
   }
 
   this.serverProcess = spawn(command, args, {

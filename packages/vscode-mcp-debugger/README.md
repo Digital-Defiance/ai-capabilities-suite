@@ -263,7 +263,7 @@ See the [Copilot Integration Guide](COPILOT-GUIDE.md) for:
 
 **Solution**:
 1. Check if Node.js is installed: `node --version`
-2. Install MCP server: `npm install -g @mcp-debugger/server`
+2. Install MCP server: `npm install -g @ai-capabilities-suite/mcp-debugger-server`
 3. Set custom server path in settings if needed
 4. Restart VS Code
 

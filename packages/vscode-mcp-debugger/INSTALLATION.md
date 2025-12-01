@@ -66,7 +66,7 @@ code --install-extension mcp-debugger-1.0.0.vsix
 The extension requires the MCP Debugger server to function. Install it globally:
 
 ```bash
-npm install -g @mcp-debugger/server
+npm install -g @ai-capabilities-suite/mcp-debugger-server
 ```
 
 Or use it via npx (no installation required):
@@ -115,7 +115,7 @@ Open VS Code settings (`Ctrl+,` / `Cmd+,`) and configure:
 
 **Solution**:
 1. Install Node.js: https://nodejs.org/
-2. Install MCP server: `npm install -g @mcp-debugger/server`
+2. Install MCP server: `npm install -g @ai-capabilities-suite/mcp-debugger-server`
 3. Check Node.js version: `node --version` (must be 16.x+)
 4. Check npm version: `npm --version`
 5. Restart VS Code
@@ -127,14 +127,14 @@ Open VS Code settings (`Ctrl+,` / `Cmd+,`) and configure:
 **Solution**:
 ```bash
 # Option 1: Use sudo (not recommended)
-sudo npm install -g @mcp-debugger/server
+sudo npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 # Option 2: Configure npm to use a different directory (recommended)
 mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
-npm install -g @mcp-debugger/server
+npm install -g @ai-capabilities-suite/mcp-debugger-server
 ```
 
 ### Extension Activation Failed
@@ -192,7 +192,7 @@ To remove all extension data:
 code --uninstall-extension mcp-debugger.mcp-debugger
 
 # Remove global server (optional)
-npm uninstall -g @mcp-debugger/server
+npm uninstall -g @ai-capabilities-suite/mcp-debugger-server
 
 # Remove extension data (optional)
 # macOS/Linux
