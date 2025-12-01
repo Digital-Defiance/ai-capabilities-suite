@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "AI Capability Extension Suite - MCP servers for AI agent capabilities",
   "private": true,
+  "packageManager": "yarn@4.11.0",
   "workspaces": [
     "packages/mcp-debugger-core",
     "packages/mcp-debugger-server",
