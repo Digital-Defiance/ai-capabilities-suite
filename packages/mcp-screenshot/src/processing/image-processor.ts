@@ -5,7 +5,7 @@
 import sharp from "sharp";
 import { IImageProcessor } from "../interfaces";
 import { ImageFormat } from "../types";
-import { UnsupportedFormatError } from "../errors";
+import { UnsupportedFormatError, EncodingFailedError } from "../errors";
 
 /**
  * Image processor implementation with comprehensive format support,
@@ -32,62 +32,76 @@ export class ImageProcessor implements IImageProcessor {
     format: ImageFormat,
     quality?: number
   ): Promise<Buffer> {
-    const image = sharp(buffer);
+    try {
+      const image = sharp(buffer);
 
-    switch (format) {
-      case "png":
-        // PNG uses lossless compression
-        // Quality parameter maps to compression level (0-9)
-        // Higher compression = smaller file but slower encoding
-        const compressionLevel =
-          quality !== undefined
-            ? Math.max(0, Math.min(9, Math.floor(quality / 11))) // Map 0-100 to 0-9
-            : 9; // Default to maximum compression
-        return image
-          .png({
-            compressionLevel,
-            adaptiveFiltering: true, // Better compression
-            palette: false, // Use full color depth
-          })
-          .toBuffer();
+      switch (format) {
+        case "png":
+          // PNG uses lossless compression
+          // Quality parameter maps to compression level (0-9)
+          // Higher compression = smaller file but slower encoding
+          const compressionLevel =
+            quality !== undefined
+              ? Math.max(0, Math.min(9, Math.floor(quality / 11))) // Map 0-100 to 0-9
+              : 9; // Default to maximum compression
+          return image
+            .png({
+              compressionLevel,
+              adaptiveFiltering: true, // Better compression
+              palette: false, // Use full color depth
+            })
+            .toBuffer();
 
-      case "jpeg":
-        // JPEG uses lossy compression
-        // Quality parameter directly controls quality (1-100)
-        const jpegQuality =
-          quality !== undefined ? Math.max(1, Math.min(100, quality)) : 90; // Default to high quality
-        return image
-          .jpeg({
-            quality: jpegQuality,
-            mozjpeg: true, // Use mozjpeg for better compression
-            chromaSubsampling: jpegQuality >= 90 ? "4:4:4" : "4:2:0", // Better quality at high settings
-          })
-          .toBuffer();
+        case "jpeg":
+          // JPEG uses lossy compression
+          // Quality parameter directly controls quality (1-100)
+          const jpegQuality =
+            quality !== undefined ? Math.max(1, Math.min(100, quality)) : 90; // Default to high quality
+          return image
+            .jpeg({
+              quality: jpegQuality,
+              mozjpeg: true, // Use mozjpeg for better compression
+              chromaSubsampling: jpegQuality >= 90 ? "4:4:4" : "4:2:0", // Better quality at high settings
+            })
+            .toBuffer();
 
-      case "webp":
-        // WebP supports both lossy and lossless compression
-        // Quality parameter controls lossy quality (1-100)
-        // Quality 100 uses lossless mode
-        const webpQuality =
-          quality !== undefined ? Math.max(1, Math.min(100, quality)) : 90; // Default to high quality
-        return image
-          .webp({
-            quality: webpQuality,
-            lossless: webpQuality === 100, // Use lossless at quality 100
-            nearLossless: webpQuality >= 95 && webpQuality < 100, // Near-lossless for very high quality
-            smartSubsample: true, // Better quality
-          })
-          .toBuffer();
+        case "webp":
+          // WebP supports both lossy and lossless compression
+          // Quality parameter controls lossy quality (1-100)
+          // Quality 100 uses lossless mode
+          const webpQuality =
+            quality !== undefined ? Math.max(1, Math.min(100, quality)) : 90; // Default to high quality
+          return image
+            .webp({
+              quality: webpQuality,
+              lossless: webpQuality === 100, // Use lossless at quality 100
+              nearLossless: webpQuality >= 95 && webpQuality < 100, // Near-lossless for very high quality
+              smartSubsample: true, // Better quality
+            })
+            .toBuffer();
 
-      case "bmp":
-        // BMP is uncompressed format
-        // Sharp doesn't have native BMP output, so we use raw format
-        // and construct BMP header manually
-        const rawData = await image.raw().toBuffer({ resolveWithObject: true });
-        return this.createBMPBuffer(rawData);
+        case "bmp":
+          // BMP is uncompressed format
+          // Sharp doesn't have native BMP output, so we use raw format
+          // and construct BMP header manually
+          const rawData = await image
+            .raw()
+            .toBuffer({ resolveWithObject: true });
+          return this.createBMPBuffer(rawData);
 
-      default:
-        throw new UnsupportedFormatError(`Unsupported format: ${format}`);
+        default:
+          throw new UnsupportedFormatError(`Unsupported format: ${format}`);
+      }
+    } catch (error) {
+      if (error instanceof UnsupportedFormatError) {
+        throw error;
+      }
+      throw new EncodingFailedError(
+        `Failed to encode image to ${format}: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+        { format, quality, originalError: error }
+      );
     }
   }
 

@@ -1,5 +1,9 @@
 /**
- * Export capture engine components
+ * Capture engine module
+ *
+ * Provides platform-specific screenshot capture capabilities for Linux, macOS, and Windows.
+ *
+ * @module capture
  */
 
 export * from "./base-capture-engine";
@@ -15,6 +19,26 @@ import { WindowsCaptureEngine } from "./windows-capture-engine";
 
 /**
  * Create a platform-specific capture engine
+ *
+ * Factory function that returns the appropriate capture engine implementation
+ * based on the current operating system platform.
+ *
+ * @returns {BaseCaptureEngine} Platform-specific capture engine instance
+ * @throws {Error} If the current platform is not supported
+ *
+ * @example
+ * ```typescript
+ * import { createCaptureEngine } from '@ai-capabilities-suite/mcp-screenshot';
+ *
+ * const engine = createCaptureEngine();
+ * const buffer = await engine.captureScreen();
+ * ```
+ *
+ * @remarks
+ * Platform-specific behavior:
+ * - **Linux**: Uses X11 (import/xwd) or Wayland (grim) depending on display server
+ * - **macOS**: Uses native screencapture command with Retina display support
+ * - **Windows**: Uses screenshot-desktop library with high-DPI support
  */
 export function createCaptureEngine(): BaseCaptureEngine {
   const platform = process.platform;

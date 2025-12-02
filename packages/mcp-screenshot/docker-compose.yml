@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  mcp-screenshot:
+    build:
+      context: ../..
+      dockerfile: packages/mcp-screenshot/Dockerfile
+    image: digitaldefiance/mcp-screenshot:latest
+    container_name: mcp-screenshot
+
+    # Security settings
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+
+    # Environment variables
+    environment:
+      - NODE_ENV=production
+      - TESSDATA_PREFIX=/usr/share/tessdata
+
+    # Volumes for persistent data
+    volumes:
+      # Mount config file (optional)
+      - ./config.json:/app/config/config.json:ro
+      # Mount screenshots directory
+      - ./screenshots:/app/screenshots:rw
+      # Temporary directory (writable)
+      - /tmp
+
+    # Stdin/stdout for MCP protocol
+    stdin_open: true
+    tty: false
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Example: Running with custom security policy
+  mcp-screenshot-secure:
+    extends: mcp-screenshot
+    container_name: mcp-screenshot-secure
+    command:
+      ["node", "dist/src/cli.js", "--config=/app/config/security-policy.json"]
+    volumes:
+      - ./security-policy.json:/app/config/security-policy.json:ro
+      - ./screenshots:/app/screenshots:rw
+      - /tmp
+    profiles:
+      - secure
+
+# Networks (optional, for container-to-container communication)
+networks:
+  default:
+    name: mcp-network
+    driver: bridge

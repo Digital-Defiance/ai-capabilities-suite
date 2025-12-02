@@ -12,6 +12,7 @@ on:
         options:
           - mcp-debugger-server
           - mcp-debugger-core
+          - mcp-screenshot
           - all
       tag:
         description: "NPM dist-tag (latest, beta, next)"
@@ -36,7 +37,9 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-          cache: "yarn"
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -76,6 +79,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish mcp-screenshot
+        if: steps.packages.outputs.packages == 'all' || steps.packages.outputs.packages == 'mcp-screenshot'
+        run: |
+          cd packages/mcp-screenshot
+          npm publish --access public --provenance --tag ${{ github.event.inputs.tag || 'latest' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Create GitHub Release Comment
         if: github.event_name == 'release'
         uses: actions/github-script@v7
@@ -87,6 +98,9 @@ jobs:
             }
             if ('${{ steps.packages.outputs.packages }}' === 'all' || '${{ steps.packages.outputs.packages }}' === 'mcp-debugger-server') {
               packages.push('@ai-capabilities-suite/mcp-debugger-server');
+            }
+            if ('${{ steps.packages.outputs.packages }}' === 'all' || '${{ steps.packages.outputs.packages }}' === 'mcp-screenshot') {
+              packages.push('@ai-capabilities-suite/mcp-screenshot');
             }
 
             const comment = `✅ Successfully published to NPM:\n\n${packages.map(p => `- \`${p}\``).join('\n')}\n\nInstall with:\n\`\`\`bash\nnpm install ${packages.join(' ')}\n\`\`\``;

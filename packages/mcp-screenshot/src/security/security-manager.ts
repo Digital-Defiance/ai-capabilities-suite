@@ -100,6 +100,10 @@ export class SecurityManager implements ISecurityManager {
    * Get current security policy
    */
   getPolicy(): SecurityPolicy {
-    return { ...this.policy };
+    return {
+      ...this.policy,
+      allowedDirectories: [...this.policy.allowedDirectories],
+      blockedWindowPatterns: [...this.policy.blockedWindowPatterns],
+    };
   }
 }
