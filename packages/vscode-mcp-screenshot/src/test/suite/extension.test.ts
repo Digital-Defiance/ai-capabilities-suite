@@ -95,7 +95,10 @@ suite("MCP Screenshot Extension Test Suite", () => {
       "jpeg",
       vscode.ConfigurationTarget.Global
     );
-    assert.strictEqual(config.get("defaultFormat"), "jpeg");
+
+    // Re-fetch config to get updated value
+    let updatedConfig = vscode.workspace.getConfiguration("mcpScreenshot");
+    assert.strictEqual(updatedConfig.get("defaultFormat"), "jpeg");
 
     // Reset to default
     await config.update(
@@ -103,6 +106,10 @@ suite("MCP Screenshot Extension Test Suite", () => {
       "png",
       vscode.ConfigurationTarget.Global
     );
+
+    // Verify reset
+    updatedConfig = vscode.workspace.getConfiguration("mcpScreenshot");
+    assert.strictEqual(updatedConfig.get("defaultFormat"), "png");
   });
 
   test("List displays command should execute", async function () {
@@ -232,7 +239,10 @@ suite("MCP Screenshot Extension - Configuration Tests", () => {
       85,
       vscode.ConfigurationTarget.Global
     );
-    assert.strictEqual(config.get("defaultQuality"), 85);
+
+    // Re-fetch config to get updated value
+    let updatedConfig = vscode.workspace.getConfiguration("mcpScreenshot");
+    assert.strictEqual(updatedConfig.get("defaultQuality"), 85);
 
     // Reset to default
     await config.update(
@@ -240,6 +250,10 @@ suite("MCP Screenshot Extension - Configuration Tests", () => {
       90,
       vscode.ConfigurationTarget.Global
     );
+
+    // Verify reset
+    updatedConfig = vscode.workspace.getConfiguration("mcpScreenshot");
+    assert.strictEqual(updatedConfig.get("defaultQuality"), 90);
   });
 
   test("PII masking setting should be boolean", () => {
@@ -265,7 +279,10 @@ suite("MCP Screenshot Extension - Configuration Tests", () => {
       "node",
       vscode.ConfigurationTarget.Global
     );
-    assert.strictEqual(config.get("serverCommand"), "node");
+
+    // Re-fetch config to get updated value
+    const updatedConfig = vscode.workspace.getConfiguration("mcpScreenshot");
+    assert.strictEqual(updatedConfig.get("serverCommand"), "node");
 
     // Restore
     await config.update(
@@ -285,7 +302,10 @@ suite("MCP Screenshot Extension - Configuration Tests", () => {
       testArgs,
       vscode.ConfigurationTarget.Global
     );
-    assert.deepStrictEqual(config.get("serverArgs"), testArgs);
+
+    // Re-fetch config to get updated value
+    const updatedConfig = vscode.workspace.getConfiguration("mcpScreenshot");
+    assert.deepStrictEqual(updatedConfig.get("serverArgs"), testArgs);
 
     // Restore
     await config.update(
