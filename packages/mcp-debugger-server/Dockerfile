@@ -14,7 +14,7 @@ RUN addgroup -g 1001 -S mcp && \
 WORKDIR /app
 
 # Install the published package from NPM
-RUN npm install -g @ai-capabilities-suite/mcp-debugger-server@1.0.
+RUN npm install -g @ai-capabilities-suite/mcp-debugger-server@1.1.5
 
 # Set environment variables
 ENV NODE_ENV=production \

@@ -98,7 +98,7 @@ jobs:
         shell: pwsh
         run: |
           # Install the package globally
-          npm install -g @ai-capabilities-suite/mcp-debugger-server@1.0.4
+          npm install -g @ai-capabilities-suite/mcp-debugger-server@1.1.5
 
           # Find where it was installed
           $PACKAGE_PATH = "$(npm root -g)/@ai-capabilities-suite/mcp-debugger-server"
@@ -122,7 +122,7 @@ jobs:
           $pkgJson | ConvertTo-Json -Depth 100 | Set-Content "package.json"
 
           # Build binary with proper bundling
-          pkg dist/cli.js --config pkg-config.json --target ${{ matrix.target }} --output $env:GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
+          pkg dist/src/cli.js --config pkg-config.json --target ${{ matrix.target }} --output $env:GITHUB_WORKSPACE/binaries/${{ matrix.artifact }}
 
       - name: Test binary (Linux/macOS)
         if: matrix.os != 'windows'

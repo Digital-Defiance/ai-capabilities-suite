@@ -89,6 +89,13 @@ const debuggerFiles = [
   },
   {
     package: "debugger",
+    path: path.join(DEBUGGER_SERVER_DIR, "Dockerfile"),
+    pattern:
+      /npm install -g @ai-capabilities-suite\/mcp-debugger-server@[0-9]+\.[0-9]+\.[0-9]+/,
+    replacement: `npm install -g @ai-capabilities-suite/mcp-debugger-server@${DEBUGGER_VERSION}`,
+  },
+  {
+    package: "debugger",
     path: path.join(VSCODE_EXTENSION_DIR, "package.json"),
     pattern: /"@ai-capabilities-suite\/mcp-debugger-server": "\^[^"]+"/,
     replacement: `"@ai-capabilities-suite/mcp-debugger-server": "^${DEBUGGER_VERSION}"`,
