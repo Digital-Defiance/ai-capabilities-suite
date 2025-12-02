@@ -93,6 +93,12 @@ const debuggerFiles = [
     pattern: /"@ai-capabilities-suite\/mcp-debugger-server": "\^[^"]+"/,
     replacement: `"@ai-capabilities-suite/mcp-debugger-server": "^${DEBUGGER_VERSION}"`,
   },
+  {
+    package: "debugger",
+    path: path.join(VSCODE_EXTENSION_DIR, "package.json"),
+    pattern: /^(\s*"version":\s*")[^"]+"/m,
+    replacement: `$1${DEBUGGER_VERSION}"`,
+  },
 ];
 
 const screenshotFiles = [
@@ -131,6 +137,18 @@ const screenshotFiles = [
     ),
     pattern: /"@ai-capabilities-suite\/mcp-screenshot": "\^[^"]+"/,
     replacement: `"@ai-capabilities-suite/mcp-screenshot": "^${SCREENSHOT_VERSION}"`,
+  },
+  {
+    package: "screenshot",
+    path: path.join(
+      __dirname,
+      "..",
+      "packages",
+      "vscode-mcp-screenshot",
+      "package.json"
+    ),
+    pattern: /^(\s*"version":\s*")[^"]+"/m,
+    replacement: `$1${SCREENSHOT_VERSION}"`,
   },
 ];
 
