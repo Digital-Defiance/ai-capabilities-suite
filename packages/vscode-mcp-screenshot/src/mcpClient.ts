@@ -138,7 +138,7 @@ export class MCPScreenshotClient {
         }
       };
 
-      this.process.stdout?.on("data", responseHandler);
+      this.process?.stdout?.on("data", responseHandler);
 
       // Set timeout
       const timeout = setTimeout(() => {
@@ -146,7 +146,7 @@ export class MCPScreenshotClient {
         reject(new Error("Request timeout"));
       }, 30000);
 
-      this.process.stdin.write(requestStr, (err) => {
+      this.process?.stdin?.write(requestStr, (err) => {
         if (err) {
           clearTimeout(timeout);
           reject(err);
