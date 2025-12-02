@@ -7,6 +7,7 @@ FROM node:20-alpine AS builder
 # Install build dependencies
 RUN apk add --no-cache \
     python3 \
+    py3-setuptools \
     make \
     g++ \
     cairo-dev \
@@ -18,18 +19,24 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
-COPY tsconfig.json ./
+COPY packages/mcp-screenshot/package*.json ./
+COPY packages/mcp-screenshot/tsconfig.json ./
+COPY tsconfig.base.json /tsconfig.base.json
+COPY packages/mcp-screenshot/tsconfig.lib.json ./tsconfig.lib.json
+COPY packages/mcp-screenshot/tsconfig.spec.json ./tsconfig.spec.json
 
-# Install dependencies
-RUN npm ci --only=production && \
+# Install ALL dependencies (including dev for building)
+RUN npm install && \
     npm cache clean --force
 
 # Copy source code
-COPY src ./src
+COPY packages/mcp-screenshot/src ./src
 
-# Build TypeScript
-RUN npm run build
+# Build TypeScript using project references
+RUN npx tsc -b tsconfig.lib.json && ls -la && ls -la dist
+
+# Remove dev dependencies after build
+RUN npm prune --omit=dev
 
 # Stage 2: Runtime
 FROM node:20-alpine
@@ -69,7 +76,7 @@ COPY --from=builder --chown=mcpuser:mcpuser /app/node_modules ./node_modules
 COPY --from=builder --chown=mcpuser:mcpuser /app/package.json ./
 
 # Copy Tesseract data
-COPY --chown=mcpuser:mcpuser eng.traineddata /usr/share/tessdata/
+COPY --chown=mcpuser:mcpuser packages/mcp-screenshot/eng.traineddata /usr/share/tessdata/
 
 # Create directories for screenshots
 RUN mkdir -p /app/screenshots /tmp/.X11-unix && \
@@ -91,8 +98,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 USER mcpuser
 
 # Start script that launches Xvfb and the MCP server
-COPY --chown=mcpuser:mcpuser docker-entrypoint.sh /app/
+COPY --chown=mcpuser:mcpuser packages/mcp-screenshot/docker-entrypoint.sh /app/
 RUN chmod +x /app/docker-entrypoint.sh
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
-CMD ["node", "dist/src/cli.js"]
+CMD ["node", "dist/cli.js"]
