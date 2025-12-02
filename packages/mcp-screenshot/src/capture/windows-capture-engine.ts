@@ -49,6 +49,21 @@ export class WindowsCaptureEngine extends BaseCaptureEngine {
     windowId: string,
     includeFrame: boolean
   ): Promise<Buffer> {
+    // Validate window exists and is visible
+    const window = await this.getWindowById(windowId);
+    if (!window) {
+      throw new WindowNotFoundError(`Window ${windowId} not found`, {
+        windowId,
+      });
+    }
+
+    if (window.isMinimized) {
+      throw new WindowNotFoundError(
+        `Cannot capture minimized window ${windowId}`,
+        { windowId, isMinimized: true }
+      );
+    }
+
     try {
       // Use PowerShell to capture window
       // This is a simplified implementation - in production, you'd use native Windows APIs
@@ -89,9 +104,9 @@ export class WindowsCaptureEngine extends BaseCaptureEngine {
   }
 
   /**
-   * Capture a specific region
+   * Capture a specific region (internal implementation)
    */
-  async captureRegion(
+  protected async captureRegionInternal(
     x: number,
     y: number,
     width: number,

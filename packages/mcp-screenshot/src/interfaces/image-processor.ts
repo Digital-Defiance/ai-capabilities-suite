@@ -63,7 +63,23 @@ export interface IImageProcessor {
    * Convert image format
    * @param buffer Input image buffer
    * @param targetFormat Target format
+   * @param quality Optional quality setting
    * @returns Converted image buffer
    */
-  convertFormat(buffer: Buffer, targetFormat: ImageFormat): Promise<Buffer>;
+  convertFormat(
+    buffer: Buffer,
+    targetFormat: ImageFormat,
+    quality?: number
+  ): Promise<Buffer>;
+
+  /**
+   * Optimize image file size
+   * @param buffer Input image buffer
+   * @param maxFileSize Maximum file size in bytes (optional)
+   * @returns Optimized image buffer with format and size information
+   */
+  optimize(
+    buffer: Buffer,
+    maxFileSize?: number
+  ): Promise<{ buffer: Buffer; format: ImageFormat; size: number }>;
 }

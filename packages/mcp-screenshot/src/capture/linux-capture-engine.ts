@@ -29,13 +29,13 @@ export class LinuxCaptureEngine extends BaseCaptureEngine {
     }
 
     // Check for Wayland
-    if (process.env.WAYLAND_DISPLAY) {
+    if (process.env["WAYLAND_DISPLAY"]) {
       this.displayServer = "wayland";
       return "wayland";
     }
 
     // Check for X11
-    if (process.env.DISPLAY) {
+    if (process.env["DISPLAY"]) {
       this.displayServer = "x11";
       return "x11";
     }
@@ -71,7 +71,7 @@ export class LinuxCaptureEngine extends BaseCaptureEngine {
   private async captureScreenX11(displayId?: string): Promise<Buffer> {
     try {
       // Use import command from ImageMagick
-      const display = displayId || process.env.DISPLAY || ":0";
+      const display = displayId || process.env["DISPLAY"] || ":0";
       const { stdout } = await execAsync(
         `DISPLAY=${display} import -window root png:-`,
         {
@@ -117,6 +117,21 @@ export class LinuxCaptureEngine extends BaseCaptureEngine {
     windowId: string,
     includeFrame: boolean
   ): Promise<Buffer> {
+    // Validate window exists and is visible
+    const window = await this.getWindowById(windowId);
+    if (!window) {
+      throw new WindowNotFoundError(`Window ${windowId} not found`, {
+        windowId,
+      });
+    }
+
+    if (window.isMinimized) {
+      throw new WindowNotFoundError(
+        `Cannot capture minimized window ${windowId}`,
+        { windowId, isMinimized: true }
+      );
+    }
+
     const displayServer = await this.detectDisplayServer();
 
     try {
@@ -126,6 +141,9 @@ export class LinuxCaptureEngine extends BaseCaptureEngine {
         return await this.captureWindowX11(windowId, includeFrame);
       }
     } catch (error) {
+      if (error instanceof WindowNotFoundError) {
+        throw error;
+      }
       throw new CaptureFailedError(
         `Failed to capture window: ${(error as Error).message}`,
         { windowId, includeFrame, displayServer, error }
@@ -196,9 +214,9 @@ export class LinuxCaptureEngine extends BaseCaptureEngine {
   }
 
   /**
-   * Capture a specific region
+   * Capture a specific region (internal implementation)
    */
-  async captureRegion(
+  protected async captureRegionInternal(
     x: number,
     y: number,
     width: number,

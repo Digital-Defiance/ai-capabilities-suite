@@ -34,98 +34,98 @@
     - Support high-DPI displays
     - _Requirements: 1.1, 1.2_
 
-  - [-] 2.5 Write property test for full screen capture
+  - [x] 2.5 Write property test for full screen capture
     - **Property 1: Full screen capture dimensions match display resolution**
     - **Validates: Requirements 1.1**
 
-- [ ] 3. Implement image processing and encoding
-  - [ ] 3.1 Create ImageProcessor class
+- [x] 3. Implement image processing and encoding
+  - [x] 3.1 Create ImageProcessor class
     - Implement format encoding (PNG, JPEG, WebP, BMP)
     - Implement compression with quality settings
     - Implement image cropping and resizing
     - Add metadata extraction
     - _Requirements: 1.3, 1.4, 4.1-4.4_
 
-  - [ ] 3.2 Implement format conversion
+  - [x] 3.2 Implement format conversion
     - Convert between image formats
     - Apply lossy/lossless compression
     - Optimize file sizes
     - _Requirements: 1.3, 4.1-4.3_
 
-  - [ ]* 3.3 Write property test for format encoding
+  - [x] 3.3 Write property test for format encoding
     - **Property 3: Format encoding correctness**
     - **Validates: Requirements 1.3**
 
-  - [ ]* 3.4 Write property test for quality parameter
+  - [x] 3.4 Write property test for quality parameter
     - **Property 4: Quality parameter affects file size**
     - **Validates: Requirements 1.4**
 
-- [ ] 4. Implement display and window enumeration
-  - [ ] 4.1 Implement display enumeration
+- [x] 4. Implement display and window enumeration
+  - [x] 4.1 Implement display enumeration
     - Get all connected displays
     - Get display resolutions and positions
     - Identify primary display
     - Handle virtual desktop coordinates
     - _Requirements: 1.2, 3.5, 7.1_
 
-  - [ ] 4.2 Implement window enumeration
+  - [x] 4.2 Implement window enumeration
     - Get all visible windows
     - Get window titles, positions, and dimensions
     - Get process information for windows
     - Handle minimized/hidden windows
     - _Requirements: 2.1, 2.4, 7.2_
 
-  - [ ]* 4.3 Write property test for display information
+  - [x] 4.3 Write property test for display information
     - **Property 20: Display information completeness**
     - **Validates: Requirements 7.1**
 
-  - [ ]* 4.4 Write property test for window information
+  - [x] 4.4 Write property test for window information
     - **Property 21: Window information completeness**
     - **Validates: Requirements 7.2**
 
 - [ ] 5. Implement window capture
-  - [ ] 5.1 Implement window capture by ID
+  - [x] 5.1 Implement window capture by ID
     - Capture specific window by identifier
     - Handle window content area vs frame
     - Validate window exists and is visible
     - _Requirements: 2.2, 2.5_
 
-  - [ ] 5.2 Implement window capture by title pattern
+  - [x] 5.2 Implement window capture by title pattern
     - Search windows by title pattern
     - Capture first matching window
     - Handle no matches gracefully
     - _Requirements: 2.3_
 
-  - [ ]* 5.3 Write property test for window capture
+  - [x] 5.3 Write property test for window capture
     - **Property 7: Window capture dimension accuracy**
     - **Validates: Requirements 2.2**
 
-  - [ ]* 5.4 Write property test for frame inclusion
+  - [x] 5.4 Write property test for frame inclusion
     - **Property 9: Frame inclusion increases dimensions**
     - **Validates: Requirements 2.5**
 
-- [ ] 6. Implement region capture
-  - [ ] 6.1 Implement region capture with coordinates
+- [x] 6. Implement region capture
+  - [x] 6.1 Implement region capture with coordinates
     - Capture rectangular region by coordinates
     - Handle regions extending beyond screen
     - Clip to visible portion
     - _Requirements: 3.1, 3.2_
 
-  - [ ] 6.2 Implement coordinate validation
+  - [x] 6.2 Implement coordinate validation
     - Validate coordinates are non-negative
     - Validate dimensions are positive
     - Handle multi-monitor coordinate systems
     - _Requirements: 3.3, 3.4, 3.5_
 
-  - [ ]* 6.3 Write property test for region capture
+  - [x] 6.3 Write property test for region capture
     - **Property 10: Region capture dimension accuracy**
     - **Validates: Requirements 3.1**
 
-  - [ ]* 6.4 Write property test for boundary clipping
+  - [x] 6.4 Write property test for boundary clipping
     - **Property 11: Region boundary clipping**
     - **Validates: Requirements 3.2**
 
-- [ ] 7. Implement PII masking
+- [-] 7. Implement PII masking
   - [ ] 7.1 Create PrivacyManager class
     - Implement OCR using tesseract.js
     - Detect PII patterns (emails, phones, credit cards)
@@ -146,11 +146,11 @@
     - Exclude authentication dialogs
     - _Requirements: 6.2, 6.4_
 
-  - [ ]* 7.4 Write property test for PII detection
+  - [ ] 7.4 Write property test for PII detection
     - **Property 18: PII detection accuracy**
     - **Validates: Requirements 6.1**
 
-  - [ ]* 7.5 Write property test for masking statistics
+  - [ ] 7.5 Write property test for masking statistics
     - **Property 19: Masking statistics accuracy**
     - **Validates: Requirements 6.5**
 
@@ -180,11 +180,11 @@
     - Include timestamps and parameters
     - _Requirements: 10.5_
 
-  - [ ]* 8.5 Write property test for path validation
+  - [ ] 8.5 Write property test for path validation
     - **Property 16: Path validation rejects unauthorized paths**
     - **Validates: Requirements 5.4**
 
-  - [ ]* 8.6 Write property test for rate limiting
+  - [ ] 8.6 Write property test for rate limiting
     - **Property 26: Rate limiting enforcement**
     - **Validates: Requirements 10.4**
 
@@ -201,11 +201,11 @@
     - Handle large images efficiently
     - _Requirements: 1.5, 5.2, 9.5_
 
-  - [ ]* 9.3 Write property test for file save
+  - [ ] 9.3 Write property test for file save
     - **Property 13: File save creates file at path**
     - **Validates: Requirements 5.1**
 
-  - [ ]* 9.4 Write property test for base64 encoding
+  - [ ] 9.4 Write property test for base64 encoding
     - **Property 14: Base64 encoding when no path provided**
     - **Validates: Requirements 5.2**
 
@@ -239,11 +239,11 @@
     - Include titles, positions, dimensions, process info
     - _Requirements: 7.2, 9.1_
 
-  - [ ]* 10.6 Write property test for response structure
+  - [ ] 10.6 Write property test for response structure
     - **Property 23: Response structure consistency**
     - **Validates: Requirements 9.1**
 
-  - [ ]* 10.7 Write property test for metadata completeness
+  - [ ] 10.7 Write property test for metadata completeness
     - **Property 24: Metadata completeness**
     - **Validates: Requirements 9.3**
 
@@ -281,26 +281,26 @@
     - Return clear error messages
     - _Requirements: 8.1-8.5_
 
-- [ ]* 13. Write integration tests
-  - [ ]* 13.1 Test full screen capture workflow
+- [ ] 13. Write integration tests
+  - [ ] 13.1 Test full screen capture workflow
     - Test capture on each platform
     - Test with different formats
     - Test with PII masking
     - _Requirements: 1.1-1.5_
 
-  - [ ]* 13.2 Test window capture workflow
+  - [ ] 13.2 Test window capture workflow
     - Test with real windows
     - Test window enumeration
     - Test frame inclusion
     - _Requirements: 2.1-2.5_
 
-  - [ ]* 13.3 Test region capture workflow
+  - [ ] 13.3 Test region capture workflow
     - Test with various coordinates
     - Test boundary clipping
     - Test multi-monitor setups
     - _Requirements: 3.1-3.5_
 
-  - [ ]* 13.4 Test security policy enforcement
+  - [ ] 13.4 Test security policy enforcement
     - Test path validation
     - Test rate limiting
     - Test audit logging
