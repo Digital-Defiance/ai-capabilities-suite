@@ -4,22 +4,66 @@
 
 import { ICaptureEngine } from "../interfaces";
 import { DisplayInfo, WindowInfo } from "../types";
+import { RegionValidator, ValidatedRegion } from "./region-validator";
 
 /**
  * Abstract base class for platform-specific capture engines
  */
 export abstract class BaseCaptureEngine implements ICaptureEngine {
+  protected regionValidator: RegionValidator;
+
+  constructor() {
+    this.regionValidator = new RegionValidator();
+  }
+
   abstract captureScreen(displayId?: string): Promise<Buffer>;
   abstract captureWindow(
     windowId: string,
     includeFrame: boolean
   ): Promise<Buffer>;
-  abstract captureRegion(
+
+  /**
+   * Capture a region with validation and boundary clipping
+   * This is the public interface that validates coordinates and clips to boundaries
+   */
+  async captureRegion(
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ): Promise<Buffer> {
+    // Get displays for boundary validation
+    const displays = await this.getDisplays();
+
+    // Validate and clip region to boundaries
+    const validatedRegion = this.regionValidator.clipToBoundaries(
+      x,
+      y,
+      width,
+      height,
+      displays
+    );
+
+    // Use the clipped coordinates for actual capture
+    return this.captureRegionInternal(
+      validatedRegion.x,
+      validatedRegion.y,
+      validatedRegion.width,
+      validatedRegion.height
+    );
+  }
+
+  /**
+   * Platform-specific region capture implementation
+   * Subclasses should implement this method instead of captureRegion
+   */
+  protected abstract captureRegionInternal(
     x: number,
     y: number,
     width: number,
     height: number
   ): Promise<Buffer>;
+
   abstract getDisplays(): Promise<DisplayInfo[]>;
   abstract getWindows(): Promise<WindowInfo[]>;
   abstract getWindowById(windowId: string): Promise<WindowInfo | null>;

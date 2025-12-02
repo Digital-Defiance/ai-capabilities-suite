@@ -6,6 +6,7 @@ export * from "./base-capture-engine";
 export * from "./linux-capture-engine";
 export * from "./macos-capture-engine";
 export * from "./windows-capture-engine";
+export * from "./region-validator";
 
 import { BaseCaptureEngine } from "./base-capture-engine";
 import { LinuxCaptureEngine } from "./linux-capture-engine";

@@ -5,7 +5,7 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@ai-capabilities-suite/mcp-debugger-core@npm:^1.0.2, @ai-capabilities-suite/mcp-debugger-core@workspace:packages/mcp-debugger-core":
+"@ai-capabilities-suite/mcp-debugger-core@npm:^1.0.4, @ai-capabilities-suite/mcp-debugger-core@workspace:packages/mcp-debugger-core":
   version: 0.0.0-use.local
   resolution: "@ai-capabilities-suite/mcp-debugger-core@workspace:packages/mcp-debugger-core"
   dependencies:
@@ -21,11 +21,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@ai-capabilities-suite/mcp-debugger-server@npm:^1.0.3, @ai-capabilities-suite/mcp-debugger-server@workspace:packages/mcp-debugger-server":
+"@ai-capabilities-suite/mcp-debugger-server@npm:^1.0.4, @ai-capabilities-suite/mcp-debugger-server@workspace:packages/mcp-debugger-server":
   version: 0.0.0-use.local
   resolution: "@ai-capabilities-suite/mcp-debugger-server@workspace:packages/mcp-debugger-server"
   dependencies:
-    "@ai-capabilities-suite/mcp-debugger-core": "npm:^1.0.2"
+    "@ai-capabilities-suite/mcp-debugger-core": "npm:^1.0.4"
     "@modelcontextprotocol/sdk": "npm:^1.23.0"
     tslib: "npm:^2.3.0"
     zod: "npm:^4.1.13"
@@ -46,6 +46,7 @@ __metadata:
     "@swc/jest": "npm:^0.2.29"
     "@types/jest": "npm:^29.5.8"
     "@types/node": "npm:^20.10.6"
+    "@types/screenshot-desktop": "npm:^1.15.0"
     active-win: "npm:^8.1.0"
     fast-check: "npm:^3.22.0"
     jest: "npm:^29.7.0"
@@ -3299,6 +3300,15 @@ __metadata:
   version: 2.1.7
   resolution: "@types/sarif@npm:2.1.7"
   checksum: 10c0/983d593735c42b288c3d95bb1655b036652438d267eecb2cd5d0f8c613ac98ae198eb7828dc171776e64a6ebe93e88c920ec9b80cf3c780e015e081ac5d26c01
+  languageName: node
+  linkType: hard
+
+"@types/screenshot-desktop@npm:^1.15.0":
+  version: 1.15.0
+  resolution: "@types/screenshot-desktop@npm:1.15.0"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/d955e780a2593b823302ea6f71abec87fcae3e96c8c07c7048355eeafce15189ee35fdc4e408706c3686205db727f278abbd8a9940d14d1cfade8e4e99e3103b
   languageName: node
   linkType: hard
 
@@ -10790,7 +10800,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ts-mcp-debugger@workspace:packages/vscode-mcp-debugger"
   dependencies:
-    "@ai-capabilities-suite/mcp-debugger-server": "npm:^1.0.3"
+    "@ai-capabilities-suite/mcp-debugger-server": "npm:^1.0.4"
     "@modelcontextprotocol/sdk": "npm:^0.5.0"
     "@types/glob": "npm:^9.0.0"
     "@types/mocha": "npm:^10.0.10"
