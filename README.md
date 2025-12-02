@@ -319,20 +319,87 @@ node packages/mcp-debugger-server/dist/src/index.js
    AI: "Started debug session. Set breakpoint at app.js:42..."
    ```
 
-### 📸 **2. MCP Screenshot** (In Development)
-**Give AI agents visual awareness**
+### 📸 **2. MCP Screenshot** (Production-Ready) ⭐
+**Give AI agents visual awareness and screen capture capabilities**
 
-- Full screen capture in multiple formats (PNG, JPG, WebP)
-- Window-specific screenshots
-- Region selection and cropping
-- Image optimization and compression
+**✨ Now available on NPM, Docker Hub, and VS Code Marketplace!**
+
+**The Problem:** AI agents couldn't see what was happening on your screen. They could read code and suggest changes, but had no visual context for UI issues, layout problems, or user experience concerns.
+
+**The Solution:** AI agents can now capture screenshots, analyze visual layouts, detect UI issues, and even mask sensitive information automatically. Available as both a standalone MCP server and a VS Code extension.
+
+#### 🎨 Key Features
+
+**Screenshot Capture:**
+- **Full screen capture** with multiple format support (PNG, JPEG, WebP, BMP)
+- **Window-specific capture** by title or ID
+- **Region capture** with precise boundary control
+- **Display management** - list and target specific monitors
+- **Quality control** - adjustable compression and optimization
+
+**Privacy & Security:**
+- **PII masking** with Tesseract OCR integration
+- **Window exclusion** - skip sensitive applications
+- **Secure defaults** - privacy-first configuration
+- **Permission handling** - proper system permission checks
+
+**Cross-Platform Support:**
+- **Linux**: X11 and Wayland support
+- **macOS**: Native screenshot APIs
+- **Windows**: Windows API integration
+- **Docker**: Headless capture with Xvfb
+
+#### 🛠️ 5 Screenshot Tools
+
+1. **`screenshot_capture_full`** - Capture entire screen with format options
+2. **`screenshot_capture_window`** - Capture specific application windows
+3. **`screenshot_capture_region`** - Capture rectangular screen regions
+4. **`screenshot_list_displays`** - List connected displays and resolutions
+5. **`screenshot_list_windows`** - List visible windows with details
+
+#### 📊 Enterprise-Grade Quality
+
+- **267 tests** with 100% pass rate
+- **Full MCP protocol compliance** verified
+- **E2E testing** (25 tests) for protocol validation
+- **Unit testing** (242 tests) for comprehensive coverage
+- **VSCode extension testing** (80+ tests)
+- **Cross-platform validation** (Linux, macOS, Windows)
+- **Graceful failure handling** for headless environments
+
+#### 🚀 Get Started
+
+**NPM Package:**
+```bash
+npm install -g @ai-capabilities-suite/mcp-screenshot
+npx @ai-capabilities-suite/mcp-screenshot
+```
+
+**Docker:**
+```bash
+docker run -v $(pwd)/screenshots:/app/screenshots digitaldefiance/mcp-screenshot:latest
+```
+
+**VSCode Extension:**
+- Search "MCP Screenshot" in VS Code Extensions
+- Or visit: https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot
 
 **What AI can now do:**
 ```
 You: "Take a screenshot of my app and analyze the UI"
 AI: *Captures screen, analyzes layout*
 AI: "The button alignment is off by 3px. Here's the CSS fix..."
+
+You: "Capture the dashboard and mask any sensitive data"
+AI: *Captures with PII masking enabled*
+AI: "Screenshot saved with 3 text regions automatically blurred..."
 ```
+
+📚 **Documentation:**
+- 👉 **[Complete screenshot documentation](./packages/mcp-screenshot/README.md)**
+- 👉 **[E2E Testing Guide](./packages/mcp-screenshot/TESTING-E2E.md)**
+- 👉 **[Docker Deployment Guide](./packages/mcp-screenshot/DOCKER-DEPLOYMENT.md)**
+- 👉 **[API Reference](./packages/mcp-screenshot/API.md)**
 
 ### 🎥 **3. MCP Recording** (Planned)
 **Enable AI to capture and analyze video**
