@@ -6,12 +6,12 @@
 
 ```bash
 # Pull the image
-docker pull digitaldefiance/mcp-screenshot:latest
+docker pull digidefiance/mcp-screenshot:latest
 
 # Run with default configuration
 docker run -i --rm \
   -v $(pwd)/screenshots:/app/screenshots \
-  digitaldefiance/mcp-screenshot:latest
+  digidefiance/mcp-screenshot:latest
 ```
 
 ### Docker Compose
@@ -23,7 +23,7 @@ version: '3.8'
 
 services:
   mcp-screenshot:
-    image: digitaldefiance/mcp-screenshot:latest
+    image: digidefiance/mcp-screenshot:latest
     stdin_open: true
     volumes:
       - ./screenshots:/app/screenshots
@@ -64,8 +64,8 @@ Mount the config file:
 docker run -i --rm \
   -v $(pwd)/config.json:/app/config/config.json:ro \
   -v $(pwd)/screenshots:/app/screenshots \
-  digitaldefiance/mcp-screenshot:latest \
-  node dist/src/cli.js --config=/app/config/config.json
+  digidefiance/mcp-screenshot:latest \
+  node dist/cli.js --config=/app/config/config.json
 ```
 
 ### Environment Variables
