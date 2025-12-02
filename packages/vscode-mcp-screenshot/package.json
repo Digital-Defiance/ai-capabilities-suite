@@ -2,9 +2,8 @@
   "name": "mcp-screenshot",
   "displayName": "MCP Screenshot",
   "description": "Cross-platform screenshot capture for VS Code with MCP integration",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "DigitalDefiance",
-  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -165,7 +164,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@ai-capabilities-suite/mcp-screenshot": "^0.0.1",
+    "@ai-capabilities-suite/mcp-screenshot": "^0.0.2",
     "@modelcontextprotocol/sdk": "^1.23.0"
   },
   "repository": {

@@ -176,15 +176,20 @@ async function captureWindow() {
 
     const config = vscode.workspace.getConfiguration("mcpScreenshot");
     const format = config.get("defaultFormat", "png");
-    const includeFrame =
-      (await vscode.window.showQuickPick(["Yes", "No"], {
+    const includeFrameChoice = await vscode.window.showQuickPick(
+      ["Yes", "No"],
+      {
         placeHolder: "Include window frame?",
-      })) === "Yes";
+      }
+    );
+    const includeFrame = includeFrameChoice === "Yes";
 
-    outputChannel.appendLine(`Capturing window: ${selected.window.title}`);
+    outputChannel.appendLine(
+      `Capturing window: ${(selected as any).window.title}`
+    );
 
     const result = await mcpClient.captureWindow({
-      windowId: selected.window.id,
+      windowId: (selected as any).window.id,
       format,
       includeFrame,
     });
