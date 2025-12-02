@@ -7,9 +7,47 @@ on:
     branches: [main, develop]
 
 jobs:
+  # Detect which packages have changed
+  detect-changes:
+    name: Detect Changed Packages
+    runs-on: ubuntu-latest
+    outputs:
+      debugger-core: ${{ steps.filter.outputs.debugger-core }}
+      debugger-server: ${{ steps.filter.outputs.debugger-server }}
+      screenshot: ${{ steps.filter.outputs.screenshot }}
+      any-package: ${{ steps.filter.outputs.any-package }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changed files
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            debugger-core:
+              - 'packages/mcp-debugger-core/**'
+              - 'package.json'
+              - 'yarn.lock'
+            debugger-server:
+              - 'packages/mcp-debugger-server/**'
+              - 'packages/mcp-debugger-core/**'
+              - 'package.json'
+              - 'yarn.lock'
+            screenshot:
+              - 'packages/mcp-screenshot/**'
+              - 'package.json'
+              - 'yarn.lock'
+            any-package:
+              - 'packages/**'
+
   test:
     name: Test on Node ${{ matrix.node-version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    needs: detect-changes
+    if: needs.detect-changes.outputs.any-package == 'true'
 
     strategy:
       matrix:
@@ -38,8 +76,21 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Test
-        run: yarn test
+      - name: Test Debugger Core
+        if: needs.detect-changes.outputs.debugger-core == 'true'
+        run: yarn nx test @ai-capabilities-suite/mcp-debugger-core
+        env:
+          CI: true
+
+      - name: Test Debugger Server
+        if: needs.detect-changes.outputs.debugger-server == 'true'
+        run: yarn nx test mcp-debugger
+        env:
+          CI: true
+
+      - name: Test Screenshot
+        if: needs.detect-changes.outputs.screenshot == 'true'
+        run: yarn nx test @ai-capabilities-suite/mcp-screenshot
         env:
           CI: true
 

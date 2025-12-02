@@ -258,7 +258,15 @@ export class MCPScreenshotServer {
         return await this.mcpTools.captureWindow(args);
 
       case "screenshot_capture_region":
-        return await this.mcpTools.captureRegion(args);
+        return await this.mcpTools.captureRegion({
+          x: args.x as number,
+          y: args.y as number,
+          width: args.width as number,
+          height: args.height as number,
+          format: args.format as any,
+          quality: args.quality as number | undefined,
+          savePath: args.savePath as string | undefined,
+        });
 
       case "screenshot_list_displays":
         return await this.mcpTools.listDisplays();

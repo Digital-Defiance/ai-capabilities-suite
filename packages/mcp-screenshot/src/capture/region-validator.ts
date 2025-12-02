@@ -3,17 +3,7 @@
  */
 
 import { DisplayInfo, RegionInfo } from "../types";
-import { ScreenshotError, ErrorCodes } from "../errors";
-
-/**
- * Error for invalid region parameters
- */
-export class InvalidRegionError extends ScreenshotError {
-  constructor(message: string, details?: any) {
-    super(message, ErrorCodes.INVALID_REGION, details);
-    this.name = "InvalidRegionError";
-  }
-}
+import { InvalidRegionError } from "../errors";
 
 /**
  * Result of region validation with clipping information
