@@ -259,13 +259,13 @@ export class MCPScreenshotServer {
 
       case "screenshot_capture_region":
         return await this.mcpTools.captureRegion({
-          x: args.x as number,
-          y: args.y as number,
-          width: args.width as number,
-          height: args.height as number,
-          format: args.format as any,
-          quality: args.quality as number | undefined,
-          savePath: args.savePath as string | undefined,
+          x: args["x"] as number,
+          y: args["y"] as number,
+          width: args["width"] as number,
+          height: args["height"] as number,
+          format: args["format"] as any,
+          quality: args["quality"] as number | undefined,
+          savePath: args["savePath"] as string | undefined,
         });
 
       case "screenshot_list_displays":
