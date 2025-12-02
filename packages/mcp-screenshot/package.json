@@ -70,7 +70,8 @@
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
-    "start": "node dist/src/index.js"
+    "start": "node dist/src/index.js",
+    "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.23.0",

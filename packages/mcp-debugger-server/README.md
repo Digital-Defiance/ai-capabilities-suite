@@ -1248,8 +1248,8 @@ Support the project:
 
 ## 📝 Changelog
 
-### Version 1.0.3 (Current)
-**Release Date**: December 2024
+### Version 1.0.4 (Current)
+**Release Date**: December 2025
 
 **New Features**:
 - Enhanced documentation with comprehensive examples

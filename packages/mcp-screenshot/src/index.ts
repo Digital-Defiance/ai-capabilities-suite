@@ -17,5 +17,8 @@ export * from "./capture";
 export * from "./processing";
 export * from "./privacy";
 export * from "./security";
+export * from "./storage";
+export * from "./tools";
 
-// Server will be implemented in later tasks
+// Export server
+export { MCPScreenshotServer } from "./server";

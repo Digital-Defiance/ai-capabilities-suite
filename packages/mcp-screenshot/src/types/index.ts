@@ -113,6 +113,7 @@ export interface ScreenshotResponse {
     code: string;
     message: string;
     details?: any;
+    remediation?: string;
   };
 }
 

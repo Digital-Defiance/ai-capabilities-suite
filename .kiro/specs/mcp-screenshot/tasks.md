@@ -125,234 +125,241 @@
     - **Property 11: Region boundary clipping**
     - **Validates: Requirements 3.2**
 
-- [-] 7. Implement PII masking
-  - [ ] 7.1 Create PrivacyManager class
+- [x] 7. Implement PII masking
+  - [x] 7.1 Create PrivacyManager class
     - Implement OCR using tesseract.js
     - Detect PII patterns (emails, phones, credit cards)
     - Apply masking with black boxes
     - Track masking statistics
     - _Requirements: 6.1, 6.5_
 
-  - [ ] 7.2 Implement pattern detection
+  - [x] 7.2 Implement pattern detection
     - Detect email addresses
     - Detect phone numbers
     - Detect credit card numbers
     - Support custom patterns
     - _Requirements: 6.1_
 
-  - [ ] 7.3 Implement window exclusion
+  - [x] 7.3 Implement window exclusion
     - Exclude windows by title pattern
     - Exclude password managers
     - Exclude authentication dialogs
     - _Requirements: 6.2, 6.4_
 
-  - [ ] 7.4 Write property test for PII detection
+  - [x] 7.4 Write property test for PII detection
     - **Property 18: PII detection accuracy**
     - **Validates: Requirements 6.1**
 
-  - [ ] 7.5 Write property test for masking statistics
+  - [x] 7.5 Write property test for masking statistics
     - **Property 19: Masking statistics accuracy**
     - **Validates: Requirements 6.5**
 
-- [ ] 8. Implement security manager
-  - [ ] 8.1 Create SecurityManager class
+- [x] 8. Implement security manager
+  - [x] 8.1 Create SecurityManager class
     - Implement path validation with workspace boundaries
     - Implement rate limiting
     - Implement audit logging
     - Load security policies from configuration
     - _Requirements: 5.4, 8.2, 10.1-10.5_
 
-  - [ ] 8.2 Implement path validation
+  - [x] 8.2 Implement path validation
     - Validate paths are within allowed directories
     - Prevent path traversal attacks
     - Check against blocklists
     - _Requirements: 5.4, 10.2_
 
-  - [ ] 8.3 Implement rate limiting
+  - [x] 8.3 Implement rate limiting
     - Track captures per agent per time window
     - Enforce maximum captures per minute
     - Return rate limit errors
     - _Requirements: 10.4_
 
-  - [ ] 8.4 Implement audit logging
+  - [x] 8.4 Implement audit logging
     - Log all capture operations
     - Log security violations
     - Include timestamps and parameters
     - _Requirements: 10.5_
 
-  - [ ] 8.5 Write property test for path validation
+  - [x] 8.5 Write property test for path validation
     - **Property 16: Path validation rejects unauthorized paths**
     - **Validates: Requirements 5.4**
 
-  - [ ] 8.6 Write property test for rate limiting
+  - [x] 8.6 Write property test for rate limiting
     - **Property 26: Rate limiting enforcement**
     - **Validates: Requirements 10.4**
 
-- [ ] 9. Implement file operations
-  - [ ] 9.1 Implement file saving
+- [x] 9. Implement file operations
+  - [x] 9.1 Implement file saving
     - Save screenshots to specified paths
     - Create directories if needed with secure permissions
     - Return absolute paths and file sizes
     - _Requirements: 5.1, 5.3, 5.5_
 
-  - [ ] 9.2 Implement base64 encoding
+  - [x] 9.2 Implement base64 encoding
     - Encode images as base64 strings
     - Include MIME type information
     - Handle large images efficiently
     - _Requirements: 1.5, 5.2, 9.5_
 
-  - [ ] 9.3 Write property test for file save
+  - [x] 9.3 Write property test for file save
     - **Property 13: File save creates file at path**
     - **Validates: Requirements 5.1**
 
-  - [ ] 9.4 Write property test for base64 encoding
+  - [x] 9.4 Write property test for base64 encoding
     - **Property 14: Base64 encoding when no path provided**
     - **Validates: Requirements 5.2**
 
-- [ ] 10. Implement MCP tools
-  - [ ] 10.1 Implement screenshot_capture_full tool
+- [x] 10. Implement MCP tools
+  - [x] 10.1 Implement screenshot_capture_full tool
     - Accept display, format, quality, savePath, enablePIIMasking parameters
     - Capture full screen or specified display
     - Apply PII masking if enabled
     - Save or return base64
     - _Requirements: 1.1-1.5, 9.1_
 
-  - [ ] 10.2 Implement screenshot_capture_window tool
+  - [x] 10.2 Implement screenshot_capture_window tool
     - Accept windowId, windowTitle, includeFrame, format parameters
     - Find and capture specified window
     - Handle minimized windows
     - _Requirements: 2.1-2.5, 9.1_
 
-  - [ ] 10.3 Implement screenshot_capture_region tool
+  - [x] 10.3 Implement screenshot_capture_region tool
     - Accept x, y, width, height, format parameters
     - Validate region parameters
     - Capture specified region
     - _Requirements: 3.1-3.5, 9.1_
 
-  - [ ] 10.4 Implement screenshot_list_displays tool
+  - [x] 10.4 Implement screenshot_list_displays tool
     - Return all displays with metadata
     - Include resolutions, positions, primary indicator
     - _Requirements: 7.1, 9.1_
 
-  - [ ] 10.5 Implement screenshot_list_windows tool
+  - [x] 10.5 Implement screenshot_list_windows tool
     - Return all visible windows with metadata
     - Include titles, positions, dimensions, process info
     - _Requirements: 7.2, 9.1_
 
-  - [ ] 10.6 Write property test for response structure
+  - [x] 10.6 Write property test for response structure
     - **Property 23: Response structure consistency**
     - **Validates: Requirements 9.1**
 
-  - [ ] 10.7 Write property test for metadata completeness
+  - [x] 10.7 Write property test for metadata completeness
     - **Property 24: Metadata completeness**
     - **Validates: Requirements 9.3**
 
-- [ ] 11. Set up MCP server
-  - [ ] 11.1 Create MCP server instance
+- [x] 11. Set up MCP server
+  - [x] 11.1 Create MCP server instance
     - Initialize MCP server with name and version
     - Configure server capabilities
     - Set up stdio transport
     - _Requirements: 9.1_
 
-  - [ ] 11.2 Register all MCP tools
+  - [x] 11.2 Register all MCP tools
     - Register all 5 screenshot tools with schemas
     - Connect tool handlers to implementation
     - Add input validation for each tool
     - _Requirements: 9.1_
 
-  - [ ] 11.3 Implement server lifecycle management
+  - [x] 11.3 Implement server lifecycle management
     - Handle server startup and shutdown
     - Clean up resources on shutdown
     - Add logging for debugging
     - _Requirements: 8.1_
 
-- [ ] 12. Implement error handling
-  - [ ] 12.1 Create error response formatting
+- [x] 12. Implement error handling
+  - [x] 12.1 Create error response formatting
     - Create structured error responses with codes
     - Handle permission errors
     - Handle not-found errors
     - Handle format errors
     - _Requirements: 8.1-8.5, 9.2_
 
-  - [ ] 12.2 Implement graceful error handling
+  - [x] 12.2 Implement graceful error handling
     - Handle capture failures
     - Handle encoding failures
     - Handle file system errors
     - Return clear error messages
     - _Requirements: 8.1-8.5_
 
-- [ ] 13. Write integration tests
-  - [ ] 13.1 Test full screen capture workflow
+- [x] 13. Write integration tests
+  - [x] 13.1 Test full screen capture workflow
     - Test capture on each platform
     - Test with different formats
     - Test with PII masking
     - _Requirements: 1.1-1.5_
 
-  - [ ] 13.2 Test window capture workflow
+  - [x] 13.2 Test window capture workflow
     - Test with real windows
     - Test window enumeration
     - Test frame inclusion
     - _Requirements: 2.1-2.5_
 
-  - [ ] 13.3 Test region capture workflow
+  - [x] 13.3 Test region capture workflow
     - Test with various coordinates
     - Test boundary clipping
     - Test multi-monitor setups
     - _Requirements: 3.1-3.5_
 
-  - [ ] 13.4 Test security policy enforcement
+  - [x] 13.4 Test security policy enforcement
     - Test path validation
     - Test rate limiting
     - Test audit logging
     - _Requirements: 10.1-10.5_
 
-- [ ] 14. Create documentation
-  - [ ] 14.1 Write README documentation
+- [x] 14. Create documentation
+  - [x] 14.1 Write README documentation
     - Document installation instructions
     - Provide usage examples for each tool
     - Document security configuration
     - Add troubleshooting section
     - _Requirements: 9.2_
 
-  - [ ] 14.2 Create configuration examples
+  - [x] 14.2 Create configuration examples
     - Provide example security policies
     - Document allowed directory configuration
     - Show rate limiting configuration
     - _Requirements: 10.1-10.5_
 
-  - [ ] 14.3 Add code documentation
+  - [x] 14.3 Add code documentation
     - Add JSDoc comments to all public APIs
     - Document platform-specific behavior
     - Document error codes and meanings
     - _Requirements: 9.2_
 
-- [ ] 15. Package and distribute
-  - [ ] 15.1 Publish to NPM registry
+- [x] 15. Package and distribute
+  - [x] 15.1 Publish to NPM registry
     - Configure package.json with proper metadata
     - Add CLI entry point
     - Create .npmignore file
     - Create GitHub Actions workflow for NPM publishing
     - _Requirements: 11.1-11.5_
 
-  - [ ] 15.2 Create Docker image
+  - [x] 15.2 Create Docker image
     - Create optimized Dockerfile
     - Create docker-compose.yml
     - Create GitHub Actions workflow for Docker Hub publishing
     - _Requirements: 11.1-11.5_
 
-  - [ ] 15.3 Submit to MCP Registry
+  - [x] 15.3 Submit to MCP Registry
     - Create MCP registry submission metadata
     - Create comprehensive server description
     - Create usage examples
     - Submit PR to MCP registry
     - _Requirements: 11.1-11.5_
 
-  - [ ] 15.4 Create VS Code extension
+  - [x] 15.4 Publish to Docker MCP Registry
+    - Create Docker MCP registry submission metadata
+    - Create comprehensive server description
+    - Create usage examples
+    - Submit PR to Docker MCP registry
+    - _Requirements: 11.1-11.5_
+
+  - [x] 15.5 Create VS Code extension
     - Create extension project structure
     - Implement screenshot panel
     - Add annotation tools
     - Publish to VS Code marketplace
     - _Requirements: 12.1-12.5_
 
-- [ ] 16. Final checkpoint - Ensure all tests pass
+- [-] 16. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
