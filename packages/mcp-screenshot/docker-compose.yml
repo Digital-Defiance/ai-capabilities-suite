@@ -3,69 +3,91 @@ version: "3.8"
 services:
   mcp-screenshot:
     build:
-      context: ../..
-      dockerfile: packages/mcp-screenshot/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     image: digitaldefiance/mcp-screenshot:latest
     container_name: mcp-screenshot
+    restart: unless-stopped
 
-    # Security settings
-    security_opt:
-      - no-new-privileges:true
-    read_only: true
+    # Environment variables
+    environment:
+      - NODE_ENV=production
+      - DISPLAY=:99
+      - TESSDATA_PREFIX=/usr/share/tessdata
+      # Optional: Enable VNC for debugging
+      - ENABLE_VNC=false
+
+    # Volumes for persistent storage
+    volumes:
+      # Screenshot output directory
+      - ./screenshots:/app/screenshots
+      # Optional: Custom configuration
+      - ./config.json:/app/config.json:ro
+
+    # Ports
+    ports:
+      # VNC port (only if ENABLE_VNC=true)
+      - "5900:5900"
 
     # Resource limits
     deploy:
       resources:
         limits:
-          cpus: "2"
+          cpus: "2.0"
           memory: 2G
         reservations:
           cpus: "0.5"
           memory: 512M
 
-    # Environment variables
-    environment:
-      - NODE_ENV=production
-      - TESSDATA_PREFIX=/usr/share/tessdata
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
-    # Volumes for persistent data
-    volumes:
-      # Mount config file (optional)
-      - ./config.json:/app/config/config.json:ro
-      # Mount screenshots directory
-      - ./screenshots:/app/screenshots:rw
-      # Temporary directory (writable)
-      - /tmp
+    # Security options
+    security_opt:
+      - no-new-privileges:true
 
-    # Stdin/stdout for MCP protocol
-    stdin_open: true
-    tty: false
+    # Read-only root filesystem (except for necessary writable paths)
+    read_only: false
 
-    # Restart policy
-    restart: unless-stopped
-
-    # Logging configuration
+    # Logging
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
 
-  # Example: Running with custom security policy
-  mcp-screenshot-secure:
-    extends: mcp-screenshot
-    container_name: mcp-screenshot-secure
-    command:
-      ["node", "dist/src/cli.js", "--config=/app/config/security-policy.json"]
-    volumes:
-      - ./security-policy.json:/app/config/security-policy.json:ro
-      - ./screenshots:/app/screenshots:rw
-      - /tmp
-    profiles:
-      - secure
+  # Optional: Development service with hot reload
+  mcp-screenshot-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    image: digitaldefiance/mcp-screenshot:dev
+    container_name: mcp-screenshot-dev
 
-# Networks (optional, for container-to-container communication)
+    environment:
+      - NODE_ENV=development
+      - DISPLAY=:99
+      - ENABLE_VNC=true
+
+    volumes:
+      - ./src:/app/src
+      - ./screenshots:/app/screenshots
+      - ./config.json:/app/config.json:ro
+
+    ports:
+      - "5900:5900"
+
+    command: npm run watch
+
+    profiles:
+      - dev
+
 networks:
   default:
-    name: mcp-network
-    driver: bridge
+    name: mcp-screenshot-network
