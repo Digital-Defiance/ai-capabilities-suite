@@ -1,4 +1,4 @@
-name: Create Release
+name: Create Release (Debugger Only)
 
 on:
   workflow_dispatch:
@@ -19,6 +19,12 @@ on:
           - mcp-debugger-server
           - mcp-debugger-core
           - all
+  push:
+    paths:
+      - "packages/mcp-debugger-server/**"
+      - "packages/mcp-debugger-core/**"
+    branches:
+      - main
 
 jobs:
   release:
@@ -64,11 +70,10 @@ jobs:
           npm version ${{ github.event.inputs.version }} --no-git-tag-version
           echo "SERVER_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
-      - name: Update CLI version
+      - name: Sync versions across all files
         if: github.event.inputs.package == 'all' || github.event.inputs.package == 'mcp-debugger-server'
         run: |
-          cd packages/mcp-debugger-server/src
-          sed -i "s/const VERSION = '[^']*'/const VERSION = '${{ env.SERVER_VERSION }}'/" cli.ts
+          node scripts/sync-versions.js
 
       - name: Build packages
         run: yarn build
