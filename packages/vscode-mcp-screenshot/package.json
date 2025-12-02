@@ -1,7 +1,7 @@
 {
   "name": "mcp-screenshot",
   "displayName": "MCP Screenshot",
-  "description": "Cross-platform screenshot capture for VS Code with MCP integration",
+  "description": "Cross-platform screenshot capture for VS Code with MCP integration and Language Server Protocol support for intelligent code assistance",
   "version": "0.0.3",
   "publisher": "DigitalDefiance",
   "icon": "images/icon.png",
@@ -24,7 +24,13 @@
     "pii-masking",
     "privacy"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:json"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -54,6 +60,14 @@
       {
         "command": "mcp-screenshot.openSettings",
         "title": "MCP Screenshot: Open Settings"
+      },
+      {
+        "command": "mcp.screenshot.capture",
+        "title": "MCP Screenshot: Capture (LSP)"
+      },
+      {
+        "command": "mcp.screenshot.getCapabilities",
+        "title": "MCP Screenshot: Get Capabilities (LSP)"
       }
     ],
     "configuration": {
@@ -139,6 +153,12 @@
         },
         {
           "command": "mcp-screenshot.openSettings"
+        },
+        {
+          "command": "mcp.screenshot.capture"
+        },
+        {
+          "command": "mcp.screenshot.getCapabilities"
         }
       ]
     }
@@ -160,13 +180,17 @@
     "@types/vscode": "^1.85.0",
     "@vscode/test-electron": "^2.3.8",
     "@vscode/vsce": "^3.7.1",
+    "fast-check": "^3.15.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@ai-capabilities-suite/mcp-screenshot": "^0.0.3",
-    "@modelcontextprotocol/sdk": "^1.23.0"
+    "@ai-capabilities-suite/mcp-screenshot": "^0.0.4",
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "vscode-languageclient": "^8.1.0",
+    "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "^1.0.8"
   },
   "repository": {
     "type": "git",
