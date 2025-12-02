@@ -1,7 +1,16 @@
 import * as vscode from "vscode";
+import * as path from "path";
+import {
+  LanguageClient,
+  LanguageClientOptions,
+  ServerOptions,
+  TransportKind,
+} from "vscode-languageclient/node";
 import { MCPScreenshotClient } from "./mcpClient";
+import { mcpClientAccessor } from "./mcpClientAccessor";
 
 let mcpClient: MCPScreenshotClient | undefined;
+let languageClient: LanguageClient | undefined;
 let outputChannel: vscode.OutputChannel;
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -17,6 +26,9 @@ export async function activate(context: vscode.ExtensionContext) {
       mcpClient = new MCPScreenshotClient(outputChannel);
       await mcpClient.start();
       outputChannel.appendLine("MCP Screenshot server started successfully");
+
+      // Set the client in the accessor for language server access
+      mcpClientAccessor.setClient(mcpClient);
     } catch (error) {
       outputChannel.appendLine(`Failed to start MCP server: ${error}`);
       if (process.env.NODE_ENV === "production") {
@@ -74,13 +86,120 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   );
 
+  // Start language server
+  try {
+    await startLanguageServer(context);
+    outputChannel.appendLine("Language server started successfully");
+  } catch (error) {
+    outputChannel.appendLine(`Failed to start language server: ${error}`);
+    // Don't fail extension activation if language server fails
+    if (process.env.NODE_ENV !== "production") {
+      vscode.window.showWarningMessage(
+        `MCP Screenshot LSP failed to start: ${error}`
+      );
+    }
+  }
+
   outputChannel.appendLine("MCP Screenshot extension activated");
 }
 
+/**
+ * Start the language server for LSP features
+ *
+ * Initializes and starts the Language Server Protocol server that provides
+ * intelligent code assistance for screenshot-related operations including:
+ * - Hover information for screenshot functions and parameters
+ * - Code lenses for quick actions
+ * - Diagnostics for parameter validation
+ * - Code completion for configuration objects
+ * - Command execution for AI agents
+ *
+ * The language server runs in a separate Node.js process and communicates
+ * with the extension via IPC (Inter-Process Communication).
+ *
+ * @param context - The VS Code extension context
+ * @throws Will log errors but not throw to prevent extension activation failure
+ *
+ * @remarks
+ * The language server is configured to support JavaScript, TypeScript, JSX, TSX,
+ * and JSON files. It will automatically activate when these file types are opened.
+ *
+ * @example
+ * ```typescript
+ * export async function activate(context: vscode.ExtensionContext) {
+ *   await startLanguageServer(context);
+ * }
+ * ```
+ */
+async function startLanguageServer(
+  context: vscode.ExtensionContext
+): Promise<void> {
+  // The server is implemented in Node
+  const serverModule = context.asAbsolutePath(
+    path.join("out", "languageServer.js")
+  );
+
+  // If the extension is launched in debug mode, the debug server options are used
+  // Otherwise the run options are used
+  const serverOptions: ServerOptions = {
+    run: { module: serverModule, transport: TransportKind.ipc },
+    debug: {
+      module: serverModule,
+      transport: TransportKind.ipc,
+      options: { execArgv: ["--nolazy", "--inspect=6009"] },
+    },
+  };
+
+  // Options to control the language client
+  const clientOptions: LanguageClientOptions = {
+    // Register the server for JavaScript, TypeScript, JSX, TSX, and JSON files
+    documentSelector: [
+      { scheme: "file", language: "javascript" },
+      { scheme: "file", language: "typescript" },
+      { scheme: "file", language: "javascriptreact" },
+      { scheme: "file", language: "typescriptreact" },
+      { scheme: "file", language: "json" },
+    ],
+    synchronize: {
+      // Notify the server about file changes to files watched in the workspace
+      fileEvents: vscode.workspace.createFileSystemWatcher(
+        "**/*.{js,ts,jsx,tsx,json}"
+      ),
+    },
+    outputChannel: outputChannel,
+  };
+
+  // Create the language client and start it
+  languageClient = new LanguageClient(
+    "mcpScreenshotLSP",
+    "MCP Screenshot Language Server",
+    serverOptions,
+    clientOptions
+  );
+
+  // Start the client. This will also launch the server
+  await languageClient.start();
+}
+
 export async function deactivate() {
+  // Stop language server
+  if (languageClient) {
+    try {
+      await languageClient.stop();
+      outputChannel.appendLine("Language server stopped");
+    } catch (error) {
+      outputChannel.appendLine(`Error stopping language server: ${error}`);
+    }
+  }
+
+  // Clear MCP client reference
+  mcpClientAccessor.clearClient();
+
+  // Stop MCP client
   if (mcpClient) {
     mcpClient.stop();
   }
+
   outputChannel.dispose();
 }
 
