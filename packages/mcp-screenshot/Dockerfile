@@ -1,4 +1,7 @@
-# Multi-stage build for optimized image size
+# Multi-stage build for MCP Screenshot Server
+# Optimized for production deployment with minimal image size
+
+# Stage 1: Builder
 FROM node:20-alpine AS builder
 
 # Install build dependencies
@@ -15,71 +18,81 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 # Copy package files
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-COPY packages/mcp-screenshot/package.json ./packages/mcp-screenshot/
+COPY package*.json ./
+COPY tsconfig.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm ci --only=production && \
+    npm cache clean --force
 
 # Copy source code
-COPY packages/mcp-screenshot ./packages/mcp-screenshot/
-COPY tsconfig.base.json ./
+COPY src ./src
 
-# Build the application
-WORKDIR /app/packages/mcp-screenshot
+# Build TypeScript
 RUN npm run build
 
-# Production stage
+# Stage 2: Runtime
 FROM node:20-alpine
 
 # Install runtime dependencies for screenshot capture
 RUN apk add --no-cache \
-    # For X11 screenshots on Linux
+    # X11 and display server
     xvfb \
+    x11vnc \
+    fluxbox \
+    # Screenshot tools
+    scrot \
     imagemagick \
-    # For Tesseract OCR
-    tesseract-ocr \
-    tesseract-ocr-data-eng \
-    # For sharp image processing
+    # Image processing
     cairo \
     jpeg \
     pango \
     giflib \
     pixman \
-    # For screenshot-desktop
-    libx11 \
-    libxext \
-    libxrandr
+    # OCR for PII detection
+    tesseract-ocr \
+    tesseract-ocr-data-eng \
+    # Utilities
+    bash \
+    dbus \
+    && rm -rf /var/cache/apk/*
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S mcp && \
-    adduser -u 1001 -S mcp -G mcp
+# Create app user
+RUN addgroup -g 1001 -S mcpuser && \
+    adduser -u 1001 -S mcpuser -G mcpuser
 
 WORKDIR /app
 
 # Copy built application from builder
-COPY --from=builder --chown=mcp:mcp /app/node_modules ./node_modules
-COPY --from=builder --chown=mcp:mcp /app/packages/mcp-screenshot/dist ./dist
-COPY --from=builder --chown=mcp:mcp /app/packages/mcp-screenshot/package.json ./
-COPY --from=builder --chown=mcp:mcp /app/packages/mcp-screenshot/eng.traineddata ./
+COPY --from=builder --chown=mcpuser:mcpuser /app/dist ./dist
+COPY --from=builder --chown=mcpuser:mcpuser /app/node_modules ./node_modules
+COPY --from=builder --chown=mcpuser:mcpuser /app/package.json ./
 
-# Create directories for screenshots with proper permissions
-RUN mkdir -p /app/screenshots /app/config && \
-    chown -R mcp:mcp /app/screenshots /app/config
+# Copy Tesseract data
+COPY --chown=mcpuser:mcpuser eng.traineddata /usr/share/tessdata/
 
-# Switch to non-root user
-USER mcp
+# Create directories for screenshots
+RUN mkdir -p /app/screenshots /tmp/.X11-unix && \
+    chown -R mcpuser:mcpuser /app/screenshots /tmp/.X11-unix
 
-# Set environment variables
+# Environment variables
 ENV NODE_ENV=production \
+    DISPLAY=:99 \
     TESSDATA_PREFIX=/usr/share/tessdata
 
-# Expose MCP stdio interface (no network ports needed)
-# The server communicates via stdin/stdout
+# Expose port for VNC (optional, for debugging)
+EXPOSE 5900
 
-# Health check (optional, for container orchestration)
+# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD node -e "console.log('healthy')" || exit 1
 
-# Default command
+# Switch to non-root user
+USER mcpuser
+
+# Start script that launches Xvfb and the MCP server
+COPY --chown=mcpuser:mcpuser docker-entrypoint.sh /app/
+RUN chmod +x /app/docker-entrypoint.sh
+
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["node", "dist/src/cli.js"]
