@@ -2,7 +2,7 @@
   "name": "mcp-screenshot",
   "displayName": "MCP Screenshot",
   "description": "Cross-platform screenshot capture for VS Code with MCP integration and Language Server Protocol support for intelligent code assistance",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "DigitalDefiance",
   "icon": "images/icon.png",
   "engines": {
