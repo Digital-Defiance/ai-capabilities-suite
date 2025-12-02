@@ -98,17 +98,39 @@ const debuggerFiles = [
 const screenshotFiles = [
   {
     package: "screenshot",
-    path: path.join(SCREENSHOT_DIR, "server.ts"),
+    path: path.join(SCREENSHOT_DIR, "src", "server.ts"),
     pattern: /version: "[^"]+"/,
     replacement: `version: "${SCREENSHOT_VERSION}"`,
-    optional: true, // May not exist yet
   },
   {
     package: "screenshot",
     path: path.join(SCREENSHOT_DIR, "mcp-registry.json"),
     pattern: /"version": "[^"]+"/,
     replacement: `"version": "${SCREENSHOT_VERSION}"`,
-    optional: true,
+  },
+  {
+    package: "screenshot",
+    path: path.join(SCREENSHOT_DIR, "docker-build-push.sh"),
+    pattern: /VERSION="[^"]+"/,
+    replacement: `VERSION="${SCREENSHOT_VERSION}"`,
+  },
+  {
+    package: "screenshot",
+    path: path.join(SCREENSHOT_DIR, "docker-mcp-registry", "server.yaml"),
+    pattern: /version: [0-9]+\.[0-9]+\.[0-9]+/,
+    replacement: `version: ${SCREENSHOT_VERSION}`,
+  },
+  {
+    package: "screenshot",
+    path: path.join(
+      __dirname,
+      "..",
+      "packages",
+      "vscode-mcp-screenshot",
+      "package.json"
+    ),
+    pattern: /"@ai-capabilities-suite\/mcp-screenshot": "\^[^"]+"/,
+    replacement: `"@ai-capabilities-suite/mcp-screenshot": "^${SCREENSHOT_VERSION}"`,
   },
 ];
 
