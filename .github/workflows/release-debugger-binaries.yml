@@ -4,10 +4,6 @@ on:
   push:
     tags:
       - "mcp-debugger-server-v*.*.*"
-    paths:
-      - "packages/mcp-debugger-server/**"
-      - "packages/mcp-debugger-core/**"
-      - ".github/workflows/release-binaries.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -68,7 +64,7 @@ jobs:
         if: matrix.os != 'windows'
         run: |
           # Install the package globally
-          npm install -g @ai-capabilities-suite/mcp-debugger-server@1.0.2
+          npm install -g @ai-capabilities-suite/mcp-debugger-server@1.1.5
 
           # Find where it was installed
           PACKAGE_PATH=$(npm root -g)/@ai-capabilities-suite/mcp-debugger-server
