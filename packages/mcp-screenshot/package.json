@@ -70,8 +70,10 @@
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:e2e": "jest --testPathPattern=e2e.spec.ts",
+    "test:unit": "jest --testPathIgnorePatterns=e2e.spec.ts",
     "start": "node dist/src/index.js",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "npm run build && npm run test:unit"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.23.0",
