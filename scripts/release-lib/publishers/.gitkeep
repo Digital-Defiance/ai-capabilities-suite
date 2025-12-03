@@ -1,0 +1,4 @@
+# Publisher modules will be placed here
+# - npm-publisher.js
+# - docker-publisher.js
+# - vscode-publisher.js

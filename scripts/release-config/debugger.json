@@ -1,0 +1,45 @@
+{
+  "packageName": "debugger",
+  "npmPackageName": "@ai-capabilities-suite/mcp-debugger-server",
+  "vscodeExtensionName": "ts-mcp-debugger",
+  "dockerImageName": "digitaldefiance/mcp-debugger",
+  "packageDir": "packages/mcp-debugger-server",
+  "vscodeExtensionDir": "packages/vscode-mcp-debugger",
+  "buildBinaries": true,
+  "binaryPlatforms": ["node18-linux-x64", "node18-macos-x64", "node18-win-x64"],
+  "testCommand": "nx test mcp-debugger-server",
+  "buildCommand": "nx build mcp-debugger-server",
+  "filesToSync": [
+    {
+      "path": "packages/mcp-debugger-server/package.json",
+      "pattern": "\"version\":\\s*\"[^\"]+\"",
+      "replacement": "\"version\": \"$VERSION\""
+    },
+    {
+      "path": "packages/vscode-mcp-debugger/package.json",
+      "pattern": "\"version\":\\s*\"[^\"]+\"",
+      "replacement": "\"version\": \"$VERSION\""
+    },
+    {
+      "path": "packages/vscode-mcp-debugger/package.json",
+      "pattern": "\"@ai-capabilities-suite/mcp-debugger-server\":\\s*\"\\^[^\"]+\"",
+      "replacement": "\"@ai-capabilities-suite/mcp-debugger-server\": \"^$VERSION\""
+    },
+    {
+      "path": "packages/mcp-debugger-server/README.md",
+      "pattern": "@ai-capabilities-suite/mcp-debugger-server@[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "@ai-capabilities-suite/mcp-debugger-server@$VERSION"
+    },
+    {
+      "path": "packages/mcp-debugger-server/DOCKER-DEPLOYMENT.md",
+      "pattern": "digitaldefiance/mcp-debugger:[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "digitaldefiance/mcp-debugger:$VERSION"
+    },
+    {
+      "path": "packages/mcp-debugger-server/docker-compose.yml",
+      "pattern": "image:\\s*digitaldefiance/mcp-debugger:[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "image: digitaldefiance/mcp-debugger:$VERSION"
+    }
+  ],
+  "githubReleaseTemplate": "## MCP Debugger v$VERSION\n\n### What's Changed\n\n$CHANGELOG\n\n### Installation\n\n**NPM:**\n```bash\nnpm install -g @ai-capabilities-suite/mcp-debugger-server@$VERSION\n```\n\n**Docker:**\n```bash\ndocker pull digitaldefiance/mcp-debugger:$VERSION\n```\n\n**VSCode Extension:**\nSearch for \"TypeScript MCP Debugger\" in the VSCode marketplace or download the VSIX from this release.\n\n**Standalone Binaries:**\nDownload the appropriate binary for your platform from the assets below.\n\n### Documentation\n\n- [API Documentation](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/API.md)\n- [Tool Reference](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/TOOL-REFERENCE.md)\n- [AI Agent Integration](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/AI-AGENT-INTEGRATION.md)\n- [VSCode Integration](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-debugger-server/VSCODE-INTEGRATION.md)"
+}

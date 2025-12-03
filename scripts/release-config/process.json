@@ -1,0 +1,24 @@
+{
+  "packageName": "process",
+  "npmPackageName": "@ai-capabilities-suite/mcp-process",
+  "vscodeExtensionName": "mcp-process",
+  "dockerImageName": "digitaldefiance/mcp-process",
+  "packageDir": "packages/mcp-process",
+  "vscodeExtensionDir": "packages/vscode-mcp-process",
+  "buildBinaries": false,
+  "testCommand": "nx test mcp-process",
+  "buildCommand": "nx build mcp-process",
+  "filesToSync": [
+    {
+      "path": "packages/mcp-process/package.json",
+      "pattern": "\"version\":\\s*\"[^\"]+\"",
+      "replacement": "\"version\": \"$VERSION\""
+    },
+    {
+      "path": "packages/mcp-process/README.md",
+      "pattern": "@ai-capabilities-suite/mcp-process@[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "@ai-capabilities-suite/mcp-process@$VERSION"
+    }
+  ],
+  "githubReleaseTemplate": "## MCP Process v$VERSION\n\n### What's Changed\n\n$CHANGELOG\n\n### Installation\n\n**NPM:**\n```bash\nnpm install -g @ai-capabilities-suite/mcp-process@$VERSION\n```\n\n### Documentation\n\n- [README](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-process/README.md)"
+}

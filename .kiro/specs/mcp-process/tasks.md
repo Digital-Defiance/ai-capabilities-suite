@@ -1,21 +1,21 @@
 # MCP Process - Implementation Plan
 
-- [ ] 1. Set up project structure and core interfaces
+- [x] 1. Set up project structure and core interfaces
   - Create directory structure for MCP server, process launcher, resource monitor, and security manager
   - Initialize package.json with MCP SDK, pidusage, which, and minimatch dependencies
   - Configure TypeScript with appropriate compiler options
   - Set up testing framework (Jest) with fast-check for property-based testing
   - _Requirements: 13.1, 14.1_
 
-- [ ] 2. Implement security manager (CRITICAL - Must be first)
-  - [ ] 2.1 Create SecurityManager class with multi-layer validation
+- [x] 2. Implement security manager (CRITICAL - Must be first)
+  - [x] 2.1 Create SecurityManager class with multi-layer validation
     - Implement executable allowlist enforcement
     - Implement 6-layer executable validation
     - Implement hardcoded dangerous executable blocklist
     - Implement hardcoded dangerous environment variable blocklist
     - _Requirements: 1.4, 11.1-11.5, 14.2-14.5_
 
-  - [ ] 2.2 Implement executable validation with all security layers
+  - [x] 2.2 Implement executable validation with all security layers
     - Layer 1: Resolve executable path
     - Layer 2: Check against dangerous executables (ALWAYS blocked)
     - Layer 3: Check against shell interpreters (if configured)
@@ -24,44 +24,44 @@
     - Layer 6: Validate arguments for injection attacks
     - _Requirements: 1.4, 11.1-11.3_
 
-  - [ ] 2.3 Implement argument validation
+  - [x] 2.3 Implement argument validation
     - Check for command injection patterns
     - Check for path traversal in arguments
     - Prevent shell metacharacters
     - _Requirements: 11.1_
 
-  - [ ] 2.4 Implement environment sanitization
+  - [x] 2.4 Implement environment sanitization
     - Remove dangerous environment variables
     - Check for command injection in values
     - Limit environment size
     - _Requirements: 11.4_
 
-  - [ ] 2.5 Implement working directory validation
+  - [x] 2.5 Implement working directory validation
     - Validate against allowed directories (if configured)
     - Prevent access to restricted paths
     - _Requirements: 1.3_
 
-  - [ ] 2.6 Implement rate limiting
+  - [x] 2.6 Implement rate limiting
     - Track process launches per agent per time window
     - Enforce maximum launches per minute
     - Return rate limit errors
     - _Requirements: 14.3_
 
-  - [ ] 2.7 Implement audit logging
+  - [x] 2.7 Implement audit logging
     - Log all process operations
     - Log security violations separately
     - Include timestamps, commands, PIDs, and results
     - _Requirements: 14.5_
 
-  - [ ]* 2.8 Write property test for allowlist enforcement
+  - [x] 2.8 Write property test for allowlist enforcement
     - **Property 2: Allowlist enforcement on launch**
     - **Validates: Requirements 1.4, 11.2, 14.2**
 
-  - [ ]* 2.9 Write property test for environment sanitization
+  - [x] 2.9 Write property test for environment sanitization
     - **Property 15: Environment variable sanitization**
     - **Validates: Requirements 11.4**
 
-- [ ] 3. Implement process launcher
+- [-] 3. Implement process launcher
   - [ ] 3.1 Create ProcessLauncher class
     - Spawn child processes with validated executables
     - Set environment variables
@@ -83,15 +83,15 @@
     - Handle binary data
     - _Requirements: 3.1-3.3_
 
-  - [ ]* 3.4 Write property test for process launch
+  - [ ] 3.4 Write property test for process launch
     - **Property 1: Process launch returns PID**
     - **Validates: Requirements 1.1**
 
-  - [ ]* 3.5 Write property test for output capture
+  - [ ] 3.5 Write property test for output capture
     - **Property 4: Output capture separation**
     - **Validates: Requirements 3.1**
 
-  - [ ]* 3.6 Write property test for output flush
+  - [ ] 3.6 Write property test for output flush
     - **Property 5: Output flush on termination**
     - **Validates: Requirements 3.5**
 
@@ -116,11 +116,11 @@
     - Query process counts
     - _Requirements: 2.5_
 
-  - [ ]* 4.4 Write property test for statistics completeness
+  - [ ] 4.4 Write property test for statistics completeness
     - **Property 3: Process statistics completeness**
     - **Validates: Requirements 2.1**
 
-  - [ ]* 4.5 Write property test for resource limit enforcement
+  - [ ] 4.5 Write property test for resource limit enforcement
     - **Property 11: Resource limit enforcement**
     - **Validates: Requirements 7.4**
 
@@ -144,7 +144,7 @@
     - Include byte counts
     - _Requirements: 3.2, 3.5_
 
-  - [ ]* 5.4 Write property test for stdin delivery
+  - [ ] 5.4 Write property test for stdin delivery
     - **Property 6: Stdin data delivery**
     - **Validates: Requirements 4.1**
 
@@ -167,11 +167,11 @@
     - Ensure process is killed
     - _Requirements: 5.2_
 
-  - [ ]* 6.4 Write property test for graceful termination
+  - [ ] 6.4 Write property test for graceful termination
     - **Property 7: Graceful termination sends SIGTERM**
     - **Validates: Requirements 5.1**
 
-  - [ ]* 6.5 Write property test for timeout escalation
+  - [ ] 6.5 Write property test for timeout escalation
     - **Property 8: Timeout escalation to SIGKILL**
     - **Validates: Requirements 5.3**
 
@@ -197,15 +197,15 @@
     - Return exit code if terminated
     - _Requirements: 6.1, 6.3_
 
-  - [ ]* 7.4 Write property test for status completeness
+  - [ ] 7.4 Write property test for status completeness
     - **Property 9: Process status completeness**
     - **Validates: Requirements 6.1**
 
-  - [ ]* 7.5 Write property test for process list
+  - [ ] 7.5 Write property test for process list
     - **Property 10: Process list completeness**
     - **Validates: Requirements 6.2**
 
-  - [ ]* 7.6 Write property test for concurrent limit
+  - [ ] 7.6 Write property test for concurrent limit
     - **Property 17: Concurrent process limit enforcement**
     - **Validates: Requirements 14.3**
 
@@ -223,7 +223,7 @@
     - Return timeout errors
     - _Requirements: 9.1, 9.2_
 
-  - [ ]* 8.3 Write property test for timeout enforcement
+  - [ ] 8.3 Write property test for timeout enforcement
     - **Property 13: Timeout enforcement**
     - **Validates: Requirements 9.1**
 
@@ -246,7 +246,7 @@
     - Handle pipeline failures
     - _Requirements: 10.3_
 
-  - [ ]* 9.4 Write property test for group termination
+  - [ ] 9.4 Write property test for group termination
     - **Property 14: Process group termination**
     - **Validates: Requirements 10.4**
 
@@ -271,7 +271,7 @@
     - Restart unhealthy services
     - _Requirements: 8.3, 8.4_
 
-  - [ ]* 10.4 Write property test for auto-restart
+  - [ ] 10.4 Write property test for auto-restart
     - **Property 12: Auto-restart on crash**
     - **Validates: Requirements 8.2**
 
@@ -344,7 +344,7 @@
     - Stop service and disable auto-restart
     - _Requirements: 8.5, 13.1_
 
-  - [ ]* 11.13 Write property test for process information
+  - [ ] 11.13 Write property test for process information
     - **Property 16: Process information completeness**
     - **Validates: Requirements 13.3**
 
@@ -389,38 +389,38 @@
     - Return clear error messages
     - _Requirements: 12.1-12.5_
 
-- [ ]* 14. Write integration tests
-  - [ ]* 14.1 Test process launch workflow
+- [ ] 14. Write integration tests
+  - [ ] 14.1 Test process launch workflow
     - Test with allowed executables
     - Test with blocked executables
     - Test with resource limits
     - _Requirements: 1.1-1.5, 11.1-11.5_
 
-  - [ ]* 14.2 Test resource monitoring workflow
+  - [ ] 14.2 Test resource monitoring workflow
     - Test CPU monitoring
     - Test memory monitoring
     - Test limit enforcement
     - _Requirements: 2.1-2.5, 7.1-7.5_
 
-  - [ ]* 14.3 Test I/O workflow
+  - [ ] 14.3 Test I/O workflow
     - Test stdin input
     - Test stdout/stderr capture
     - Test binary data
     - _Requirements: 3.1-3.5, 4.1-4.5_
 
-  - [ ]* 14.4 Test termination workflow
+  - [ ] 14.4 Test termination workflow
     - Test graceful termination
     - Test forced termination
     - Test timeout escalation
     - _Requirements: 5.1-5.5_
 
-  - [ ]* 14.5 Test service management workflow
+  - [ ] 14.5 Test service management workflow
     - Test service start/stop
     - Test auto-restart
     - Test health checks
     - _Requirements: 8.1-8.5_
 
-  - [ ]* 14.6 Test security policy enforcement
+  - [ ] 14.6 Test security policy enforcement
     - Test allowlist enforcement
     - Test argument validation
     - Test environment sanitization

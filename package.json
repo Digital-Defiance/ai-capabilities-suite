@@ -8,7 +8,8 @@
     "packages/mcp-debugger-core",
     "packages/mcp-debugger-server",
     "packages/vscode-mcp-debugger",
-    "packages/mcp-screenshot"
+    "packages/mcp-screenshot",
+    "packages/mcp-process"
   ],
   "scripts": {
     "build": "nx run-many -t build",
@@ -17,6 +18,7 @@
     "build:binaries": "npm run build && node scripts/build-binaries.js",
     "changelog": "node scripts/generate-changelog.js",
     "sync-versions": "node scripts/sync-versions.js",
+    "set-version": "node scripts/set-version.js",
     "version:debugger": "cd packages/mcp-debugger-server && npm version",
     "postversion:debugger": "npm run sync-versions",
     "publish:core": "cd packages/mcp-debugger-core && npm publish --access public",

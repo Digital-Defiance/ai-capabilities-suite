@@ -1,14 +1,7 @@
 # 🚀 AI Capability Extension Suite
 
-[![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/digitaldefiance.ts-mcp-debugger?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
-[![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/digitaldefiance.ts-mcp-debugger?label=Installs)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
-[![VS Code Rating](https://img.shields.io/visual-studio-marketplace/r/digitaldefiance.ts-mcp-debugger?label=Rating)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
-[![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-debugger-server?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
-[![Docker Image](https://img.shields.io/docker/v/digidefiance/mcp-debugger-server?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
 [![GitHub Release](https://img.shields.io/github/v/release/digitaldefiance/ai-capabilities-suite?label=Release&logo=github)](https://github.com/digital-defiance/ai-capabilities-suite/releases)
 [![License](https://img.shields.io/github/license/digitaldefiance/ai-capabilities-suite?label=License)](./LICENSE)
-[![Test Coverage](https://img.shields.io/badge/coverage-94.53%25-brightgreen?logo=jest)](./DEBUGGER-STATUS.md)
-[![Tests](https://img.shields.io/badge/tests-1059%20passed-brightgreen?logo=jest)](./DEBUGGER-STATUS.md)
 
 ## What if AI agents could actually *see*, *debug*, and *control* your development environment?
 
@@ -55,6 +48,14 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 
 ### 🐛 **1. MCP Debugger** (Production-Ready) ⭐
 **The most comprehensive debugging interface for AI agents - our flagship product**
+
+[![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/digitaldefiance.ts-mcp-debugger?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
+[![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/digitaldefiance.ts-mcp-debugger?label=Installs)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
+[![VS Code Rating](https://img.shields.io/visual-studio-marketplace/r/digitaldefiance.ts-mcp-debugger?label=Rating)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
+[![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-debugger-server?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
+[![Docker Image](https://img.shields.io/docker/v/digidefiance/mcp-debugger-server?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
+[![Test Coverage](https://img.shields.io/badge/coverage-94.53%25-brightgreen?logo=jest)](./DEBUGGER-STATUS.md)
+[![Tests](https://img.shields.io/badge/tests-1059%20passed-brightgreen?logo=jest)](./DEBUGGER-STATUS.md)
 
 **✨ Now available as a VS Code extension!** [Install from Marketplace →](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
 
@@ -321,6 +322,12 @@ node packages/mcp-debugger-server/dist/src/index.js
 
 ### 📸 **2. MCP Screenshot** (Production-Ready) ⭐
 **Give AI agents visual awareness and screen capture capabilities**
+
+[![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-screenshot?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
+[![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-screenshot?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
+[![VS Code Rating](https://img.shields.io/visual-studio-marketplace/r/DigitalDefiance.mcp-screenshot?label=Rating)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
+[![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-screenshot?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot)
+[![Docker Image](https://img.shields.io/docker/v/digidefiance/mcp-screenshot?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digidefiance/mcp-screenshot)
 
 **✨ Now available on NPM, Docker Hub, and VS Code Marketplace!**
 
@@ -736,6 +743,7 @@ We welcome contributions! This project follows a spec-driven development approac
 
 **Digital Defiance**
 - 📧 Email: [info@digitaldefiance.org](mailto:info@digitaldefiance.org)
+- 🚨 Security: [SECURITY.md](./SECURITY.md)
 - 🔗 LinkedIn: [Digital Defiance](https://www.linkedin.com/company/digital-defiance)
 - 🌐 Website: [digitaldefiance.org](https://digitaldefiance.org)
 

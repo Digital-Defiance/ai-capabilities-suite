@@ -37,6 +37,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@ai-capabilities-suite/mcp-process@workspace:packages/mcp-process":
+  version: 0.0.0-use.local
+  resolution: "@ai-capabilities-suite/mcp-process@workspace:packages/mcp-process"
+  dependencies:
+    "@modelcontextprotocol/sdk": "npm:^1.23.0"
+    "@swc/core": "npm:^1.15.3"
+    "@swc/jest": "npm:^0.2.39"
+    "@types/node": "npm:^20.10.6"
+    "@types/which": "npm:^3.0.4"
+    fast-check: "npm:^4.3.0"
+    jest: "npm:^29.7.0"
+    minimatch: "npm:^10.0.1"
+    pidusage: "npm:^3.0.2"
+    typescript: "npm:^5.3.3"
+    which: "npm:^4.0.0"
+    zod: "npm:^4.1.13"
+  languageName: unknown
+  linkType: soft
+
 "@ai-capabilities-suite/mcp-screenshot@workspace:packages/mcp-screenshot":
   version: 0.0.0-use.local
   resolution: "@ai-capabilities-suite/mcp-screenshot@workspace:packages/mcp-screenshot"
@@ -3332,6 +3351,13 @@ __metadata:
   version: 1.106.1
   resolution: "@types/vscode@npm:1.106.1"
   checksum: 10c0/699bb2b1932cf885bc863d1a978eeb07f263150544f56eb7a2b59f4ed521e654f9a5f3357c5b3a45e56af07b876e7936140075ba4a2acaa9641a8ad8e0ab9f05
+  languageName: node
+  linkType: hard
+
+"@types/which@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@types/which@npm:3.0.4"
+  checksum: 10c0/036e4cb243ebfd5cf4893be2ab3b9a60a22368811c1f1c78fb8fc70cadc274024282d04b8d7c0948268372600003252d84e2d3a5e064014a543a5da235c5989d
   languageName: node
   linkType: hard
 
@@ -8257,7 +8283,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.1.1":
+"minimatch@npm:^10.0.1, minimatch@npm:^10.1.1":
   version: 10.1.1
   resolution: "minimatch@npm:10.1.1"
   dependencies:
@@ -9272,6 +9298,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pidusage@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "pidusage@npm:3.0.2"
+  dependencies:
+    safe-buffer: "npm:^5.2.1"
+  checksum: 10c0/605722ab95e146ebaeb224285023d5c95bd383d460769cb00be774d125d654193b5de806fe9d6e6c9e4994687524f7285fc35bd5c653081c28ee6bd24d11b854
+  languageName: node
+  linkType: hard
+
 "pirates@npm:^4.0.4, pirates@npm:^4.0.7":
   version: 4.0.7
   resolution: "pirates@npm:4.0.7"
@@ -9860,7 +9895,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:~5.2.0":
+"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: 10c0/6501914237c0a86e9675d4e51d89ca3c21ffd6a31642efeba25ad65720bce6921c9e7e974e5be91a786b25aa058b5303285d3c15dbabf983a919f5f630d349f3
@@ -11313,6 +11348,17 @@ __metadata:
   bin:
     node-which: ./bin/node-which
   checksum: 10c0/66522872a768b60c2a65a57e8ad184e5372f5b6a9ca6d5f033d4b0dc98aff63995655a7503b9c0a2598936f532120e81dd8cc155e2e92ed662a2b9377cc4374f
+  languageName: node
+  linkType: hard
+
+"which@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "which@npm:4.0.0"
+  dependencies:
+    isexe: "npm:^3.1.1"
+  bin:
+    node-which: bin/which.js
+  checksum: 10c0/449fa5c44ed120ccecfe18c433296a4978a7583bf2391c50abce13f76878d2476defde04d0f79db8165bdf432853c1f8389d0485ca6e8ebce3bbcded513d5e6a
   languageName: node
   linkType: hard
 

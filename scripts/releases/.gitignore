@@ -1,0 +1,6 @@
+# Ignore all release logs and manifests
+*.log
+*-manifest.json
+
+# But keep the directory structure
+!.gitignore

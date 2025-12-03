@@ -1,0 +1,44 @@
+{
+  "packageName": "screenshot",
+  "npmPackageName": "@ai-capabilities-suite/mcp-screenshot",
+  "vscodeExtensionName": "mcp-screenshot",
+  "dockerImageName": "digitaldefiance/mcp-screenshot",
+  "packageDir": "packages/mcp-screenshot",
+  "vscodeExtensionDir": "packages/vscode-mcp-screenshot",
+  "buildBinaries": false,
+  "testCommand": "nx test mcp-screenshot",
+  "buildCommand": "nx build mcp-screenshot",
+  "filesToSync": [
+    {
+      "path": "packages/mcp-screenshot/package.json",
+      "pattern": "\"version\":\\s*\"[^\"]+\"",
+      "replacement": "\"version\": \"$VERSION\""
+    },
+    {
+      "path": "packages/vscode-mcp-screenshot/package.json",
+      "pattern": "\"version\":\\s*\"[^\"]+\"",
+      "replacement": "\"version\": \"$VERSION\""
+    },
+    {
+      "path": "packages/vscode-mcp-screenshot/package.json",
+      "pattern": "\"@ai-capabilities-suite/mcp-screenshot\":\\s*\"\\^[^\"]+\"",
+      "replacement": "\"@ai-capabilities-suite/mcp-screenshot\": \"^$VERSION\""
+    },
+    {
+      "path": "packages/mcp-screenshot/README.md",
+      "pattern": "@ai-capabilities-suite/mcp-screenshot@[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "@ai-capabilities-suite/mcp-screenshot@$VERSION"
+    },
+    {
+      "path": "packages/mcp-screenshot/DOCKER-DEPLOYMENT.md",
+      "pattern": "digitaldefiance/mcp-screenshot:[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "digitaldefiance/mcp-screenshot:$VERSION"
+    },
+    {
+      "path": "packages/mcp-screenshot/docker-compose.yml",
+      "pattern": "image:\\s*digitaldefiance/mcp-screenshot:[0-9]+\\.[0-9]+\\.[0-9]+",
+      "replacement": "image: digitaldefiance/mcp-screenshot:$VERSION"
+    }
+  ],
+  "githubReleaseTemplate": "## MCP Screenshot v$VERSION\n\n### What's Changed\n\n$CHANGELOG\n\n### Installation\n\n**NPM:**\n```bash\nnpm install -g @ai-capabilities-suite/mcp-screenshot@$VERSION\n```\n\n**Docker:**\n```bash\ndocker pull digitaldefiance/mcp-screenshot:$VERSION\n```\n\n**VSCode Extension:**\nSearch for \"MCP Screenshot\" in the VSCode marketplace or download the VSIX from this release.\n\n### Documentation\n\n- [API Documentation](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-screenshot/API.md)\n- [Configuration Guide](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-screenshot/CONFIGURATION.md)\n- [Examples](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-screenshot/EXAMPLES.md)"
+}
