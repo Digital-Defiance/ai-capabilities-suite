@@ -1,0 +1,30 @@
+[submodule "packages/mcp-core"]
+	path = packages/mcp-core
+	url = https://github.com/Digital-Defiance/mcp-core.git
+[submodule "packages/mcp-debugger-core"]
+	path = packages/mcp-debugger-core
+	url = https://github.com/Digital-Defiance/mcp-debugger-core.git
+[submodule "packages/mcp-debugger-server"]
+	path = packages/mcp-debugger-server
+	url = https://github.com/Digital-Defiance/mcp-debugger-server.git
+[submodule "packages/mcp-process"]
+	path = packages/mcp-process
+	url = https://github.com/Digital-Defiance/mcp-process.git
+[submodule "packages/mcp-screenshot"]
+	path = packages/mcp-screenshot
+	url = https://github.com/Digital-Defiance/mcp-screenshot.git
+[submodule "packages/vscode-mcp-debugger"]
+	path = packages/vscode-mcp-debugger
+	url = https://github.com/Digital-Defiance/vscode-mcp-debugger.git
+[submodule "packages/vscode-mcp-screenshot"]
+	path = packages/vscode-mcp-screenshot
+	url = https://github.com/Digital-Defiance/vscode-mcp-screenshot.git
+[submodule "packages/mcp-server"]
+	path = packages/mcp-server
+	url = https://github.com/Digital-Defiance/mcp-server.git
+[submodule "packages/mcp-filesystem"]
+	path = packages/mcp-filesystem
+	url = https://github.com/Digital-Defiance/mcp-filesystem.git
+[submodule "packages/mcp-recording"]
+	path = packages/mcp-recording
+	url = https://github.com/Digital-Defiance/mcp-recording.git
