@@ -4,13 +4,18 @@
   "description": "AI Capability Extension Suite - MCP servers for AI agent capabilities",
   "private": true,
   "packageManager": "yarn@4.11.0",
-  "workspaces": [
-    "packages/mcp-debugger-core",
-    "packages/mcp-debugger-server",
-    "packages/vscode-mcp-debugger",
-    "packages/mcp-screenshot",
-    "packages/mcp-process"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/mcp-debugger-core",
+      "packages/mcp-debugger-server",
+      "packages/vscode-mcp-debugger",
+      "packages/mcp-screenshot",
+      "packages/mcp-process"
+    ],
+    "nohoist": [
+      "**/vscode-mcp-screenshot"
+    ]
+  },
   "scripts": {
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",
