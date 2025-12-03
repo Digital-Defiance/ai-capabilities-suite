@@ -8,11 +8,51 @@
  * for release notes.
  */
 
-const { execSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
+import { execSync } from "child_process";
+import * as fs from "fs";
+import * as path from "path";
 
-function getLatestTag() {
+/**
+ * Commit information from git log
+ */
+interface GitCommit {
+  hash: string;
+  subject: string;
+  body: string;
+}
+
+/**
+ * Categorized commits by type
+ */
+interface CategorizedCommits {
+  features: GitCommit[];
+  fixes: GitCommit[];
+  docs: GitCommit[];
+  performance: GitCommit[];
+  refactor: GitCommit[];
+  tests: GitCommit[];
+  chore: GitCommit[];
+  other: GitCommit[];
+}
+
+/**
+ * Pattern mapping for commit categorization
+ */
+interface CategoryPatterns {
+  features: RegExp;
+  fixes: RegExp;
+  docs: RegExp;
+  performance: RegExp;
+  refactor: RegExp;
+  tests: RegExp;
+  chore: RegExp;
+}
+
+/**
+ * Gets the latest git tag
+ * @returns Latest tag or null if no tags exist
+ */
+function getLatestTag(): string | null {
   try {
     return execSync("git describe --tags --abbrev=0", {
       encoding: "utf-8",
@@ -22,7 +62,12 @@ function getLatestTag() {
   }
 }
 
-function getCommitsSinceTag(tag) {
+/**
+ * Gets commits since a specific tag
+ * @param tag - Git tag to compare from (or null for all commits)
+ * @returns Array of git commits
+ */
+function getCommitsSinceTag(tag: string | null): GitCommit[] {
   const range = tag ? `${tag}..HEAD` : "HEAD";
   try {
     const commits = execSync(`git log ${range} --pretty=format:"%H|%s|%b"`, {
@@ -41,8 +86,13 @@ function getCommitsSinceTag(tag) {
   }
 }
 
-function categorizeCommits(commits) {
-  const categories = {
+/**
+ * Categorizes commits by their conventional commit type
+ * @param commits - Array of git commits
+ * @returns Categorized commits object
+ */
+function categorizeCommits(commits: GitCommit[]): CategorizedCommits {
+  const categories: CategorizedCommits = {
     features: [],
     fixes: [],
     docs: [],
@@ -53,7 +103,7 @@ function categorizeCommits(commits) {
     other: [],
   };
 
-  const patterns = {
+  const patterns: CategoryPatterns = {
     features: /^feat(\(.+\))?:/i,
     fixes: /^fix(\(.+\))?:/i,
     docs: /^docs(\(.+\))?:/i,
@@ -68,7 +118,7 @@ function categorizeCommits(commits) {
 
     for (const [category, pattern] of Object.entries(patterns)) {
       if (pattern.test(commit.subject)) {
-        categories[category].push(commit);
+        categories[category as keyof CategorizedCommits].push(commit);
         categorized = true;
         break;
       }
@@ -82,7 +132,12 @@ function categorizeCommits(commits) {
   return categories;
 }
 
-function formatCommit(commit) {
+/**
+ * Formats a commit for markdown output
+ * @param commit - Git commit to format
+ * @returns Formatted markdown string
+ */
+function formatCommit(commit: GitCommit): string {
   // Remove conventional commit prefix
   const subject = commit.subject.replace(
     /^(feat|fix|docs|perf|refactor|test|chore)(\(.+\))?:\s*/i,
@@ -91,7 +146,16 @@ function formatCommit(commit) {
   return `- ${subject} ([${commit.hash}](https://github.com/digital-defiance/ai-capabilities-suite/commit/${commit.hash}))`;
 }
 
-function generateChangelog(version, previousTag) {
+/**
+ * Generates changelog markdown from commits
+ * @param _version - Version string for the changelog (unused but kept for API compatibility)
+ * @param previousTag - Previous git tag to compare from
+ * @returns Formatted changelog markdown
+ */
+function generateChangelog(
+  _version: string,
+  previousTag: string | null
+): string {
   const commits = getCommitsSinceTag(previousTag);
 
   if (commits.length === 0) {
@@ -168,7 +232,10 @@ function generateChangelog(version, previousTag) {
   return changelog;
 }
 
-function main() {
+/**
+ * Main execution function
+ */
+function main(): void {
   const args = process.argv.slice(2);
   const version = args[0] || "unreleased";
   const previousTag = args[1] || getLatestTag();
@@ -189,7 +256,17 @@ function main() {
     ".github",
     "RELEASE_TEMPLATE.md"
   );
-  let template = fs.readFileSync(templatePath, "utf-8");
+
+  let template: string;
+  try {
+    template = fs.readFileSync(templatePath, "utf-8");
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error reading template: ${error.message}`);
+      process.exit(1);
+    }
+    throw error;
+  }
 
   // Replace placeholders
   template = template.replace(/\{VERSION\}/g, version);
@@ -204,7 +281,15 @@ function main() {
 
   // Write to output
   const outputPath = path.join(__dirname, "..", "RELEASE_NOTES.md");
-  fs.writeFileSync(outputPath, template);
+  try {
+    fs.writeFileSync(outputPath, template);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error writing output: ${error.message}`);
+      process.exit(1);
+    }
+    throw error;
+  }
 
   console.log(`\nChangelog generated successfully!`);
   console.log(`Output: ${outputPath}`);

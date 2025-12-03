@@ -4,48 +4,67 @@
  * Updates package.json version and syncs across all files
  *
  * Usage:
- *   node scripts/set-version.js <package> <version>
+ *   node scripts/set-version.ts <package> <version>
  *   yarn set-version <package> <version>
  *
  * Examples:
- *   node scripts/set-version.js debugger 1.2.0
+ *   node scripts/set-version.ts debugger 1.2.0
  *   yarn set-version screenshot 0.5.1
  */
 
-const fs = require("fs");
-const path = require("path");
-const { execSync } = require("child_process");
+import * as fs from "fs";
+import * as path from "path";
+
+// Use require for JavaScript modules that don't have TypeScript definitions
 const { loadConfig } = require("./release-lib/config-loader");
 const {
   syncVersions,
   validateVersion,
 } = require("./release-lib/version-manager");
 
+// Type imports for JSDoc types
+type ReleaseConfig = any;
+type SyncResult = {
+  filesUpdated: string[];
+  errors: string[];
+};
+
+/**
+ * Package.json structure
+ */
+interface PackageJson {
+  name?: string;
+  version: string;
+  [key: string]: unknown;
+}
+
 /**
  * Prints usage information
  */
-function printUsage() {
+function printUsage(): void {
   console.log(`
-Usage: node scripts/set-version.js <package> <version>
+Usage: node scripts/set-version.ts <package> <version>
 
 Arguments:
   package    Package to update: 'debugger' or 'screenshot'
   version    Version to set (semver format, e.g., 1.2.3)
 
 Examples:
-  node scripts/set-version.js debugger 1.2.0
-  node scripts/set-version.js screenshot 0.5.1
+  node scripts/set-version.ts debugger 1.2.0
+  node scripts/set-version.ts screenshot 0.5.1
   yarn set-version debugger 1.2.0
 `);
 }
 
 /**
  * Updates package.json with new version
- * @param {string} packageJsonPath - Path to package.json
- * @param {string} version - New version
+ * @param packageJsonPath - Path to package.json
+ * @param version - New version
  */
-function updatePackageJson(packageJsonPath, version) {
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+function updatePackageJson(packageJsonPath: string, version: string): void {
+  const packageJson: PackageJson = JSON.parse(
+    fs.readFileSync(packageJsonPath, "utf8")
+  );
   packageJson.version = version;
   fs.writeFileSync(
     packageJsonPath,
@@ -57,9 +76,9 @@ function updatePackageJson(packageJsonPath, version) {
 /**
  * Main function
  */
-async function main() {
+async function main(): Promise<void> {
   // Parse command-line arguments
-  const args = process.argv.slice(2);
+  const args: string[] = process.argv.slice(2);
 
   if (args.length !== 2) {
     console.error("❌ Error: Invalid number of arguments\n");
@@ -78,14 +97,14 @@ async function main() {
 
     // Load package configuration
     console.log("📦 Loading package configuration...");
-    const config = loadConfig(packageName);
+    const config: ReleaseConfig = loadConfig(packageName);
     console.log(`✅ Loaded configuration for ${config.packageName}\n`);
 
     // Get project root
-    const projectRoot = path.join(__dirname, "..");
+    const projectRoot: string = path.join(__dirname, "..");
 
     // Update main package.json
-    const packageJsonPath = path.join(
+    const packageJsonPath: string = path.join(
       projectRoot,
       config.packageDir,
       "package.json"
@@ -96,16 +115,20 @@ async function main() {
 
     // Sync versions across all files
     console.log("🔄 Syncing versions across all files...");
-    const syncResult = await syncVersions(config, version);
+    const syncResult: SyncResult = await syncVersions(config, version);
 
     if (syncResult.errors.length > 0) {
       console.error("\n❌ Errors occurred during version sync:");
-      syncResult.errors.forEach((error) => console.error(`   - ${error}`));
+      syncResult.errors.forEach((error: string) =>
+        console.error(`   - ${error}`)
+      );
       process.exit(1);
     }
 
     console.log(`✅ Updated ${syncResult.filesUpdated.length} file(s):`);
-    syncResult.filesUpdated.forEach((file) => console.log(`   - ${file}`));
+    syncResult.filesUpdated.forEach((file: string) =>
+      console.log(`   - ${file}`)
+    );
     console.log();
 
     // Success summary
@@ -124,13 +147,21 @@ async function main() {
       `   - Create a release: node scripts/release.js ${packageName} ${version}`
     );
   } catch (error) {
-    console.error("\n❌ Error:", error.message);
+    if (error instanceof Error) {
+      console.error("\n❌ Error:", error.message);
+    } else {
+      console.error("\n❌ Error:", String(error));
+    }
     process.exit(1);
   }
 }
 
 // Run main function
-main().catch((error) => {
-  console.error("❌ Unexpected error:", error);
+main().catch((error: unknown) => {
+  if (error instanceof Error) {
+    console.error("❌ Unexpected error:", error);
+  } else {
+    console.error("❌ Unexpected error:", String(error));
+  }
   process.exit(1);
 });

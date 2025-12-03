@@ -2,137 +2,200 @@
 
 ## Overview
 
-The release automation system provides a unified command-line interface for releasing both MCP-DEBUGGER and MCP-SCREENSHOT packages. The system orchestrates the complete release lifecycle including version management, building, testing, publishing to multiple platforms, and verification. It is designed to be safe (with dry-run and rollback), transparent (with detailed logging), and flexible (supporting both interactive and automated workflows).
+The release automation system provides a unified command-line interface for coordinating releases across multiple independent Git submodule repositories in the AI Capabilities Suite monorepo. The system supports two release modes: **local releases** (executing all steps from the monorepo) and **remote releases** (triggering GitHub Actions workflows in submodule repositories). It orchestrates version management, building, testing, publishing to multiple platforms, and verification while maintaining a centralized release manifest in the monorepo.
 
 ## Architecture
 
-The system follows a pipeline architecture with the following components:
+The system follows a coordinator pattern with the following components:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     Release CLI                              │
-│  (scripts/release.js - Entry point & orchestration)         │
+│                  Monorepo Release CLI                        │
+│  (scripts/release.ts - Entry point & orchestration)         │
 └──────────────────┬──────────────────────────────────────────┘
                    │
                    ├──> Configuration Loader
-                   │    (Load package-specific config)
+                   │    (Load submodule-specific config)
                    │
-                   ├──> Pre-flight Checker
-                   │    (Git status, tests, builds, credentials)
+                   ├──> Release Mode Selector
+                   │    ├──> Local Release Pipeline
+                   │    └──> Remote Release Pipeline
                    │
-                   ├──> Version Manager
-                   │    (Sync versions across all files)
-                   │
-                   ├──> Build Pipeline
-                   │    ├──> NPM Builder
-                   │    ├──> Binary Builder (debugger only)
-                   │    └──> VSCode Extension Builder
-                   │
-                   ├──> Publishing Pipeline
-                   │    ├──> NPM Publisher
-                   │    ├──> Docker Publisher (optional)
-                   │    └──> VSCode Marketplace Publisher
-                   │
-                   ├──> Git Operations
-                   │    ├──> Commit & Tag
-                   │    └──> GitHub Release Creator
-                   │
-                   ├──> Verification Pipeline
-                   │    (Verify all artifacts are accessible)
-                   │
-                   ├──> Changelog Generator
-                   │    (Generate release notes from commits)
-                   │
-                   └──> Release Manifest Writer
-                        (Track release metadata)
+┌──────────────────┴──────────────────────────────────────────┐
+│              Local Release Pipeline                          │
+│  (Execute all steps within monorepo)                        │
+├─────────────────────────────────────────────────────────────┤
+│  ├──> Pre-flight Checker                                    │
+│  │    (Git status, tests, builds, credentials)              │
+│  │                                                           │
+│  ├──> Version Manager                                       │
+│  │    (Sync versions within submodule)                      │
+│  │                                                           │
+│  ├──> Build Pipeline                                        │
+│  │    ├──> NPM Builder                                      │
+│  │    ├──> Binary Builder (debugger only)                   │
+│  │    └──> VSCode Extension Builder                         │
+│  │                                                           │
+│  ├──> Publishing Pipeline                                   │
+│  │    ├──> NPM Publisher                                    │
+│  │    ├──> Docker Publisher (optional)                      │
+│  │    └──> VSCode Marketplace Publisher                     │
+│  │                                                           │
+│  ├──> Git Operations (in submodule)                         │
+│  │    ├──> Commit & Tag                                     │
+│  │    └──> GitHub Release Creator                           │
+│  │                                                           │
+│  └──> Verification Pipeline                                 │
+│       (Verify all artifacts are accessible)                 │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│              Remote Release Pipeline                         │
+│  (Trigger GitHub Actions in submodule repo)                 │
+├─────────────────────────────────────────────────────────────┤
+│  ├──> GitHub API Client                                     │
+│  │    (Trigger workflow_dispatch event)                     │
+│  │                                                           │
+│  ├──> Workflow Monitor                                      │
+│  │    (Poll workflow run status)                            │
+│  │                                                           │
+│  └──> Verification Pipeline                                 │
+│       (Verify artifacts after workflow completes)           │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│              Shared Components                               │
+├─────────────────────────────────────────────────────────────┤
+│  ├──> Changelog Generator                                   │
+│  │    (Generate release notes from commits)                 │
+│  │                                                           │
+│  ├──> Release Manifest Writer                               │
+│  │    (Track releases in monorepo)                          │
+│  │                                                           │
+│  ├──> Submodule Reference Updater                           │
+│  │    (Update submodule commits in monorepo)                │
+│  │                                                           │
+│  └──> Logger                                                 │
+│       (Structured logging with file output)                 │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## Components and Interfaces
 
-### 1. Release CLI (`scripts/release.js`)
+### 1. Release CLI (`scripts/release.ts`)
 
 Main entry point that orchestrates the release process.
 
 **Interface:**
-```bash
-# Full release
-node scripts/release.js <package> <version> [options]
 
-# Set version only (no release)
-node scripts/set-version.js <package> <version>
+```bash
+# Release a single submodule
+yarn release <submodule> <version-bump> [options]
+
+# Release multiple submodules
+yarn release <submodule1>,<submodule2> <version-bump> [options]
 
 Arguments:
-  package    Package to release: 'debugger' or 'screenshot'
-  version    Version to release (semver format)
+  submodule      Submodule(s) to release: 'mcp-debugger-server', 'mcp-screenshot', etc.
+                 Multiple submodules separated by commas
+  version-bump   Version bump type: 'patch', 'minor', or 'major'
 
-Options (release.js):
-  --dry-run           Simulate release without publishing
-  --skip-tests        Skip test execution (not recommended)
-  --skip-build        Skip build step (not recommended)
-  --docker            Include Docker image publishing
-  --non-interactive   Run without prompts (use defaults)
-  --skip-verify       Skip post-release verification
-  --log-file <path>   Custom log file path
+Options:
+  --mode <mode>          Release mode: 'local' or 'remote' (default: 'remote')
+  --dry-run              Simulate release without publishing
+  --skip-tests           Skip test execution (not recommended)
+  --skip-build           Skip build step (not recommended)
+  --docker               Include Docker image publishing (local mode only)
+  --non-interactive      Run without prompts (use defaults)
+  --skip-verify          Skip post-release verification
+  --skip-submodule-update  Don't update submodule reference in monorepo
+  --log-file <path>      Custom log file path
 ```
 
 **Responsibilities:**
+
 - Parse command-line arguments
-- Load package configuration
-- Execute release pipeline steps in order
-- Handle errors and rollback if needed
+- Load submodule configuration
+- Select release mode (local vs remote)
+- Execute release pipeline
+- Handle errors and report status
 - Generate release summary
 
 ### 2. Configuration Loader
 
-Loads package-specific configuration from JSON files.
+Loads submodule-specific configuration from JSON files.
 
 **Configuration Files:**
-- `scripts/release-config/debugger.json`
-- `scripts/release-config/screenshot.json`
+
+- `scripts/release-config/mcp-debugger-server.json`
+- `scripts/release-config/mcp-screenshot.json`
+- `scripts/release-config/vscode-mcp-debugger.json`
+- etc.
 
 **Configuration Schema:**
+
 ```typescript
-interface ReleaseConfig {
-  packageName: string;
-  npmPackageName: string;
-  vscodeExtensionName: string;
-  dockerImageName: string;
-  packageDir: string;
-  vscodeExtensionDir: string;
-  buildBinaries: boolean;
-  binaryPlatforms?: string[];
-  testCommand: string;
-  buildCommand: string;
-  filesToSync: VersionSyncFile[];
-  githubReleaseTemplate: string;
+interface SubmoduleConfig {
+  name: string;
+  displayName: string;
+  path: string; // Relative path from monorepo root
+  repository: {
+    owner: string;
+    name: string;
+    url: string;
+  };
+  artifacts: {
+    npm: boolean;
+    docker: boolean;
+    vscode: boolean;
+    binaries: boolean;
+  };
+  build: {
+    command: string;
+    testCommand: string;
+  };
+  publish: {
+    npmPackageName?: string;
+    dockerImageName?: string;
+    vscodeExtensionId?: string;
+  };
+  versionSync: {
+    files: VersionSyncFile[];
+  };
 }
 
 interface VersionSyncFile {
-  path: string;
+  path: string; // Relative to submodule root
   pattern: string | RegExp;
   replacement: string;
 }
 ```
 
-### 3. Pre-flight Checker
+### 3. Release Mode Selector
 
-Validates the environment before starting the release.
-
-**Checks:**
-1. Git working directory is clean
-2. Current branch is `main`
-3. Local branch is up-to-date with remote
-4. All tests pass
-5. Build succeeds
-6. NPM authentication is configured
-7. VSCode marketplace token is available
-8. Docker authentication is configured (if --docker flag)
-9. GitHub token is available
+Determines which release pipeline to use based on user input.
 
 **Interface:**
+
+```typescript
+interface ReleaseModeSelector {
+  selectMode(options: ReleaseOptions): "local" | "remote";
+  validateMode(mode: string, config: SubmoduleConfig): boolean;
+}
+```
+
+### 4. Local Release Pipeline
+
+Executes all release steps from within the monorepo.
+
+**Pre-flight Checker:**
+
 ```typescript
 interface PreflightChecker {
-  runChecks(config: ReleaseConfig, options: ReleaseOptions): Promise<PreflightResult>;
+  runChecks(
+    submodulePath: string,
+    config: SubmoduleConfig
+  ): Promise<PreflightResult>;
 }
 
 interface PreflightResult {
@@ -147,15 +210,24 @@ interface CheckResult {
 }
 ```
 
-### 4. Version Manager
+**Version Manager:**
 
-Synchronizes version numbers across all files in the codebase.
-
-**Interface:**
 ```typescript
 interface VersionManager {
-  syncVersions(config: ReleaseConfig, version: string): Promise<SyncResult>;
-  verifyVersions(config: ReleaseConfig, version: string): Promise<boolean>;
+  bumpVersion(
+    submodulePath: string,
+    bumpType: "patch" | "minor" | "major"
+  ): Promise<string>;
+  syncVersions(
+    submodulePath: string,
+    config: SubmoduleConfig,
+    version: string
+  ): Promise<SyncResult>;
+  verifyVersions(
+    submodulePath: string,
+    config: SubmoduleConfig,
+    version: string
+  ): Promise<boolean>;
 }
 
 interface SyncResult {
@@ -164,94 +236,71 @@ interface SyncResult {
 }
 ```
 
-**Files to Sync (per package):**
-- package.json files
-- Source code version constants
-- Docker files
-- Documentation files
-- VSCode extension manifests
+**Build Pipeline:**
 
-### 5. Build Pipeline
-
-Builds all artifacts for the release.
-
-**NPM Builder:**
 ```typescript
-interface NpmBuilder {
-  build(config: ReleaseConfig): Promise<BuildResult>;
-  test(config: ReleaseConfig): Promise<TestResult>;
+interface BuildPipeline {
+  build(submodulePath: string, config: SubmoduleConfig): Promise<BuildResult>;
+  test(submodulePath: string, config: SubmoduleConfig): Promise<TestResult>;
 }
-```
 
-**Binary Builder (debugger only):**
-```typescript
 interface BinaryBuilder {
-  buildBinaries(config: ReleaseConfig, version: string): Promise<BinaryResult>;
+  buildBinaries(submodulePath: string, version: string): Promise<BinaryResult>;
   generateChecksums(binaries: string[]): Promise<Map<string, string>>;
 }
 
-interface BinaryResult {
-  binaries: BinaryArtifact[];
-  checksums: Map<string, string>;
-}
-
-interface BinaryArtifact {
-  platform: string;
-  path: string;
-  size: number;
-}
-```
-
-**VSCode Extension Builder:**
-```typescript
 interface VscodeBuilder {
-  compile(extensionDir: string): Promise<void>;
-  package(extensionDir: string): Promise<string>; // Returns .vsix path
+  compile(extensionPath: string): Promise<void>;
+  package(extensionPath: string): Promise<string>; // Returns .vsix path
 }
 ```
 
-### 6. Publishing Pipeline
+**Publishing Pipeline:**
 
-Publishes artifacts to various platforms.
-
-**NPM Publisher:**
 ```typescript
 interface NpmPublisher {
-  publish(config: ReleaseConfig, dryRun: boolean): Promise<PublishResult>;
+  publish(submodulePath: string, dryRun: boolean): Promise<PublishResult>;
   verify(packageName: string, version: string): Promise<boolean>;
 }
-```
 
-**Docker Publisher:**
-```typescript
 interface DockerPublisher {
-  build(config: ReleaseConfig, version: string): Promise<void>;
+  build(
+    submodulePath: string,
+    imageName: string,
+    version: string
+  ): Promise<void>;
   tag(imageName: string, tags: string[]): Promise<void>;
   push(imageName: string, tags: string[]): Promise<void>;
   verify(imageName: string, version: string): Promise<boolean>;
 }
-```
 
-**VSCode Marketplace Publisher:**
-```typescript
 interface VscodePublisher {
   publish(vsixPath: string, dryRun: boolean): Promise<PublishResult>;
-  verify(extensionName: string, version: string): Promise<boolean>;
+  verify(extensionId: string, version: string): Promise<boolean>;
 }
 ```
 
-### 7. Git Operations
+**Git Operations:**
 
-Handles Git commits, tags, and GitHub releases.
-
-**Interface:**
 ```typescript
 interface GitOperations {
-  commitChanges(message: string): Promise<void>;
-  createTag(tag: string): Promise<void>;
-  pushToRemote(includeTags: boolean): Promise<void>;
-  createGithubRelease(release: GithubReleaseData): Promise<string>; // Returns release URL
-  attachAssets(releaseId: string, assets: string[]): Promise<void>;
+  commitChanges(submodulePath: string, message: string): Promise<void>;
+  createTag(submodulePath: string, tag: string): Promise<void>;
+  pushToRemote(submodulePath: string, includeTags: boolean): Promise<void>;
+  createGithubRelease(
+    repo: RepositoryInfo,
+    release: GithubReleaseData
+  ): Promise<string>;
+  attachAssets(
+    repo: RepositoryInfo,
+    releaseId: string,
+    assets: string[]
+  ): Promise<void>;
+}
+
+interface RepositoryInfo {
+  owner: string;
+  name: string;
 }
 
 interface GithubReleaseData {
@@ -263,20 +312,67 @@ interface GithubReleaseData {
 }
 ```
 
-### 8. Verification Pipeline
+### 5. Remote Release Pipeline
+
+Triggers GitHub Actions workflows in submodule repositories.
+
+**GitHub API Client:**
+
+```typescript
+interface GitHubApiClient {
+  triggerWorkflow(
+    repo: RepositoryInfo,
+    workflowId: string,
+    inputs: WorkflowInputs
+  ): Promise<WorkflowRun>;
+}
+
+interface WorkflowInputs {
+  version: "patch" | "minor" | "major";
+  dry_run: boolean;
+}
+
+interface WorkflowRun {
+  id: number;
+  status: "queued" | "in_progress" | "completed";
+  conclusion?: "success" | "failure" | "cancelled";
+  html_url: string;
+}
+```
+
+**Workflow Monitor:**
+
+```typescript
+interface WorkflowMonitor {
+  pollWorkflowStatus(
+    repo: RepositoryInfo,
+    runId: number,
+    pollInterval: number
+  ): AsyncGenerator<WorkflowRun>;
+
+  waitForCompletion(
+    repo: RepositoryInfo,
+    runId: number,
+    timeout: number
+  ): Promise<WorkflowRun>;
+}
+```
+
+### 6. Verification Pipeline
 
 Verifies that all published artifacts are accessible.
 
 **Interface:**
+
 ```typescript
 interface VerificationPipeline {
-  verifyAll(manifest: ReleaseManifest): Promise<VerificationResult>;
+  verifyAll(manifest: ReleaseArtifacts): Promise<VerificationResult>;
 }
 
 interface VerificationResult {
-  npm: VerificationCheck;
+  npm?: VerificationCheck;
   docker?: VerificationCheck;
-  vscode: VerificationCheck;
+  vscode?: VerificationCheck;
   github: VerificationCheck;
 }
 
@@ -287,14 +383,19 @@ interface VerificationCheck {
 }
 ```
 
-### 9. Changelog Generator
+### 7. Changelog Generator
 
 Generates release notes from Git commit history.
 
 **Interface:**
+
 ```typescript
 interface ChangelogGenerator {
-  generate(fromTag: string, toTag: string): Promise<Changelog>;
+  generate(
+    submodulePath: string,
+    fromTag: string,
+    toTag: string
+  ): Promise<Changelog>;
   format(changelog: Changelog, template: string): string;
 }
 
@@ -314,30 +415,41 @@ interface CommitInfo {
 }
 ```
 
-### 10. Release Manifest Writer
+### 8. Release Manifest Writer
 
-Tracks release metadata and artifact information.
+Tracks release metadata across all submodules in the monorepo.
 
 **Interface:**
+
 ```typescript
 interface ManifestWriter {
-  create(release: ReleaseInfo): Promise<string>; // Returns manifest path
-  update(manifestPath: string, updates: Partial<ReleaseManifest>): Promise<void>;
+  loadManifest(): Promise<ReleaseManifest>;
+  addRelease(release: SubmoduleRelease): Promise<void>;
+  save(): Promise<void>;
 }
 
 interface ReleaseManifest {
-  package: string;
+  version: string; // Manifest format version
+  releases: SubmoduleRelease[];
+}
+
+interface SubmoduleRelease {
+  submodule: string;
   version: string;
   timestamp: string;
-  artifacts: {
-    npm?: ArtifactInfo;
-    docker?: ArtifactInfo;
-    vscode?: ArtifactInfo;
-    binaries?: BinaryArtifact[];
-    github?: ArtifactInfo;
-  };
+  mode: "local" | "remote";
+  artifacts: ReleaseArtifacts;
   verification: VerificationResult;
   changelog: string;
+  commit: string; // Submodule commit hash
+}
+
+interface ReleaseArtifacts {
+  npm?: ArtifactInfo;
+  docker?: ArtifactInfo;
+  vscode?: ArtifactInfo;
+  binaries?: BinaryArtifact[];
+  github: ArtifactInfo;
 }
 
 interface ArtifactInfo {
@@ -345,113 +457,209 @@ interface ArtifactInfo {
   url: string;
   checksum?: string;
 }
+
+interface BinaryArtifact {
+  platform: string;
+  path: string;
+  checksum: string;
+}
+```
+
+### 9. Submodule Reference Updater
+
+Updates submodule commit references in the monorepo.
+
+**Interface:**
+
+```typescript
+interface SubmoduleReferenceUpdater {
+  updateReference(submoduleName: string, commitHash: string): Promise<void>;
+  commitUpdate(submoduleName: string, version: string): Promise<void>;
+  verifyReference(
+    submoduleName: string,
+    expectedCommit: string
+  ): Promise<boolean>;
+}
+```
+
+### 10. Logger
+
+Provides structured logging with file output.
+
+**Interface:**
+
+```typescript
+interface Logger {
+  debug(message: string, meta?: object): void;
+  info(message: string, meta?: object): void;
+  warn(message: string, meta?: object): void;
+  error(message: string, error?: Error, meta?: object): void;
+
+  startStep(stepName: string): void;
+  endStep(stepName: string, success: boolean): void;
+
+  getSummary(): LogSummary;
+}
+
+interface LogSummary {
+  steps: StepResult[];
+  duration: number;
+  success: boolean;
+}
+
+interface StepResult {
+  name: string;
+  status: "success" | "failed" | "skipped";
+  duration: number;
+  error?: string;
+}
 ```
 
 ## Data Models
 
 ### Release Options
+
 ```typescript
 interface ReleaseOptions {
-  package: 'debugger' | 'screenshot';
-  version: string;
+  submodules: string[]; // One or more submodule names
+  versionBump: "patch" | "minor" | "major";
+  mode: "local" | "remote";
   dryRun: boolean;
   skipTests: boolean;
   skipBuild: boolean;
   includeDocker: boolean;
   nonInteractive: boolean;
   skipVerify: boolean;
+  skipSubmoduleUpdate: boolean;
   logFile?: string;
 }
 ```
 
 ### Release State
+
 ```typescript
 interface ReleaseState {
   options: ReleaseOptions;
-  config: ReleaseConfig;
+  submodule: SubmoduleConfig;
   startTime: Date;
   steps: StepResult[];
-  manifest?: ReleaseManifest;
-  rollbackNeeded: boolean;
-}
-
-interface StepResult {
-  name: string;
-  status: 'pending' | 'running' | 'success' | 'failed' | 'skipped';
-  startTime?: Date;
-  endTime?: Date;
-  error?: Error;
-  output?: string;
+  newVersion?: string;
+  artifacts?: ReleaseArtifacts;
+  workflowRun?: WorkflowRun;
 }
 ```
 
 ## Correctness Properties
 
-*A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+_A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees._
 
-### Property 1: Version consistency after sync
-*For any* package and target version, after version synchronization completes, all configured files should contain the target version string.
-**Validates: Requirements 2.5**
+### Property 1: Submodule isolation
 
-### Property 2: Pre-flight checks prevent invalid releases
-*For any* release attempt, if any pre-flight check fails, then no artifacts should be published.
-**Validates: Requirements 3.6**
+_For any_ release command with a specific submodule name, only that submodule's artifacts should be built and published, and no other submodules should be affected.
+**Validates: Requirements 1.1**
 
-### Property 3: Rollback restores pre-release state
-*For any* failed release, executing rollback should result in no published artifacts and no Git tags.
-**Validates: Requirements 11.1, 11.2, 11.3, 11.4, 11.5**
+### Property 2: Dry-run produces no side effects
 
-### Property 4: Dry-run produces no side effects
-*For any* release executed with dry-run flag, no artifacts should be published and no Git operations should be performed.
+_For any_ release configuration executed with dry-run flag, no artifacts should be published, no Git tags should be created, and no GitHub releases should be made.
 **Validates: Requirements 1.5**
 
-### Property 5: Release manifest completeness
-*For any* completed release, the release manifest should contain entries for all published artifacts.
-**Validates: Requirements 12.3**
+### Property 3: Version consistency after sync
 
-### Property 6: Package-specific configuration isolation
-*For any* package release, only that package's artifacts should be built and published.
-**Validates: Requirements 13.1, 13.2, 13.5**
+_For any_ submodule and target version, after version synchronization completes, all configured files in that submodule should contain the target version string.
+**Validates: Requirements 4.5**
 
-### Property 7: Verification matches published artifacts
-*For any* completed release, all verification URLs in the manifest should return successful responses.
-**Validates: Requirements 10.1, 10.2, 10.3, 10.4**
+### Property 4: Pre-flight checks prevent invalid releases
 
-### Property 8: Binary checksums are deterministic
-*For any* binary artifact, generating the checksum multiple times should produce the same result.
-**Validates: Requirements 7.4**
+_For any_ release attempt, if any pre-flight check fails, then no artifacts should be published and no Git operations should be performed.
+**Validates: Requirements 5.6**
 
-### Property 9: Git tag format consistency
-*For any* package and version, the Git tag should follow the format `{package}-v{version}`.
-**Validates: Requirements 8.2**
+### Property 5: Remote workflow triggering
 
-### Property 10: Changelog categorization completeness
-*For any* set of commits, every commit should appear in exactly one category in the generated changelog.
-**Validates: Requirements 9.2**
+_For any_ remote release request, the system should trigger exactly one workflow_dispatch event in the correct submodule repository with the correct inputs.
+**Validates: Requirements 2.1**
+
+### Property 6: Git tag format consistency
+
+_For any_ version string, the Git tag created should follow the format `v{version}` (e.g., v1.2.3).
+**Validates: Requirements 10.2**
+
+### Property 7: Binary checksums are deterministic
+
+_For any_ binary artifact, generating the SHA256 checksum multiple times should produce the same result.
+**Validates: Requirements 9.4**
+
+### Property 8: Changelog categorization completeness
+
+_For any_ set of commits between two tags, every commit should appear in exactly one category (features, fixes, breaking, or other) in the generated changelog.
+**Validates: Requirements 11.2**
+
+### Property 9: Verification matches published artifacts
+
+_For any_ completed release, all verification checks should pass for artifacts that were marked as published in the release manifest.
+**Validates: Requirements 12.5**
+
+### Property 10: Submodule reference correctness
+
+_For any_ submodule release, after updating the submodule reference in the monorepo, the submodule should point to the commit that contains the new version.
+**Validates: Requirements 14.1, 14.5**
+
+### Property 11: Multi-release failure isolation
+
+_For any_ multi-submodule release where one submodule fails, all subsequent submodules should not be processed, and the system should report which submodule failed.
+**Validates: Requirements 16.3**
+
+### Property 12: Configuration defaults
+
+_For any_ submodule without a configuration file, the system should apply sensible defaults and complete the release successfully.
+**Validates: Requirements 17.5**
+
+### Property 13: Manifest completeness
+
+_For any_ completed release, the release manifest should contain an entry with all required fields (submodule, version, timestamp, artifacts, verification).
+**Validates: Requirements 13.5**
+
+### Property 14: Mode availability
+
+_For any_ submodule, both local and remote release modes should be available and functional.
+**Validates: Requirements 1.2**
 
 ## Error Handling
 
 ### Error Categories
 
-1. **Pre-flight Errors**: Validation failures before release starts
-   - Action: Report error, exit without changes
+1. **Configuration Errors**: Invalid or missing configuration
+
+   - Action: Report error with configuration path, exit without changes
+   - Examples: Missing config file, invalid JSON, missing required fields
+
+2. **Pre-flight Errors**: Validation failures before release starts
+
+   - Action: Report error with specific check that failed, exit without changes
    - Examples: Dirty git state, failing tests, missing credentials
 
-2. **Build Errors**: Failures during artifact building
+3. **Build Errors**: Failures during artifact building
+
    - Action: Report error, exit without publishing
-   - Examples: Compilation errors, packaging failures
+   - Examples: Compilation errors, test failures, packaging failures
 
-3. **Publishing Errors**: Failures during artifact publishing
-   - Action: Initiate rollback, report error
-   - Examples: NPM publish failure, Docker push failure
+4. **Publishing Errors**: Failures during artifact publishing
 
-4. **Verification Errors**: Failures during post-release verification
-   - Action: Report error, provide remediation steps
-   - Examples: Artifact not accessible, incorrect version
+   - Action: Report error, log what was published, provide cleanup steps
+   - Examples: NPM publish failure, Docker push failure, GitHub API errors
 
-5. **Rollback Errors**: Failures during rollback process
-   - Action: Report error, provide manual cleanup steps
-   - Examples: Cannot unpublish NPM package, cannot delete tag
+5. **Verification Errors**: Failures during post-release verification
+
+   - Action: Report error, provide remediation steps, mark in manifest
+   - Examples: Artifact not accessible, incorrect version, 404 errors
+
+6. **GitHub API Errors**: Failures when interacting with GitHub
+
+   - Action: Report error with API response, provide retry guidance
+   - Examples: Authentication failure, rate limiting, workflow not found
+
+7. **Submodule Errors**: Failures related to Git submodules
+   - Action: Report error, provide Git commands for manual fix
+   - Examples: Submodule not initialized, detached HEAD, merge conflicts
 
 ### Error Recovery Strategy
 
@@ -461,23 +669,29 @@ interface ErrorHandler {
 }
 
 interface ErrorResolution {
-  action: 'retry' | 'rollback' | 'abort' | 'continue';
+  action: "retry" | "abort" | "continue" | "manual";
   message: string;
   manualSteps?: string[];
+  retryable: boolean;
 }
 ```
 
-### Rollback Procedure
+### Cleanup Procedures
 
-1. Identify which steps completed successfully
-2. Execute reverse operations in reverse order:
-   - Delete GitHub release
-   - Delete Git tag (local and remote)
-   - Unpublish VSCode extension (if possible)
-   - Delete Docker tags (if possible)
-   - Unpublish NPM package (if within time window)
-3. Log all rollback actions
-4. Report final state and any manual cleanup needed
+**Local Release Cleanup:**
+
+1. Log all completed steps
+2. Identify which artifacts were published
+3. Provide commands to unpublish (where possible)
+4. Provide commands to delete Git tags
+5. Provide commands to delete GitHub releases
+
+**Remote Release Cleanup:**
+
+1. Log workflow run URL
+2. Wait for workflow to complete or cancel it
+3. Check workflow logs for published artifacts
+4. Provide cleanup guidance based on workflow state
 
 ## Testing Strategy
 
@@ -487,14 +701,16 @@ interface ErrorResolution {
 - Version sync pattern matching and replacement
 - Changelog commit categorization
 - Manifest file creation and updates
-- Error handler decision logic
 - Git tag format generation
+- Submodule path resolution
+- Error handler decision logic
 
 ### Integration Tests
 
-- Pre-flight checker with mock Git repository
-- Build pipeline with test packages
-- Publishing pipeline with test registries (Verdaccio for NPM)
+- Pre-flight checker with test Git repository
+- Build pipeline with test submodule
+- GitHub API client with mock server
+- Workflow monitor with simulated workflow runs
 - Verification pipeline with mock HTTP responses
 - End-to-end dry-run execution
 
@@ -502,23 +718,27 @@ interface ErrorResolution {
 
 Each correctness property will be implemented as a property-based test using fast-check:
 
-1. **Property 1 Test**: Generate random version strings and file configurations, verify all files contain the version after sync
-2. **Property 2 Test**: Generate random pre-flight check failures, verify no publishing occurs
-3. **Property 3 Test**: Generate random release states, execute rollback, verify clean state
-4. **Property 4 Test**: Generate random release configurations, execute with dry-run, verify no side effects
-5. **Property 5 Test**: Generate random release executions, verify manifest contains all artifacts
-6. **Property 6 Test**: Generate random package selections, verify only that package's artifacts are affected
-7. **Property 7 Test**: Generate random release manifests, verify all URLs are accessible
-8. **Property 8 Test**: Generate random binary data, verify checksum consistency
-9. **Property 9 Test**: Generate random package/version combinations, verify tag format
-10. **Property 10 Test**: Generate random commit sets, verify all commits appear in exactly one category
+1. **Property 1 Test**: Generate random submodule names, execute release, verify only that submodule affected
+2. **Property 2 Test**: Generate random release configurations, execute with dry-run, verify no side effects
+3. **Property 3 Test**: Generate random version strings and file configurations, sync, verify all match
+4. **Property 4 Test**: Generate random pre-flight check failures, verify no publishing occurs
+5. **Property 5 Test**: Generate random remote release requests, verify correct workflow_dispatch calls
+6. **Property 6 Test**: Generate random version strings, verify tag format
+7. **Property 7 Test**: Generate random binary data, verify checksum consistency
+8. **Property 8 Test**: Generate random commit sets, verify categorization completeness
+9. **Property 9 Test**: Generate random release manifests, verify verification matches published artifacts
+10. **Property 10 Test**: Generate random releases, verify submodule reference correctness
+11. **Property 11 Test**: Generate random multi-release failures, verify correct halting
+12. **Property 12 Test**: Test with missing configurations, verify defaults applied
+13. **Property 13 Test**: Generate random releases, verify manifest completeness
+14. **Property 14 Test**: Test both modes for all submodules, verify both work
 
 ### Manual Testing
 
-- Full release to test NPM registry
-- Full release to test Docker registry
-- Full release to test VSCode marketplace
-- Rollback after partial failure
+- Full local release to test NPM registry
+- Full remote release via GitHub Actions
+- Multi-submodule release coordination
+- Verification of all artifact types
 - Interactive mode with user prompts
 - Non-interactive mode for CI
 
@@ -526,9 +746,10 @@ Each correctness property will be implemented as a property-based test using fas
 
 ### Technology Stack
 
-- **Language**: Node.js (JavaScript/TypeScript)
+- **Language**: TypeScript (Node.js)
 - **CLI Framework**: Commander.js for argument parsing
 - **Git Operations**: simple-git library
+- **GitHub API**: @octokit/rest for GitHub integration
 - **HTTP Requests**: node-fetch for verification
 - **Process Execution**: child_process for running commands
 - **Logging**: winston for structured logging
@@ -538,29 +759,35 @@ Each correctness property will be implemented as a property-based test using fas
 
 ```
 scripts/
-├── release.js                    # Main CLI entry point for full releases
-├── set-version.js                # CLI for setting version only
+├── release.ts                    # Main CLI entry point
 ├── release-lib/
-│   ├── config-loader.js
-│   ├── preflight-checker.js
-│   ├── version-manager.js
-│   ├── builders/
-│   │   ├── npm-builder.js
-│   │   ├── binary-builder.js
-│   │   └── vscode-builder.js
-│   ├── publishers/
-│   │   ├── npm-publisher.js
-│   │   ├── docker-publisher.js
-│   │   └── vscode-publisher.js
-│   ├── git-operations.js
-│   ├── verification-pipeline.js
-│   ├── changelog-generator.js
-│   ├── manifest-writer.js
-│   ├── error-handler.js
-│   └── logger.js
+│   ├── config-loader.ts
+│   ├── release-mode-selector.ts
+│   ├── local-release/
+│   │   ├── preflight-checker.ts
+│   │   ├── version-manager.ts
+│   │   ├── build-pipeline.ts
+│   │   ├── binary-builder.ts
+│   │   ├── vscode-builder.ts
+│   │   ├── npm-publisher.ts
+│   │   ├── docker-publisher.ts
+│   │   ├── vscode-publisher.ts
+│   │   └── git-operations.ts
+│   ├── remote-release/
+│   │   ├── github-api-client.ts
+│   │   └── workflow-monitor.ts
+│   ├── shared/
+│   │   ├── verification-pipeline.ts
+│   │   ├── changelog-generator.ts
+│   │   ├── manifest-writer.ts
+│   │   ├── submodule-reference-updater.ts
+│   │   └── logger.ts
+│   └── types.ts
 ├── release-config/
-│   ├── debugger.json
-│   └── screenshot.json
+│   ├── mcp-debugger-server.json
+│   ├── mcp-screenshot.json
+│   ├── vscode-mcp-debugger.json
+│   └── defaults.json
 └── __tests__/
     ├── unit/
     ├── integration/
@@ -569,24 +796,113 @@ scripts/
 
 ### Security Considerations
 
-1. **Credential Management**: Never log credentials, use environment variables
-2. **Dry-run Safety**: Ensure dry-run mode cannot accidentally publish
-3. **Rollback Safety**: Verify rollback operations before executing
-4. **Input Validation**: Validate all user inputs (version format, package names)
-5. **Audit Trail**: Log all operations to file for audit purposes
+1. **Credential Management**:
+
+   - Never log credentials
+   - Use environment variables for tokens
+   - Validate token permissions before use
+   - Support credential helpers (e.g., gh auth)
+
+2. **Dry-run Safety**:
+
+   - Ensure dry-run mode cannot accidentally publish
+   - Use separate code paths for dry-run vs real publishing
+   - Verify no network calls in dry-run mode
+
+3. **Input Validation**:
+
+   - Validate all user inputs (submodule names, versions)
+   - Sanitize inputs before using in shell commands
+   - Validate configuration files against schema
+
+4. **Audit Trail**:
+   - Log all operations to file
+   - Include timestamps and user information
+   - Preserve logs even on failure
 
 ### Performance Considerations
 
-1. **Parallel Operations**: Run independent verifications in parallel
-2. **Caching**: Cache pre-flight check results when safe
-3. **Streaming**: Stream large file operations (binary building)
-4. **Timeouts**: Set reasonable timeouts for all network operations
+1. **Parallel Operations**:
+
+   - Run independent verifications in parallel
+   - Build multiple binaries in parallel
+   - Verify multiple artifacts concurrently
+
+2. **Caching**:
+
+   - Cache pre-flight check results when safe
+   - Reuse build artifacts when possible
+   - Cache GitHub API responses
+
+3. **Streaming**:
+
+   - Stream large file operations (binary building)
+   - Stream command output to logs
+   - Use streaming for file uploads
+
+4. **Timeouts**:
+   - Set reasonable timeouts for all network operations
+   - Set timeouts for workflow monitoring
+   - Allow user to configure timeout values
 
 ### Extensibility
 
-The system is designed to be extensible for future packages:
+The system is designed to be extensible for future submodules:
 
-1. Add new package configuration file
-2. Define package-specific build/publish steps
-3. Update release CLI to recognize new package name
-4. No changes needed to core pipeline logic
+1. Add new submodule configuration file
+2. Define submodule-specific build/publish steps in config
+3. No changes needed to core pipeline logic
+4. System automatically discovers new submodules
+
+### Workflow Integration
+
+**GitHub Actions Workflow Requirements:**
+
+Each submodule repository should have a `release.yml` workflow with:
+
+- `workflow_dispatch` trigger
+- Inputs: `version` (choice: patch/minor/major), `dry_run` (boolean)
+- Steps: version bump, build, test, publish, tag, GitHub release
+- Outputs: new version, release URL
+
+**Example workflow_dispatch configuration:**
+
+```yaml
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      dry_run:
+        description: 'Dry run (don't publish)'
+        required: false
+        type: boolean
+        default: false
+```
+
+### Monorepo Coordination
+
+**Submodule Reference Management:**
+
+- After each release, update submodule reference to new commit
+- Commit with message: `chore: update {submodule} to v{version}`
+- Optionally create monorepo tag: `suite-v{date}` for coordinated releases
+
+**Release Manifest Location:**
+
+- `releases/manifest.json` in monorepo root
+- Tracked in Git for history
+- Updated after each submodule release
+
+**Multi-Submodule Releases:**
+
+- Release submodules in dependency order
+- Wait for each to complete before starting next
+- Update manifest after all complete
+- Create suite-level tag if all succeed

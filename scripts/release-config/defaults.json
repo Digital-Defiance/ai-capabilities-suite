@@ -1,0 +1,7 @@
+{
+  "buildBinaries": false,
+  "testCommand": "npm test",
+  "buildCommand": "npm run build",
+  "filesToSync": [],
+  "githubReleaseTemplate": "## $PACKAGE_NAME v$VERSION\n\n### What's Changed\n\n$CHANGELOG\n\n### Installation\n\n**NPM:**\n```bash\nnpm install -g $NPM_PACKAGE_NAME@$VERSION\n```\n\n### Documentation\n\nSee the [README](https://github.com/$REPO_OWNER/$REPO_NAME/blob/main/README.md) for more information."
+}

@@ -326,7 +326,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    ```
 
 ### 📸 **2. MCP Screenshot** (Production-Ready) ⭐
-**Give AI agents visual awareness and screen capture capabilities** - **[Repository](https://github.com/Digital-Defiance/mcp-screenshot)**
+**Transform AI agents from code readers into visual UI experts and documentation partners** - **[Repository](https://github.com/Digital-Defiance/mcp-screenshot)**
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-screenshot?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-screenshot?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
@@ -336,9 +336,9 @@ node packages/mcp-debugger-server/dist/src/index.js
 
 **✨ Now available on NPM, Docker Hub, and VS Code Marketplace!**
 
-**The Problem:** AI agents couldn't see what was happening on your screen. They could read code and suggest changes, but had no visual context for UI issues, layout problems, or user experience concerns.
+**The Problem:** AI agents were blind to your actual user interface. They could read HTML/CSS and suggest improvements, but couldn't see what users actually experience—broken layouts, poor contrast, misaligned elements, or accessibility issues.
 
-**The Solution:** AI agents can now capture screenshots, analyze visual layouts, detect UI issues, and even mask sensitive information automatically. Available as both a standalone MCP server and a VS Code extension.
+**The Solution:** AI agents now have **visual superpowers**—they can see, analyze, and document your applications like a senior UX designer. From automated documentation generation to accessibility audits, AI can now work with what users actually see.
 
 #### 🎨 Key Features
 
@@ -361,13 +361,19 @@ node packages/mcp-debugger-server/dist/src/index.js
 - **Windows**: Windows API integration
 - **Docker**: Headless capture with Xvfb
 
-#### 🛠️ 5 Screenshot Tools
+#### 🛠️ 5 Professional Screenshot Tools
 
-1. **`screenshot_capture_full`** - Capture entire screen with format options
-2. **`screenshot_capture_window`** - Capture specific application windows
-3. **`screenshot_capture_region`** - Capture rectangular screen regions
-4. **`screenshot_list_displays`** - List connected displays and resolutions
-5. **`screenshot_list_windows`** - List visible windows with details
+1. **`screenshot_capture_full`** - Capture entire screen with format options (PNG, JPEG, WebP, BMP)
+2. **`screenshot_capture_window`** - Capture specific application windows by title or ID
+3. **`screenshot_capture_region`** - Capture rectangular screen regions with precise boundaries
+4. **`screenshot_list_displays`** - List connected displays with resolutions and scaling
+5. **`screenshot_list_windows`** - List visible windows with titles, positions, and dimensions
+
+**Privacy & Security Features:**
+- **PII Masking** - Automatically detect and blur sensitive information (emails, phone numbers, credit cards)
+- **Window Exclusion** - Skip password managers and authentication dialogs
+- **Secure Defaults** - Privacy-first configuration out of the box
+- **Permission Handling** - Proper system permission checks and user consent
 
 #### 📊 Enterprise-Grade Quality
 
@@ -396,16 +402,58 @@ docker run -v $(pwd)/screenshots:/app/screenshots digitaldefiance/mcp-screenshot
 - Search "MCP Screenshot" in VS Code Extensions
 - Or visit: https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot
 
-**What AI can now do:**
-```
-You: "Take a screenshot of my app and analyze the UI"
-AI: *Captures screen, analyzes layout*
-AI: "The button alignment is off by 3px. Here's the CSS fix..."
+#### 🎯 Revolutionary Use Cases
 
-You: "Capture the dashboard and mask any sensitive data"
-AI: *Captures with PII masking enabled*
-AI: "Screenshot saved with 3 text regions automatically blurred..."
+**"AI, create professional documentation"**
 ```
+You: "Document the user onboarding flow"
+AI: *Captures each step, analyzes UI elements*
+AI: "Generated step-by-step guide with 8 annotated screenshots, user journey map, and accessibility notes..."
+```
+
+**"AI, audit this design for accessibility"**
+```
+You: "Check if this form meets WCAG standards"
+AI: *Captures form, analyzes contrast and spacing*
+AI: "Found 3 issues: Submit button has 2.1:1 contrast (needs 4.5:1), labels lack focus indicators, touch targets under 44px..."
+```
+
+**"AI, help debug this responsive layout"**
+```
+You: "Why does my navbar break on mobile?"
+AI: *Captures multiple viewport sizes*
+AI: "Navigation collapses at 768px but hamburger menu overlaps logo. Here's the CSS fix with before/after comparison..."
+```
+
+**"AI, compare these two design options"**
+```
+You: "Which landing page converts better?"
+AI: *Captures both versions, analyzes visual hierarchy*
+AI: "Version B has 34% better visual flow—CTA button more prominent, hero text clearer, social proof positioned optimally..."
+```
+
+**"AI, create a bug report with visuals"**
+```
+You: "The checkout form validation isn't working"
+AI: *Captures error states and user flow*
+AI: "Created detailed bug report with 5 screenshots showing error conditions, expected vs actual behavior, and reproduction steps..."
+```
+
+#### 🔥 What This Changes
+
+**Before:** AI worked blind, relying on code descriptions
+- ❌ "The layout looks broken" → AI guesses what's wrong
+- ❌ "Create documentation" → AI writes generic text without visuals
+- ❌ "Check accessibility" → AI can only review code, not actual contrast
+- ❌ "Debug responsive design" → AI can't see actual breakpoint behavior
+
+**After:** AI sees and analyzes your actual user interface
+- ✅ **Visual debugging** - AI identifies exact pixel-level issues
+- ✅ **Intelligent documentation** - AI creates guides with real screenshots and annotations
+- ✅ **Accessibility audits** - AI measures actual contrast ratios and spacing
+- ✅ **Responsive testing** - AI captures and compares different screen sizes
+- ✅ **Design analysis** - AI evaluates visual hierarchy and user experience
+- ✅ **Professional bug reports** - AI creates detailed reports with visual evidence
 
 📚 **Documentation:**
 - 👉 **[Complete screenshot documentation](https://github.com/Digital-Defiance/mcp-screenshot)**

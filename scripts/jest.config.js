@@ -1,0 +1,20 @@
+module.exports = {
+  displayName: "scripts",
+  testEnvironment: "node",
+  roots: ["<rootDir>"],
+  testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
+  preset: "ts-jest",
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
+  coverageDirectory: "../coverage/scripts",
+  testTimeout: 60000,
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true,
+  collectCoverageFrom: [
+    "**/*.ts",
+    "!**/*.spec.ts",
+    "!**/*.test.ts",
+    "!**/node_modules/**",
+    "!**/dist/**",
+  ],
+};
