@@ -28,3 +28,6 @@
 [submodule "packages/mcp-recording"]
 	path = packages/mcp-recording
 	url = https://github.com/Digital-Defiance/mcp-recording.git
+[submodule "mcp-registry"]
+	path = mcp-registry
+	url = https://github.com/docker/mcp-registry.git
