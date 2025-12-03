@@ -1,7 +1,6 @@
 # 🚀 AI Capability Extension Suite
 
-[![GitHub Release](https://img.shields.io/github/v/release/digitaldefiance/ai-capabilities-suite?label=Release&logo=github)](https://github.com/digital-defiance/ai-capabilities-suite/releases)
-[![License](https://img.shields.io/github/license/digitaldefiance/ai-capabilities-suite?label=License)](./LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## What if AI agents could actually *see*, *debug*, and *control* your development environment?
 
