@@ -7,6 +7,8 @@
 
 **We've built the most comprehensive suite of MCP servers that give AI agents superpowers they've never had before.** This isn't just another tool collection—it's a paradigm shift that transforms AI assistants from code generators into intelligent development partners with **runtime visibility**, **system control**, and **physical world access**.
 
+> 📝 **Note:** All packages have been split into individual Git submodules with their own repositories for better maintainability and independent versioning. Each package now has its own dedicated repository under the [Digital-Defiance](https://github.com/Digital-Defiance) organization.
+
 ---
 
 ## 🎯 Now Available on VS Code Marketplace!
@@ -48,6 +50,8 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 
 ### 🐛 **1. MCP Debugger** (Production-Ready) ⭐
 **The most comprehensive debugging interface for AI agents - our flagship product**
+
+**Repositories:** [Core](https://github.com/Digital-Defiance/mcp-debugger-core) | [Server](https://github.com/Digital-Defiance/mcp-debugger-server) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-debugger)
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/digitaldefiance.ts-mcp-debugger?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/digitaldefiance.ts-mcp-debugger?label=Installs)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
@@ -269,7 +273,9 @@ node packages/mcp-debugger-server/dist/src/index.js
 - 👉 **[VS Code Extension Guide](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
 - 👉 **[Complete debugger documentation](./DEBUGGER-README.md)**  
 - 👉 **[Production status report](./DEBUGGER-STATUS.md)**  
-- 👉 **[Installation guide](./packages/mcp-debugger-server/INSTALLATION.md)**
+- 👉 **[MCP Debugger Server Repository](https://github.com/Digital-Defiance/mcp-debugger-server)**
+- 👉 **[MCP Debugger Core Repository](https://github.com/Digital-Defiance/mcp-debugger-core)**
+- 👉 **[VS Code Extension Repository](https://github.com/Digital-Defiance/vscode-mcp-debugger)**
 
 #### 📦 Installation & Usage
 
@@ -321,7 +327,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    ```
 
 ### 📸 **2. MCP Screenshot** (Production-Ready) ⭐
-**Give AI agents visual awareness and screen capture capabilities**
+**Give AI agents visual awareness and screen capture capabilities** - **[Repository](https://github.com/Digital-Defiance/mcp-screenshot)**
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-screenshot?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-screenshot?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
@@ -403,13 +409,13 @@ AI: "Screenshot saved with 3 text regions automatically blurred..."
 ```
 
 📚 **Documentation:**
-- 👉 **[Complete screenshot documentation](./packages/mcp-screenshot/README.md)**
-- 👉 **[E2E Testing Guide](./packages/mcp-screenshot/TESTING-E2E.md)**
-- 👉 **[Docker Deployment Guide](./packages/mcp-screenshot/DOCKER-DEPLOYMENT.md)**
-- 👉 **[API Reference](./packages/mcp-screenshot/API.md)**
+- 👉 **[Complete screenshot documentation](https://github.com/Digital-Defiance/mcp-screenshot)**
+- 👉 **[E2E Testing Guide](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/TESTING-E2E.md)**
+- 👉 **[Docker Deployment Guide](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/DOCKER-DEPLOYMENT.md)**
+- 👉 **[API Reference](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/API.md)**
 
 ### 🎥 **3. MCP Recording** (Planned)
-**Enable AI to capture and analyze video**
+**Enable AI to capture and analyze video** - **[Repository](https://github.com/Digital-Defiance/mcp-recording)**
 
 - Screen recording with audio
 - Video encoding and optimization
@@ -417,7 +423,7 @@ AI: "Screenshot saved with 3 text regions automatically blurred..."
 - Automated demo generation
 
 ### 📁 **4. MCP Filesystem** (Planned)
-**Advanced file operations beyond basic I/O**
+**Advanced file operations beyond basic I/O** - **[Repository](https://github.com/Digital-Defiance/mcp-filesystem)**
 
 - Batch file operations
 - Directory watching and monitoring
@@ -425,7 +431,7 @@ AI: "Screenshot saved with 3 text regions automatically blurred..."
 - Permission management
 
 ### ⚙️ **5. MCP Process** (Planned)
-**System-level process control**
+**System-level process control** - **[Repository](https://github.com/Digital-Defiance/mcp-process)**
 
 - Process launching and monitoring
 - Resource usage tracking
@@ -528,10 +534,8 @@ AI: "Reorganized 247 files into proper architecture..."
 ## 📦 Package Structure
 
 ### 🐛 Debugging Capabilities
-- **mcp-debugger-core** - Core debugging engine with Chrome DevTools Protocol
-- **mcp-debugger-server** - MCP server with 25+ debugging tools
-- **mcp-debugger-core** - Core debugging engine with Chrome DevTools Protocol integration
-- **mcp-debugger-server** - MCP server with 25+ professional debugging tools
+- **[mcp-debugger-core](https://github.com/Digital-Defiance/mcp-debugger-core)** - Core debugging engine with Chrome DevTools Protocol integration
+- **[mcp-debugger-server](https://github.com/Digital-Defiance/mcp-debugger-server)** - MCP server with 25+ professional debugging tools
   - Breakpoints, variable inspection, execution control
   - Performance profiling (CPU, memory, timeline)
   - Hang detection and infinite loop identification
@@ -540,15 +544,15 @@ AI: "Reorganized 247 files into proper architecture..."
   - **94.53% test coverage** with 1,059 tests
   - See [DEBUGGER-README.md](./DEBUGGER-README.md) for full details
 
-
 ### 🖥️ System Capabilities  
-- **mcp-screenshot** - Screen capture and image operations
-- **mcp-recording** - Screen recording and video operations
-- **mcp-filesystem** - Advanced file system operations
-- **mcp-process** - Process and application management
+- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations
+- **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and video operations
+- **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced file system operations
+- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management
 
-### 🔧 Shared Infrastructure
-- **mcp-core** - Common MCP patterns, base classes, and utilities
+### 🎨 VS Code Extensions
+- **[vscode-mcp-debugger](https://github.com/Digital-Defiance/vscode-mcp-debugger)** - VS Code extension for MCP debugging
+- **[vscode-mcp-screenshot](https://github.com/Digital-Defiance/vscode-mcp-screenshot)** - VS Code extension for screenshot capture
 
 ## 🚀 Getting Started
 
@@ -705,10 +709,14 @@ npx nx lint mcp-debugger-core
 - **[.kiro-debugger/specs/mcp-debugger-tool/tasks.md](./.kiro-debugger/specs/mcp-debugger-tool/tasks.md)** - Detailed task breakdown
 
 ### Package Documentation
-- **[packages/mcp-debugger-core/README.md](./packages/mcp-debugger-core/README.md)** - Core debugging engine
-- **[packages/mcp-debugger-server/README.md](./packages/mcp-debugger-server/README.md)** - MCP server
-- **[packages/vscode-mcp-debugger/README.md](./packages/vscode-mcp-debugger/README.md)** - VS Code extension
-- **[packages/mcp-core/](./packages/mcp-core/)** - Shared infrastructure
+- **[mcp-debugger-core](https://github.com/Digital-Defiance/mcp-debugger-core)** - Core debugging engine
+- **[mcp-debugger-server](https://github.com/Digital-Defiance/mcp-debugger-server)** - MCP server
+- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screenshot capture server
+- **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Filesystem operations server
+- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process management server
+- **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Recording and playback server
+- **[vscode-mcp-debugger](https://github.com/Digital-Defiance/vscode-mcp-debugger)** - VS Code debugging extension
+- **[vscode-mcp-screenshot](https://github.com/Digital-Defiance/vscode-mcp-screenshot)** - VS Code screenshot extension
 
 ### API Reference
 - **[MCP Tools Reference](./packages/mcp-debugger-server/docs/tools.md)** - All 25+ debugging tools
@@ -1012,6 +1020,34 @@ yarn install && yarn build && yarn test
 [![License](https://img.shields.io/github/license/digitaldefiance/ai-capabilities-suite?style=for-the-badge)](./LICENSE)
 [![Test Coverage](https://img.shields.io/badge/coverage-94.53%25-brightgreen?logo=jest&style=for-the-badge)](./DEBUGGER-STATUS.md)
 [![Tests](https://img.shields.io/badge/tests-1059%20passed-brightgreen?logo=jest&style=for-the-badge)](./DEBUGGER-STATUS.md)
+
+---
+
+## 🔗 Individual Package Repositories
+
+### Core MCP Servers
+- **[mcp-debugger-core](https://github.com/Digital-Defiance/mcp-debugger-core)** - Core debugging engine with Chrome DevTools Protocol
+- **[mcp-debugger-server](https://github.com/Digital-Defiance/mcp-debugger-server)** - MCP debugging server with 25+ tools
+- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screenshot capture server with PII masking
+- **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced filesystem operations server
+- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process management and monitoring server
+- **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and playback server
+
+### VS Code Extensions
+- **[vscode-mcp-debugger](https://github.com/Digital-Defiance/vscode-mcp-debugger)** - VS Code debugging extension with Copilot integration
+- **[vscode-mcp-screenshot](https://github.com/Digital-Defiance/vscode-mcp-screenshot)** - VS Code screenshot extension with LSP features
+
+### Registry & Infrastructure
+- **[mcp-registry](https://github.com/Digital-Defiance/mcp-registry)** - MCP server registry and catalog
+
+### Main Links
+- **Homepage**: [digitaldefiance.org](https://digitaldefiance.org)
+- **Main Repository**: [ai-capabilities-suite](https://github.com/digital-defiance/ai-capabilities-suite)
+- **Organization**: [Digital-Defiance](https://github.com/Digital-Defiance)
+- **NPM Packages**: [@ai-capabilities-suite](https://www.npmjs.com/org/ai-capabilities-suite)
+- **Docker Hub**: [digidefiance](https://hub.docker.com/u/digidefiance)
+- **Issues**: [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
 
 ---
 
