@@ -54,7 +54,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Bump version - mcp-debugger-core
         if: github.event.inputs.package == 'all' || github.event.inputs.package == 'mcp-debugger-core'

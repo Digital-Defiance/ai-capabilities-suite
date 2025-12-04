@@ -64,6 +64,7 @@ ts-mcp/                          # New repo root
 ## Setup Commands
 
 ### 1. Create New Directory
+
 ```bash
 cd ~/source/repos/DigitalBurnbag
 mkdir ts-mcp
@@ -71,6 +72,7 @@ cd ts-mcp
 ```
 
 ### 2. Initialize Nx Workspace
+
 ```bash
 # Create Nx workspace with TypeScript preset
 npx create-nx-workspace@latest . \
@@ -81,6 +83,7 @@ npx create-nx-workspace@latest . \
 ```
 
 ### 3. Add Required Plugins
+
 ```bash
 # Add Node plugin for library generation
 yarn add -D @nx/node
@@ -93,6 +96,7 @@ yarn add -D @nx/eslint-plugin
 ```
 
 ### 4. Generate Core Package
+
 ```bash
 npx nx g @nx/node:library debugger-core \
   --directory=packages/debugger-core \
@@ -103,6 +107,7 @@ npx nx g @nx/node:library debugger-core \
 ```
 
 ### 5. Generate MCP Server Package
+
 ```bash
 npx nx g @nx/node:library mcp-server \
   --directory=packages/mcp-server \
@@ -113,6 +118,7 @@ npx nx g @nx/node:library mcp-server \
 ```
 
 ### 6. Generate CLI Package (Optional)
+
 ```bash
 npx nx g @nx/node:application cli \
   --directory=packages/cli \
@@ -127,9 +133,7 @@ npx nx g @nx/node:application cli \
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "build": "nx run-many --target=build --all",
     "test": "nx run-many --target=test --all",
@@ -220,7 +224,9 @@ npx nx g @nx/node:application cli \
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ai-capabilities-suite/mcp-core": ["packages/debugger-core/src/index.ts"],
+      "@ai-capabilities-suite/mcp-core": [
+        "packages/debugger-core/src/index.ts"
+      ],
       "@ai-capabilities-suite/mcp-server": ["packages/mcp-server/src/index.ts"]
     }
   },
@@ -349,12 +355,12 @@ Add to your MCP configuration:
 
 \`\`\`json
 {
-  "mcpServers": {
-    "debugger": {
-      "command": "node",
-      "args": ["path/to/mcp-debugger/dist/packages/mcp-server/src/index.js"]
-    }
-  }
+"mcpServers": {
+"debugger": {
+"command": "node",
+"args": ["path/to/mcp-debugger/dist/packages/mcp-server/src/index.js"]
+}
+}
 }
 \`\`\`
 
@@ -363,33 +369,39 @@ Add to your MCP configuration:
 \`\`\`typescript
 // Via MCP
 const result = await mcpCall('debugger_detect_hang', {
-  command: 'node',
-  args: ['script.js'],
-  timeout: 10000
+command: 'node',
+args: ['script.js'],
+timeout: 10000
 });
 
 if (result.hung) {
-  console.log('Hung at:', result.location);
-  console.log('Stack:', result.stack);
+console.log('Hung at:', result.location);
+console.log('Stack:', result.stack);
 }
 \`\`\`
 
 ## Development
 
 \`\`\`bash
+
 # Build all packages
+
 yarn build
 
 # Run tests
+
 yarn test
 
 # Run tests in watch mode
+
 yarn test --watch
 
 # Lint
+
 yarn lint
 
 # Format
+
 yarn format
 \`\`\`
 
@@ -420,30 +432,30 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
-      
+          node-version: "20"
+          cache: "yarn"
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      
+        run: yarn install --immutable
+
       - name: Lint
         run: yarn lint
-      
+
       - name: Build
         run: yarn build
-      
+
       - name: Test
         run: yarn test
-      
+
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         if: always()
@@ -467,6 +479,7 @@ jobs:
 ## Next Steps
 
 After setup:
+
 1. Implement core debugger functionality in `debugger-core`
 2. Implement MCP tools in `mcp-server`
 3. Add tests
