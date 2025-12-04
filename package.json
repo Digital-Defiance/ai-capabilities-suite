@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "AI Capability Extension Suite - Collection of independent MCP servers for AI agent capabilities",
   "private": true,
-  "packageManager": "yarn@4.11.0",
+  "packageManager": "yarn@4.12.0",
   "scripts": {
     "build:binaries": "npm run build && npx ts-node scripts/build-binaries.ts",
     "changelog": "npx ts-node scripts/generate-changelog.ts",
