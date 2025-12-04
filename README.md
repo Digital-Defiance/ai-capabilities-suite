@@ -477,13 +477,198 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - File search and indexing
 - Permission management
 
-### ⚙️ **5. MCP Process** (Planned)
-**System-level process control** - **[Repository](https://github.com/Digital-Defiance/mcp-process)**
+### ⚙️ **5. MCP Process** (In Development) 🚧
+**Enterprise-grade process management with strict security boundaries** - **[Repository](https://github.com/Digital-Defiance/mcp-process)**
 
-- Process launching and monitoring
-- Resource usage tracking
-- Application lifecycle management
-- Service orchestration
+[![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-process?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-process)
+[![Docker Image](https://img.shields.io/docker/v/digitaldefiance/mcp-process?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digitaldefiance/mcp-process)
+
+**The Problem:** AI agents couldn't safely manage system processes. They needed to run commands, monitor resources, and manage services, but without proper security boundaries, this posed significant risks—command injection, resource exhaustion, and privilege escalation.
+
+**The Solution:** AI agents now have **enterprise-grade process management** with 6 layers of security validation. From launching processes with resource limits to managing long-running services with auto-restart, AI can now safely orchestrate your development environment.
+
+#### 🔥 Key Features
+
+**Process Management:**
+- **Process launching** with arguments and environment variables
+- **Resource monitoring** - Track CPU, memory, threads, and I/O in real-time
+- **Output capture** - Separate stdout and stderr streams
+- **Process termination** - Graceful (SIGTERM) and forced (SIGKILL) with timeout escalation
+- **Interactive processes** - Send stdin input and retrieve buffered output
+- **Timeout management** - Automatic termination after specified duration
+
+**Service Management:**
+- **Long-running services** with auto-restart capabilities
+- **Health checks** - Periodic validation of service health
+- **Restart policies** - Configurable retry limits and backoff strategies
+- **Service lifecycle** - Start, stop, restart, and monitor services
+
+**Process Groups:**
+- **Group management** - Organize related processes
+- **Pipeline creation** - Chain processes with stdout/stdin piping
+- **Batch operations** - Terminate entire groups at once
+
+**Security (Defense-in-Depth):**
+- **Executable allowlist** - Only pre-approved executables can run
+- **Argument validation** - Prevent command injection attacks
+- **Environment sanitization** - Remove dangerous environment variables
+- **Resource limits** - CPU, memory, and time constraints
+- **Privilege prevention** - Block setuid executables and privilege escalation
+- **Audit logging** - Complete operation tracking for compliance
+
+#### 🛠️ 12 Professional Process Tools
+
+1. **`process_start`** - Launch processes with arguments, environment, and resource limits
+2. **`process_terminate`** - Graceful or forced termination with timeout escalation
+3. **`process_get_stats`** - Real-time CPU, memory, thread, and I/O statistics
+4. **`process_send_stdin`** - Send input to interactive processes
+5. **`process_get_output`** - Retrieve captured stdout and stderr
+6. **`process_list`** - List all managed processes with status
+7. **`process_get_status`** - Detailed process state and uptime
+8. **`process_create_group`** - Create process groups and pipelines
+9. **`process_add_to_group`** - Add processes to groups
+10. **`process_terminate_group`** - Terminate all processes in a group
+11. **`process_start_service`** - Start long-running services with auto-restart
+12. **`process_stop_service`** - Stop services and disable auto-restart
+
+#### 🔒 Enterprise Security
+
+**6 Layers of Security Validation:**
+
+1. **Executable Allowlist** - Only approved executables can be launched
+   - Supports absolute paths, basenames, and glob patterns
+   - Blocks shell interpreters by default (bash, sh, cmd.exe)
+   - Prevents setuid executable execution
+
+2. **Argument Validation** - Prevents command injection
+   - Validates all command-line arguments
+   - Blocks shell metacharacters and injection patterns
+   - Sanitizes special characters
+
+3. **Environment Sanitization** - Removes dangerous variables
+   - Strips LD_PRELOAD, LD_LIBRARY_PATH
+   - Removes privilege escalation vectors
+   - Validates environment variable names and values
+
+4. **Resource Limits** - Prevents resource exhaustion
+   - CPU percentage limits (per-process)
+   - Memory limits (MB)
+   - CPU time limits (seconds)
+   - Automatic termination on limit exceeded
+
+5. **Privilege Prevention** - No privilege escalation
+   - Blocks sudo, su, pkexec
+   - Prevents setuid executable execution
+   - Enforces least-privilege principle
+
+6. **Audit Logging** - Complete operation tracking
+   - Logs all process operations
+   - Records security violations
+   - Tracks resource usage
+   - Compliance-ready audit trail
+
+#### 📊 Quality Metrics
+
+- **Comprehensive testing** with unit, integration, and E2E tests
+- **Security-first design** with defense-in-depth validation
+- **Production-ready** with graceful error handling
+- **Cross-platform** support (Linux, macOS, Windows)
+- **Docker deployment** with secure defaults
+
+#### 🎯 Revolutionary Use Cases
+
+**"AI, run my build and monitor resources"**
+```
+You: "Build the project and tell me if it uses too much memory"
+AI: *Launches build with resource limits, monitors in real-time*
+AI: "Build completed in 45s. Peak memory: 512MB (within limits). CPU averaged 65%."
+```
+
+**"AI, start my development services"**
+```
+You: "Start the API server and database with auto-restart"
+AI: *Starts services with health checks and restart policies*
+AI: "Started 2 services: api-server (PID 1234), postgres (PID 1235). Health checks enabled."
+```
+
+**"AI, create a data processing pipeline"**
+```
+You: "Process data.txt through grep, sort, and uniq"
+AI: *Creates process group with pipeline*
+AI: "Pipeline created: cat → grep → sort → uniq. Processing 10,000 lines..."
+```
+
+**"AI, debug this hanging process"**
+```
+You: "My script is stuck, what's it doing?"
+AI: *Gets process stats and output*
+AI: "Process consuming 100% CPU in infinite loop. Last output: 'Processing item 5000'. Shall I terminate it?"
+```
+
+**"AI, run tests with timeout"**
+```
+You: "Run the test suite but kill it if it takes more than 5 minutes"
+AI: *Launches tests with 5-minute timeout*
+AI: "Tests completed in 3m 42s. All 247 tests passed. Peak memory: 384MB."
+```
+
+#### 🚀 Get Started
+
+**Docker (Recommended):**
+```bash
+# Pull the image
+docker pull digitaldefiance/mcp-process:latest
+
+# Create configuration
+cat > config/mcp-process-config.json << EOF
+{
+  "allowedExecutables": ["node", "python3", "npm"],
+  "maxConcurrentProcesses": 10,
+  "enableAuditLog": true
+}
+EOF
+
+# Run with docker-compose
+docker-compose up -d
+```
+
+**NPM:**
+```bash
+# Install globally
+npm install -g @ai-capabilities-suite/mcp-process
+
+# Create config
+mcp-process --create-config ./mcp-process-config.json
+
+# Edit config to add allowed executables
+# Then start server
+mcp-process --config ./mcp-process-config.json
+```
+
+**Configuration Example:**
+```json
+{
+  "allowedExecutables": ["node", "python3", "npm", "git"],
+  "defaultResourceLimits": {
+    "maxCpuPercent": 80,
+    "maxMemoryMB": 1024,
+    "maxCpuTime": 300
+  },
+  "maxConcurrentProcesses": 10,
+  "maxProcessLifetime": 3600,
+  "enableAuditLog": true,
+  "blockShellInterpreters": true,
+  "blockSetuidExecutables": true,
+  "allowProcessTermination": true,
+  "allowForcedTermination": false
+}
+```
+
+📚 **Documentation:**
+- 👉 **[Complete process management documentation](https://github.com/Digital-Defiance/mcp-process)**
+- 👉 **[Security implementation guide](https://github.com/Digital-Defiance/mcp-process/blob/main/SECURITY.md)**
+- 👉 **[Docker deployment guide](https://github.com/Digital-Defiance/mcp-process/blob/main/DOCKER.md)**
+- 👉 **[API reference and examples](https://github.com/Digital-Defiance/mcp-process/blob/main/README.md#mcp-tools)**
 
 ---
 
@@ -592,10 +777,10 @@ AI: "Reorganized 247 files into proper architecture..."
   - See [DEBUGGER-README.md](./DEBUGGER-README.md) for full details
 
 ### 🖥️ System Capabilities  
-- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations
-- **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and video operations
-- **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced file system operations
-- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management
+- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations (Production-Ready ✅)
+- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management with enterprise security (In Development 🚧)
+- **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and video operations (Planned)
+- **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced file system operations (Planned)
 
 ### 🎨 VS Code Extensions
 - **[vscode-mcp-debugger](https://github.com/Digital-Defiance/vscode-mcp-debugger)** - VS Code extension for MCP debugging
@@ -727,10 +912,10 @@ npx nx lint mcp-debugger-core
 - 👉 **[API reference](./packages/mcp-debugger-server/docs/)**
 
 ### 🛠️ System Capabilities (In Development)
-- **mcp-screenshot**: Screenshot capture with multiple formats (PNG, JPG, WebP)
-- **mcp-recording**: Screen recording with video encoding and frame extraction
-- **mcp-filesystem**: Advanced file operations beyond basic read/write
-- **mcp-process**: Process management, monitoring, and orchestration
+- **mcp-screenshot**: Screenshot capture with multiple formats (PNG, JPG, WebP) - **Production-Ready** ✅
+- **mcp-process**: Process management with enterprise security - **In Development** 🚧
+- **mcp-recording**: Screen recording with video encoding and frame extraction - **Planned**
+- **mcp-filesystem**: Advanced file operations beyond basic read/write - **Planned**
 
 ---
 

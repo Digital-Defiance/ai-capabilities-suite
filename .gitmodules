@@ -31,3 +31,6 @@
 [submodule "mcp-registry"]
 	path = mcp-registry
 	url = https://github.com/docker/mcp-registry.git
+[submodule "packages/vscode-mcp-acs-process"]
+	path = packages/vscode-mcp-acs-process
+	url = https://github.com/Digital-Defiance/vscode-mcp-acs-process.git

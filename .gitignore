@@ -37,3 +37,30 @@ coverage
 *_token
 *.token
 .mcpregistry_*
+
+# Root should not have dependencies
+/node_modules/
+/yarn.lock
+/.yarn/cache/
+/.yarn/install-state.gz
+
+# Nx (no longer used)
+/.nx/
+
+# Root should not have dependencies
+/node_modules/
+/yarn.lock
+/.yarn/cache/
+/.yarn/install-state.gz
+
+# Nx (no longer used)
+/.nx/
+
+# Root should not have dependencies
+/node_modules/
+/yarn.lock
+/.yarn/cache/
+/.yarn/install-state.gz
+
+# Nx (no longer used)
+/.nx/

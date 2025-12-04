@@ -9,6 +9,7 @@
  * Examples:
  *   ts-node scripts/sync-versions.ts debugger    # Sync debugger versions
  *   ts-node scripts/sync-versions.ts screenshot  # Sync screenshot versions
+ *   ts-node scripts/sync-versions.ts process     # Sync process versions
  *   ts-node scripts/sync-versions.ts             # Sync all packages
  */
 
@@ -33,6 +34,13 @@ const VSCODE_EXTENSION_DIR = path.join(
   "vscode-mcp-debugger"
 );
 const SCREENSHOT_DIR = path.join(__dirname, "..", "packages", "mcp-screenshot");
+const PROCESS_DIR = path.join(__dirname, "..", "packages", "mcp-process");
+const VSCODE_PROCESS_DIR = path.join(
+  __dirname,
+  "..",
+  "packages",
+  "vscode-mcp-acs-process"
+);
 
 /**
  * Reads package information from a package.json file
@@ -113,6 +121,36 @@ function getDebuggerFileUpdates(version: string): FileUpdate[] {
       path: path.join(VSCODE_EXTENSION_DIR, "package.json"),
       pattern: /^(\s*"version":\s*")[^"]+"/m,
       replacement: `$1${version}"`,
+    },
+  ];
+}
+
+/**
+ * Gets file update configurations for process package
+ * @param version - Version string to use
+ * @returns Array of file update configurations
+ */
+function getProcessFileUpdates(version: string): FileUpdate[] {
+  return [
+    {
+      package: "process",
+      path: path.join(PROCESS_DIR, "src", "server.ts"),
+      pattern: /version: "[^"]+"/,
+      replacement: `version: "${version}"`,
+    },
+    {
+      package: "process",
+      path: path.join(VSCODE_PROCESS_DIR, "package.json"),
+      pattern: /"@ai-capabilities-suite\/mcp-process": "\^[^"]+"/,
+      replacement: `"@ai-capabilities-suite/mcp-process": "^${version}"`,
+      optional: true,
+    },
+    {
+      package: "process",
+      path: path.join(VSCODE_PROCESS_DIR, "package.json"),
+      pattern: /^(\s*"version":\s*")[^"]+"/m,
+      replacement: `$1${version}"`,
+      optional: true,
     },
   ];
 }
@@ -241,13 +279,16 @@ function syncVersions(options: SyncVersionsOptions): number {
   // Read versions from package.json files (sources of truth)
   const debuggerPackage = readPackageInfo(DEBUGGER_SERVER_DIR);
   const screenshotPackage = readPackageInfo(SCREENSHOT_DIR);
+  const processPackage = readPackageInfo(PROCESS_DIR);
 
   const DEBUGGER_VERSION = debuggerPackage.version;
   const SCREENSHOT_VERSION = screenshotPackage.version;
+  const PROCESS_VERSION = processPackage.version;
 
   console.log(`📦 Package Versions:`);
   console.log(`   Debugger: ${DEBUGGER_VERSION}`);
   console.log(`   Screenshot: ${SCREENSHOT_VERSION}`);
+  console.log(`   Process: ${PROCESS_VERSION}`);
   console.log();
 
   // Combine all files based on filter
@@ -260,6 +301,11 @@ function syncVersions(options: SyncVersionsOptions): number {
   if (!packageFilter || packageFilter === "screenshot") {
     filesToUpdate = filesToUpdate.concat(
       getScreenshotFileUpdates(SCREENSHOT_VERSION)
+    );
+  }
+  if (!packageFilter || packageFilter === "process") {
+    filesToUpdate = filesToUpdate.concat(
+      getProcessFileUpdates(PROCESS_VERSION)
     );
   }
 
@@ -307,6 +353,9 @@ function syncVersions(options: SyncVersionsOptions): number {
   if (!packageFilter || packageFilter === "screenshot") {
     console.log(`   Screenshot Version: ${SCREENSHOT_VERSION}`);
   }
+  if (!packageFilter || packageFilter === "process") {
+    console.log(`   Process Version: ${PROCESS_VERSION}`);
+  }
 
   if (errorCount > 0) {
     console.error(`\n❌ ${errorCount} error(s) occurred during sync`);
@@ -328,10 +377,11 @@ function main(): void {
   if (
     packageFilter &&
     packageFilter !== "debugger" &&
-    packageFilter !== "screenshot"
+    packageFilter !== "screenshot" &&
+    packageFilter !== "process"
   ) {
     console.error(
-      `❌ Invalid package name: ${packageFilter}. Must be 'debugger' or 'screenshot'`
+      `❌ Invalid package name: ${packageFilter}. Must be 'debugger', 'screenshot', or 'process'`
     );
     process.exit(1);
   }
@@ -355,5 +405,6 @@ export {
   readPackageInfo,
   getDebuggerFileUpdates,
   getScreenshotFileUpdates,
+  getProcessFileUpdates,
   updateSingleFile,
 };
