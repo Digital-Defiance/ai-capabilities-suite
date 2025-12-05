@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## What if AI agents could actually *see*, *debug*, and *control* your development environment?
+## What if AI agents could actually _see_, _debug_, and _control_ your development environment?
 
 **We've built the most comprehensive suite of MCP servers that give AI agents superpowers they've never had before.** This isn't just another tool collection—it's a paradigm shift that transforms AI assistants from code generators into intelligent development partners with **runtime visibility**, **system control**, and **physical world access**.
 
@@ -17,6 +17,7 @@
 Our flagship MCP Debugger is now available as a native VS Code extension, bringing professional-grade debugging capabilities directly to your editor with **zero configuration required**.
 
 **Why developers love it:**
+
 - ✅ **One-click installation** from VS Code Marketplace
 - ✅ **GitHub Copilot integration** for AI-powered debugging
 - ✅ **25+ debugging tools** accessible to AI agents
@@ -33,6 +34,7 @@ Our flagship MCP Debugger is now available as a native VS Code extension, bringi
 ## 🤔 The Problem We're Solving
 
 **AI agents today are powerful but blind:**
+
 - ❌ Can't see what code actually does when it runs
 - ❌ Can't capture your screen or record demonstrations
 - ❌ Can't manage files beyond basic read/write
@@ -48,6 +50,7 @@ Our flagship MCP Debugger is now available as a native VS Code extension, bringi
 The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** that give AI agents professional-grade capabilities:
 
 ### 🐛 **1. MCP Debugger** (Production-Ready) ⭐
+
 **The most comprehensive debugging interface for AI agents - our flagship product**
 
 **Repositories:** [Core](https://github.com/Digital-Defiance/mcp-debugger-core) | [Server](https://github.com/Digital-Defiance/mcp-debugger-server) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-debugger)
@@ -69,18 +72,21 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 #### 🎨 VS Code Extension Features
 
 **Zero-Configuration Setup:**
+
 - Install from VS Code Marketplace with one click
 - Automatic MCP server integration
 - No manual configuration required
 - Works immediately with TypeScript and JavaScript projects
 
 **GitHub Copilot Integration:**
+
 - AI-powered debugging assistance in your editor
 - Copilot can access debugging context and tools
 - Natural language debugging commands
 - Intelligent breakpoint suggestions
 
 **Native IDE Integration:**
+
 - Language Server Protocol (LSP) for code intelligence
 - Debug Adapter Protocol (DAP) for seamless debugging
 - Hover providers for variable inspection
@@ -88,6 +94,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 - Integrated debugging UI
 
 **Professional Debugging Workflow:**
+
 - Set breakpoints with right-click context menu
 - Step through code with keyboard shortcuts
 - Inspect variables in hover tooltips
@@ -95,6 +102,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 - Profile performance without leaving editor
 
 **Multi-Language Support:**
+
 - TypeScript with full source map support
 - JavaScript (Node.js and browser)
 - React, Vue, Angular applications
@@ -104,12 +112,14 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 #### 🔥 Why This Changes Everything
 
 **For Developers:**
+
 - **"Debug this for me"** becomes reality—AI investigates and fixes runtime issues
 - **Instant performance insights**—AI identifies bottlenecks and memory leaks automatically
 - **Intelligent test debugging**—AI debugs failing tests and suggests precise fixes
 - **Proactive hang detection**—Never lose time to infinite loops again
 
 **For AI Agents:**
+
 - **Runtime visibility**—See what's actually happening when code executes
 - **Interactive debugging**—Set breakpoints, step through code, inspect state
 - **Performance analysis**—Profile CPU, memory, and execution timelines
@@ -118,6 +128,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 #### 🛠️ 25+ Professional Debugging Tools
 
 **Core Debugging (17 tools):**
+
 - 🚀 Session management (start, stop with clean shutdown)
 - 🎯 Breakpoint operations (set, remove, toggle, list with conditional logic)
 - ▶️ Execution control (continue, step over/into/out, pause)
@@ -126,12 +137,14 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 - ⚠️ Hang detection (intelligent infinite loop identification)
 
 **Advanced Breakpoints (4 tools):**
+
 - 📝 **Logpoints** - Non-breaking observation with variable interpolation
 - 🚨 **Exception breakpoints** - Break on caught/uncaught exceptions with filtering
 - 🎯 **Function breakpoints** - Break on function entry with regex matching
 - 🔢 **Hit count conditions** - Break after N hits or every Nth hit
 
 **Performance Profiling (4 tools):**
+
 - 🔥 **CPU profiling** - Real-time performance analysis with flame graphs
 - 🧠 **Memory profiling** - Heap snapshots and leak detection
 - 📉 **Performance metrics** - Timeline analysis and regression detection
@@ -141,22 +154,22 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 
 **Comparison with Other Solutions:**
 
-| Feature | Our MCP Debugger | Other MCP Debuggers | VS Code Built-in | Chrome DevTools |
-|---------|------------------|---------------------|------------------|-----------------|
-| **AI Agent Integration** | ✅ Full MCP + VS Code | ⚠️ Basic MCP only | ❌ No AI integration | ❌ No AI integration |
-| **Number of Tools** | ✅ 25+ tools | ⚠️ 5-10 tools | ⚠️ Limited API | ⚠️ Manual only |
-| **Performance Profiling** | ✅ CPU, Memory, Timeline | ❌ None | ⚠️ Basic | ✅ Advanced |
-| **Hang Detection** | ✅ Automatic | ❌ None | ❌ None | ❌ Manual |
-| **Advanced Breakpoints** | ✅ 4 types | ❌ Basic only | ⚠️ Limited | ✅ Advanced |
-| **Enterprise Security** | ✅ Full suite | ❌ None | ❌ None | ❌ None |
-| **Test Coverage** | ✅ 94.53% | ⚠️ <50% typical | N/A | N/A |
-| **TypeScript Support** | ✅ Full source maps | ⚠️ Limited | ✅ Good | ✅ Good |
-| **Test Framework Integration** | ✅ Jest, Mocha, Vitest | ❌ None | ⚠️ Manual | ⚠️ Manual |
-| **VS Code Extension** | ✅ Native | ❌ None | N/A | ❌ Separate tool |
-| **GitHub Copilot Integration** | ✅ Full | ❌ None | ⚠️ Limited | ❌ None |
-| **Production Ready** | ✅ Yes | ⚠️ Beta/Alpha | ✅ Yes | ✅ Yes |
-| **Cross-Platform** | ✅ Linux, macOS, Windows | ⚠️ Limited | ✅ Yes | ✅ Yes |
-| **Deployment Options** | ✅ 4 options | ⚠️ 1-2 options | N/A | N/A |
+| Feature                        | Our MCP Debugger         | Other MCP Debuggers | VS Code Built-in     | Chrome DevTools      |
+| ------------------------------ | ------------------------ | ------------------- | -------------------- | -------------------- |
+| **AI Agent Integration**       | ✅ Full MCP + VS Code    | ⚠️ Basic MCP only   | ❌ No AI integration | ❌ No AI integration |
+| **Number of Tools**            | ✅ 25+ tools             | ⚠️ 5-10 tools       | ⚠️ Limited API       | ⚠️ Manual only       |
+| **Performance Profiling**      | ✅ CPU, Memory, Timeline | ❌ None             | ⚠️ Basic             | ✅ Advanced          |
+| **Hang Detection**             | ✅ Automatic             | ❌ None             | ❌ None              | ❌ Manual            |
+| **Advanced Breakpoints**       | ✅ 4 types               | ❌ Basic only       | ⚠️ Limited           | ✅ Advanced          |
+| **Enterprise Security**        | ✅ Full suite            | ❌ None             | ❌ None              | ❌ None              |
+| **Test Coverage**              | ✅ 94.53%                | ⚠️ <50% typical     | N/A                  | N/A                  |
+| **TypeScript Support**         | ✅ Full source maps      | ⚠️ Limited          | ✅ Good              | ✅ Good              |
+| **Test Framework Integration** | ✅ Jest, Mocha, Vitest   | ❌ None             | ⚠️ Manual            | ⚠️ Manual            |
+| **VS Code Extension**          | ✅ Native                | ❌ None             | N/A                  | ❌ Separate tool     |
+| **GitHub Copilot Integration** | ✅ Full                  | ❌ None             | ⚠️ Limited           | ❌ None              |
+| **Production Ready**           | ✅ Yes                   | ⚠️ Beta/Alpha       | ✅ Yes               | ✅ Yes               |
+| **Cross-Platform**             | ✅ Linux, macOS, Windows | ⚠️ Limited          | ✅ Yes               | ✅ Yes               |
+| **Deployment Options**         | ✅ 4 options             | ⚠️ 1-2 options      | N/A                  | N/A                  |
 
 **Key Differentiators:**
 
@@ -193,6 +206,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 #### 🎮 Real-World Use Cases
 
 **"AI, debug this failing test"**
+
 ```
 You: "My Jest test is failing but I can't figure out why"
 AI: *Sets breakpoints in test, inspects variables, identifies exact divergence*
@@ -200,6 +214,7 @@ AI: "Line 42: API returns string but test expects number. Here's the fix..."
 ```
 
 **"AI, find the performance bottleneck"**
+
 ```
 You: "This function is slow but I don't know why"
 AI: *Starts CPU profiling, analyzes flame graphs, identifies hot paths*
@@ -207,6 +222,7 @@ AI: "Bottleneck in nested loop on line 156. Here's 10x faster version..."
 ```
 
 **"AI, why is my app hanging?"**
+
 ```
 You: "My Node.js app freezes randomly"
 AI: *Detects infinite loop, captures call stack, identifies root cause*
@@ -214,6 +230,7 @@ AI: "Infinite loop in processQueue() - exit condition never true because..."
 ```
 
 **"AI, debug this TypeScript issue"**
+
 ```
 You: "Runtime behavior doesn't match my TypeScript types"
 AI: *Uses source maps to debug original TypeScript, maps runtime values*
@@ -223,6 +240,7 @@ AI: "Type assertion on line 23 incorrect—actual runtime type is..."
 #### 🚀 Get Started
 
 **Option 1: VS Code Extension (Recommended for VS Code users)**
+
 ```bash
 # Install from VS Code Marketplace
 # Search for "TypeScript MCP Debugger" or visit:
@@ -233,6 +251,7 @@ code --install-extension digitaldefiance.ts-mcp-debugger
 ```
 
 **Features:**
+
 - ✅ **Zero configuration** - Works out of the box
 - ✅ **GitHub Copilot integration** - AI-powered debugging assistance
 - ✅ **Native VS Code debugging** - Seamless IDE integration
@@ -240,6 +259,7 @@ code --install-extension digitaldefiance.ts-mcp-debugger
 - ✅ **Debug Adapter Protocol** - Full debugging capabilities
 
 **Option 2: Standalone MCP Server (For other AI agents)**
+
 ```bash
 # NPM (Recommended)
 npm install -g @ai-capabilities-suite/mcp-debugger-server
@@ -258,6 +278,7 @@ docker run digidefiance/mcp-debugger-server
 ```
 
 **Option 3: From Source**
+
 ```bash
 # Clone and build
 git clone https://github.com/digital-defiance/ai-capabilities-suite.git
@@ -269,9 +290,10 @@ node packages/mcp-debugger-server/dist/src/index.js
 ```
 
 📚 **Documentation:**
+
 - 👉 **[VS Code Extension Guide](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
-- 👉 **[Complete debugger documentation](./DEBUGGER-README.md)**  
-- 👉 **[Production status report](./DEBUGGER-STATUS.md)**  
+- 👉 **[Complete debugger documentation](./DEBUGGER-README.md)**
+- 👉 **[Production status report](./DEBUGGER-STATUS.md)**
 - 👉 **[MCP Debugger Server Repository](https://github.com/Digital-Defiance/mcp-debugger-server)**
 - 👉 **[MCP Debugger Core Repository](https://github.com/Digital-Defiance/mcp-debugger-core)**
 - 👉 **[VS Code Extension Repository](https://github.com/Digital-Defiance/vscode-mcp-debugger)**
@@ -281,6 +303,7 @@ node packages/mcp-debugger-server/dist/src/index.js
 **VS Code Extension (Recommended for VS Code users):**
 
 1. **Install from Marketplace:**
+
    - Open VS Code
    - Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
    - Search for "TypeScript MCP Debugger"
@@ -288,6 +311,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    - Or visit: https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger
 
 2. **Start Debugging:**
+
    - Open a TypeScript or JavaScript file
    - Set breakpoints by clicking in the gutter
    - Press F5 to start debugging
@@ -303,11 +327,13 @@ node packages/mcp-debugger-server/dist/src/index.js
 **Standalone MCP Server (For other AI agents):**
 
 1. **Install globally:**
+
    ```bash
    npm install -g @ai-capabilities-suite/mcp-debugger-server
    ```
 
 2. **Configure your AI agent:**
+
    ```json
    {
      "mcpServers": {
@@ -326,7 +352,10 @@ node packages/mcp-debugger-server/dist/src/index.js
    ```
 
 ### 📸 **2. MCP Screenshot** (Production-Ready) ⭐
-**Transform AI agents from code readers into visual UI experts and documentation partners** - **[Repository](https://github.com/Digital-Defiance/mcp-screenshot)**
+
+**Transform AI agents from code readers into visual UI experts and documentation partners**
+
+**Repositories:** [MCP Screenshot](https://github.com/Digital-Defiance/mcp-screenshot) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-screenshot)
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-screenshot?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-screenshot?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
@@ -343,6 +372,7 @@ node packages/mcp-debugger-server/dist/src/index.js
 #### 🎨 Key Features
 
 **Screenshot Capture:**
+
 - **Full screen capture** with multiple format support (PNG, JPEG, WebP, BMP)
 - **Window-specific capture** by title or ID
 - **Region capture** with precise boundary control
@@ -350,12 +380,14 @@ node packages/mcp-debugger-server/dist/src/index.js
 - **Quality control** - adjustable compression and optimization
 
 **Privacy & Security:**
+
 - **PII masking** with Tesseract OCR integration
 - **Window exclusion** - skip sensitive applications
 - **Secure defaults** - privacy-first configuration
 - **Permission handling** - proper system permission checks
 
 **Cross-Platform Support:**
+
 - **Linux**: X11 and Wayland support
 - **macOS**: Native screenshot APIs
 - **Windows**: Windows API integration
@@ -370,6 +402,7 @@ node packages/mcp-debugger-server/dist/src/index.js
 5. **`screenshot_list_windows`** - List visible windows with titles, positions, and dimensions
 
 **Privacy & Security Features:**
+
 - **PII Masking** - Automatically detect and blur sensitive information (emails, phone numbers, credit cards)
 - **Window Exclusion** - Skip password managers and authentication dialogs
 - **Secure Defaults** - Privacy-first configuration out of the box
@@ -388,23 +421,27 @@ node packages/mcp-debugger-server/dist/src/index.js
 #### 🚀 Get Started
 
 **NPM Package:**
+
 ```bash
 npm install -g @ai-capabilities-suite/mcp-screenshot
 npx @ai-capabilities-suite/mcp-screenshot
 ```
 
 **Docker:**
+
 ```bash
 docker run -v $(pwd)/screenshots:/app/screenshots digitaldefiance/mcp-screenshot:latest
 ```
 
 **VSCode Extension:**
+
 - Search "MCP Screenshot" in VS Code Extensions
 - Or visit: https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot
 
 #### 🎯 Revolutionary Use Cases
 
 **"AI, create professional documentation"**
+
 ```
 You: "Document the user onboarding flow"
 AI: *Captures each step, analyzes UI elements*
@@ -412,6 +449,7 @@ AI: "Generated step-by-step guide with 8 annotated screenshots, user journey map
 ```
 
 **"AI, audit this design for accessibility"**
+
 ```
 You: "Check if this form meets WCAG standards"
 AI: *Captures form, analyzes contrast and spacing*
@@ -419,6 +457,7 @@ AI: "Found 3 issues: Submit button has 2.1:1 contrast (needs 4.5:1), labels lack
 ```
 
 **"AI, help debug this responsive layout"**
+
 ```
 You: "Why does my navbar break on mobile?"
 AI: *Captures multiple viewport sizes*
@@ -426,6 +465,7 @@ AI: "Navigation collapses at 768px but hamburger menu overlaps logo. Here's the 
 ```
 
 **"AI, compare these two design options"**
+
 ```
 You: "Which landing page converts better?"
 AI: *Captures both versions, analyzes visual hierarchy*
@@ -433,6 +473,7 @@ AI: "Version B has 34% better visual flow—CTA button more prominent, hero text
 ```
 
 **"AI, create a bug report with visuals"**
+
 ```
 You: "The checkout form validation isn't working"
 AI: *Captures error states and user flow*
@@ -442,12 +483,14 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 #### 🔥 What This Changes
 
 **Before:** AI worked blind, relying on code descriptions
+
 - ❌ "The layout looks broken" → AI guesses what's wrong
 - ❌ "Create documentation" → AI writes generic text without visuals
 - ❌ "Check accessibility" → AI can only review code, not actual contrast
 - ❌ "Debug responsive design" → AI can't see actual breakpoint behavior
 
 **After:** AI sees and analyzes your actual user interface
+
 - ✅ **Visual debugging** - AI identifies exact pixel-level issues
 - ✅ **Intelligent documentation** - AI creates guides with real screenshots and annotations
 - ✅ **Accessibility audits** - AI measures actual contrast ratios and spacing
@@ -456,12 +499,14 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - ✅ **Professional bug reports** - AI creates detailed reports with visual evidence
 
 📚 **Documentation:**
+
 - 👉 **[Complete screenshot documentation](https://github.com/Digital-Defiance/mcp-screenshot)**
 - 👉 **[E2E Testing Guide](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/TESTING-E2E.md)**
 - 👉 **[Docker Deployment Guide](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/DOCKER-DEPLOYMENT.md)**
 - 👉 **[API Reference](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/API.md)**
 
 ### 🎥 **3. MCP Recording** (Planned)
+
 **Enable AI to capture and analyze video** - **[Repository](https://github.com/Digital-Defiance/mcp-recording)**
 
 - Screen recording with audio
@@ -470,6 +515,7 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - Automated demo generation
 
 ### 📁 **4. MCP Filesystem** (Planned)
+
 **Advanced file operations beyond basic I/O** - **[Repository](https://github.com/Digital-Defiance/mcp-filesystem)**
 
 - Batch file operations
@@ -478,7 +524,10 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - Permission management
 
 ### ⚙️ **5. MCP Process** (Production-Ready) ⭐
-**Enterprise-grade process management with strict security boundaries** - **[Repository](https://github.com/Digital-Defiance/mcp-process)**
+
+**Enterprise-grade process management with strict security boundaries**
+
+**Repositories:** [MCP Process](https://github.com/Digital-Defiance/mcp-process) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-acs-process)
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-acs-process?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-acs-process?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
@@ -495,6 +544,7 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 #### 🔥 Key Features
 
 **Process Management:**
+
 - **Process launching** with arguments and environment variables
 - **Resource monitoring** - Track CPU, memory, threads, and I/O in real-time
 - **Output capture** - Separate stdout and stderr streams
@@ -503,17 +553,20 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - **Timeout management** - Automatic termination after specified duration
 
 **Service Management:**
+
 - **Long-running services** with auto-restart capabilities
 - **Health checks** - Periodic validation of service health
 - **Restart policies** - Configurable retry limits and backoff strategies
 - **Service lifecycle** - Start, stop, restart, and monitor services
 
 **Process Groups:**
+
 - **Group management** - Organize related processes
 - **Pipeline creation** - Chain processes with stdout/stdin piping
 - **Batch operations** - Terminate entire groups at once
 
 **Security (Defense-in-Depth):**
+
 - **Executable allowlist** - Only pre-approved executables can run
 - **Argument validation** - Prevent command injection attacks
 - **Environment sanitization** - Remove dangerous environment variables
@@ -541,27 +594,32 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 **6 Layers of Security Validation:**
 
 1. **Executable Allowlist** - Only approved executables can be launched
+
    - Supports absolute paths, basenames, and glob patterns
    - Blocks shell interpreters by default (bash, sh, cmd.exe)
    - Prevents setuid executable execution
 
 2. **Argument Validation** - Prevents command injection
+
    - Validates all command-line arguments
    - Blocks shell metacharacters and injection patterns
    - Sanitizes special characters
 
 3. **Environment Sanitization** - Removes dangerous variables
+
    - Strips LD_PRELOAD, LD_LIBRARY_PATH
    - Removes privilege escalation vectors
    - Validates environment variable names and values
 
 4. **Resource Limits** - Prevents resource exhaustion
+
    - CPU percentage limits (per-process)
    - Memory limits (MB)
    - CPU time limits (seconds)
    - Automatic termination on limit exceeded
 
 5. **Privilege Prevention** - No privilege escalation
+
    - Blocks sudo, su, pkexec
    - Prevents setuid executable execution
    - Enforces least-privilege principle
@@ -583,6 +641,7 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 #### 🎯 Revolutionary Use Cases
 
 **"AI, run my build and monitor resources"**
+
 ```
 You: "Build the project and tell me if it uses too much memory"
 AI: *Launches build with resource limits, monitors in real-time*
@@ -590,6 +649,7 @@ AI: "Build completed in 45s. Peak memory: 512MB (within limits). CPU averaged 65
 ```
 
 **"AI, start my development services"**
+
 ```
 You: "Start the API server and database with auto-restart"
 AI: *Starts services with health checks and restart policies*
@@ -597,6 +657,7 @@ AI: "Started 2 services: api-server (PID 1234), postgres (PID 1235). Health chec
 ```
 
 **"AI, create a data processing pipeline"**
+
 ```
 You: "Process data.txt through grep, sort, and uniq"
 AI: *Creates process group with pipeline*
@@ -604,6 +665,7 @@ AI: "Pipeline created: cat → grep → sort → uniq. Processing 10,000 lines..
 ```
 
 **"AI, debug this hanging process"**
+
 ```
 You: "My script is stuck, what's it doing?"
 AI: *Gets process stats and output*
@@ -611,6 +673,7 @@ AI: "Process consuming 100% CPU in infinite loop. Last output: 'Processing item 
 ```
 
 **"AI, run tests with timeout"**
+
 ```
 You: "Run the test suite but kill it if it takes more than 5 minutes"
 AI: *Launches tests with 5-minute timeout*
@@ -620,6 +683,7 @@ AI: "Tests completed in 3m 42s. All 247 tests passed. Peak memory: 384MB."
 #### 🚀 Get Started
 
 **Docker (Recommended):**
+
 ```bash
 # Pull the image
 docker pull digitaldefiance/mcp-process:latest
@@ -638,6 +702,7 @@ docker-compose up -d
 ```
 
 **NPM:**
+
 ```bash
 # Install globally
 npm install -g @ai-capabilities-suite/mcp-process
@@ -651,6 +716,7 @@ mcp-process --config ./mcp-process-config.json
 ```
 
 **Configuration Example:**
+
 ```json
 {
   "allowedExecutables": ["node", "python3", "npm", "git"],
@@ -670,6 +736,7 @@ mcp-process --config ./mcp-process-config.json
 ```
 
 📚 **Documentation:**
+
 - 👉 **[Complete process management documentation](https://github.com/Digital-Defiance/mcp-process)**
 - 👉 **[Security implementation guide](https://github.com/Digital-Defiance/mcp-process/blob/main/SECURITY.md)**
 - 👉 **[Docker deployment guide](https://github.com/Digital-Defiance/mcp-process/blob/main/DOCKER.md)**
@@ -723,12 +790,14 @@ mcp-process --config ./mcp-process-config.json
 ### Integration Paths
 
 **1. VS Code Extension (Native Integration)**
+
 - Language Server Protocol (LSP) for code intelligence
 - Debug Adapter Protocol (DAP) for debugging
 - GitHub Copilot integration for AI assistance
 - Zero configuration required
 
 **2. MCP Server (Universal Integration)**
+
 - Model Context Protocol for AI agent communication
 - Works with Kiro, Amazon Q, Claude Desktop, and other MCP clients
 - Flexible deployment (NPM, Docker, binaries)
@@ -739,6 +808,7 @@ mcp-process --config ./mcp-process-config.json
 ## 🎮 Revolutionary Use Cases
 
 ### 🤖 **"AI, debug and fix this issue"**
+
 ```
 You: "My app crashes when processing large files"
 AI: *Starts debugger, sets breakpoints, profiles memory*
@@ -746,6 +816,7 @@ AI: "Memory leak in line 156. Buffer not released. Here's the fix..."
 ```
 
 ### 📸 **"AI, document this feature"**
+
 ```
 You: "Create documentation for the new dashboard"
 AI: *Captures screenshots, analyzes UI, generates docs*
@@ -753,6 +824,7 @@ AI: "Created comprehensive guide with 12 annotated screenshots..."
 ```
 
 ### 🎥 **"AI, create a demo video"**
+
 ```
 You: "Show how the authentication flow works"
 AI: *Records screen, adds annotations, exports video*
@@ -760,6 +832,7 @@ AI: "Generated 2-minute demo with voiceover script..."
 ```
 
 ### 📁 **"AI, organize my project files"**
+
 ```
 You: "Restructure this codebase following best practices"
 AI: *Analyzes structure, moves files, updates imports*
@@ -771,6 +844,7 @@ AI: "Reorganized 247 files into proper architecture..."
 ## 📦 Package Structure
 
 ### 🐛 Debugging Capabilities
+
 - **[mcp-debugger-core](https://github.com/Digital-Defiance/mcp-debugger-core)** - Core debugging engine with Chrome DevTools Protocol integration
 - **[mcp-debugger-server](https://github.com/Digital-Defiance/mcp-debugger-server)** - MCP server with 25+ professional debugging tools
   - Breakpoints, variable inspection, execution control
@@ -781,19 +855,22 @@ AI: "Reorganized 247 files into proper architecture..."
   - **94.53% test coverage** with 1,059 tests
   - See [DEBUGGER-README.md](./DEBUGGER-README.md) for full details
 
-### 🖥️ System Capabilities  
+### 🖥️ System Capabilities
+
 - **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations (Production-Ready ✅)
 - **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management with enterprise security (Production-Ready ✅)
 - **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and video operations (Planned)
 - **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced file system operations (Planned)
 
 ### 🎨 VS Code Extensions
+
 - **[vscode-mcp-debugger](https://github.com/Digital-Defiance/vscode-mcp-debugger)** - VS Code extension for MCP debugging
 - **[vscode-mcp-screenshot](https://github.com/Digital-Defiance/vscode-mcp-screenshot)** - VS Code extension for screenshot capture
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - Yarn (workspace support)
 - TypeScript 5+
@@ -885,6 +962,7 @@ npx nx lint mcp-debugger-core
 ### ✅ MCP Debugger (Production-Ready & Published)
 
 **Distribution Channels:**
+
 - ✅ **[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)** - Native extension with Copilot integration
 - ✅ **[NPM Registry](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)** - Global installation via npm
 - ✅ **[Docker Hub](https://hub.docker.com/r/digidefiance/mcp-debugger-server)** - Containerized deployment
@@ -892,6 +970,7 @@ npx nx lint mcp-debugger-core
 - � **[MCP Registry** - Submission in progress for official Model Context Protocol registry
 
 **Quality Metrics:**
+
 - **25+ professional debugging tools** for AI agents
 - **Enterprise-grade** security, compliance, and observability
 - **94.53% test coverage** exceeding industry standards (target: 90%)
@@ -903,6 +982,7 @@ npx nx lint mcp-debugger-core
 - **TypeScript compatibility** tested on versions 4.x and 5.x
 
 **Enterprise Features:**
+
 - 🔒 **Security**: Authentication, rate limiting, PII masking, audit logging
 - 📊 **Observability**: Structured logging, metrics collection, health checks
 - 🚀 **Performance**: CPU/memory profiling, performance timeline analysis
@@ -910,6 +990,7 @@ npx nx lint mcp-debugger-core
 - 📈 **Scalability**: Load tested with 100+ concurrent debug sessions
 
 **Documentation:**
+
 - 👉 **[VS Code Extension Guide](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
 - 👉 **[Complete debugger documentation](./DEBUGGER-README.md)**
 - 👉 **[Production status report](./DEBUGGER-STATUS.md)**
@@ -917,6 +998,7 @@ npx nx lint mcp-debugger-core
 - 👉 **[API reference](./packages/mcp-debugger-server/docs/)**
 
 ### 🛠️ System Capabilities
+
 - **mcp-screenshot**: Screenshot capture with multiple formats (PNG, JPG, WebP) - **Production-Ready** ✅
 - **mcp-process**: Process management with enterprise security - **Production-Ready** ✅
 - **mcp-recording**: Screen recording with video encoding and frame extraction - **Planned**
@@ -927,12 +1009,14 @@ npx nx lint mcp-debugger-core
 ## 📚 Documentation
 
 ### Getting Started
+
 - **[VS Code Extension Guide](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)** - Installation and usage for VS Code
 - **[Quick Start Guide](./packages/mcp-debugger-server/INSTALLATION.md)** - Get up and running in 5 minutes
 - **[Configuration Guide](./packages/mcp-debugger-server/docs/configuration.md)** - Customize for your workflow
 - **[Troubleshooting Guide](./packages/mcp-debugger-server/docs/troubleshooting.md)** - Common issues and solutions
 
 ### Main Documentation
+
 - **[README.md](./README.md)** - This file (suite overview)
 - **[DEBUGGER-README.md](./DEBUGGER-README.md)** - Complete debugger documentation
 - **[DEBUGGER-STATUS.md](./DEBUGGER-STATUS.md)** - Production readiness report
@@ -940,12 +1024,14 @@ npx nx lint mcp-debugger-core
 - **[MIGRATION-COMPLETE.md](./MIGRATION-COMPLETE.md)** - Migration completion guide
 
 ### Debugger Specs & Tasks
+
 - **[.kiro-debugger/specs/](./kiro-debugger/specs/)** - Complete specifications
 - **[.kiro-debugger/specs/mcp-debugger-tool/requirements.md](./.kiro-debugger/specs/mcp-debugger-tool/requirements.md)** - EARS-formatted requirements
 - **[.kiro-debugger/specs/mcp-debugger-tool/design.md](./.kiro-debugger/specs/mcp-debugger-tool/design.md)** - Architecture and design
 - **[.kiro-debugger/specs/mcp-debugger-tool/tasks.md](./.kiro-debugger/specs/mcp-debugger-tool/tasks.md)** - Detailed task breakdown
 
 ### Package Documentation
+
 - **[mcp-debugger-core](https://github.com/Digital-Defiance/mcp-debugger-core)** - Core debugging engine
 - **[mcp-debugger-server](https://github.com/Digital-Defiance/mcp-debugger-server)** - MCP server
 - **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screenshot capture server
@@ -956,6 +1042,7 @@ npx nx lint mcp-debugger-core
 - **[vscode-mcp-screenshot](https://github.com/Digital-Defiance/vscode-mcp-screenshot)** - VS Code screenshot extension
 
 ### API Reference
+
 - **[MCP Tools Reference](./packages/mcp-debugger-server/docs/tools.md)** - All 25+ debugging tools
 - **[CDP Protocol Reference](./packages/mcp-debugger-core/docs/cdp.md)** - Chrome DevTools Protocol integration
 - **[LSP/DAP Reference](./packages/vscode-mcp-debugger/docs/protocols.md)** - Language Server and Debug Adapter protocols
@@ -987,6 +1074,7 @@ We welcome contributions! This project follows a spec-driven development approac
 ## 👥 Team
 
 **Digital Defiance**
+
 - 📧 Email: [info@digitaldefiance.org](mailto:info@digitaldefiance.org)
 - 🚨 Security: [SECURITY.md](./SECURITY.md)
 - 🔗 LinkedIn: [Digital Defiance](https://www.linkedin.com/company/digital-defiance)
@@ -1005,6 +1093,7 @@ MIT License - See [LICENSE](./LICENSE) for details
 **We're building the foundation for AI-powered development workflows.**
 
 By giving AI agents professional-grade capabilities, we're creating a future where:
+
 - ✅ **Bugs are investigated automatically** while you focus on features
 - ✅ **Documentation is generated** from actual system behavior
 - ✅ **Demos are created** with a single command
@@ -1018,6 +1107,7 @@ By giving AI agents professional-grade capabilities, we're creating a future whe
 ## 🚀 Quick Start Options
 
 ### For VS Code Users (Recommended)
+
 ```bash
 # Install from VS Code Marketplace
 code --install-extension digitaldefiance.ts-mcp-debugger
@@ -1026,6 +1116,7 @@ code --install-extension digitaldefiance.ts-mcp-debugger
 ```
 
 ### For Other AI Agents (Kiro, Amazon Q, Claude)
+
 ```bash
 # Install globally via NPM
 npm install -g @ai-capabilities-suite/mcp-debugger-server
@@ -1037,6 +1128,7 @@ docker run -p 3000:3000 digidefiance/mcp-debugger-server
 ```
 
 ### For Contributors & Developers
+
 ```bash
 # Clone and build from source
 git clone https://github.com/digital-defiance/ai-capabilities-suite.git
@@ -1063,6 +1155,7 @@ yarn install && yarn build && yarn test
 ## 🌟 Why Choose This Suite?
 
 **1. Production-Ready Quality**
+
 - Enterprise-grade testing with 94.53% coverage
 - Property-based testing with 22 correctness properties
 - Load testing with 100+ concurrent sessions
@@ -1070,12 +1163,14 @@ yarn install && yarn build && yarn test
 - Security testing for vulnerability detection
 
 **2. Multiple Integration Options**
+
 - Native VS Code extension with zero configuration
 - Standalone MCP server for universal AI agent support
 - Docker containers for easy deployment
 - Standalone binaries for no-install usage
 
 **3. Comprehensive Feature Set**
+
 - 25+ debugging tools (most comprehensive in MCP ecosystem)
 - Performance profiling (CPU, memory, timeline)
 - Advanced breakpoint types (logpoints, exception, hit count, function)
@@ -1083,12 +1178,14 @@ yarn install && yarn build && yarn test
 - Production readiness (graceful shutdown, circuit breakers, retry logic)
 
 **4. Active Development & Support**
+
 - Regular updates and new features
 - Responsive issue tracking on GitHub
 - Comprehensive documentation and examples
 - Community-driven development
 
 **5. Open Source & Extensible**
+
 - MIT License - use freely in any project
 - Well-documented codebase for contributions
 - Modular architecture for easy extension
@@ -1096,57 +1193,24 @@ yarn install && yarn build && yarn test
 
 ---
 
-## 📈 Roadmap
-
-### Q1 2025 (Current)
-- ✅ MCP Debugger production release
-- ✅ VS Code extension publication
-- ✅ NPM package publication
-- ✅ Docker Hub publication
-- ✅ GitHub Releases with binaries
-- 🔄 MCP Registry submission (in progress)
-- 🔄 Homebrew formula (in progress)
-
-### Q2 2025
-- 📸 MCP Screenshot production release
-- 🎥 MCP Recording beta release
-- 📁 MCP Filesystem alpha release
-- ⚙️ MCP Process alpha release
-- 🔧 Enhanced VS Code extension features
-- 📚 Video tutorials and demos
-
-### Q3 2025
-- 🎥 MCP Recording production release
-- 📁 MCP Filesystem beta release
-- ⚙️ MCP Process beta release
-- 🤖 AI agent workflow templates
-- 🌐 Web-based debugger UI
-- 📊 Analytics and telemetry dashboard
-
-### Q4 2025
-- 📁 MCP Filesystem production release
-- ⚙️ MCP Process production release
-- 🔌 Additional MCP servers (TBD based on community feedback)
-- 🎓 Comprehensive training materials
-- 🏢 Enterprise support options
-
----
-
 ## 💬 Community & Support
 
 **Get Help:**
+
 - 📖 [Documentation](./DEBUGGER-README.md)
 - 🐛 [Issue Tracker](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - 💬 [Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
 - 📧 [Email Support](mailto:info@digitaldefiance.org)
 
 **Stay Updated:**
+
 - ⭐ Star this repository for updates
 - 👀 Watch for new releases
 - 🐦 Follow us on social media (coming soon)
 - 📰 Subscribe to our newsletter (coming soon)
 
 **Contribute:**
+
 - 🔧 Submit pull requests
 - 🐛 Report bugs and issues
 - 💡 Suggest new features
@@ -1158,12 +1222,14 @@ yarn install && yarn build && yarn test
 ## 🏅 Recognition & Achievements
 
 ### VS Code Marketplace
-- **✅ Published Extension** - [TypeScript MCP Debugger](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
+
+- **✅ Published Extension** - [MCP ACS TypeScript Debugger](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
 - **🎯 Zero Configuration** - Works immediately after installation
 - **🤖 Copilot Integration** - First MCP debugger with native Copilot support
 - **📦 Professional Quality** - Enterprise-grade extension with comprehensive testing
 
 ### Distribution Channels
+
 - **✅ VS Code Marketplace** - Native extension for VS Code users
 - **✅ NPM Registry** - Global installation via `npm install -g`
 - **✅ Docker Hub** - Containerized deployment for production
@@ -1172,6 +1238,7 @@ yarn install && yarn build && yarn test
 - **🔄 Homebrew** - macOS package manager (formula in progress)
 
 ### Quality Metrics
+
 - **🏆 94.53% Test Coverage** - Exceeding industry standard of 90%
 - **✅ 1,059 Tests** - Comprehensive test suite with 99.81% pass rate
 - **🔒 Enterprise Security** - Authentication, rate limiting, PII masking, audit logging
@@ -1180,6 +1247,7 @@ yarn install && yarn build && yarn test
 - **🔧 Multi-Version** - Node.js 16-22, TypeScript 4.x-5.x compatibility
 
 ### Community Impact
+
 - **Model Context Protocol Ecosystem** - Contributing to the MCP standard
 - **Open Source Excellence** - MIT License, well-documented codebase
 - **Community Driven** - Built with feedback from developers worldwide
@@ -1197,11 +1265,13 @@ yarn install && yarn build && yarn test
 **Install the extension in 3 ways:**
 
 1. **From VS Code:**
+
    - Open Extensions (Ctrl+Shift+X / Cmd+Shift+X)
-   - Search "TypeScript MCP Debugger"
+   - Search "MCP ACS TypeScript Debugger"
    - Click Install
 
 2. **From Command Line:**
+
    ```bash
    code --install-extension digitaldefiance.ts-mcp-debugger
    ```
@@ -1263,6 +1333,7 @@ yarn install && yarn build && yarn test
 ## 🔗 Individual Package Repositories
 
 ### Core MCP Servers
+
 - **[mcp-debugger-core](https://github.com/Digital-Defiance/mcp-debugger-core)** - Core debugging engine with Chrome DevTools Protocol
 - **[mcp-debugger-server](https://github.com/Digital-Defiance/mcp-debugger-server)** - MCP debugging server with 25+ tools
 - **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screenshot capture server with PII masking
@@ -1271,13 +1342,13 @@ yarn install && yarn build && yarn test
 - **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and playback server
 
 ### VS Code Extensions
+
 - **[vscode-mcp-debugger](https://github.com/Digital-Defiance/vscode-mcp-debugger)** - VS Code debugging extension with Copilot integration
 - **[vscode-mcp-screenshot](https://github.com/Digital-Defiance/vscode-mcp-screenshot)** - VS Code screenshot extension with LSP features
-
-### Registry & Infrastructure
-- **[mcp-registry](https://github.com/Digital-Defiance/mcp-registry)** - MCP server registry and catalog
+- **[vscode-mcp-acs-process](https://github.com/Digital-Defiance/vscode-mcp-acs-process)** - VS Code process management extension with LSP features
 
 ### Main Links
+
 - **Homepage**: [digitaldefiance.org](https://digitaldefiance.org)
 - **Main Repository**: [ai-capabilities-suite](https://github.com/digital-defiance/ai-capabilities-suite)
 - **Organization**: [Digital-Defiance](https://github.com/Digital-Defiance)
@@ -1288,6 +1359,6 @@ yarn install && yarn build && yarn test
 
 ---
 
-*Built with ❤️ by the Digital Defiance team using Amazon Kiro, Nx, TypeScript, and the Model Context Protocol*
+_Built with ❤️ by the Digital Defiance team using Amazon Kiro, TypeScript, and the Model Context Protocol_
 
 **Ready to give your AI agent superpowers? Install now! 🚀**
