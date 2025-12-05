@@ -549,9 +549,10 @@
     - Create comprehensive server description
     - Create usage examples with security warnings
     - Submit PR to MCP registry
+    - create branch on mcp-registry submodule at root of repo under servers/vscode-mcp-acs-process
     - _Requirements: 15.1-15.5_
 
-  - [ ] 16.4 Create VS Code extension
+  - [x] 16.4 Create VS Code extension
 
     - Create extension project structure (under vscode-mcp-acs-process)
     - Implement process management panel
@@ -559,7 +560,7 @@
     - Publish to VS Code marketplace
     - _Requirements: 16.1-16.5_
 
-  - [ ] 16.5 Create VS Code Language Server Extension for LSP/MCP Integration
+  - [x] 16.5 Create VS Code Language Server Extension for LSP/MCP Integration ✅ COMPLETE
     - **Overview**: Package the MCP process server as a VS Code extension to enable integration with VS Code and GitHub Copilot
     - **Architecture**: Implement Language Server Protocol (LSP) wrapper around MCP server for editor communication
     - **Setup Extension Project**:
@@ -623,6 +624,8 @@
       - Validate Copilot can access debugging context
       - Test with multiple concurrent debug sessions
       - Test AI agent tool discovery and usage
+      - Thorughly test E2E via VS Code extension integration testing
+        - Test code lens, etc
     - _Requirements: VS Code/Copilot integration, LSP compliance, DAP support, AI agent compatibility_
 
 - [ ] 17. Final checkpoint - Ensure all tests pass

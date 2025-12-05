@@ -140,17 +140,33 @@ function getProcessFileUpdates(version: string): FileUpdate[] {
     },
     {
       package: "process",
+      path: path.join(PROCESS_DIR, ".github", "workflows", "ci.yml"),
+      pattern: /repository: Digital-Defiance\/mcp-process/,
+      replacement: `repository: Digital-Defiance/mcp-process`,
+    },
+    {
+      package: "process",
+      path: path.join(PROCESS_DIR, ".github", "workflows", "release.yml"),
+      pattern: /repository: Digital-Defiance\/mcp-process/,
+      replacement: `repository: Digital-Defiance/mcp-process`,
+    },
+    {
+      package: "process",
+      path: path.join(PROCESS_DIR, ".github", "workflows", "docker-publish.yml"),
+      pattern: /repository: Digital-Defiance\/mcp-process/g,
+      replacement: `repository: Digital-Defiance/mcp-process`,
+    },
+    {
+      package: "process",
       path: path.join(VSCODE_PROCESS_DIR, "package.json"),
       pattern: /"@ai-capabilities-suite\/mcp-process": "\^[^"]+"/,
       replacement: `"@ai-capabilities-suite/mcp-process": "^${version}"`,
-      optional: true,
     },
     {
       package: "process",
       path: path.join(VSCODE_PROCESS_DIR, "package.json"),
       pattern: /^(\s*"version":\s*")[^"]+"/m,
       replacement: `$1${version}"`,
-      optional: true,
     },
   ];
 }
