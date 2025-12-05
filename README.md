@@ -10,6 +10,31 @@
 
 ---
 
+## 📦 Quick Index
+
+### 🐛 MCP Debugger
+**25+ debugging tools for AI agents** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server) | [Docker](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
+- ✅ VS Code Extension with GitHub Copilot integration
+- ✅ 94.53% test coverage, 1,059 tests
+- ✅ Performance profiling, hang detection, advanced breakpoints
+- 🎯 **Kiro Superpower in development** - Enhanced AI debugging workflows
+
+### 📸 MCP Screenshot
+**Visual UI capture and analysis** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot) | [Docker](https://hub.docker.com/r/digidefiance/mcp-screenshot)
+- ✅ Full screen, window, and region capture
+- ✅ PII masking with OCR integration
+- ✅ 267 tests, cross-platform support
+- 🎯 **Kiro Superpower in development** - AI-powered visual analysis
+
+### ⚙️ MCP Process
+**Enterprise-grade process management** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-process) | [Docker](https://hub.docker.com/r/digitaldefiance/mcp-process)
+- ✅ 12 process management tools
+- ✅ 6 layers of security validation
+- ✅ Resource monitoring and service management
+- 🎯 **Kiro Superpower in development** - Intelligent process orchestration
+
+---
+
 ## 🎯 Now Available on VS Code Marketplace!
 
 ### **[⚡ Install the VS Code Extension →](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
@@ -23,7 +48,7 @@ Our flagship MCP Debugger is now available as a native VS Code extension, bringi
 - ✅ **25+ debugging tools** accessible to AI agents
 - ✅ **Zero configuration** - works immediately after install
 - ✅ **Enterprise-grade quality** with 94.53% test coverage
-- ✅ **Production-ready** with 1,059 passing tests
+- ✅ 1,059 passing tests
 
 **[View on VS Code Marketplace →](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
 
@@ -49,7 +74,7 @@ Our flagship MCP Debugger is now available as a native VS Code extension, bringi
 
 The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** that give AI agents professional-grade capabilities:
 
-### 🐛 **1. MCP Debugger** (Production-Ready) ⭐
+### 🐛 **1. MCP Debugger**
 
 **The most comprehensive debugging interface for AI agents - our flagship product**
 
@@ -351,7 +376,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    AI: "Started debug session. Set breakpoint at app.js:42..."
    ```
 
-### 📸 **2. MCP Screenshot** (Production-Ready) ⭐
+### 📸 **2. MCP Screenshot**
 
 **Transform AI agents from code readers into visual UI experts and documentation partners**
 
@@ -523,7 +548,7 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - File search and indexing
 - Permission management
 
-### ⚙️ **5. MCP Process** (Production-Ready) ⭐
+### ⚙️ **5. MCP Process**
 
 **Enterprise-grade process management with strict security boundaries**
 
@@ -765,7 +790,7 @@ mcp-process --config ./mcp-process-config.json
 ┌─────────▼────────────────────────▼───────────────────────────┐
 │          AI Capability Extension Suite                        │
 │  ┌────────────────────────────────────────────────────────┐  │
-│  │  MCP Debugger (Production-Ready)                       │  │
+│  │  MCP Debugger                                          │  │
 │  │  • 25+ debugging tools                                 │  │
 │  │  • VS Code extension with LSP/DAP integration          │  │
 │  │  • Standalone MCP server for other agents              │  │
@@ -857,8 +882,8 @@ AI: "Reorganized 247 files into proper architecture..."
 
 ### 🖥️ System Capabilities
 
-- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations (Production-Ready ✅)
-- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management with enterprise security (Production-Ready ✅)
+- **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations
+- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management with enterprise security
 - **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and video operations (Planned)
 - **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced file system operations (Planned)
 
@@ -959,7 +984,7 @@ npx nx lint mcp-debugger-core
 
 ## 🏆 Production Status & Distribution
 
-### ✅ MCP Debugger (Production-Ready & Published)
+### ✅ MCP Debugger
 
 **Distribution Channels:**
 
@@ -999,8 +1024,9 @@ npx nx lint mcp-debugger-core
 
 ### 🛠️ System Capabilities
 
-- **mcp-screenshot**: Screenshot capture with multiple formats (PNG, JPG, WebP) - **Production-Ready** ✅
-- **mcp-process**: Process management with enterprise security - **Production-Ready** ✅
+- **mcp-debugger**: 25+ debugging tools with performance profiling, hang detection, advanced breakpoints
+- **mcp-screenshot**: Screenshot capture with multiple formats (PNG, JPG, WebP)
+- **mcp-process**: Process management with enterprise security
 - **mcp-recording**: Screen recording with video encoding and frame extraction - **Planned**
 - **mcp-filesystem**: Advanced file operations beyond basic read/write - **Planned**
 
