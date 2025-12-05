@@ -477,11 +477,16 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - File search and indexing
 - Permission management
 
-### ⚙️ **5. MCP Process** (In Development) 🚧
+### ⚙️ **5. MCP Process** (Production-Ready) ⭐
 **Enterprise-grade process management with strict security boundaries** - **[Repository](https://github.com/Digital-Defiance/mcp-process)**
 
+[![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-acs-process?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
+[![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-acs-process?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
+[![VS Code Rating](https://img.shields.io/visual-studio-marketplace/r/DigitalDefiance.mcp-acs-process?label=Rating)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
 [![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-process?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-process)
 [![Docker Image](https://img.shields.io/docker/v/digitaldefiance/mcp-process?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digitaldefiance/mcp-process)
+
+**✨ Now available on NPM, Docker Hub, and VS Code Marketplace!**
 
 **The Problem:** AI agents couldn't safely manage system processes. They needed to run commands, monitor resources, and manage services, but without proper security boundaries, this posed significant risks—command injection, resource exhaustion, and privilege escalation.
 
@@ -778,7 +783,7 @@ AI: "Reorganized 247 files into proper architecture..."
 
 ### 🖥️ System Capabilities  
 - **[mcp-screenshot](https://github.com/Digital-Defiance/mcp-screenshot)** - Screen capture and image operations (Production-Ready ✅)
-- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management with enterprise security (In Development 🚧)
+- **[mcp-process](https://github.com/Digital-Defiance/mcp-process)** - Process and application management with enterprise security (Production-Ready ✅)
 - **[mcp-recording](https://github.com/Digital-Defiance/mcp-recording)** - Screen recording and video operations (Planned)
 - **[mcp-filesystem](https://github.com/Digital-Defiance/mcp-filesystem)** - Advanced file system operations (Planned)
 
@@ -911,9 +916,9 @@ npx nx lint mcp-debugger-core
 - 👉 **[Installation guide](./packages/mcp-debugger-server/INSTALLATION.md)**
 - 👉 **[API reference](./packages/mcp-debugger-server/docs/)**
 
-### 🛠️ System Capabilities (In Development)
+### 🛠️ System Capabilities
 - **mcp-screenshot**: Screenshot capture with multiple formats (PNG, JPG, WebP) - **Production-Ready** ✅
-- **mcp-process**: Process management with enterprise security - **In Development** 🚧
+- **mcp-process**: Process management with enterprise security - **Production-Ready** ✅
 - **mcp-recording**: Screen recording with video encoding and frame extraction - **Planned**
 - **mcp-filesystem**: Advanced file operations beyond basic read/write - **Planned**
 
