@@ -1388,3 +1388,137 @@ yarn install && yarn build && yarn test
 _Built with ❤️ by the Digital Defiance team using Amazon Kiro, TypeScript, and the Model Context Protocol_
 
 **Ready to give your AI agent superpowers? Install now! 🚀**
+
+
+---
+
+## 🔧 Kiro MCP Configuration
+
+### Quick Setup for Kiro Users
+
+Configure Kiro to use the AI Capability Extension Suite MCP servers by editing `~/.kiro/settings/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "mcp-screenshot": {
+      "command": "npx",
+      "args": ["-y", "@ai-capabilities-suite/mcp-screenshot"]
+    },
+    "mcp-process": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ai-capabilities-suite/mcp-process",
+        "--config",
+        "./mcp-process-config.json"
+      ]
+    },
+    "mcp-debugger": {
+      "command": "npx",
+      "args": ["-y", "@ai-capabilities-suite/mcp-debugger-server"]
+    }
+  }
+}
+```
+
+### MCP Process Configuration
+
+Create `mcp-process-config.json` in your project directory or home directory:
+
+```json
+{
+  "allowedExecutables": ["node", "python3", "npm", "yarn", "git"],
+  "defaultResourceLimits": {
+    "maxCpuPercent": 80,
+    "maxMemoryMB": 1024,
+    "maxCpuTime": 300
+  },
+  "maxConcurrentProcesses": 10,
+  "maxProcessLifetime": 3600,
+  "enableAuditLog": true,
+  "blockShellInterpreters": true,
+  "blockSetuidExecutables": true,
+  "allowProcessTermination": true,
+  "allowForcedTermination": false
+}
+```
+
+> **Note:** The config file requirement for mcp-process will be removed in an upcoming release, making it optional with sensible defaults.
+
+### Prerequisites
+
+**For Linux users (Ubuntu/Debian):**
+
+```bash
+# Install Python setuptools for native dependencies
+sudo apt-get install -y python3-setuptools build-essential
+```
+
+**For macOS users:**
+
+```bash
+# Install Xcode Command Line Tools
+xcode-select --install
+```
+
+**For Windows users:**
+
+```powershell
+# Install Visual Studio Build Tools
+# Download from: https://visualstudio.microsoft.com/downloads/
+```
+
+### Alternative: Global Installation
+
+If you prefer global installation over npx:
+
+```bash
+# Install all three servers globally
+npm install -g @ai-capabilities-suite/mcp-screenshot
+npm install -g @ai-capabilities-suite/mcp-process
+npm install -g @ai-capabilities-suite/mcp-debugger-server
+
+# Then use direct commands in mcp.json
+{
+  "mcpServers": {
+    "mcp-screenshot": {
+      "command": "mcp-screenshot"
+    },
+    "mcp-process": {
+      "command": "mcp-process",
+      "args": ["--config", "./mcp-process-config.json"]
+    },
+    "mcp-debugger": {
+      "command": "mcp-debugger"
+    }
+  }
+}
+```
+
+### Verification
+
+After configuration, restart Kiro and verify the servers are connected:
+
+```
+You: "List available MCP tools"
+Kiro: *Shows tools from mcp-screenshot, mcp-process, and mcp-debugger*
+```
+
+### Troubleshooting
+
+**Connection issues:**
+- Ensure Node.js 18+ is installed: `node --version`
+- Check Python setuptools: `python3 -c "import setuptools"`
+- Verify packages are published: `npm view @ai-capabilities-suite/mcp-screenshot`
+
+**Native dependency errors:**
+- Install build tools (see Prerequisites above)
+- Clear npm cache: `npm cache clean --force`
+- Reinstall with: `npm install -g --force @ai-capabilities-suite/mcp-screenshot`
+
+**Config file not found:**
+- Use absolute path to config file in mcp.json
+- Verify file exists: `ls -la ./mcp-process-config.json`
+- Check JSON syntax: `cat mcp-process-config.json | jq`
+

@@ -34,3 +34,6 @@
 [submodule "packages/vscode-mcp-acs-process"]
 	path = packages/vscode-mcp-acs-process
 	url = https://github.com/Digital-Defiance/vscode-mcp-acs-process.git
+[submodule "packages/vscode-mcp-acs-filesystem"]
+	path = packages/vscode-mcp-acs-filesystem
+	url = https://github.com/Digital-Defiance/vscode-mcp-acs-filesystem.git

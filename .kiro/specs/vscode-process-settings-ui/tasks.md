@@ -42,7 +42,7 @@
   - **Property 7: Dependency validation**
   - **Validates: Requirements 6.1**
 
-- [-] 3. Implement configuration presets
+- [x] 3. Implement configuration presets
 - [x] 3.1 Create preset definitions
 
   - Define Development preset with permissive settings
@@ -51,7 +51,7 @@
   - Add preset metadata (name, description, security level)
   - _Requirements: 11.1, 11.5_
 
-- [-] 3.2 Implement preset application logic
+- [x] 3.2 Implement preset application logic
 
   - Create applyPreset() method in Settings Manager
   - Generate diff showing changes before applying
@@ -59,13 +59,13 @@
   - Handle preset application with existing custom settings
   - _Requirements: 11.2, 11.3, 11.4_
 
-- [ ] 3.3 Write property test for preset idempotence
+- [x] 3.3 Write property test for preset idempotence
 
   - **Property 3: Preset application idempotence**
   - **Validates: Requirements 11.2**
 
-- [ ] 4. Implement import/export functionality
-- [ ] 4.1 Create export functionality
+- [x] 4. Implement import/export functionality
+- [x] 4.1 Create export functionality
 
   - Implement exportConfiguration() to generate JSON
   - Include all current settings in export
@@ -73,7 +73,7 @@
   - Validate exported JSON is well-formed
   - _Requirements: 10.1, 10.4_
 
-- [ ] 4.2 Create import functionality
+- [x] 4.2 Create import functionality
 
   - Implement importConfiguration() to parse and validate JSON
   - Validate imported settings against schema

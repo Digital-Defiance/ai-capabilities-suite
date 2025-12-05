@@ -140,6 +140,12 @@ function getProcessFileUpdates(version: string): FileUpdate[] {
     },
     {
       package: "process",
+      path: path.join(PROCESS_DIR, "server.json"),
+      pattern: /"version": "[^"]+"/g,
+      replacement: `"version": "${version}"`,
+    },
+    {
+      package: "process",
       path: path.join(PROCESS_DIR, ".github", "workflows", "ci.yml"),
       pattern: /repository: Digital-Defiance\/mcp-process/,
       replacement: `repository: Digital-Defiance/mcp-process`,
@@ -183,6 +189,12 @@ function getScreenshotFileUpdates(version: string): FileUpdate[] {
       path: path.join(SCREENSHOT_DIR, "src", "server.ts"),
       pattern: /version: "[^"]+"/,
       replacement: `version: "${version}"`,
+    },
+    {
+      package: "screenshot",
+      path: path.join(SCREENSHOT_DIR, "server.json"),
+      pattern: /"version": "[^"]+"/g,
+      replacement: `"version": "${version}"`,
     },
     {
       package: "screenshot",
