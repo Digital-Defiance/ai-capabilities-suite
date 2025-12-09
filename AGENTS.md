@@ -11,3 +11,11 @@
 - If the user needs help with an Nx configuration or project graph error, use the `nx_workspace` tool to get any errors
 
 <!-- nx configuration end-->
+
+<!-- MCP AI Capabilities Suite start -->
+
+# MCP AI Capabilities Suite
+
+You have at your disposal, the MCP ACS Debugger, MCP ACS Screenshot, MCP ACS Process, and soon, MCP ACS Filesystem tools which will allow you to debug code, take screenshots (to see what UI is doing, for documentation, bug reports and more) and to kill and manage processes (like stuck/hung code, etc). Make sure to consider these tools over adding debug prints, etc.
+
+<!-- MCP AI Capabilitites Suite end -->

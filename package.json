@@ -36,5 +36,13 @@
   "bugs": {
     "url": "https://github.com/digital-defiance/ai-capabilities-suite/issues"
   },
-  "homepage": "https://github.com/digital-defiance/ai-capabilities-suite#readme"
+  "homepage": "https://github.com/digital-defiance/ai-capabilities-suite#readme",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "fast-check": "^4.4.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  }
 }

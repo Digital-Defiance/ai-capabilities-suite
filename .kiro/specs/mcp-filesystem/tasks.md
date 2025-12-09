@@ -1,6 +1,6 @@
 # MCP Filesystem - Implementation Plan
 
-- [ ] 1. Set up project structure and core interfaces
+- [x] 1. Set up project structure and core interfaces
 
   - Create directory structure for MCP server, batch operations, directory watcher, search engine, and security manager
   - Initialize package.json with MCP SDK, chokidar, lunr, fast-glob, and crypto dependencies
@@ -8,9 +8,9 @@
   - Set up testing framework (Jest) with fast-check for property-based testing
   - _Requirements: 12.1, 13.1_
 
-- [ ] 2. Implement security manager (CRITICAL - Must be first)
+- [x] 2. Implement security manager (CRITICAL - Must be first)
 
-  - [ ] 2.1 Create SecurityManager class with multi-layer validation
+  - [x] 2.1 Create SecurityManager class with multi-layer validation
 
     - Implement workspace root enforcement
     - Implement 10-layer path validation
@@ -18,7 +18,7 @@
     - Implement hardcoded sensitive file pattern blocklist
     - _Requirements: 9.1, 9.2, 11.1-11.5, 13.2-13.5_
 
-  - [ ] 2.2 Implement path validation with all security layers
+  - [x] 2.2 Implement path validation with all security layers
 
     - Layer 1: Resolve to absolute path
     - Layer 2: Check workspace boundary
@@ -32,73 +32,75 @@
     - Layer 10: Resolve and validate symlinks
     - _Requirements: 9.1, 9.2, 11.1_
 
-  - [ ] 2.3 Implement symlink validation
+  - [x] 2.3 Implement symlink validation
 
     - Validate symlink targets are within workspace
     - Recursively validate symlink chains
     - Prevent symlink escape attacks
     - _Requirements: 6.4, 11.2_
 
-  - [ ] 2.4 Implement rate limiting
+  - [x] 2.4 Implement rate limiting
 
     - Track operations per agent per time window
     - Enforce maximum operations per minute
     - Return rate limit errors
     - _Requirements: 13.4_
 
-  - [ ] 2.5 Implement audit logging
+  - [x] 2.5 Implement audit logging
 
     - Log all filesystem operations
     - Log security violations separately
     - Include timestamps, paths, and results
     - _Requirements: 13.5_
 
-  - [ ] 2.6 Write property test for workspace boundary
+  - [x] 2.6 Write property test for workspace boundary
 
     - **Property 12: Workspace boundary enforcement**
     - **Validates: Requirements 9.1**
 
-  - [ ] 2.7 Write property test for path traversal prevention
+  - [x] 2.7 Write property test for path traversal prevention
 
     - **Property 13: Path traversal prevention**
     - **Validates: Requirements 9.2**
 
-  - [ ] 2.8 Write property test for symlink security
+  - [x] 2.8 Write property test for symlink security
     - **Property 18: Symlink security enforcement**
     - **Validates: Requirements 11.2**
 
-- [ ] 3. Implement batch operations
+- [x] 3. Implement batch operations ✅ **COMPLETE**
 
-  - [ ] 3.1 Create BatchOperationManager class
+  - [x] 3.1 Create BatchOperationManager class ✅
 
-    - Implement batch copy operations
-    - Implement batch move operations
-    - Implement batch delete operations
-    - Implement atomic rollback on failure
+    - ✅ Implement batch copy operations
+    - ✅ Implement batch move operations
+    - ✅ Implement batch delete operations
+    - ✅ Implement atomic rollback on failure
     - _Requirements: 1.1-1.5_
 
-  - [ ] 3.2 Implement atomic operations
+  - [x] 3.2 Implement atomic operations ✅
 
-    - Track completed operations for rollback
-    - Implement rollback logic
-    - Ensure all-or-nothing semantics
+    - ✅ Track completed operations for rollback
+    - ✅ Implement rollback logic
+    - ✅ Ensure all-or-nothing semantics
     - _Requirements: 1.2, 9.5_
 
-  - [ ] 3.3 Implement operation validation
+  - [x] 3.3 Implement operation validation ✅
 
-    - Validate all paths before execution
-    - Check file sizes against limits
-    - Check total batch size against limits
+    - ✅ Validate all paths before execution
+    - ✅ Check file sizes against limits
+    - ✅ Check total batch size against limits
     - _Requirements: 1.4, 9.1, 9.2_
 
-  - [ ] 3.4 Write property test for batch copy
+  - [x] 3.4 Write property test for batch copy ✅
 
     - **Property 1: Batch copy completeness**
     - **Validates: Requirements 1.1**
+    - **Status: PASSING** (5 test cases, 10 runs each)
 
-  - [ ] 3.5 Write property test for atomic operations
+  - [x] 3.5 Write property test for atomic operations ✅
     - **Property 2: Atomic batch operations**
     - **Validates: Requirements 1.2**
+    - **Status: PASSING** (2 test cases, 10 runs each)
 
 - [ ] 4. Implement directory watching
 
@@ -595,9 +597,13 @@
       - Test AI agent tool discovery and usage
     - _Requirements: VS Code/Copilot integration, LSP compliance, DAP support, AI agent compatibility_
 
-- [ ] 16. Copy github workflows from other MCPs we've done (mcp-process -> mcp-filesystem, vscode-mcp-acs-process -> vscode-mcp-acs-filesystem)
+- [ ] 16. Implement Language Model Tools / Language Client. Investigate and implement any other extension features that are relevant and available to implement.
 
-- [ ] 17. Set up sync-versions.ts for mcp-filesystem
+- [ ] 17. Copy github workflows from other MCPs we've done (mcp-process -> mcp-filesystem, vscode-mcp-acs-process -> vscode-mcp-acs-filesystem)
 
-- [ ] 18. Final checkpoint - Ensure all tests pass
+- [ ] 18. Set up sync-versions.ts for mcp-filesystem & vscode-mcp-acs-filesystem
+
+- [ ] 19. Duplicate/mimic package.json and extension.ts MCP functionality from mcp-debugger/mcp-process/mcp-screenshot which registers with CoPilot
+
+- [ ] 20. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.

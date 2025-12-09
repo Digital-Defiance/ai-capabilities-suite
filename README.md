@@ -12,21 +12,21 @@
 
 ## 📦 Quick Index
 
-### 🐛 MCP Debugger
+### 🐛 MCP ACS Debugger
 **25+ debugging tools for AI agents** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server) | [Docker](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
 - ✅ VS Code Extension with GitHub Copilot integration
 - ✅ 94.53% test coverage, 1,059 tests
 - ✅ Performance profiling, hang detection, advanced breakpoints
 - 🎯 **Kiro Superpower in development** - Enhanced AI debugging workflows
 
-### 📸 MCP Screenshot
+### 📸 MCP ACS Screenshot
 **Visual UI capture and analysis** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot) | [Docker](https://hub.docker.com/r/digidefiance/mcp-screenshot)
 - ✅ Full screen, window, and region capture
 - ✅ PII masking with OCR integration
 - ✅ 267 tests, cross-platform support
 - 🎯 **Kiro Superpower in development** - AI-powered visual analysis
 
-### ⚙️ MCP Process
+### ⚙️ MCP ACS Process
 **Enterprise-grade process management** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-process) | [Docker](https://hub.docker.com/r/digitaldefiance/mcp-process)
 - ✅ 12 process management tools
 - ✅ 6 layers of security validation
@@ -39,7 +39,7 @@
 
 ### **[⚡ Install the VS Code Extension →](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
 
-Our flagship MCP Debugger is now available as a native VS Code extension, bringing professional-grade debugging capabilities directly to your editor with **zero configuration required**.
+Our flagship MCP ACS Debugger is now available as a native VS Code extension, bringing professional-grade debugging capabilities directly to your editor with **zero configuration required**.
 
 **Why developers love it:**
 
@@ -74,7 +74,7 @@ Our flagship MCP Debugger is now available as a native VS Code extension, bringi
 
 The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** that give AI agents professional-grade capabilities:
 
-### 🐛 **1. MCP Debugger**
+### 🐛 **1. MCP ACS Debugger**
 
 **The most comprehensive debugging interface for AI agents - our flagship product**
 
@@ -101,7 +101,8 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 - Install from VS Code Marketplace with one click
 - Automatic MCP server integration
 - No manual configuration required
-- Works immediately with TypeScript and JavaScript projects
+- VS Code extension works with any language via Debug Adapter Protocol
+- Standalone MCP server works with Node.js/JavaScript via Chrome DevTools Protocol
 
 **GitHub Copilot Integration:**
 
@@ -126,13 +127,16 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 - View call stack in debug panel
 - Profile performance without leaving editor
 
-**Multi-Language Support:**
+**Language Support:**
 
-- TypeScript with full source map support
-- JavaScript (Node.js and browser)
-- React, Vue, Angular applications
-- Jest, Mocha, Vitest test frameworks
-- Any Node.js-based project
+- **VS Code Extension**: Multi-language support via Debug Adapter Protocol
+  - JavaScript/TypeScript, Python, Java, C/C++, Go, Rust, PHP, Ruby, and more
+  - Test Frameworks: Jest, Mocha, Vitest, pytest, JUnit, go test, cargo test
+  - Frameworks: React, Vue, Angular, Django, Spring Boot, and more
+- **Standalone MCP Server**: Node.js/JavaScript only via Chrome DevTools Protocol
+  - Full TypeScript support with source maps
+  - Test Frameworks: Jest, Mocha, Vitest
+  - Frameworks: Express, Nest.js, React (Node.js SSR), and more
 
 #### 🔥 Why This Changes Everything
 
@@ -179,7 +183,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 
 **Comparison with Other Solutions:**
 
-| Feature                        | Our MCP Debugger         | Other MCP Debuggers | VS Code Built-in     | Chrome DevTools      |
+| Feature                        | Our MCP ACS Debugger     | Other MCP Debuggers | VS Code Built-in     | Chrome DevTools      |
 | ------------------------------ | ------------------------ | ------------------- | -------------------- | -------------------- |
 | **AI Agent Integration**       | ✅ Full MCP + VS Code    | ⚠️ Basic MCP only   | ❌ No AI integration | ❌ No AI integration |
 | **Number of Tools**            | ✅ 25+ tools             | ⚠️ 5-10 tools       | ⚠️ Limited API       | ⚠️ Manual only       |
@@ -204,8 +208,9 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 - **Advanced breakpoint types** (logpoints, exception, hit count, function)
 - **Enterprise security** (authentication, rate limiting, PII masking, audit logging)
 - **Production readiness** (graceful shutdown, circuit breakers, retry logic)
-- **TypeScript source maps** for debugging original code
-- **Test framework integration** (Jest, Mocha, Vitest)
+- **Multi-language support** via VS Code's Debug Adapter Protocol
+- **Source map support** for TypeScript and transpiled languages
+- **Test framework integration** (Jest, Mocha, Vitest, pytest, JUnit, go test, cargo test)
 - **94.53% test coverage** with 1,059 tests (most MCP servers have minimal testing)
 - **Property-based testing** with 22 correctness properties
 - **Load testing** with 100+ concurrent sessions
@@ -254,12 +259,12 @@ AI: *Detects infinite loop, captures call stack, identifies root cause*
 AI: "Infinite loop in processQueue() - exit condition never true because..."
 ```
 
-**"AI, debug this TypeScript issue"**
+**"AI, debug this Node.js issue"**
 
 ```
-You: "Runtime behavior doesn't match my TypeScript types"
-AI: *Uses source maps to debug original TypeScript, maps runtime values*
-AI: "Type assertion on line 23 incorrect—actual runtime type is..."
+You: "My Express server crashes on startup"
+AI: *Sets breakpoints, inspects variables, traces execution*
+AI: "Missing environment variable 'PORT' on line 23. Server tries to bind to undefined port..."
 ```
 
 #### 🚀 Get Started
@@ -268,7 +273,7 @@ AI: "Type assertion on line 23 incorrect—actual runtime type is..."
 
 ```bash
 # Install from VS Code Marketplace
-# Search for "TypeScript MCP Debugger" or visit:
+# Search for "MCP ACS Debugger" or visit:
 # https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger
 
 # Or install via command line
@@ -331,13 +336,14 @@ node packages/mcp-debugger-server/dist/src/index.js
 
    - Open VS Code
    - Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
-   - Search for "TypeScript MCP Debugger"
+   - Search for "MCP ACS Debugger"
    - Click Install
    - Or visit: https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger
 
 2. **Start Debugging:**
 
-   - Open a TypeScript or JavaScript file
+   - VS Code extension: Open any source code file
+   - Standalone MCP server: Open JavaScript or TypeScript file
    - Set breakpoints by clicking in the gutter
    - Press F5 to start debugging
    - Use GitHub Copilot to ask debugging questions
@@ -376,11 +382,11 @@ node packages/mcp-debugger-server/dist/src/index.js
    AI: "Started debug session. Set breakpoint at app.js:42..."
    ```
 
-### 📸 **2. MCP Screenshot**
+### 📸 **2. MCP ACS Screenshot**
 
 **Transform AI agents from code readers into visual UI experts and documentation partners**
 
-**Repositories:** [MCP Screenshot](https://github.com/Digital-Defiance/mcp-screenshot) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-screenshot)
+**Repositories:** [MCP ACS Screenshot](https://github.com/Digital-Defiance/mcp-screenshot) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-screenshot)
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-screenshot?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-screenshot?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
@@ -460,7 +466,7 @@ docker run -v $(pwd)/screenshots:/app/screenshots digitaldefiance/mcp-screenshot
 
 **VSCode Extension:**
 
-- Search "MCP Screenshot" in VS Code Extensions
+- Search "MCP ACS Screenshot" in VS Code Extensions
 - Or visit: https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot
 
 #### 🎯 Revolutionary Use Cases
@@ -548,11 +554,11 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - File search and indexing
 - Permission management
 
-### ⚙️ **5. MCP Process**
+### ⚙️ **5. MCP ACS Process**
 
 **Enterprise-grade process management with strict security boundaries**
 
-**Repositories:** [MCP Process](https://github.com/Digital-Defiance/mcp-process) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-acs-process)
+**Repositories:** [MCP ACS Process](https://github.com/Digital-Defiance/mcp-process) | [VS Code Extension](https://github.com/Digital-Defiance/vscode-mcp-acs-process)
 
 [![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-acs-process?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-acs-process?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process)
@@ -790,7 +796,7 @@ mcp-process --config ./mcp-process-config.json
 ┌─────────▼────────────────────────▼───────────────────────────┐
 │          AI Capability Extension Suite                        │
 │  ┌────────────────────────────────────────────────────────┐  │
-│  │  MCP Debugger                                          │  │
+│  │  MCP ACS Debugger                                      │  │
 │  │  • 25+ debugging tools                                 │  │
 │  │  • VS Code extension with LSP/DAP integration          │  │
 │  │  • Standalone MCP server for other agents              │  │
@@ -917,7 +923,7 @@ yarn build
 yarn test
 ```
 
-### Quick Start: MCP Debugger
+### Quick Start: MCP ACS Debugger
 
 ```bash
 # Build debugger packages
@@ -984,7 +990,7 @@ npx nx lint mcp-debugger-core
 
 ## 🏆 Production Status & Distribution
 
-### ✅ MCP Debugger
+### ✅ MCP ACS Debugger
 
 **Distribution Channels:**
 
@@ -1138,7 +1144,7 @@ By giving AI agents professional-grade capabilities, we're creating a future whe
 # Install from VS Code Marketplace
 code --install-extension digitaldefiance.ts-mcp-debugger
 
-# Or search "TypeScript MCP Debugger" in VS Code Extensions
+# Or search "MCP ACS Debugger" in VS Code Extensions
 ```
 
 ### For Other AI Agents (Kiro, Amazon Q, Claude)
@@ -1252,6 +1258,7 @@ yarn install && yarn build && yarn test
 - **✅ Published Extension** - [MCP ACS TypeScript Debugger](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
 - **🎯 Zero Configuration** - Works immediately after installation
 - **🤖 Copilot Integration** - First MCP debugger with native Copilot support
+- **🌍 Multi-Language** - VS Code extension supports all languages; MCP server supports Node.js/JavaScript
 - **📦 Professional Quality** - Enterprise-grade extension with comprehensive testing
 
 ### Distribution Channels
@@ -1293,7 +1300,7 @@ yarn install && yarn build && yarn test
 1. **From VS Code:**
 
    - Open Extensions (Ctrl+Shift+X / Cmd+Shift+X)
-   - Search "MCP ACS TypeScript Debugger"
+   - Search "MCP ACS Debugger"
    - Click Install
 
 2. **From Command Line:**
@@ -1422,7 +1429,7 @@ Configure Kiro to use the AI Capability Extension Suite MCP servers by editing `
 }
 ```
 
-### MCP Process Configuration
+### MCP ACS Process Configuration
 
 Create `mcp-process-config.json` in your project directory or home directory:
 
