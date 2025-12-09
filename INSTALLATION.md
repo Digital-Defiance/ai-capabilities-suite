@@ -29,16 +29,19 @@ npm install -g @ai-capabilities-suite/mcp-debugger-server
 ### One-Line Install Scripts
 
 **Linux:**
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-linux.sh | bash
 ```
 
 **macOS:**
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-macos.sh | bash
 ```
 
 **Windows (PowerShell as Administrator):**
+
 ```powershell
 iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-suite/main/scripts/install-windows.ps1 | iex
 ```
@@ -58,12 +61,14 @@ ts-mcp-server --version
 ```
 
 **Advantages:**
+
 - ✅ Automatic updates via `npm update -g`
 - ✅ Works on all platforms
 - ✅ Includes all dependencies
 - ✅ Easy to uninstall
 
 **Requirements:**
+
 - Node.js 18.0.0 or higher
 - NPM 8.0.0 or higher
 
@@ -80,12 +85,14 @@ Visit the [latest release page](https://github.com/digital-defiance/ai-capabilit
 - `ts-mcp-server-win-x64.zip` - Windows (x64)
 
 **Advantages:**
+
 - ✅ No Node.js required
 - ✅ Single executable file
 - ✅ Portable
 - ✅ Fast startup
 
 **Disadvantages:**
+
 - ❌ Manual updates required
 - ❌ Larger file size (~50MB)
 
@@ -95,22 +102,24 @@ Run the MCP Debugger Server in a Docker container:
 
 ```bash
 # Pull the latest image
-docker pull digidefiance/mcp-debugger-server:latest
+docker pull digitaldefiance/mcp-debugger-server:latest
 
 # Run the server
-docker run -it --rm digidefiance/mcp-debugger-server:latest
+docker run -it --rm digitaldefiance/mcp-debugger-server:latest
 
 # Run with volume mount for debugging local files
-docker run -it --rm -v $(pwd):/workspace digidefiance/mcp-debugger-server:latest
+docker run -it --rm -v $(pwd):/workspace digitaldefiance/mcp-debugger-server:latest
 ```
 
 **Advantages:**
+
 - ✅ Isolated environment
 - ✅ Consistent across platforms
 - ✅ Easy to deploy
 - ✅ Version pinning
 
 **Requirements:**
+
 - Docker 20.10 or higher
 
 ### Package Managers
@@ -149,31 +158,37 @@ curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-su
 #### Method 2: Manual Installation
 
 1. Download the binary:
+
    ```bash
    wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64.tar.gz
    ```
 
 2. Download the checksum:
+
    ```bash
    wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-linux-x64.tar.gz.sha256
    ```
 
 3. Verify the checksum:
+
    ```bash
    sha256sum -c ts-mcp-server-linux-x64.tar.gz.sha256
    ```
 
 4. Extract the binary:
+
    ```bash
    tar -xzf ts-mcp-server-linux-x64.tar.gz
    ```
 
 5. Make it executable:
+
    ```bash
    chmod +x ts-mcp-server-linux-x64
    ```
 
 6. Move to system path:
+
    ```bash
    sudo mv ts-mcp-server-linux-x64 /usr/local/bin/ts-mcp-server
    ```
@@ -194,36 +209,43 @@ curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-su
 #### Method 2: Manual Installation
 
 1. Download the binary:
+
    ```bash
    wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-macos-x64.tar.gz
    ```
 
 2. Download the checksum:
+
    ```bash
    wget https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-macos-x64.tar.gz.sha256
    ```
 
 3. Verify the checksum:
+
    ```bash
    shasum -a 256 -c ts-mcp-server-macos-x64.tar.gz.sha256
    ```
 
 4. Extract the binary:
+
    ```bash
    tar -xzf ts-mcp-server-macos-x64.tar.gz
    ```
 
 5. Remove quarantine attribute:
+
    ```bash
    xattr -d com.apple.quarantine ts-mcp-server-macos-x64
    ```
 
 6. Make it executable:
+
    ```bash
    chmod +x ts-mcp-server-macos-x64
    ```
 
 7. Move to system path:
+
    ```bash
    sudo mv ts-mcp-server-macos-x64 /usr/local/bin/ts-mcp-server
    ```
@@ -234,6 +256,7 @@ curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-su
    ```
 
 **Note:** On first run, macOS may show a security warning. If this happens:
+
 1. Go to **System Preferences** > **Security & Privacy**
 2. Click **Allow Anyway** for `ts-mcp-server`
 3. Run the command again
@@ -249,16 +272,19 @@ iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-sui
 #### Method 2: Manual Installation
 
 1. Download the binary:
+
    ```powershell
    Invoke-WebRequest -Uri https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-win-x64.zip -OutFile ts-mcp-server.zip
    ```
 
 2. Download the checksum:
+
    ```powershell
    Invoke-WebRequest -Uri https://github.com/digital-defiance/ai-capabilities-suite/releases/latest/download/ts-mcp-server-win-x64.zip.sha256 -OutFile ts-mcp-server.zip.sha256
    ```
 
 3. Verify the checksum:
+
    ```powershell
    $expectedHash = (Get-Content ts-mcp-server.zip.sha256).Split()[0]
    $actualHash = (Get-FileHash -Path ts-mcp-server.zip -Algorithm SHA256).Hash
@@ -266,11 +292,13 @@ iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-sui
    ```
 
 4. Extract the binary:
+
    ```powershell
    Expand-Archive -Path ts-mcp-server.zip -DestinationPath .
    ```
 
 5. Move to system directory (requires Administrator):
+
    ```powershell
    Move-Item ts-mcp-server-win-x64.exe C:\Windows\System32\ts-mcp-server.exe
    ```
@@ -364,6 +392,7 @@ export MCP_HOST=localhost
 If you get a "command not found" error after installation:
 
 **Linux/macOS:**
+
 ```bash
 # Check if the binary is in your PATH
 which ts-mcp-server
@@ -374,6 +403,7 @@ source ~/.bashrc
 ```
 
 **Windows:**
+
 ```powershell
 # Check if the binary is in your PATH
 where.exe ts-mcp-server
@@ -428,6 +458,7 @@ sudo npm install -g @ai-capabilities-suite/mcp-debugger-server --unsafe-perm
 If the binary doesn't work:
 
 1. Check system requirements:
+
    - Linux: glibc 2.17 or higher
    - macOS: macOS 10.13 or higher
    - Windows: Windows 10 or higher
@@ -448,11 +479,13 @@ npm uninstall -g @ai-capabilities-suite/mcp-debugger-server
 ### Standalone Binary
 
 **Linux/macOS:**
+
 ```bash
 sudo rm /usr/local/bin/ts-mcp-server
 ```
 
 **Windows:**
+
 ```powershell
 Remove-Item C:\Windows\System32\mcp-debugger-server.exe
 ```
@@ -460,7 +493,7 @@ Remove-Item C:\Windows\System32\mcp-debugger-server.exe
 ### Docker
 
 ```bash
-docker rmi digidefiance/mcp-debugger-server
+docker rmi digitaldefiance/mcp-debugger-server
 ```
 
 ## Getting Help

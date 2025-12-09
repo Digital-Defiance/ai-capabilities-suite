@@ -10,6 +10,7 @@
  *   ts-node scripts/sync-versions.ts debugger    # Sync debugger versions
  *   ts-node scripts/sync-versions.ts screenshot  # Sync screenshot versions
  *   ts-node scripts/sync-versions.ts process     # Sync process versions
+ *   ts-node scripts/sync-versions.ts filesystem  # Sync filesystem versions
  *   ts-node scripts/sync-versions.ts             # Sync all packages
  */
 
@@ -40,6 +41,13 @@ const VSCODE_PROCESS_DIR = path.join(
   "..",
   "packages",
   "vscode-mcp-acs-process"
+);
+const FILESYSTEM_DIR = path.join(__dirname, "..", "packages", "mcp-filesystem");
+const VSCODE_FILESYSTEM_DIR = path.join(
+  __dirname,
+  "..",
+  "packages",
+  "vscode-mcp-acs-filesystem"
 );
 
 /**
@@ -158,7 +166,12 @@ function getProcessFileUpdates(version: string): FileUpdate[] {
     },
     {
       package: "process",
-      path: path.join(PROCESS_DIR, ".github", "workflows", "docker-publish.yml"),
+      path: path.join(
+        PROCESS_DIR,
+        ".github",
+        "workflows",
+        "docker-publish.yml"
+      ),
       pattern: /repository: Digital-Defiance\/mcp-process/g,
       replacement: `repository: Digital-Defiance/mcp-process`,
     },
@@ -171,6 +184,34 @@ function getProcessFileUpdates(version: string): FileUpdate[] {
     {
       package: "process",
       path: path.join(VSCODE_PROCESS_DIR, "package.json"),
+      pattern: /^(\s*"version":\s*")[^"]+"/m,
+      replacement: `$1${version}"`,
+    },
+  ];
+}
+
+/**
+ * Gets file update configurations for filesystem package
+ * @param version - Version string to use
+ * @returns Array of file update configurations
+ */
+function getFilesystemFileUpdates(version: string): FileUpdate[] {
+  return [
+    {
+      package: "filesystem",
+      path: path.join(FILESYSTEM_DIR, "src", "lib", "MCPServer.ts"),
+      pattern: /version: "[^"]+"/,
+      replacement: `version: "${version}"`,
+    },
+    {
+      package: "filesystem",
+      path: path.join(VSCODE_FILESYSTEM_DIR, "package.json"),
+      pattern: /"@ai-capabilities-suite\/mcp-filesystem": "\^[^"]+"/,
+      replacement: `"@ai-capabilities-suite/mcp-filesystem": "^${version}"`,
+    },
+    {
+      package: "filesystem",
+      path: path.join(VSCODE_FILESYSTEM_DIR, "package.json"),
       pattern: /^(\s*"version":\s*")[^"]+"/m,
       replacement: `$1${version}"`,
     },
@@ -241,7 +282,8 @@ function getScreenshotFileUpdates(version: string): FileUpdate[] {
     {
       package: "screenshot",
       path: path.join(SCREENSHOT_DIR, "Dockerfile"),
-      pattern: /npm install -g @ai-capabilities-suite\/mcp-screenshot@[0-9]+\.[0-9]+\.[0-9]+/,
+      pattern:
+        /npm install -g @ai-capabilities-suite\/mcp-screenshot@[0-9]+\.[0-9]+\.[0-9]+/,
       replacement: `npm install -g @ai-capabilities-suite/mcp-screenshot@${version}`,
     },
   ];
@@ -308,15 +350,18 @@ function syncVersions(options: SyncVersionsOptions): number {
   const debuggerPackage = readPackageInfo(DEBUGGER_SERVER_DIR);
   const screenshotPackage = readPackageInfo(SCREENSHOT_DIR);
   const processPackage = readPackageInfo(PROCESS_DIR);
+  const filesystemPackage = readPackageInfo(FILESYSTEM_DIR);
 
   const DEBUGGER_VERSION = debuggerPackage.version;
   const SCREENSHOT_VERSION = screenshotPackage.version;
   const PROCESS_VERSION = processPackage.version;
+  const FILESYSTEM_VERSION = filesystemPackage.version;
 
   console.log(`📦 Package Versions:`);
   console.log(`   Debugger: ${DEBUGGER_VERSION}`);
   console.log(`   Screenshot: ${SCREENSHOT_VERSION}`);
   console.log(`   Process: ${PROCESS_VERSION}`);
+  console.log(`   Filesystem: ${FILESYSTEM_VERSION}`);
   console.log();
 
   // Combine all files based on filter
@@ -334,6 +379,11 @@ function syncVersions(options: SyncVersionsOptions): number {
   if (!packageFilter || packageFilter === "process") {
     filesToUpdate = filesToUpdate.concat(
       getProcessFileUpdates(PROCESS_VERSION)
+    );
+  }
+  if (!packageFilter || packageFilter === "filesystem") {
+    filesToUpdate = filesToUpdate.concat(
+      getFilesystemFileUpdates(FILESYSTEM_VERSION)
     );
   }
 
@@ -384,6 +434,9 @@ function syncVersions(options: SyncVersionsOptions): number {
   if (!packageFilter || packageFilter === "process") {
     console.log(`   Process Version: ${PROCESS_VERSION}`);
   }
+  if (!packageFilter || packageFilter === "filesystem") {
+    console.log(`   Filesystem Version: ${FILESYSTEM_VERSION}`);
+  }
 
   if (errorCount > 0) {
     console.error(`\n❌ ${errorCount} error(s) occurred during sync`);
@@ -406,10 +459,11 @@ function main(): void {
     packageFilter &&
     packageFilter !== "debugger" &&
     packageFilter !== "screenshot" &&
-    packageFilter !== "process"
+    packageFilter !== "process" &&
+    packageFilter !== "filesystem"
   ) {
     console.error(
-      `❌ Invalid package name: ${packageFilter}. Must be 'debugger', 'screenshot', or 'process'`
+      `❌ Invalid package name: ${packageFilter}. Must be 'debugger', 'screenshot', 'process', or 'filesystem'`
     );
     process.exit(1);
   }
@@ -434,5 +488,6 @@ export {
   getDebuggerFileUpdates,
   getScreenshotFileUpdates,
   getProcessFileUpdates,
+  getFilesystemFileUpdates,
   updateSingleFile,
 };

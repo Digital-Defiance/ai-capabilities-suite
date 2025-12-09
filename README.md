@@ -13,21 +13,27 @@
 ## 📦 Quick Index
 
 ### 🐛 MCP ACS Debugger
-**25+ debugging tools for AI agents** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server) | [Docker](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
+
+**25+ debugging tools for AI agents** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server) | [Docker](https://hub.docker.com/r/digitaldefiance/mcp-debugger-server)
+
 - ✅ VS Code Extension with GitHub Copilot integration
 - ✅ 94.53% test coverage, 1,059 tests
 - ✅ Performance profiling, hang detection, advanced breakpoints
 - 🎯 **Kiro Superpower in development** - Enhanced AI debugging workflows
 
 ### 📸 MCP ACS Screenshot
-**Visual UI capture and analysis** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot) | [Docker](https://hub.docker.com/r/digidefiance/mcp-screenshot)
+
+**Visual UI capture and analysis** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot) | [Docker](https://hub.docker.com/r/digitaldefiance/mcp-screenshot)
+
 - ✅ Full screen, window, and region capture
 - ✅ PII masking with OCR integration
 - ✅ 267 tests, cross-platform support
 - 🎯 **Kiro Superpower in development** - AI-powered visual analysis
 
 ### ⚙️ MCP ACS Process
+
 **Enterprise-grade process management** | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process) | [NPM](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-process) | [Docker](https://hub.docker.com/r/digitaldefiance/mcp-process)
+
 - ✅ 12 process management tools
 - ✅ 6 layers of security validation
 - ✅ Resource monitoring and service management
@@ -84,7 +90,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/digitaldefiance.ts-mcp-debugger?label=Installs)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
 [![VS Code Rating](https://img.shields.io/visual-studio-marketplace/r/digitaldefiance.ts-mcp-debugger?label=Rating)](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)
 [![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-debugger-server?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
-[![Docker Image](https://img.shields.io/docker/v/digidefiance/mcp-debugger-server?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
+[![Docker Image](https://img.shields.io/docker/v/digitaldefiance/mcp-debugger-server?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digitaldefiance/mcp-debugger-server)
 [![Test Coverage](https://img.shields.io/badge/coverage-94.53%25-brightgreen?logo=jest)](./DEBUGGER-STATUS.md)
 [![Tests](https://img.shields.io/badge/tests-1059%20passed-brightgreen?logo=jest)](./DEBUGGER-STATUS.md)
 
@@ -295,7 +301,7 @@ code --install-extension digitaldefiance.ts-mcp-debugger
 npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 # Docker
-docker run digidefiance/mcp-debugger-server
+docker run digitaldefiance/mcp-debugger-server
 
 # Configure your AI agent (Kiro, Amazon Q, etc.)
 {
@@ -392,7 +398,7 @@ node packages/mcp-debugger-server/dist/src/index.js
 [![VS Code Installs](https://img.shields.io/visual-studio-marketplace/i/DigitalDefiance.mcp-screenshot?label=Installs)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
 [![VS Code Rating](https://img.shields.io/visual-studio-marketplace/r/DigitalDefiance.mcp-screenshot?label=Rating)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot)
 [![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-screenshot?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot)
-[![Docker Image](https://img.shields.io/docker/v/digidefiance/mcp-screenshot?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digidefiance/mcp-screenshot)
+[![Docker Image](https://img.shields.io/docker/v/digitaldefiance/mcp-screenshot?label=Docker&logo=docker&sort=semver)](https://hub.docker.com/r/digitaldefiance/mcp-screenshot)
 
 **✨ Now available on NPM, Docker Hub, and VS Code Marketplace!**
 
@@ -996,7 +1002,7 @@ npx nx lint mcp-debugger-core
 
 - ✅ **[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)** - Native extension with Copilot integration
 - ✅ **[NPM Registry](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)** - Global installation via npm
-- ✅ **[Docker Hub](https://hub.docker.com/r/digidefiance/mcp-debugger-server)** - Containerized deployment
+- ✅ **[Docker Hub](https://hub.docker.com/r/digitaldefiance/mcp-debugger-server)** - Containerized deployment
 - ✅ **[GitHub Releases](https://github.com/digital-defiance/ai-capabilities-suite/releases)** - Standalone binaries for all platforms
 - � **[MCP Registry** - Submission in progress for official Model Context Protocol registry
 
@@ -1154,7 +1160,7 @@ code --install-extension digitaldefiance.ts-mcp-debugger
 npm install -g @ai-capabilities-suite/mcp-debugger-server
 
 # Or use Docker
-docker run -p 3000:3000 digidefiance/mcp-debugger-server
+docker run -p 3000:3000 digitaldefiance/mcp-debugger-server
 
 # Or download standalone binary from GitHub Releases
 ```
@@ -1322,7 +1328,7 @@ yarn install && yarn build && yarn test
 npm install -g @digitaldefiance/mcp-debugger-server
 
 # Docker (Containerized)
-docker run -p 3000:3000 digidefiance/mcp-debugger-server
+docker run -p 3000:3000 digitaldefiance/mcp-debugger-server
 
 # Homebrew (macOS - coming soon)
 brew install digitaldefiance/tap/mcp-debugger-server
@@ -1351,8 +1357,8 @@ yarn install && yarn build && yarn test
 [![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-debugger-server?label=NPM&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
 [![NPM Downloads](https://img.shields.io/npm/dm/@ai-capabilities-suite/mcp-debugger-server?label=Downloads&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server)
 
-[![Docker Image](https://img.shields.io/docker/v/digidefiance/mcp-debugger-server?label=Docker&logo=docker&sort=semver&style=for-the-badge)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
-[![Docker Pulls](https://img.shields.io/docker/pulls/digidefiance/mcp-debugger-server?label=Pulls&logo=docker&style=for-the-badge)](https://hub.docker.com/r/digidefiance/mcp-debugger-server)
+[![Docker Image](https://img.shields.io/docker/v/digitaldefiance/mcp-debugger-server?label=Docker&logo=docker&sort=semver&style=for-the-badge)](https://hub.docker.com/r/digitaldefiance/mcp-debugger-server)
+[![Docker Pulls](https://img.shields.io/docker/pulls/digitaldefiance/mcp-debugger-server?label=Pulls&logo=docker&style=for-the-badge)](https://hub.docker.com/r/digitaldefiance/mcp-debugger-server)
 
 [![GitHub Release](https://img.shields.io/github/v/release/digitaldefiance/ai-capabilities-suite?label=Release&logo=github&style=for-the-badge)](https://github.com/digital-defiance/ai-capabilities-suite/releases)
 [![GitHub Downloads](https://img.shields.io/github/downloads/digitaldefiance/ai-capabilities-suite/total?label=Downloads&logo=github&style=for-the-badge)](https://github.com/digital-defiance/ai-capabilities-suite/releases)
@@ -1386,7 +1392,7 @@ yarn install && yarn build && yarn test
 - **Main Repository**: [ai-capabilities-suite](https://github.com/digital-defiance/ai-capabilities-suite)
 - **Organization**: [Digital-Defiance](https://github.com/Digital-Defiance)
 - **NPM Packages**: [@ai-capabilities-suite](https://www.npmjs.com/org/ai-capabilities-suite)
-- **Docker Hub**: [digidefiance](https://hub.docker.com/u/digidefiance)
+- **Docker Hub**: [digitaldefiance](https://hub.docker.com/u/digitaldefiance)
 - **Issues**: [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
 
@@ -1395,7 +1401,6 @@ yarn install && yarn build && yarn test
 _Built with ❤️ by the Digital Defiance team using Amazon Kiro, TypeScript, and the Model Context Protocol_
 
 **Ready to give your AI agent superpowers? Install now! 🚀**
-
 
 ---
 
@@ -1515,17 +1520,19 @@ Kiro: *Shows tools from mcp-screenshot, mcp-process, and mcp-debugger*
 ### Troubleshooting
 
 **Connection issues:**
+
 - Ensure Node.js 18+ is installed: `node --version`
 - Check Python setuptools: `python3 -c "import setuptools"`
 - Verify packages are published: `npm view @ai-capabilities-suite/mcp-screenshot`
 
 **Native dependency errors:**
+
 - Install build tools (see Prerequisites above)
 - Clear npm cache: `npm cache clean --force`
 - Reinstall with: `npm install -g --force @ai-capabilities-suite/mcp-screenshot`
 
 **Config file not found:**
+
 - Use absolute path to config file in mcp.json
 - Verify file exists: `ls -la ./mcp-process-config.json`
 - Check JSON syntax: `cat mcp-process-config.json | jq`
-

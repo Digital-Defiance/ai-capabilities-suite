@@ -1,6 +1,7 @@
 # MCP Debugger Tool - Implementation Plan
 
 - [ ] 1. Set up project structure and core interfaces
+
   - Create directory structure for MCP server, inspector client, session manager, and tool implementations
   - Initialize package.json with MCP SDK, WebSocket, and TypeScript dependencies
   - Configure TypeScript with appropriate compiler options
@@ -8,7 +9,9 @@
   - _Requirements: 8.2, 9.1_
 
 - [x] 2. Implement Inspector Protocol client
+
   - [x] 2.1 Create InspectorClient class with WebSocket connection management
+
     - Implement connection to Node.js Inspector Protocol via WebSocket
     - Implement CDP message protocol with request/response handling
     - Add event listener system for CDP events
@@ -16,10 +19,12 @@
     - _Requirements: 2.1, 8.2_
 
   - [x] 2.2 Write property test for Inspector client connection
+
     - **Property 5: Process start with inspector attachment**
     - **Validates: Requirements 2.1**
 
   - [x] 2.3 Implement CDP command sending with timeout handling
+
     - Create send method that generates unique message IDs
     - Implement promise-based response handling
     - Add timeout mechanism for commands that don't respond
@@ -31,7 +36,9 @@
     - **Validates: Requirements 8.3, 8.4**
 
 - [x] 3. Implement process spawning with inspector
+
   - [x] 3.1 Create spawnWithInspector function
+
     - Spawn Node.js process with --inspect-brk flag
     - Parse inspector WebSocket URL from stderr
     - Handle spawn errors and timeouts
@@ -44,13 +51,16 @@
     - _Requirements: 7.1_
 
 - [x] 4. Implement session management
+
   - [x] 4.1 Create DebugSession class
+
     - Track session ID, process, inspector client, and state
     - Implement session lifecycle (start, pause, resume, cleanup)
     - Store breakpoints and watched variables per session
     - _Requirements: 8.2, 8.5_
 
   - [x] 4.2 Create SessionManager class
+
     - Generate unique session IDs
     - Track multiple concurrent sessions
     - Implement session isolation
@@ -62,7 +72,9 @@
     - **Validates: Requirements 8.5**
 
 - [x] 5. Implement breakpoint management
+
   - [x] 5.1 Create BreakpointManager class
+
     - Store breakpoint definitions with file, line, and condition
     - Generate unique breakpoint identifiers
     - Track breakpoint state (enabled/disabled)
@@ -70,18 +82,22 @@
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
   - [x] 5.2 Write property test for breakpoint creation and retrieval
+
     - **Property 1: Breakpoint creation and retrieval consistency**
     - **Validates: Requirements 1.1, 1.3**
 
   - [x] 5.3 Write property test for breakpoint removal
+
     - **Property 3: Breakpoint removal completeness**
     - **Validates: Requirements 1.4**
 
   - [x] 5.4 Write property test for breakpoint toggle
+
     - **Property 4: Breakpoint toggle preserves identity**
     - **Validates: Requirements 1.5**
 
   - [x] 5.5 Implement CDP breakpoint operations
+
     - Map file paths to script IDs using Debugger.scriptParsed events
     - Set breakpoints using Debugger.setBreakpointByUrl
     - Remove breakpoints using Debugger.removeBreakpoint
@@ -93,13 +109,16 @@
     - **Validates: Requirements 1.2**
 
 - [x] 6. Implement execution control operations
+
   - [x] 6.1 Implement continue operation
+
     - Send Debugger.resume CDP command
     - Update session state to running
     - Handle Debugger.paused events
     - _Requirements: 2.2_
 
   - [x] 6.2 Implement step operations
+
     - Implement step over using Debugger.stepOver
     - Implement step into using Debugger.stepInto
     - Implement step out using Debugger.stepOut
@@ -107,6 +126,7 @@
     - _Requirements: 2.3, 2.4, 2.5_
 
   - [x] 6.3 Write property test for step operations
+
     - **Property 6: Step operations maintain execution flow**
     - **Validates: Requirements 2.3, 2.4, 2.5**
 
@@ -117,7 +137,9 @@
     - _Requirements: 2.6_
 
 - [-] 7. Implement variable inspection
+
   - [x] 7.1 Implement expression evaluation
+
     - Get current call frame from paused state
     - Use Debugger.evaluateOnCallFrame to evaluate expressions
     - Handle evaluation errors gracefully
@@ -125,10 +147,12 @@
     - _Requirements: 3.4, 9.3_
 
   - [x] 7.2 Write property test for expression evaluation
+
     - **Property 8: Expression evaluation correctness**
     - **Validates: Requirements 3.4**
 
   - [x] 7.3 Implement object inspection
+
     - Use Runtime.getProperties to get object properties
     - Handle nested objects and arrays
     - Limit inspection depth to prevent performance issues
@@ -136,14 +160,17 @@
     - _Requirements: 3.3, 9.3_
 
   - [x] 7.4 Write property test for object inspection
+
     - **Property 7: Object inspection completeness**
     - **Validates: Requirements 3.3**
 
   - [x] 7.5 Write property test for complex object serialization
+
     - **Property 21: Complex object serialization with type information**
     - **Validates: Requirements 9.3**
 
   - [x] 7.6 Implement variable watching
+
     - Track watched variable names per session
     - Evaluate watched expressions on each pause
     - Detect and report value changes
@@ -154,17 +181,21 @@
     - **Validates: Requirements 3.5**
 
 - [x] 8. Implement call stack operations
+
   - [x] 8.1 Implement call stack retrieval
+
     - Get call stack from Debugger.paused event
     - Format stack frames with function names, files, and line numbers
     - Convert all file paths to absolute paths
     - _Requirements: 4.1, 9.4_
 
   - [x] 8.2 Write property test for call stack absolute paths
+
     - **Property 22: Call stack absolute path requirement**
     - **Validates: Requirements 9.4**
 
   - [x] 8.3 Implement stack frame navigation
+
     - Allow switching context to different stack frames
     - Update current frame for variable inspection
     - Ensure variable inspection uses correct frame scope
@@ -175,7 +206,9 @@
     - **Validates: Requirements 4.2, 4.3**
 
 - [x] 9. Implement hang detection
+
   - [x] 9.1 Create HangDetector class
+
     - Start debug session with timeout
     - Implement periodic call stack sampling
     - Compare consecutive samples to detect unchanged location
@@ -183,10 +216,12 @@
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
   - [x] 9.2 Write property test for timeout-based hang detection
+
     - **Property 11: Timeout-based hang detection**
     - **Validates: Requirements 5.1, 5.2**
 
   - [x] 9.3 Write property test for infinite loop detection
+
     - **Property 12: Infinite loop detection via sampling**
     - **Validates: Requirements 5.3, 5.4**
 
@@ -198,23 +233,28 @@
     - _Requirements: 5.3, 5.4_
 
 - [x] 10. Implement source map support
+
   - [x] 10.1 Implement source map loading
+
     - Detect .map files alongside JavaScript files
     - Parse source map JSON format
     - Cache loaded source maps per session
     - _Requirements: 7.1_
 
   - [x] 10.2 Implement location mapping
+
     - Map TypeScript locations to JavaScript for breakpoint setting
     - Map JavaScript locations back to TypeScript when paused
     - Handle missing or invalid source maps gracefully
     - _Requirements: 7.2, 7.3_
 
   - [x] 10.3 Write property test for source map round-trip
+
     - **Property 15: Source map round-trip consistency**
     - **Validates: Requirements 7.2, 7.3**
 
   - [x] 10.4 Implement variable name mapping
+
     - Use source map names section for variable mapping
     - Display TypeScript variable names in inspection results
     - Fall back to JavaScript names if mapping unavailable
@@ -225,7 +265,9 @@
     - **Validates: Requirements 7.4**
 
 - [x] 11. Implement test framework integration
+
   - [x] 11.1 Implement Jest test execution
+
     - Spawn Jest with inspector attached
     - Capture test output (stdout/stderr)
     - Parse test results and failures
@@ -233,18 +275,21 @@
     - _Requirements: 6.1, 6.4, 6.5_
 
   - [x] 11.2 Implement Mocha test execution
+
     - Spawn Mocha with inspector attached
     - Capture test output
     - Parse test results
     - _Requirements: 6.2, 6.4, 6.5_
 
   - [x] 11.3 Implement Vitest test execution
+
     - Spawn Vitest with inspector attached
     - Capture test output
     - Parse test results
     - _Requirements: 6.3, 6.4, 6.5_
 
   - [x] 11.4 Write property test for test output capture
+
     - **Property 13: Test output capture completeness**
     - **Validates: Requirements 6.4**
 
@@ -253,7 +298,9 @@
     - **Validates: Requirements 6.5**
 
 - [x] 12. Implement MCP tools
+
   - [x] 12.1 Implement debugger_start tool
+
     - Accept command, args, cwd, and timeout parameters
     - Create new debug session
     - Start process with inspector
@@ -261,6 +308,7 @@
     - _Requirements: 2.1, 9.1_
 
   - [x] 12.2 Implement debugger_set_breakpoint tool
+
     - Accept file, line, and optional condition
     - Validate file path
     - Create breakpoint via BreakpointManager
@@ -268,30 +316,35 @@
     - _Requirements: 1.1, 1.2, 9.1_
 
   - [x] 12.3 Implement debugger_continue tool
+
     - Accept session ID
     - Resume execution in session
     - Return execution status
     - _Requirements: 2.2, 9.1_
 
   - [x] 12.4 Implement debugger_step_over tool
+
     - Accept session ID
     - Execute step over operation
     - Return new execution location
     - _Requirements: 2.3, 9.1_
 
   - [x] 12.5 Implement debugger_inspect tool
+
     - Accept session ID and expression
     - Evaluate expression in current context
     - Return value with type information
     - _Requirements: 3.4, 9.1, 9.3_
 
   - [x] 12.6 Implement debugger_get_stack tool
+
     - Accept session ID
     - Return current call stack
     - Include absolute file paths
     - _Requirements: 4.1, 9.1, 9.4_
 
   - [x] 12.7 Implement debugger_detect_hang tool
+
     - Accept command, args, timeout, and sample interval
     - Run hang detection
     - Return hang status, location, and stack if hung
@@ -302,7 +355,9 @@
     - **Validates: Requirements 9.1, 9.2**
 
 - [-] 13. Implement error handling and cleanup
+
   - [x] 13.1 Implement crash detection
+
     - Listen for process exit events
     - Detect unexpected terminations
     - Clean up session resources on crash
@@ -310,10 +365,12 @@
     - _Requirements: 8.1_
 
   - [x] 13.2 Write property test for crash detection and cleanup
+
     - **Property 17: Crash detection and cleanup**
     - **Validates: Requirements 8.1, 8.2**
 
   - [x] 13.3 Implement session cleanup
+
     - Remove all breakpoints on session end
     - Disconnect inspector client
     - Kill process if still running
@@ -327,26 +384,32 @@
     - _Requirements: 9.2_
 
 - [x] 14. Set up MCP server
+
   - [x] 14.1 Create MCP server instance
+
     - Initialize MCP server with name and version
     - Configure server capabilities
     - Set up stdio transport
     - _Requirements: 9.1_
 
   - [x] 14.2 Register all MCP tools
+
     - Register all debugger tools with schemas
     - Connect tool handlers to implementation
     - Add input validation for each tool
     - _Requirements: 9.1_
 
   - [x] 14.3 Implement server lifecycle management
+
     - Handle server startup and shutdown
     - Clean up all sessions on shutdown
     - Add logging for debugging
     - _Requirements: 8.2_
 
   - [x] 14.4 Implement MCP protocol E2E tests
+
     - [x] 14.4.1 Create E2E test suite
+
       - Set up test infrastructure to spawn MCP server as child process
       - Implement JSON-RPC communication over stdio
       - Create helper functions for sending requests and receiving responses
@@ -354,6 +417,7 @@
       - _Requirements: 9.1, 9.2_
 
     - [x] 14.4.2 Test MCP protocol initialization
+
       - Test initialize request with protocol version and capabilities
       - Verify server responds with correct server info and capabilities
       - Test initialized notification
@@ -361,6 +425,7 @@
       - _Requirements: 9.1_
 
     - [x] 14.4.3 Test tool discovery
+
       - Test tools/list request
       - Verify all 7 tools are returned (debugger_start, debugger_set_breakpoint, etc.)
       - Verify each tool has name, description, and inputSchema
@@ -368,6 +433,7 @@
       - _Requirements: 9.1_
 
     - [x] 14.4.4 Test tool execution - debugger_detect_hang
+
       - Test hang detection with infinite loop fixture
       - Test hang detection with normal completion fixture
       - Verify response format matches specification
@@ -375,6 +441,7 @@
       - _Requirements: 5.1, 5.2, 5.3, 5.4, 9.1_
 
     - [x] 14.4.5 Test tool execution - debugger_start
+
       - Test starting debug session with valid parameters
       - Verify session ID is returned
       - Verify process is paused at start
@@ -382,6 +449,7 @@
       - _Requirements: 2.1, 9.1_
 
     - [x] 14.4.6 Test tool execution - session operations
+
       - Test debugger_set_breakpoint with valid session
       - Test debugger_continue with valid session
       - Test debugger_step_over with valid session
@@ -390,6 +458,7 @@
       - _Requirements: 1.1, 2.2, 2.3, 3.4, 4.1, 9.1_
 
     - [x] 14.4.7 Test error handling
+
       - Test invalid session ID returns proper error
       - Test missing required parameters returns error
       - Test invalid tool name returns error
@@ -397,6 +466,7 @@
       - _Requirements: 9.2_
 
     - [x] 14.4.8 Create manual testing script
+
       - Create interactive test script with colored output
       - Test all major MCP operations
       - Provide clear pass/fail indicators
@@ -411,55 +481,65 @@
       - _Requirements: 9.2_
 
 - [x] 15. Implement missing MCP tools for complete feature coverage
+
   - [x] 15.1 Implement debugger_step_into tool
+
     - Accept session ID
     - Execute step into operation
     - Return new execution location
     - _Requirements: 2.4, 9.1_
 
   - [x] 15.2 Implement debugger_step_out tool
+
     - Accept session ID
     - Execute step out operation
     - Return new execution location
     - _Requirements: 2.5, 9.1_
 
   - [x] 15.3 Implement debugger_pause tool
+
     - Accept session ID
     - Pause running execution
     - Return current execution location
     - _Requirements: 2.6, 9.1_
 
   - [x] 15.4 Implement debugger_remove_breakpoint tool
+
     - Accept session ID and breakpoint ID
     - Remove breakpoint from session
     - Return success status
     - _Requirements: 1.4, 9.1_
 
   - [x] 15.5 Implement debugger_toggle_breakpoint tool
+
     - Accept session ID and breakpoint ID
     - Toggle breakpoint enabled/disabled state
     - Return updated breakpoint status
     - _Requirements: 1.5, 9.1_
 
   - [x] 15.6 Implement debugger_list_breakpoints tool
+
     - Accept session ID
     - Return all breakpoints for session
     - Include file, line, condition, and enabled state
     - _Requirements: 1.3, 9.1_
 
   - [x] 15.7 Implement debugger_get_local_variables tool
+
     - Accept session ID
     - Return all local variables in current scope
     - Include variable names, values, and types
     - _Requirements: 3.1, 9.1, 9.3_
 
   - [x] 15.8 Implement debugger_get_global_variables tool
+
     - Accept session ID
     - Return global variables accessible from current scope
     - Include variable names, values, and types
     - _Requirements: 3.2, 9.1, 9.3_
 
   - [x] 15.9 Implement debugger_inspect_object tool
+
     - Accept session ID and object reference
     - Return object properties with values
     - Handle nested objects and arrays
@@ -467,24 +547,28 @@
     - _Requirements: 3.3, 9.1, 9.3_
 
   - [x] 15.10 Implement debugger_add_watch tool
+
     - Accept session ID and expression
     - Add expression to watch list
     - Return watch ID
     - _Requirements: 3.5, 9.1_
 
   - [x] 15.11 Implement debugger_remove_watch tool
+
     - Accept session ID and watch ID
     - Remove expression from watch list
     - Return success status
     - _Requirements: 3.5, 9.1_
 
   - [x] 15.12 Implement debugger_get_watches tool
+
     - Accept session ID
     - Return all watched expressions with current values
     - Detect and report value changes
     - _Requirements: 3.5, 9.1_
 
   - [x] 15.13 Implement debugger_switch_stack_frame tool
+
     - Accept session ID and frame index
     - Switch context to specified stack frame
     - Return frame details
@@ -498,7 +582,9 @@
     - _Requirements: 8.2, 9.1_
 
 - [x] 16. Expand E2E tests for complete coverage
+
   - [x] 16.1 Add E2E tests for step operations
+
     - Test debugger_step_into
     - Test debugger_step_out
     - Test debugger_pause
@@ -506,6 +592,7 @@
     - _Requirements: 2.4, 2.5, 2.6_
 
   - [x] 16.2 Add E2E tests for breakpoint management
+
     - Test debugger_list_breakpoints
     - Test debugger_remove_breakpoint
     - Test debugger_toggle_breakpoint
@@ -514,6 +601,7 @@
     - _Requirements: 1.2, 1.3, 1.4, 1.5_
 
   - [x] 16.3 Add E2E tests for variable inspection
+
     - Test debugger_get_local_variables
     - Test debugger_get_global_variables
     - Test debugger_inspect_object with nested objects
@@ -521,6 +609,7 @@
     - _Requirements: 3.1, 3.2, 3.3, 9.3_
 
   - [x] 16.4 Add E2E tests for variable watching
+
     - Test debugger_add_watch
     - Test debugger_remove_watch
     - Test debugger_get_watches
@@ -528,12 +617,14 @@
     - _Requirements: 3.5_
 
   - [x] 16.5 Add E2E tests for stack frame navigation
+
     - Test debugger_switch_stack_frame
     - Test variable inspection in different frames
     - Verify frame context switching
     - _Requirements: 4.2, 4.3_
 
   - [x] 16.6 Add E2E tests for session management
+
     - Test debugger_stop_session
     - Test multiple concurrent sessions
     - Verify session isolation
@@ -547,7 +638,9 @@
     - _Requirements: 8.1_
 
 - [x] 17. Create test fixtures and integration tests
+
   - [x] 17.1 Create test fixture files
+
     - Create infinite-loop.js for hang detection testing
     - Create async-hang.js for async hang testing
     - Create normal-completion.js for successful execution
@@ -555,12 +648,14 @@
     - _Requirements: 5.4, 7.1_
 
   - [x] 17.2 Write integration test for hang detection
+
     - Test detecting infinite loops
     - Test detecting async hangs
     - Test normal completion without false positives
     - _Requirements: 5.1, 5.4_
 
   - [x] 17.3 Write integration test for TypeScript debugging
+
     - Test setting breakpoints in TypeScript files
     - Test source map location mapping
     - Test variable inspection with TypeScript names
@@ -573,13 +668,16 @@
     - _Requirements: 6.1, 6.4, 6.5_
 
 - [x] 18. Create MCP configuration and documentation
+
   - [x] 18.1 Create MCP configuration file
+
     - Add debugger server to .kiro/settings/mcp.json
     - Configure command and args for server startup
     - Test MCP connection from Kiro
     - _Requirements: 9.1_
 
   - [x] 18.2 Write README documentation
+
     - Document installation instructions
     - Provide usage examples for each tool (now 17 tools total)
     - Document common debugging scenarios
@@ -587,12 +685,14 @@
     - _Requirements: 9.2_
 
   - [x] 18.3 Add code documentation
+
     - Add JSDoc comments to all public APIs
     - Document CDP protocol interactions
     - Document error codes and meanings
     - _Requirements: 9.2_
 
   - [x] 18.4 Create AI Agent Integration Documentation
+
     - Document MCP server configuration for Kiro/Amazon Q
     - Create workflow examples for common debugging scenarios
     - Document tool schemas with parameter descriptions
@@ -600,6 +700,7 @@
     - _Requirements: 9.2_
 
   - [x] 18.5 Create VS Code Extension Documentation
+
     - Document VS Code extension installation and setup
     - Create debugging workflow examples for VS Code
     - Document GitHub Copilot integration patterns
@@ -619,7 +720,9 @@
 ## Enterprise-Grade Enhancements
 
 - [x] 20. Implement advanced breakpoint types
+
   - [x] 20.1 Implement logpoints (non-breaking breakpoints)
+
     - Add logpoint type to breakpoint definitions
     - Implement log message template evaluation
     - Log to output without pausing execution
@@ -627,6 +730,7 @@
     - _Requirements: Enhanced debugging capabilities_
 
   - [x] 20.2 Implement exception breakpoints
+
     - Add exception breakpoint configuration
     - Break on caught exceptions (optional)
     - Break on uncaught exceptions
@@ -635,6 +739,7 @@
     - _Requirements: Enhanced debugging capabilities_
 
   - [x] 20.3 Implement hit count breakpoints
+
     - Add hit count condition to breakpoints
     - Track breakpoint hit counts per session
     - Support operators (==, >, >=, <, <=, %)
@@ -642,6 +747,7 @@
     - _Requirements: Enhanced debugging capabilities_
 
   - [x] 20.4 Implement function breakpoints
+
     - Break on function entry by name
     - Support regex patterns for function matching
     - Handle anonymous and arrow functions
@@ -655,13 +761,16 @@
     - _Requirements: Enhanced debugging capabilities_
 
 - [x] 21. Implement security and compliance features
+
   - [x] 21.1 Add authentication support
+
     - Implement token-based authentication for MCP connections
     - Support API key validation
     - Add session token management
     - _Requirements: Enterprise security_
 
   - [x] 21.2 Implement rate limiting
+
     - Add rate limiting for debugging operations
     - Configure limits per operation type
     - Return appropriate error responses when limits exceeded
@@ -669,6 +778,7 @@
     - _Requirements: Enterprise security_
 
   - [x] 21.3 Implement sensitive data masking
+
     - Detect common PII patterns (emails, SSNs, credit cards)
     - Mask sensitive values in variable inspection
     - Add configurable masking rules
@@ -676,6 +786,7 @@
     - _Requirements: Enterprise security_
 
   - [x] 21.4 Add session timeout enforcement
+
     - Implement configurable session timeouts
     - Auto-cleanup expired sessions
     - Send timeout warnings before expiration
@@ -689,7 +800,9 @@
     - _Requirements: Enterprise security_
 
 - [x] 22. Implement observability and telemetry
+
   - [x] 22.1 Add structured logging
+
     - Implement log levels (debug, info, warn, error)
     - Use structured logging format (JSON)
     - Add correlation IDs for request tracing
@@ -697,6 +810,7 @@
     - _Requirements: Enterprise observability_
 
   - [x] 22.2 Implement metrics collection
+
     - Track session duration and count
     - Track breakpoint hit counts
     - Track operation latencies
@@ -705,6 +819,7 @@
     - _Requirements: Enterprise observability_
 
   - [x] 22.3 Add health check endpoints
+
     - Implement /health endpoint
     - Implement /ready endpoint (readiness probe)
     - Implement /live endpoint (liveness probe)
@@ -719,7 +834,9 @@
     - _Requirements: Advanced observability_
 
 - [x] 23. Implement performance profiling features
+
   - [x] 23.1 Add CPU profiling support
+
     - Use Profiler.start/stop CDP commands
     - Capture CPU profile data
     - Generate flame graphs or call trees
@@ -727,6 +844,7 @@
     - _Requirements: Performance debugging_
 
   - [x] 23.2 Add memory profiling support
+
     - Capture heap snapshots via HeapProfiler domain
     - Track memory allocation over time
     - Detect memory leaks via heap growth analysis
@@ -734,6 +852,7 @@
     - _Requirements: Performance debugging_
 
   - [x] 23.3 Implement performance timeline
+
     - Record performance events during execution
     - Track function execution times
     - Identify slow operations
@@ -748,7 +867,9 @@
     - _Requirements: Performance debugging_
 
 - [x] 24. Implement production readiness features
+
   - [x] 24.1 Add graceful shutdown handling
+
     - Handle SIGTERM and SIGINT signals
     - Complete in-flight operations before shutdown
     - Clean up all active sessions
@@ -756,6 +877,7 @@
     - _Requirements: Production readiness_
 
   - [x] 24.2 Implement circuit breakers
+
     - Add circuit breakers for CDP operations
     - Configure failure thresholds
     - Implement automatic recovery
@@ -763,6 +885,7 @@
     - _Requirements: Production readiness_
 
   - [x] 24.3 Add retry logic with exponential backoff
+
     - Implement retry for transient failures
     - Use exponential backoff strategy
     - Configure max retry attempts
@@ -770,6 +893,7 @@
     - _Requirements: Production readiness_
 
   - [x] 24.4 Implement resource limits and quotas
+
     - Limit max concurrent sessions per user
     - Limit max breakpoints per session
     - Limit max memory usage per session
@@ -784,7 +908,9 @@
     - _Requirements: Production readiness_
 
 - [x] 25. Enhanced testing for enterprise features
+
   - [x] 25.1 Implement load testing
+
     - Test with 100+ concurrent debug sessions
     - Measure throughput and latency under load
     - Identify performance bottlenecks
@@ -792,6 +918,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 25.2 Implement chaos testing
+
     - Test random process crashes
     - Test network disconnections
     - Test CDP protocol errors
@@ -800,6 +927,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 25.3 Add compatibility testing
+
     - Test with Node.js 16, 18, 20, 22
     - Test with TypeScript 4.x and 5.x
     - Test with different test frameworks
@@ -807,6 +935,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 25.4 Implement security testing
+
     - Test authentication and authorization
     - Test rate limiting effectiveness
     - Test PII masking accuracy
@@ -822,13 +951,16 @@
     - _Requirements: Enterprise quality_
 
 - [x] 26. Developer experience enhancements
+
   - [x] 26.1 Add debugging configuration presets
+
     - Create presets for common scenarios (Node.js app, Jest tests, etc.)
     - Support custom preset definitions
     - Allow preset inheritance and composition
     - _Requirements: Enhanced DX_
 
   - [x] 26.2 Implement workspace-aware debugging
+
     - Support monorepo debugging
     - Auto-detect workspace structure
     - Handle multiple package.json files
@@ -836,6 +968,7 @@
     - _Requirements: Enhanced DX_
 
   - [x] 26.3 Add multi-target debugging support
+
     - Debug multiple processes simultaneously
     - Coordinate breakpoints across targets
     - Aggregate logs from multiple targets
@@ -843,6 +976,7 @@
     - _Requirements: Enhanced DX_
 
   - [x] 26.4 Implement smart breakpoint suggestions
+
     - Suggest breakpoint locations based on code analysis
     - Recommend breakpoints for common debugging scenarios
     - Suggest conditional breakpoints based on context
@@ -865,7 +999,9 @@
 ## Distribution and Consumer Adoption
 
 - [ ] 28. Package and distribute MCP server for easy consumer adoption
+
   - [ ] 28.1 Publish to NPM registry
+
     - [x] 28.1.1 Configure package.json with proper metadata and keywords
     - [x] 28.1.2 Add CLI entry point and bin configuration
     - [x] 28.1.3 Create .npmignore file to exclude unnecessary files
@@ -876,16 +1012,18 @@
     - _Requirements: Easy installation, Global availability_
 
   - [x] 28.2 Create Docker image for containerized deployment
+
     - [x] 28.2.1 Create optimized Dockerfile with multi-stage build
     - [x] 28.2.2 Create docker-compose.yml for easy deployment
     - [x] 28.2.3 Create .dockerignore file to optimize build context
     - [x] 28.2.4 Create GitHub Actions workflow for Docker Hub publishing
     - [x] 28.2.5 Create Docker deployment documentation
     - [x] 28.2.6 Manual: Create Docker Hub account and configure DOCKER_TOKEN
-    - [x] 28.2.7 Manual: Push first image with `docker push digidefiance/mcp-debugger-server`
+    - [x] 28.2.7 Manual: Push first image with `docker push digitaldefiance/mcp-debugger-server`
     - _Requirements: Containerized deployment, Easy scaling_
 
   - [x] 28.3 Submit to official MCP Registry
+
     - [x] 28.3.1 Create MCP registry submission metadata file
     - [x] 28.3.2 Create comprehensive server description with all 25+ tools
     - [x] 28.3.3 Create usage examples and configuration templates
@@ -895,6 +1033,7 @@
     - _Requirements: Official discovery, Community visibility_
 
   - [x] 28.4 Create GitHub Releases with binaries
+
     - [x] 28.4.1 Create GitHub Actions workflow for automated releases
     - [x] 28.4.2 Configure pkg to create standalone executables
     - [x] 28.4.3 Create release notes template and changelog automation
@@ -905,6 +1044,7 @@
     - _Requirements: No-install deployment, Cross-platform support_
 
   - [ ] 28.5 Create Homebrew formula (macOS)
+
     - [ ] 28.5.1 Create Homebrew formula template
     - [ ] 28.5.2 Create homebrew tap repository structure
     - [ ] 28.5.3 Create launchd service plist for background service
@@ -915,6 +1055,7 @@
     - _Requirements: macOS package management_
 
   - [ ] 28.6 Create APT/YUM packages (Linux)
+
     - Build .deb packages for Debian/Ubuntu
     - Build .rpm packages for RHEL/CentOS/Fedora
     - Set up package repositories
@@ -923,6 +1064,7 @@
     - _Requirements: Linux package management_
 
   - [ ] 28.7 Create Chocolatey package (Windows)
+
     - Submit package to Chocolatey community repository
     - Enable installation via `choco install ts-mcp-server`
     - Include Windows service configuration
@@ -930,6 +1072,7 @@
     - _Requirements: Windows package management_
 
   - [-] 28.8 Create VS Code extension marketplace listing
+
     - [ ] 28.8.1 Create VS Code extension project structure
     - [ ] 28.8.2 Create extension manifest with proper metadata
     - [ ] 28.8.3 Create extension activation and MCP server integration
@@ -952,13 +1095,16 @@
     - _Requirements: User onboarding, Reduced support burden_
 
 - [-] 29. Prepare for Docker MCP Registry contribution
+
   - [ ] 29.1 Review Docker MCP Registry contribution guidelines
+
     - Read https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
     - Understand submission requirements and format
     - Review existing MCP server examples in the registry
     - _Requirements: Community contribution_
 
   - [x] 29.2 Create MCP server package metadata
+
     - Create package.json with proper metadata (name, description, keywords)
     - Add repository, homepage, and bugs URLs
     - Include proper licensing information (MIT)
@@ -966,6 +1112,7 @@
     - _Requirements: Registry submission_
 
   - [x] 29.3 Write comprehensive README for registry
+
     - Document installation instructions
     - Provide usage examples with code snippets
     - List all available tools and their parameters
@@ -975,6 +1122,7 @@
     - _Requirements: Registry submission_
 
   - [x] 29.4 Create MCP server configuration examples
+
     - Provide example mcp.json configuration for Kiro
     - Create configuration examples for other MCP clients
     - Document environment variables and options
@@ -982,6 +1130,7 @@
     - _Requirements: Registry submission_
 
   - [x] 29.5 Prepare Docker MCP Registry submission
+
     - Create registry submission PR following guidelines
     - Include server metadata in proper format
     - Add server to appropriate category
@@ -1055,13 +1204,16 @@
     - _Requirements: VS Code/Copilot integration, LSP compliance, DAP support, AI agent compatibility_
 
 - [x] 30. VS Code and GitHub Copilot integration
+
   - [x] 29.1 Research VS Code MCP integration
+
     - Investigate VS Code extension requirements for MCP
     - Review VS Code debugging API compatibility
     - Understand how to integrate with VS Code's debug adapter protocol
     - _Requirements: VS Code integration_
 
   - [x] 29.2 Create VS Code extension
+
     - Set up VS Code extension project structure
     - Implement MCP client for VS Code
     - Create debug configuration provider
@@ -1069,12 +1221,14 @@
     - _Requirements: VS Code integration_
 
   - [x] 29.3 Research GitHub Copilot integration
+
     - Investigate GitHub Copilot extension points
     - Understand how Copilot can use MCP servers
     - Review Copilot's debugging assistance capabilities
     - _Requirements: Copilot integration_
 
   - [x] 29.4 Document VS Code/Copilot usage
+
     - Write guide for using debugger with VS Code
     - Document Copilot integration patterns
     - Provide example debugging workflows
@@ -1091,13 +1245,16 @@
 ## Optional Long-Term Testing
 
 - [ ] 31. Implement soak testing (optional - resource intensive)
+
   - [ ] 30.1 Set up long-running test environment
+
     - Configure dedicated test infrastructure
     - Set up monitoring and alerting
     - Prepare test scenarios
     - _Requirements: Long-term stability validation_
 
   - [ ] 30.2 Run continuous operation tests
+
     - Run continuous operation for 24+ hours
     - Monitor for memory leaks
     - Monitor for resource leaks
@@ -1110,7 +1267,6 @@
     - Document findings and recommendations
     - _Requirements: Long-term stability validation_
 
-
 ## CRITICAL: Test Coverage Improvement (Based on Actual Metrics)
 
 **Current Coverage:** 74.19% lines, 55.30% branches
@@ -1118,7 +1274,9 @@
 **Status:** ⚠️ NOT ENTERPRISE-READY
 
 - [x] 32. Achieve 90% test coverage (P0 - Critical Priority)
+
   - [x] 32.1 Fix cdp-breakpoint-operations.ts coverage (CRITICAL)
+
     - **Current:** 15.62% lines, 14.28% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 54 uncovered lines, 24 uncovered branches
@@ -1131,6 +1289,7 @@
     - _Requirements: Enterprise quality, 1.1, 1.2, 1.4_
 
   - [x] 32.2 Fix breakpoint-manager.ts branch coverage (CRITICAL)
+
     - **Current:** 41.02% lines, 10.34% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 46 uncovered lines, 26 uncovered branches
@@ -1141,6 +1300,7 @@
     - _Requirements: Enterprise quality, 1.1-1.5_
 
   - [x] 32.3 Fix cpu-profiler.ts coverage (CRITICAL)
+
     - **Current:** 41.23% lines, 23.52% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 57 uncovered lines, 39 uncovered branches
@@ -1152,6 +1312,7 @@
     - _Requirements: Enterprise quality, Performance debugging_
 
   - [x] 32.4 Fix memory-profiler.ts coverage (CRITICAL)
+
     - **Current:** 45.71% lines, 20% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 57 uncovered lines, 16 uncovered branches
@@ -1163,6 +1324,7 @@
     - _Requirements: Enterprise quality, Performance debugging_
 
   - [x] 32.5 Fix performance-timeline.ts coverage (CRITICAL)
+
     - **Current:** 46.15% lines, 15.15% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 49 uncovered lines, 28 uncovered branches
@@ -1185,7 +1347,9 @@
     - _Requirements: Enterprise quality, Enterprise security_
 
 - [x] 33. Improve coverage for moderate-gap modules (P1 - High Priority)
+
   - [x] 33.1 Improve debug-session.ts coverage
+
     - **Current:** 62.43% lines, 45.53% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 142 uncovered lines, 122 uncovered branches
@@ -1197,6 +1361,7 @@
     - _Requirements: Enterprise quality, 2.1-2.6, 8.2_
 
   - [x] 33.2 Improve source-map-manager.ts coverage
+
     - **Current:** 54.73% lines, 27.27% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 43 uncovered lines, 32 uncovered branches
@@ -1207,6 +1372,7 @@
     - _Requirements: Enterprise quality, 7.1-7.4_
 
   - [x] 33.3 Improve test-runner.ts coverage
+
     - **Current:** 63.82% lines, 37.42% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 68 uncovered lines, 102 uncovered branches
@@ -1217,6 +1383,7 @@
     - _Requirements: Enterprise quality, 6.1-6.5_
 
   - [x] 33.4 Improve shutdown-handler.ts coverage
+
     - **Current:** 66.07% lines, 47.36% branches
     - **Target:** 90% lines, 85% branches
     - **Gap:** 19 uncovered lines, function coverage low
@@ -1237,6 +1404,7 @@
     - _Requirements: Enterprise quality, 3.1-3.4_
 
 - [-] 34. Improve branch coverage across all modules (P2 - Medium Priority)
+
   - [x] 34.1 Improve branch coverage for well-tested modules
     - session-manager.ts: 60% → 85% branches
     - session-timeout-manager.ts: 66.66% → 85% branches
@@ -1252,7 +1420,9 @@
     - _Requirements: Enterprise quality_
 
 - [x] 35. Fix test execution issues
+
   - [x] 35.1 Investigate and fix test suite timeout with coverage
+
     - Full test suite passes without coverage ✅
     - Full test suite times out with coverage ❌
     - Individual tests pass with coverage ✅
@@ -1262,6 +1432,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 35.2 Optimize test execution for coverage
+
     - Run tests in smaller batches
     - Use --maxWorkers=2 to limit concurrency
     - Add --forceExit where needed
@@ -1276,6 +1447,7 @@
     - _Requirements: Enterprise quality_
 
 - [x] 36. Coverage validation checkpoint
+
   - Run full test suite with coverage
   - Verify 90% line coverage achieved
   - Verify 85% branch coverage achieved
@@ -1287,7 +1459,9 @@
   - **Status:** PRODUCTION-READY with minor improvements needed
 
 - [-] 37. Address coverage validation findings
+
   - [x] 37.1 Fix failing tests (P0 - Critical)
+
     - Fix 3 failures in compatibility-testing.spec.ts
     - Fix 5 failures in chaos-testing.spec.ts
     - Fix 6 failures in debug-session.unit.spec.ts
@@ -1299,6 +1473,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 37.2 Fix test execution timeout issues (P0 - Critical)
+
     - Investigate why full test suite times out with coverage
     - Improve test isolation and resource cleanup
     - Fix source map fixture generation
@@ -1306,6 +1481,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 37.3 Improve critical module coverage to 90%+ (P1 - High Priority)
+
     - cdp-breakpoint-operations.ts: 15.62% → 90% (54 lines needed)
     - breakpoint-manager.ts: 41.02% → 90% (46 lines needed)
     - cpu-profiler.ts: 41.23% → 90% (57 lines needed)
@@ -1314,6 +1490,7 @@
     - _Requirements: Enterprise quality, 1.1-1.5, Performance debugging_
 
   - [x] 37.4 Improve high-priority module coverage to 90%+ (P1 - High Priority)
+
     - **Final Results:**
       - ✅ audit-logger.ts: 52.38% → **100%** lines, **100%** branches (COMPLETE)
       - ✅ source-map-manager.ts: 54.73% → **95.78%** lines, **100%** branches (COMPLETE)
@@ -1329,16 +1506,18 @@
       - Achieved 90%+ coverage on 6/8 high-priority modules
       - Overall project: **94.53% lines, 83.45% branches**
     - _Requirements: Enterprise quality, 2.1-2.6, 3.1-3.4, 6.1-6.5, 7.1-7.4, 8.2_
-  
+
   - [x] 37.4.1 Implement WebSocket mocking for inspector-based tests
+
     - Create mock WebSocket server using mock-socket library
     - Mock CDP (Chrome DevTools Protocol) message responses
     - Update inspector-client tests to use mocked WebSocket
     - Create reusable test fixtures for common CDP scenarios
     - Test connection, disconnection, and error scenarios
     - _Requirements: Enterprise quality, 2.1_
-  
+
   - [x] 37.4.2 Fix variable-inspector.ts coverage (5.45% → 90%)
+
     - Refactor variable-inspector.spec.ts to use WebSocket mocks
     - Test evaluateExpression with various expression types
     - Test getObjectProperties with nested objects
@@ -1347,8 +1526,9 @@
     - Test source map integration for variable names
     - Add 50+ tests to cover all code paths
     - _Requirements: Enterprise quality, 3.1-3.4, 7.4_
-  
+
   - [x] 37.4.3 Fix debug-session.ts coverage (21.1% → 90%)
+
     - Refactor debug-session tests to use WebSocket mocks
     - Test session lifecycle (start, pause, resume, stop)
     - Test breakpoint operations integration
@@ -1358,8 +1538,9 @@
     - Test profiling operations integration
     - Add 100+ tests to cover all code paths
     - _Requirements: Enterprise quality, 2.1-2.6, 8.2_
-  
+
   - [x] 36.4.4 Complete test-runner and shutdown-handler coverage
+
     - **test-runner.ts (74.47% → 90%):**
       - Add tests for uncovered parsing edge cases (lines 72-105)
       - Test inspector attachment with actual WebSocket URL parsing
@@ -1374,6 +1555,7 @@
     - _Requirements: Enterprise quality, 6.1-6.5, Production readiness_
 
   - [x] 36.5 Improve branch coverage across all modules (P2 - Medium Priority)
+
     - Target 85% branch coverage for all modules
     - Focus on conditional logic and error paths
     - Add edge case tests
@@ -1381,6 +1563,7 @@
     - _Requirements: Enterprise quality_
 
   - [x] 36.6 Re-run coverage validation
+
     - ✅ Run full test suite with coverage
     - ✅ Verify 90% line coverage achieved: **93.71%** (target: 90%)
     - ⚠️ Verify 85% branch coverage: **82.51%** (target: 85%, gap: 2.49%)

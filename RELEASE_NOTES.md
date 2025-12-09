@@ -6,7 +6,6 @@
 
 No changes recorded.
 
-
 ## 📦 Installation
 
 ### NPM (Recommended)
@@ -48,8 +47,8 @@ Move-Item ts-mcp-server-win-x64.exe C:\Windows\System32\ts-mcp-server.exe
 ### Docker
 
 ```bash
-docker pull digidefiance/mcp-debugger-server:--from=v1.0.0
-docker run -it digidefiance/mcp-debugger-server:--from=v1.0.0
+docker pull digitaldefiance/mcp-debugger-server:--from=v1.0.0
+docker run -it digitaldefiance/mcp-debugger-server:--from=v1.0.0
 ```
 
 ## 🚀 Quick Start

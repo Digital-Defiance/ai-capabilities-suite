@@ -45,8 +45,8 @@ Move-Item ts-mcp-server-win-x64.exe C:\Windows\System32\ts-mcp-server.exe
 ### Docker
 
 ```bash
-docker pull digidefiance/mcp-debugger-server:{VERSION}
-docker run -it digidefiance/mcp-debugger-server:{VERSION}
+docker pull digitaldefiance/mcp-debugger-server:{VERSION}
+docker run -it digitaldefiance/mcp-debugger-server:{VERSION}
 ```
 
 ## 🚀 Quick Start
