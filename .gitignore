@@ -4,6 +4,8 @@ dist
 build
 binaries
 
+.vscode-test/
+
 # IDE
 .vscode
 .idea
@@ -64,3 +66,7 @@ coverage
 
 # Nx (no longer used)
 /.nx/
+
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md

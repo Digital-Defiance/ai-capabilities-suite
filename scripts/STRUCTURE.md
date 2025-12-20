@@ -28,8 +28,8 @@ scripts/
 │       └── vscode-publisher.js        # (To be created)
 │
 ├── release-config/                     # Package configurations
-│   ├── debugger.json                   # MCP Debugger config
-│   └── screenshot.json                 # MCP Screenshot config
+│   ├── debugger.json                   # MCP ACS Debugger config
+│   └── screenshot.json                 # MCP ACS Screenshot config
 │
 └── releases/                           # Release artifacts (gitignored)
     └── .gitignore                      # Ignore logs and manifests
@@ -40,7 +40,9 @@ scripts/
 ### Configuration Files
 
 #### `scripts/release-config/debugger.json`
-Configuration for MCP Debugger package including:
+
+Configuration for MCP ACS Debugger package including:
+
 - Package names and directories
 - Build/test commands (using Nx)
 - Version sync patterns for 6 files
@@ -48,7 +50,9 @@ Configuration for MCP Debugger package including:
 - GitHub release template
 
 #### `scripts/release-config/screenshot.json`
-Configuration for MCP Screenshot package including:
+
+Configuration for MCP ACS Screenshot package including:
+
 - Package names and directories
 - Build/test commands (using Nx)
 - Version sync patterns for 6 files
@@ -58,7 +62,9 @@ Configuration for MCP Screenshot package including:
 ### Type Definitions
 
 #### `scripts/release-lib/types.js`
+
 Comprehensive JSDoc type definitions for:
+
 - Configuration types (ReleaseConfig, VersionSyncFile)
 - Options types (ReleaseOptions)
 - Result types (BuildResult, PublishResult, etc.)
@@ -73,7 +79,9 @@ Total: 20+ type definitions for IDE support and type safety
 ### Documentation
 
 #### `scripts/README.md`
+
 Main documentation covering:
+
 - Overview and features
 - Quick start guide
 - Command reference (release.js, set-version.js)
@@ -87,7 +95,9 @@ Main documentation covering:
 - Development guide
 
 #### `scripts/release-lib/README.md`
+
 Module documentation covering:
+
 - Architecture diagram
 - Module descriptions
 - Usage instructions
@@ -95,31 +105,40 @@ Module documentation covering:
 - Configuration reference
 
 #### `scripts/STRUCTURE.md`
+
 This file - documents the project structure
 
 ### Directory Placeholders
 
 #### `scripts/release-lib/builders/.gitkeep`
+
 Placeholder for builder modules with comments listing:
+
 - npm-builder.js
 - binary-builder.js
 - vscode-builder.js
 
 #### `scripts/release-lib/publishers/.gitkeep`
+
 Placeholder for publisher modules with comments listing:
+
 - npm-publisher.js
 - docker-publisher.js
 - vscode-publisher.js
 
 #### `scripts/releases/.gitignore`
+
 Gitignore file to exclude release artifacts:
+
 - *.log (release logs)
 - *-manifest.json (release manifests)
 
 ## Key Features
 
 ### Version Synchronization
+
 Both configurations define patterns to sync versions across:
+
 - Main package.json
 - VSCode extension package.json
 - VSCode extension dependencies
@@ -128,14 +147,18 @@ Both configurations define patterns to sync versions across:
 - docker-compose.yml files
 
 ### Nx Integration
+
 Commands use Nx for building and testing:
+
 - `nx test mcp-debugger-server`
 - `nx build mcp-debugger-server`
 - `nx test mcp-screenshot`
 - `nx build mcp-screenshot`
 
 ### Binary Builds
+
 Debugger configuration includes binary builds for:
+
 - node18-linux-x64
 - node18-macos-x64
 - node18-win-x64
@@ -143,7 +166,9 @@ Debugger configuration includes binary builds for:
 Screenshot configuration has `buildBinaries: false`
 
 ### GitHub Release Templates
+
 Both configurations include comprehensive release templates with:
+
 - Version header
 - Changelog placeholder
 - Installation instructions (NPM, Docker, VSCode)
@@ -188,6 +213,7 @@ The following modules need to be implemented (in order):
 ## Validation
 
 All created files have been validated:
+
 - ✅ JSON files are valid JSON
 - ✅ JavaScript files have valid syntax
 - ✅ Directory structure is complete

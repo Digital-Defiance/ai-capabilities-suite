@@ -1,4 +1,4 @@
-name: Docker Image CI/CD - MCP Screenshot
+name: Docker Image CI/CD - MCP ACS Screenshot
 
 on:
   push:

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Setting up TS-MCP (TypeScript MCP Debugger) monorepo..."
+echo "🚀 Setting up TS-MCP (TypeScript MCP ACS Debugger) monorepo..."
 
 # Navigate to repos directory
 cd ~/source/repos/DigitalBurnbag

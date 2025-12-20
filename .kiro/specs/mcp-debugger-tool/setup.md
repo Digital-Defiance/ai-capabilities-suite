@@ -1,8 +1,8 @@
-# MCP Debugger - Monorepo Setup
+# MCP ACS Debugger - Monorepo Setup
 
 ## Project Structure
 
-Create a new standalone Nx monorepo for TS-MCP (TypeScript MCP Debugger):
+Create a new standalone Nx monorepo for TS-MCP (TypeScript MCP ACS Debugger):
 
 ```
 ts-mcp/                          # New repo root
@@ -328,7 +328,7 @@ coverage/
 ## README.md
 
 ```markdown
-# TS-MCP (TypeScript MCP Debugger)
+# TS-MCP (TypeScript MCP ACS Debugger)
 
 A Model Context Protocol (MCP) server that provides debugging capabilities for Node.js/TypeScript applications.
 

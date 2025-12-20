@@ -154,6 +154,18 @@ function getProcessFileUpdates(version: string): FileUpdate[] {
     },
     {
       package: "process",
+      path: path.join(PROCESS_DIR, "Dockerfile"),
+      pattern: /npm install -g @ai-capabilities-suite\/mcp-process@[^\s]+/,
+      replacement: `npm install -g @ai-capabilities-suite/mcp-process@${version}`,
+    },
+    {
+      package: "process",
+      path: path.join(PROCESS_DIR, "Dockerfile"),
+      pattern: /org\.opencontainers\.image\.version="[^"]+"/,
+      replacement: `org.opencontainers.image.version="${version}"`,
+    },
+    {
+      package: "process",
       path: path.join(PROCESS_DIR, ".github", "workflows", "ci.yml"),
       pattern: /repository: Digital-Defiance\/mcp-process/,
       replacement: `repository: Digital-Defiance/mcp-process`,
@@ -202,6 +214,19 @@ function getFilesystemFileUpdates(version: string): FileUpdate[] {
       path: path.join(FILESYSTEM_DIR, "src", "lib", "MCPServer.ts"),
       pattern: /version: "[^"]+"/,
       replacement: `version: "${version}"`,
+    },
+    {
+      package: "filesystem",
+      path: path.join(FILESYSTEM_DIR, "Dockerfile"),
+      pattern:
+        /npm install -g @ai-capabilities-suite\/mcp-filesystem@[0-9]+\.[0-9]+\.[0-9]+/,
+      replacement: `npm install -g @ai-capabilities-suite/mcp-filesystem@${version}`,
+    },
+    {
+      package: "filesystem",
+      path: path.join(FILESYSTEM_DIR, "Dockerfile"),
+      pattern: /org\.opencontainers\.image\.version="[^"]+"/,
+      replacement: `org.opencontainers.image.version="${version}"`,
     },
     {
       package: "filesystem",

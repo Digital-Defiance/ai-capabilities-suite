@@ -1,4 +1,4 @@
-# MCP Debugger Tool - Implementation Plan
+# MCP ACS Debugger Tool - Implementation Plan
 
 - [ ] 1. Set up project structure and core interfaces
 
@@ -1098,7 +1098,7 @@
 
   - [ ] 29.1 Review Docker MCP Registry contribution guidelines
 
-    - Read https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
+    - Read <https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md>
     - Understand submission requirements and format
     - Review existing MCP server examples in the registry
     - _Requirements: Community contribution_

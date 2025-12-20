@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Build standalone binaries for the MCP Debugger Server
+ * Build standalone binaries for the MCP ACS Debugger Server
  *
  * This script uses pkg to create standalone executables for:
  * - Linux (x64)

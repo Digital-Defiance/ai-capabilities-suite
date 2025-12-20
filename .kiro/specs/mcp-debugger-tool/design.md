@@ -1,4 +1,4 @@
-# MCP Debugger Tool - Design
+# MCP ACS Debugger Tool - Design
 
 ## Architecture
 
@@ -10,7 +10,7 @@
          │ MCP Protocol
          │
 ┌────────▼────────┐
-│  MCP Debugger   │
+│  MCP ACS Debugger   │
 │     Server      │
 └────────┬────────┘
          │ Inspector Protocol (CDP)
@@ -25,30 +25,35 @@
 ## Core Components
 
 ### 1. MCP Server
+
 - Implements MCP protocol
 - Exposes debugging tools
 - Manages debug sessions
 - Handles tool calls from AI agent
 
 ### 2. Inspector Client
+
 - Connects to Node.js Inspector
 - Sends CDP commands
 - Receives CDP events
 - Manages WebSocket connection
 
 ### 3. Session Manager
+
 - Tracks active debug sessions
 - Maps session IDs to processes
 - Handles session lifecycle
 - Cleans up resources
 
 ### 4. Breakpoint Manager
+
 - Stores breakpoint definitions
 - Resolves file paths to script IDs
 - Handles source maps
 - Manages breakpoint state
 
 ### 5. Hang Detector
+
 - Monitors process execution
 - Detects infinite loops
 - Samples call stack periodically
@@ -384,96 +389,119 @@ class DebugSession {
 *A property is a characteristic or behavior that should hold true across all valid executions of a system—essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
 
 ### Property 1: Breakpoint creation and retrieval consistency
+
 *For any* valid file path and line number, when a breakpoint is created at that location, then retrieving the breakpoint list should include that breakpoint with the correct file path and line number.
 **Validates: Requirements 1.1, 1.3**
 
 ### Property 2: Conditional breakpoint evaluation
+
 *For any* conditional breakpoint with a valid condition expression, the Target Process should only pause at that breakpoint when the condition evaluates to true.
 **Validates: Requirements 1.2**
 
 ### Property 3: Breakpoint removal completeness
+
 *For any* breakpoint that exists in the system, when that breakpoint is removed by its identifier, then subsequent breakpoint list retrievals should not include that breakpoint.
 **Validates: Requirements 1.4**
 
 ### Property 4: Breakpoint toggle preserves identity
+
 *For any* breakpoint, when its state is toggled between enabled and disabled, the breakpoint should remain in the breakpoint list with the same identifier and location but with updated state.
 **Validates: Requirements 1.5**
 
 ### Property 5: Process start with inspector attachment
+
 *For any* valid Node.js command with arguments, when the MCP Server starts that command, then the resulting process should have the Inspector Protocol attached and be in a paused state.
 **Validates: Requirements 2.1**
 
 ### Property 6: Step operations maintain execution flow
+
 *For any* paused Target Process, when a step operation (step over, step into, or step out) is executed, then the process should pause at a valid source location that is reachable from the previous location according to the step semantics.
 **Validates: Requirements 2.3, 2.4, 2.5**
 
 ### Property 7: Object inspection completeness
+
 *For any* object reference in a paused Target Process, when that object is inspected, then all enumerable properties of that object should be returned with their current values.
 **Validates: Requirements 3.3**
 
 ### Property 8: Expression evaluation correctness
+
 *For any* valid JavaScript expression and paused Target Process, when that expression is evaluated in the current execution context, then the result should match what would be computed if the expression were executed at that point in the code.
 **Validates: Requirements 3.4**
 
 ### Property 9: Variable watch notification
+
 *For any* watched variable, when that variable's value changes during execution, then the MCP Server should report the change with the old and new values.
 **Validates: Requirements 3.5**
 
 ### Property 10: Stack frame context switching
+
 *For any* valid stack frame index in a paused Target Process, when the context is switched to that frame, then subsequent variable inspections should return variables from that frame's scope, not from other frames.
 **Validates: Requirements 4.2, 4.3**
 
 ### Property 11: Timeout-based hang detection
+
 *For any* Target Process and specified timeout duration, if the process executes for longer than the timeout without completing, then the MCP Server should pause the process and report a hang condition with the current call stack.
 **Validates: Requirements 5.1, 5.2**
 
 ### Property 12: Infinite loop detection via sampling
+
 *For any* Target Process being monitored with a sample interval, if the execution location remains unchanged across consecutive samples for the specified duration, then the MCP Server should report an infinite loop condition with the loop location.
 **Validates: Requirements 5.3, 5.4**
 
 ### Property 13: Test output capture completeness
+
 *For any* test execution, all output written to stdout and stderr by the test process should be captured and returned by the MCP Server.
 **Validates: Requirements 6.4**
 
 ### Property 14: Test failure information completeness
+
 *For any* failing test, the MCP Server should return the failure message, complete stack trace, and execution context including variable values at the failure point.
 **Validates: Requirements 6.5**
 
 ### Property 15: Source map round-trip consistency
+
 *For any* TypeScript source location with a valid source map, mapping that location to JavaScript and then back to TypeScript should yield the original location.
 **Validates: Requirements 7.2, 7.3**
 
 ### Property 16: Source map variable name preservation
+
 *For any* variable in a TypeScript source file with a valid source map, when that variable is inspected during debugging, the variable name should match the name in the TypeScript source, not the potentially mangled JavaScript name.
 **Validates: Requirements 7.4**
 
 ### Property 17: Crash detection and cleanup
+
 *For any* Debug Session, if the Target Process crashes or terminates unexpectedly, then the MCP Server should detect the termination, clean up all debugging resources, and report the error without leaving orphaned resources.
 **Validates: Requirements 8.1, 8.2**
 
 ### Property 18: Error handling without process crash
+
 *For any* invalid operation (invalid breakpoint location, invalid expression evaluation), the MCP Server should return a clear error message without causing the Target Process to crash or become unresponsive.
 **Validates: Requirements 8.3, 8.4**
 
 ### Property 19: Debug session isolation
+
 *For any* two concurrent Debug Sessions, operations performed on one session should not affect the state, breakpoints, or execution of the other session.
 **Validates: Requirements 8.5**
 
 ### Property 20: Response format consistency
+
 *For any* debugging operation, the MCP Server should return a structured JSON response containing an operation status field and either a results object or an error object with code, message, and context.
 **Validates: Requirements 9.1, 9.2**
 
 ### Property 21: Complex object serialization with type information
+
 *For any* complex object (arrays, nested objects, functions) returned from variable inspection, the serialized representation should include type information for each value and property.
 **Validates: Requirements 9.3**
 
 ### Property 22: Call stack absolute path requirement
+
 *For any* call stack returned by the MCP Server, every stack frame should include an absolute file path, not a relative path.
 **Validates: Requirements 9.4**
 
 ## Testing Strategy
 
 ### Unit Tests
+
 - Test CDP command formatting
 - Test source map resolution
 - Test breakpoint management
@@ -482,6 +510,7 @@ class DebugSession {
 - Test object serialization
 
 ### Property-Based Tests
+
 - Use fast-check library for TypeScript property-based testing
 - Each property test should run a minimum of 100 iterations
 - Each property-based test must be tagged with a comment referencing the correctness property from this design document
@@ -494,6 +523,7 @@ class DebugSession {
   - Error handling without crashes
 
 ### Integration Tests
+
 - Test with simple Node.js script
 - Test with TypeScript file
 - Test with Jest test
@@ -503,7 +533,7 @@ class DebugSession {
 ### Example Test Cases
 
 ```typescript
-describe('MCP Debugger', () => {
+describe('MCP ACS Debugger', () => {
   it('should set breakpoint and pause execution', async () => {
     const session = await debugger.start({
       command: 'node',

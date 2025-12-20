@@ -1,5 +1,5 @@
-# MCP Debugger Server - Windows Installation Script
-# This script downloads and installs the MCP Debugger Server binary for Windows
+# MCP ACS Debugger Server - Windows Installation Script
+# This script downloads and installs the MCP ACS Debugger Server binary for Windows
 
 param(
     [string]$InstallDir = "$env:ProgramFiles\ts-mcp-server",
@@ -99,7 +99,7 @@ try {
     }
 
     Write-ColorOutput "`n✓ Installation successful!" "Green"
-    Write-ColorOutput "`nMCP Debugger Server has been installed to $InstallDir" "White"
+    Write-ColorOutput "`nMCP ACS Debugger Server has been installed to $InstallDir" "White"
     Write-ColorOutput "`nUsage:" "White"
     Write-ColorOutput "  ts-mcp-server --help" "Cyan"
     Write-ColorOutput "`nTo get started, run:" "White"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# MCP Debugger Server - Linux Installation Script
-# This script downloads and installs the MCP Debugger Server binary for Linux
+# MCP ACS Debugger Server - Linux Installation Script
+# This script downloads and installs the MCP ACS Debugger Server binary for Linux
 
 set -e
 
@@ -84,7 +84,7 @@ rm -rf "$TMP_DIR"
 if command -v "$INSTALL_NAME" &> /dev/null; then
     echo -e "${GREEN}✓ Installation successful!${NC}"
     echo ""
-    echo "MCP Debugger Server has been installed to ${INSTALL_DIR}/${INSTALL_NAME}"
+    echo "MCP ACS Debugger Server has been installed to ${INSTALL_DIR}/${INSTALL_NAME}"
     echo ""
     echo "Usage:"
     echo "  ${INSTALL_NAME} --help"

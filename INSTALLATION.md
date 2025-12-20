@@ -1,6 +1,6 @@
-# MCP Debugger Server - Installation Guide
+# MCP ACS Debugger Server - Installation Guide
 
-This guide provides comprehensive installation instructions for the MCP Debugger Server across all supported platforms.
+This guide provides comprehensive installation instructions for the MCP ACS Debugger Server across all supported platforms.
 
 ## Table of Contents
 
@@ -50,7 +50,7 @@ iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-sui
 
 ### NPM (Recommended)
 
-The easiest way to install the MCP Debugger Server is via NPM:
+The easiest way to install the MCP ACS Debugger Server is via NPM:
 
 ```bash
 # Install globally
@@ -98,7 +98,7 @@ Visit the [latest release page](https://github.com/digital-defiance/ai-capabilit
 
 ### Docker
 
-Run the MCP Debugger Server in a Docker container:
+Run the MCP ACS Debugger Server in a Docker container:
 
 ```bash
 # Pull the latest image
@@ -194,6 +194,7 @@ curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-su
    ```
 
 7. Verify installation:
+
    ```bash
    ts-mcp-server --version
    ```
@@ -251,6 +252,7 @@ curl -fsSL https://raw.githubusercontent.com/digital-defiance/ai-capabilities-su
    ```
 
 8. Verify installation:
+
    ```bash
    ts-mcp-server --version
    ```
@@ -304,6 +306,7 @@ iwr -useb https://raw.githubusercontent.com/digital-defiance/ai-capabilities-sui
    ```
 
 6. Verify installation:
+
    ```powershell
    ts-mcp-server --version
    ```
@@ -464,6 +467,7 @@ If the binary doesn't work:
    - Windows: Windows 10 or higher
 
 2. Try the NPM installation instead:
+
    ```bash
    npm install -g @ai-capabilities-suite/mcp-debugger-server
    ```
@@ -501,7 +505,7 @@ docker rmi digitaldefiance/mcp-debugger-server
 - **Documentation:** [README.md](packages/mcp-debugger-server/README.md)
 - **Issues:** [GitHub Issues](https://github.com/digital-defiance/ai-capabilities-suite/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
-- **Email:** info@digitaldefiance.org
+- **Email:** <info@digitaldefiance.org>
 
 ## Next Steps
 

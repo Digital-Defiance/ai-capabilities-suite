@@ -52,15 +52,18 @@ node scripts/set-version.js screenshot 1.0.1
 Main release orchestrator that handles the complete release process.
 
 **Usage:**
+
 ```bash
 node scripts/release.js <package> <version> [options]
 ```
 
 **Arguments:**
+
 - `package` - Package to release: `debugger` or `screenshot`
 - `version` - Version to release (semver format, e.g., `1.2.0`)
 
 **Options:**
+
 - `--dry-run` - Simulate release without publishing
 - `--skip-tests` - Skip test execution (not recommended)
 - `--skip-build` - Skip build step (not recommended)
@@ -70,6 +73,7 @@ node scripts/release.js <package> <version> [options]
 - `--log-file <path>` - Custom log file path
 
 **Examples:**
+
 ```bash
 # Standard release
 node scripts/release.js debugger 1.2.0
@@ -89,15 +93,18 @@ node scripts/release.js debugger 1.2.0 --non-interactive --docker
 Updates version numbers across all files without performing a release.
 
 **Usage:**
+
 ```bash
 node scripts/set-version.js <package> <version>
 ```
 
 **Arguments:**
+
 - `package` - Package to update: `debugger` or `screenshot`
 - `version` - New version (semver format)
 
 **Examples:**
+
 ```bash
 # Update debugger version
 node scripts/set-version.js debugger 1.2.0
@@ -107,6 +114,7 @@ node scripts/set-version.js screenshot 1.0.1
 ```
 
 This command:
+
 1. Updates the package.json version
 2. Runs sync-versions script to update all references
 3. Commits the changes to Git
@@ -146,10 +154,11 @@ If any step fails, the system can rollback published artifacts.
 
 Package configurations are stored in `release-config/`:
 
-- `debugger.json` - MCP Debugger configuration
-- `screenshot.json` - MCP Screenshot configuration
+- `debugger.json` - MCP ACS Debugger configuration
+- `screenshot.json` - MCP ACS Screenshot configuration
 
 Each configuration defines:
+
 - Package names and paths
 - Build/test commands
 - Files to sync versions in
@@ -184,6 +193,7 @@ node scripts/release.js debugger 1.2.0 --dry-run
 ```
 
 Dry run mode:
+
 - ✅ Runs all pre-flight checks
 - ✅ Builds all artifacts
 - ✅ Simulates publishing (npm pack instead of publish)
@@ -206,9 +216,11 @@ Manual rollback may be needed for some operations.
 ## Logs
 
 Release logs are saved to:
+
 - `releases/<package>-<version>-<timestamp>.log`
 
 Logs include:
+
 - Timestamps for each step
 - Command outputs
 - Error messages
@@ -217,9 +229,11 @@ Logs include:
 ## Release Manifest
 
 Each release creates a manifest file:
+
 - `releases/<package>-<version>-manifest.json`
 
 The manifest contains:
+
 - Package and version info
 - Published artifact URLs
 - Verification results
@@ -231,6 +245,7 @@ The manifest contains:
 ### Pre-flight Check Failures
 
 **Dirty Git State:**
+
 ```bash
 git status
 git add .
@@ -238,12 +253,14 @@ git commit -m "Prepare for release"
 ```
 
 **Tests Failing:**
+
 ```bash
 npm test
 # Fix failing tests before releasing
 ```
 
 **Missing Credentials:**
+
 ```bash
 # Check environment variables
 echo $NPM_TOKEN
@@ -254,6 +271,7 @@ echo $GITHUB_TOKEN
 ### Publishing Failures
 
 If publishing fails, check:
+
 1. Credentials are valid
 2. Package name is available
 3. Version doesn't already exist
@@ -262,6 +280,7 @@ If publishing fails, check:
 ### Verification Failures
 
 If verification fails:
+
 1. Wait a few minutes (propagation delay)
 2. Check registry status pages
 3. Manually verify URLs in manifest
@@ -330,8 +349,9 @@ npm run test:property
 ## Support
 
 For issues or questions:
-- GitHub Issues: https://github.com/digital-defiance/ai-capabilities-suite/issues
-- Email: info@digitaldefiance.org
+
+- GitHub Issues: <https://github.com/digital-defiance/ai-capabilities-suite/issues>
+- Email: <info@digitaldefiance.org>
 
 ## License
 

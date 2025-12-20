@@ -1,4 +1,4 @@
-# MCP Debugger Server v--from=v1.0.0
+# MCP ACS Debugger Server v--from=v1.0.0
 
 ## 🎉 What's New
 
@@ -139,7 +139,7 @@ Found a bug? Please [open an issue](https://github.com/digital-defiance/ai-capab
 
 - [GitHub Discussions](https://github.com/digital-defiance/ai-capabilities-suite/discussions)
 - [Issue Tracker](https://github.com/digital-defiance/ai-capabilities-suite/issues)
-- Email: info@digitaldefiance.org
+- Email: <info@digitaldefiance.org>
 
 ## 📄 License
 
@@ -147,4 +147,4 @@ MIT License - see [LICENSE](https://github.com/digital-defiance/ai-capabilities-
 
 ---
 
-**Full Changelog**: https://github.com/digital-defiance/ai-capabilities-suite/compare/v--to=v1.1.0...v--from=v1.0.0
+**Full Changelog**: <https://github.com/digital-defiance/ai-capabilities-suite/compare/v--to=v1.1.0...v--from=v1.0.0>

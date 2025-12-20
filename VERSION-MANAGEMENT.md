@@ -8,10 +8,12 @@ The monorepo contains multiple packages with interdependencies. To maintain cons
 
 ## Version Sources of Truth
 
-### MCP Debugger Server
+### MCP ACS Debugger Server
+
 **Source:** `packages/mcp-debugger-server/package.json`
 
 This version is automatically synced to:
+
 - `packages/mcp-debugger-server/src/cli.ts` - CLI version constant
 - `packages/mcp-debugger-server/src/lib/mcp-server.ts` - Server version
 - `packages/mcp-debugger-server/server.json` - MCP registry metadata
@@ -20,12 +22,14 @@ This version is automatically synced to:
 - `packages/mcp-debugger-server/Dockerfile.local` - Local Docker image label
 - `packages/vscode-mcp-debugger/package.json` - VS Code extension dependency
 
-### MCP Screenshot
+### MCP ACS Screenshot
+
 **Source:** `packages/mcp-screenshot/package.json`
 
 Currently independent, no automatic syncing needed.
 
 ### VS Code Extension
+
 **Source:** `packages/vscode-mcp-debugger/package.json`
 
 The extension version is independent, but its dependency on `@ai-capabilities-suite/mcp-debugger-server` is automatically synced.
@@ -37,12 +41,14 @@ The extension version is independent, but its dependency on `@ai-capabilities-su
 The `scripts/sync-versions.js` script automatically updates all version references when the source package.json changes.
 
 **Usage:**
+
 ```bash
 # Sync all versions from package.json
 npm run sync-versions
 ```
 
 **When to run:**
+
 - After manually updating `packages/mcp-debugger-server/package.json`
 - After running `npm version` in the debugger-server package
 - Before committing version changes
@@ -51,6 +57,7 @@ npm run sync-versions
 ### Automatic Syncing
 
 The script is automatically triggered:
+
 1. **After version bump:** When you run `npm version` in the debugger-server package
 2. **In CI/CD:** During the release workflow
 3. **Pre-commit hook:** (Optional - can be added)
@@ -114,6 +121,7 @@ git commit -m "chore: bump version to X.Y.Z"
 ### Pre-commit Check (Optional)
 
 Add to `.husky/pre-commit`:
+
 ```bash
 #!/bin/sh
 npm run sync-versions
@@ -123,6 +131,7 @@ git add packages/mcp-debugger-server packages/vscode-mcp-debugger
 ### CI Check
 
 The CI workflow verifies version consistency:
+
 ```bash
 # Check if versions are in sync
 node scripts/sync-versions.js --check
@@ -133,6 +142,7 @@ node scripts/sync-versions.js --check
 ### Versions are out of sync
 
 Run the sync script:
+
 ```bash
 npm run sync-versions
 ```
@@ -140,6 +150,7 @@ npm run sync-versions
 ### Script fails
 
 Check that all files exist:
+
 ```bash
 ls -la packages/mcp-debugger-server/src/cli.ts
 ls -la packages/mcp-debugger-server/src/lib/mcp-server.ts
@@ -149,6 +160,7 @@ ls -la packages/vscode-mcp-debugger/package.json
 ### Need to add a new file to sync
 
 Edit `scripts/sync-versions.js` and add to the `filesToUpdate` array:
+
 ```javascript
 {
   path: path.join(DEBUGGER_SERVER_DIR, 'path', 'to', 'file.ts'),
@@ -192,6 +204,7 @@ The repository has two release workflows that **only run for debugger changes**:
 ### Path Filtering
 
 Both workflows use path filters to only run when debugger-related files change:
+
 ```yaml
 on:
   push:
@@ -201,6 +214,7 @@ on:
 ```
 
 This ensures:
+
 - Screenshot changes don't trigger debugger releases
 - CI resources are used efficiently
 - Clear separation of concerns

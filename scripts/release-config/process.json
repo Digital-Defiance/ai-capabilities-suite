@@ -20,5 +20,5 @@
       "replacement": "@ai-capabilities-suite/mcp-process@$VERSION"
     }
   ],
-  "githubReleaseTemplate": "## MCP Process v$VERSION\n\n### What's Changed\n\n$CHANGELOG\n\n### Installation\n\n**NPM:**\n```bash\nnpm install -g @ai-capabilities-suite/mcp-process@$VERSION\n```\n\n### Documentation\n\n- [README](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-process/README.md)"
+  "githubReleaseTemplate": "## MCP ACS Process v$VERSION\n\n### What's Changed\n\n$CHANGELOG\n\n### Installation\n\n**NPM:**\n```bash\nnpm install -g @ai-capabilities-suite/mcp-process@$VERSION\n```\n\n### Documentation\n\n- [README](https://github.com/digital-defiance/ai-capabilities-suite/blob/main/packages/mcp-process/README.md)"
 }

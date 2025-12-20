@@ -66,6 +66,7 @@ The `filesToSync` array specifies which files should have their version numbers 
 #### Common Patterns
 
 **package.json version:**
+
 ```json
 {
   "path": "packages/your-package/package.json",
@@ -75,6 +76,7 @@ The `filesToSync` array specifies which files should have their version numbers 
 ```
 
 **Dependency version in package.json:**
+
 ```json
 {
   "path": "packages/your-extension/package.json",
@@ -84,6 +86,7 @@ The `filesToSync` array specifies which files should have their version numbers 
 ```
 
 **README installation instructions:**
+
 ```json
 {
   "path": "packages/your-package/README.md",
@@ -93,6 +96,7 @@ The `filesToSync` array specifies which files should have their version numbers 
 ```
 
 **Docker image tags:**
+
 ```json
 {
   "path": "packages/your-package/docker-compose.yml",
@@ -109,6 +113,7 @@ The `githubReleaseTemplate` field supports these placeholders:
 - **$CHANGELOG**: Auto-generated changelog from commits
 
 Example template:
+
 ```markdown
 ## Your Package v$VERSION
 
@@ -171,13 +176,14 @@ node scripts/release.js your-package-name 1.0.0
       "replacement": "\"version\": \"$VERSION\""
     }
   ],
-  "githubReleaseTemplate": "## MCP Process v$VERSION\n\n$CHANGELOG"
+  "githubReleaseTemplate": "## MCP ACS Process v$VERSION\n\n$CHANGELOG"
 }
 ```
 
 ### Complex Package (With Binaries and VSCode Extension)
 
 See `scripts/release-config/debugger.json` for a complete example with:
+
 - Binary building for multiple platforms
 - VSCode extension
 - Multiple file syncs
@@ -221,6 +227,7 @@ This configuration-driven approach provides:
 ## Future Packages
 
 The system is ready to support any future packages you add to the monorepo:
+
 - mcp-filesystem
 - mcp-recording
 - Any other MCP servers or tools

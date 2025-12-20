@@ -205,7 +205,7 @@ jobs:
           else
             echo "## Initial Release" > CHANGELOG.md
             echo "" >> CHANGELOG.md
-            echo "First release of the MCP Debugger Server with 25+ debugging tools." >> CHANGELOG.md
+            echo "First release of the MCP ACS Debugger Server with 25+ debugging tools." >> CHANGELOG.md
           fi
 
           echo "" >> CHANGELOG.md
@@ -251,7 +251,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.version.outputs.tag }}
-          name: MCP Debugger Server v${{ steps.version.outputs.version }}
+          name: MCP ACS Debugger Server v${{ steps.version.outputs.version }}
           body_path: CHANGELOG.md
           draft: false
           prerelease: false

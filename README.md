@@ -41,7 +41,7 @@
 
 ---
 
-## 🎯 Now Available on VS Code Marketplace!
+## 🎯 Now Available on VS Code Marketplace
 
 ### **[⚡ Install the VS Code Extension →](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
 
@@ -189,7 +189,7 @@ The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** t
 
 **Comparison with Other Solutions:**
 
-| Feature                        | Our MCP ACS Debugger     | Other MCP Debuggers | VS Code Built-in     | Chrome DevTools      |
+| Feature                        | Our MCP ACS Debugger     | Other MCP ACS Debuggers | VS Code Built-in     | Chrome DevTools      |
 | ------------------------------ | ------------------------ | ------------------- | -------------------- | -------------------- |
 | **AI Agent Integration**       | ✅ Full MCP + VS Code    | ⚠️ Basic MCP only   | ❌ No AI integration | ❌ No AI integration |
 | **Number of Tools**            | ✅ 25+ tools             | ⚠️ 5-10 tools       | ⚠️ Limited API       | ⚠️ Manual only       |
@@ -330,8 +330,8 @@ node packages/mcp-debugger-server/dist/src/index.js
 - 👉 **[VS Code Extension Guide](https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger)**
 - 👉 **[Complete debugger documentation](./DEBUGGER-README.md)**
 - 👉 **[Production status report](./DEBUGGER-STATUS.md)**
-- 👉 **[MCP Debugger Server Repository](https://github.com/Digital-Defiance/mcp-debugger-server)**
-- 👉 **[MCP Debugger Core Repository](https://github.com/Digital-Defiance/mcp-debugger-core)**
+- 👉 **[MCP ACS Debugger Server Repository](https://github.com/Digital-Defiance/mcp-debugger-server)**
+- 👉 **[MCP ACS Debugger Core Repository](https://github.com/Digital-Defiance/mcp-debugger-core)**
 - 👉 **[VS Code Extension Repository](https://github.com/Digital-Defiance/vscode-mcp-debugger)**
 
 #### 📦 Installation & Usage
@@ -344,7 +344,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    - Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
    - Search for "MCP ACS Debugger"
    - Click Install
-   - Or visit: https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger
+   - Or visit: <https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger>
 
 2. **Start Debugging:**
 
@@ -355,6 +355,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    - Use GitHub Copilot to ask debugging questions
 
 3. **Use with Copilot:**
+
    ```
    You: "@workspace debug this failing test"
    Copilot: *Uses MCP debugger to investigate*
@@ -382,6 +383,7 @@ node packages/mcp-debugger-server/dist/src/index.js
    ```
 
 3. **Use with your AI agent:**
+
    ```
    You: "Debug my Node.js app"
    AI: *Uses MCP tools to start debugging session*
@@ -473,7 +475,7 @@ docker run -v $(pwd)/screenshots:/app/screenshots digitaldefiance/mcp-screenshot
 **VSCode Extension:**
 
 - Search "MCP ACS Screenshot" in VS Code Extensions
-- Or visit: https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot
+- Or visit: <https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot>
 
 #### 🎯 Revolutionary Use Cases
 

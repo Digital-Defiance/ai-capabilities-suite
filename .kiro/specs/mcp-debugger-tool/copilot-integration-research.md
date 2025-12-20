@@ -1,17 +1,19 @@
 # GitHub Copilot Integration Research
 
 ## Date: 2024
+
 ## Task: 29.3 Research GitHub Copilot integration
 
 ## Executive Summary
 
-Research completed on GitHub Copilot extension points and how Copilot can use MCP servers. The MCP Debugger Server is already Copilot-ready through the Model Context Protocol, which Copilot can discover and use automatically.
+Research completed on GitHub Copilot extension points and how Copilot can use MCP servers. The MCP ACS Debugger Server is already Copilot-ready through the Model Context Protocol, which Copilot can discover and use automatically.
 
 ## Key Findings
 
 ### 1. GitHub Copilot Extension Points
 
 #### Copilot Architecture
+
 GitHub Copilot integrates with VS Code through multiple layers:
 
 1. **Copilot Extension** (`GitHub.copilot`)
@@ -37,6 +39,7 @@ GitHub Copilot integrates with VS Code through multiple layers:
 #### Copilot Chat Features
 
 **Slash Commands**:
+
 - `/explain` - Explain code
 - `/fix` - Fix problems
 - `/tests` - Generate tests
@@ -44,6 +47,7 @@ GitHub Copilot integrates with VS Code through multiple layers:
 - Custom commands can be added via extensions
 
 **Context Providers**:
+
 - `#file` - Reference specific files
 - `#selection` - Reference selected code
 - `#editor` - Reference active editor
@@ -51,6 +55,7 @@ GitHub Copilot integrates with VS Code through multiple layers:
 - Custom context providers via extensions
 
 **Agent Mode**:
+
 - Copilot can act autonomously
 - Can use tools to accomplish tasks
 - Can make multiple tool calls in sequence
@@ -90,6 +95,7 @@ Or through workspace settings:
 #### Tool Discovery
 
 When Copilot starts, it:
+
 1. Connects to configured MCP servers
 2. Sends `tools/list` request
 3. Receives tool schemas with:
@@ -98,7 +104,8 @@ When Copilot starts, it:
    - Input schema (JSON Schema)
    - Output schema (optional)
 
-For the MCP Debugger Server, Copilot discovers 25+ tools:
+For the MCP ACS Debugger Server, Copilot discovers 25+ tools:
+
 - `debugger_start`
 - `debugger_set_breakpoint`
 - `debugger_continue`
@@ -125,6 +132,7 @@ When a user asks Copilot to debug code:
    - Selects appropriate tools
 
 3. **Tool Calls**:
+
    ```
    Copilot → MCP Server: debugger_start
    MCP Server → Copilot: { sessionId: "abc123" }
@@ -186,6 +194,7 @@ Copilot can autonomously:
 #### Debugging Workflows
 
 **Workflow 1: Find a Bug**
+
 ```
 User: "Find the bug in this code"
 
@@ -202,6 +211,7 @@ Copilot:
 ```
 
 **Workflow 2: Explain Behavior**
+
 ```
 User: "Why does this function return undefined?"
 
@@ -216,6 +226,7 @@ Copilot:
 ```
 
 **Workflow 3: Detect Hang**
+
 ```
 User: "This script seems to hang, can you check?"
 
@@ -229,6 +240,7 @@ Copilot:
 ```
 
 **Workflow 4: Performance Analysis**
+
 ```
 User: "Why is this function slow?"
 
@@ -241,7 +253,7 @@ Copilot:
 6. Suggests optimizations
 ```
 
-### 4. MCP Debugger Server Copilot Readiness
+### 4. MCP ACS Debugger Server Copilot Readiness
 
 #### ✅ Already Implemented
 
@@ -400,30 +412,35 @@ To optimize Copilot's use of the debugger, we can provide agent instructions:
 #### Test Scenarios
 
 1. **Basic Debugging**
+
    ```
    User: "Debug test.js"
    Expected: Copilot starts session, sets breakpoints, inspects variables
    ```
 
 2. **Bug Finding**
+
    ```
    User: "Find the bug in this function"
    Expected: Copilot analyzes code, debugs, identifies issue
    ```
 
 3. **Hang Detection**
+
    ```
    User: "Check if this script hangs"
    Expected: Copilot uses hang detection, reports results
    ```
 
 4. **Performance Analysis**
+
    ```
    User: "Why is this slow?"
    Expected: Copilot profiles code, identifies bottlenecks
    ```
 
 5. **Error Handling**
+
    ```
    User: "Debug a non-existent file"
    Expected: Copilot handles error gracefully, explains issue
@@ -470,7 +487,7 @@ To optimize Copilot's use of the debugger, we can provide agent instructions:
            │ stdio/JSON-RPC
            │
 ┌──────────▼──────────┐
-│  MCP Debugger       │
+│  MCP ACS Debugger       │
 │  Server             │
 └──────────┬──────────┘
            │
@@ -650,19 +667,22 @@ Test the following:
 ## Resources
 
 ### Documentation
+
 - [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [VS Code Extension API](https://code.visualstudio.com/api)
 - [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
 
 ### Existing Files
+
 - `packages/mcp-debugger-server/AI-AGENT-INTEGRATION.md` - AI agent integration guide
 - `packages/mcp-debugger-server/VSCODE-INTEGRATION.md` - VS Code integration guide
 - `packages/vscode-mcp-debugger/README.md` - Extension documentation
 
 ## Conclusion
 
-The MCP Debugger Server is fully Copilot-ready:
+The MCP ACS Debugger Server is fully Copilot-ready:
+
 - ✅ MCP protocol compliance
 - ✅ Complete tool schemas
 - ✅ Autonomous operation support

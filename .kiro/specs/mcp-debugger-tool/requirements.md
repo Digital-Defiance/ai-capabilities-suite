@@ -1,8 +1,8 @@
-# MCP Debugger Tool - Requirements Document
+# MCP ACS Debugger Tool - Requirements Document
 
 ## Introduction
 
-This document specifies requirements for a Model Context Protocol (MCP) server that provides debugging capabilities for Node.js and TypeScript applications. The MCP Debugger Server enables AI agents to interactively debug code by setting breakpoints, inspecting variables, stepping through execution, and detecting problematic runtime conditions such as hanging processes and infinite loops.
+This document specifies requirements for a Model Context Protocol (MCP) server that provides debugging capabilities for Node.js and TypeScript applications. The MCP ACS Debugger Server enables AI agents to interactively debug code by setting breakpoints, inspecting variables, stepping through execution, and detecting problematic runtime conditions such as hanging processes and infinite loops.
 
 ## Glossary
 

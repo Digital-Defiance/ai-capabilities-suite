@@ -1,19 +1,21 @@
 # VS Code MCP Integration Research
 
 ## Date: 2024
+
 ## Task: 29.1 Research VS Code MCP integration
 
 ## Executive Summary
 
-Research completed on VS Code extension requirements for MCP integration. The project already has a functional VS Code extension (`packages/vscode-mcp-debugger`) that integrates the MCP Debugger Server with VS Code and GitHub Copilot.
+Research completed on VS Code extension requirements for MCP integration. The project already has a functional VS Code extension (`packages/vscode-mcp-debugger`) that integrates the MCP ACS Debugger Server with VS Code and GitHub Copilot.
 
 ## Key Findings
 
 ### 1. VS Code Extension Requirements for MCP
 
 #### Extension Structure
+
 - **Package Type**: VS Code extension with TypeScript
-- **Activation Events**: 
+- **Activation Events**:
   - `onDebug` - Activates when debugging starts
   - `onLanguage:javascript` and `onLanguage:typescript` - Activates for JS/TS files
   - `onCommand:*` - Activates on specific commands
@@ -21,6 +23,7 @@ Research completed on VS Code extension requirements for MCP integration. The pr
 - **Minimum VS Code Version**: 1.85.0
 
 #### Required Components
+
 1. **Extension Manifest** (`package.json`):
    - Extension metadata (name, publisher, version)
    - Activation events
@@ -54,9 +57,11 @@ Research completed on VS Code extension requirements for MCP integration. The pr
 ### 2. VS Code Debugging API Compatibility
 
 #### Debug Adapter Protocol (DAP)
+
 The extension implements DAP by extending `DebugSession` from `@vscode/debugadapter`:
 
 **Supported DAP Features**:
+
 - ✅ Configuration done request
 - ✅ Evaluate for hovers
 - ✅ Conditional breakpoints
@@ -67,6 +72,7 @@ The extension implements DAP by extending `DebugSession` from `@vscode/debugadap
 - ❌ Restart frame (not supported)
 
 **DAP Request Handlers**:
+
 - `initializeRequest` - Initialize debug adapter capabilities
 - `launchRequest` - Start debug session
 - `setBreakPointsRequest` - Set/update breakpoints
@@ -83,6 +89,7 @@ The extension implements DAP by extending `DebugSession` from `@vscode/debugadap
 - `disconnectRequest` - Stop debugging
 
 #### MCP to DAP Mapping
+
 The debug adapter maps MCP tools to DAP operations:
 
 | DAP Operation | MCP Tool |
@@ -101,6 +108,7 @@ The debug adapter maps MCP tools to DAP operations:
 ### 3. Debug Adapter Protocol Integration
 
 #### Architecture
+
 ```
 ┌─────────────┐
 │   VS Code   │
@@ -128,6 +136,7 @@ The debug adapter maps MCP tools to DAP operations:
 ```
 
 #### Communication Flow
+
 1. **VS Code → Debug Adapter**: DAP requests (JSON-RPC over stdio)
 2. **Debug Adapter → MCP Client**: Tool call requests
 3. **MCP Client → MCP Server**: JSON-RPC over stdio
@@ -135,6 +144,7 @@ The debug adapter maps MCP tools to DAP operations:
 5. **Inspector → Node.js Process**: Native debugging
 
 #### Debug Configuration
+
 The extension provides debug configurations via `contributes.debuggers`:
 
 ```json
@@ -368,12 +378,14 @@ export class MCPDebugAdapter extends DebugSession {
 ## Resources
 
 ### Documentation
+
 - [VS Code Extension API](https://code.visualstudio.com/api)
 - [Debug Adapter Protocol](https://microsoft.github.io/debug-adapter-protocol/)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
 
 ### Existing Files
+
 - `packages/vscode-mcp-debugger/package.json` - Extension manifest
 - `packages/vscode-mcp-debugger/src/extension.ts` - Extension entry point
 - `packages/vscode-mcp-debugger/src/mcpClient.ts` - MCP client
@@ -386,7 +398,8 @@ export class MCPDebugAdapter extends DebugSession {
 
 ## Conclusion
 
-The VS Code extension for MCP Debugger is already well-implemented with:
+The VS Code extension for MCP ACS Debugger is already well-implemented with:
+
 - ✅ Full DAP implementation
 - ✅ MCP client integration
 - ✅ 25+ debugging tools exposed

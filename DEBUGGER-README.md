@@ -12,7 +12,7 @@
 
 ## 🎯 What We've Built: The Game Changer
 
-The **TypeScript MCP Debugger** is a feature-rich Model Context Protocol (MCP) debugging server, giving AI agents **25+ professional debugging tools** through a standardized interface. While other MCP debuggers exist, none offer our comprehensive feature set: advanced breakpoints, performance profiling, hang detection, enterprise security, and production-ready architecture.
+The **TypeScript MCP ACS Debugger** is a feature-rich Model Context Protocol (MCP) debugging server, giving AI agents **25+ professional debugging tools** through a standardized interface. While other MCP debuggers exist, none offer our comprehensive feature set: advanced breakpoints, performance profiling, hang detection, enterprise security, and production-ready architecture.
 
 ### 🔥 Why This Changes Everything
 
@@ -82,7 +82,7 @@ This isn't just a debugging tool—it's a **debugging platform** designed from t
               │ MCP Protocol (Standardized AI Interface)
               │
 ┌─────────────▼───────────────────────┐
-│        MCP Debugger Server          │  ← 25+ Professional debugging tools
+│        MCP ACS Debugger Server          │  ← 25+ Professional debugging tools
 │     (@ai-capabilities-suite/ts-mcp)       │
 └─────────────┬───────────────────────┘
               │ Chrome DevTools Protocol
