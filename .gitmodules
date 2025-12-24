@@ -43,3 +43,9 @@
 [submodule "packages/mcp-client-base"]
 	path = packages/mcp-client-base
 	url = https://github.com/Digital-Defiance/mcp-client-base.git
+[submodule "packages/mcp-testing"]
+	path = packages/mcp-testing
+	url = https://github.com/Digital-Defiance/mcp-testing.git
+[submodule "packages/vscode-mcp-acs-testing"]
+	path = packages/vscode-mcp-acs-testing
+	url = https://github.com/Digital-Defiance/vscode-mcp-acs-testing.git

@@ -544,25 +544,121 @@ AI: "Created detailed bug report with 5 screenshots showing error conditions, ex
 - 👉 **[Docker Deployment Guide](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/DOCKER-DEPLOYMENT.md)**
 - 👉 **[API Reference](https://github.com/Digital-Defiance/mcp-screenshot/blob/main/API.md)**
 
-### 🎥 **3. MCP Recording** (Planned)
+### 📁 **3. MCP Filesystem**
 
-**Enable AI to capture and analyze video** - **[Repository](https://github.com/Digital-Defiance/mcp-recording)**
+**Advanced file operations beyond basic I/O with strict security boundaries**
 
-- Screen recording with audio
-- Video encoding and optimization
-- Frame extraction and analysis
-- Automated demo generation
+**Repositories:** [MCP Filesystem](https://github.com/Digital-Defiance/ai-capabilities-suite/tree/main/packages/mcp-filesystem) | [VS Code Extension](https://github.com/Digital-Defiance/ai-capabilities-suite/tree/main/packages/vscode-mcp-acs-filesystem)
 
-### 📁 **4. MCP Filesystem** (Planned)
+[![NPM Package](https://img.shields.io/npm/v/@ai-capabilities-suite/mcp-filesystem?label=NPM&logo=npm)](https://www.npmjs.com/package/@ai-capabilities-suite/mcp-filesystem)
+[![VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/DigitalDefiance.mcp-acs-filesystem?label=VS%20Code%20Extension&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-filesystem)
 
-**Advanced file operations beyond basic I/O** - **[Repository](https://github.com/Digital-Defiance/mcp-filesystem)**
+**✨ Now available on NPM and VS Code Marketplace!**
 
-- Batch file operations
-- Directory watching and monitoring
-- File search and indexing
-- Permission management
+**The Problem:** AI agents needed advanced file operations beyond basic read/write, but without proper security boundaries, this posed significant risks—path traversal attacks, unauthorized access to system files, and exposure of sensitive credentials.
 
-### ⚙️ **5. MCP ACS Process**
+**The Solution:** AI agents now have **enterprise-grade filesystem operations** with 10 layers of security validation. From batch operations with atomic rollback to real-time directory watching, AI can now safely manage your workspace files.
+
+#### 🔥 Key Features
+
+**Advanced Operations:**
+
+- **Batch operations** - Execute multiple file operations atomically with rollback support
+- **Directory watching** - Monitor filesystem changes in real-time with event filtering
+- **File search & indexing** - Fast full-text search with metadata filtering
+- **Checksum operations** - Compute and verify file integrity (MD5, SHA-1, SHA-256, SHA-512)
+- **Symlink management** - Create and manage symbolic links within workspace boundaries
+- **Disk usage analysis** - Analyze directory sizes and identify large files
+- **Directory operations** - Recursive copy, sync, and atomic file replacement
+
+**Security (Defense-in-Depth):**
+
+- **Workspace jail** - All operations confined to configured workspace root
+- **10-layer path validation** - Multiple security checks prevent path traversal
+- **Hardcoded blocklists** - System paths and sensitive files always blocked (cannot be disabled)
+- **Rate limiting** - Configurable operation limits per minute
+- **Audit logging** - Complete operation tracking for compliance
+- **Platform-specific security** - Automatic OS-specific boundary enforcement
+
+#### 🛠️ 12 Professional Filesystem Tools
+
+1. **`fs_batch_operations`** - Execute multiple operations atomically with rollback
+2. **`fs_watch_directory`** - Monitor directories for real-time changes
+3. **`fs_get_watch_events`** - Retrieve accumulated filesystem events
+4. **`fs_stop_watch`** - Stop watch sessions and clean up resources
+5. **`fs_search_files`** - Search by name, content, or metadata
+6. **`fs_build_index`** - Build searchable index for fast searching
+7. **`fs_create_symlink`** - Create symbolic links within workspace
+8. **`fs_compute_checksum`** - Compute file checksums for integrity verification
+9. **`fs_verify_checksum`** - Verify file checksums match expected values
+10. **`fs_analyze_disk_usage`** - Analyze disk usage and identify large files
+11. **`fs_copy_directory`** - Recursively copy directories with options
+12. **`fs_sync_directory`** - Sync directories by copying only newer/missing files
+
+#### 🚀 Get Started
+
+**NPM Package:**
+
+```bash
+npm install -g @ai-capabilities-suite/mcp-filesystem
+mcp-filesystem --config ./mcp-filesystem-config.json
+```
+
+**VS Code Extension:**
+
+- Search "MCP ACS Filesystem" in VS Code Extensions
+- Or visit: <https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-filesystem>
+
+#### 🎯 Revolutionary Use Cases
+
+**"AI, backup all my TypeScript files"**
+
+```
+You: "Create atomic backup of all .ts files to backup folder"
+AI: *Uses batch operations with rollback*
+AI: "Backed up 47 TypeScript files (2.3 MB) atomically. All operations succeeded, no rollback needed."
+```
+
+**"AI, watch for changes and rebuild"**
+
+```
+You: "Watch src directory and notify me of changes"
+AI: *Starts directory watch with filters*
+AI: "Watching src/ recursively. Detected 3 changes: file1.ts modified, file2.ts created, file3.ts deleted."
+```
+
+**"AI, find all TODOs in the codebase"**
+
+```
+You: "Search for TODO comments in TypeScript files"
+AI: *Builds index and searches content*
+AI: "Found 23 TODO comments across 12 files. Most common: 'TODO: Add error handling' (5 occurrences)."
+```
+
+**"AI, verify file integrity"**
+
+```
+You: "Compute SHA-256 checksum for release.zip"
+AI: *Computes checksum*
+AI: "SHA-256: a3f5b8c2... File integrity verified against expected checksum."
+```
+
+**"AI, analyze disk usage"**
+
+```
+You: "What's taking up space in node_modules?"
+AI: *Analyzes disk usage*
+AI: "node_modules: 487 MB. Largest: webpack (45 MB), typescript (38 MB), @types/* (92 MB total)."
+```
+
+📚 **Documentation:**
+
+- 👉 **[MCP Filesystem Documentation](https://github.com/Digital-Defiance/ai-capabilities-suite/tree/main/packages/mcp-filesystem)**
+- 👉 **[VS Code Extension Documentation](https://github.com/Digital-Defiance/ai-capabilities-suite/tree/main/packages/vscode-mcp-acs-filesystem)**
+- 👉 **[Security Documentation](https://github.com/Digital-Defiance/ai-capabilities-suite/blob/main/packages/mcp-filesystem/SECURITY.md)**
+- 👉 **[Docker Deployment Guide](https://github.com/Digital-Defiance/ai-capabilities-suite/blob/main/packages/mcp-filesystem/DOCKER.md)**
+
+### ⚙️ **4. MCP ACS Process**
 
 **Enterprise-grade process management with strict security boundaries**
 
