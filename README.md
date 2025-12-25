@@ -39,6 +39,15 @@
 - ✅ Resource monitoring and service management
 - 🎯 **Kiro Superpower in development** - Intelligent process orchestration
 
+### 🎯 Akira
+
+**Spec-driven development for GitHub Copilot** | [Repository](https://github.com/Digital-Defiance/akira)
+
+- ✅ EARS-compliant requirements engineering
+- ✅ Property-based testing integration
+- ✅ Structured Requirements → Design → Tasks → Execution workflow
+- ✅ MCP-powered persistent context across chat sessions
+
 ---
 
 ## 🎯 Now Available on VS Code Marketplace
@@ -60,8 +69,6 @@ Our flagship MCP ACS Debugger is now available as a native VS Code extension, br
 
 ---
 
----
-
 ## 🤔 The Problem We're Solving
 
 **AI agents today are powerful but blind:**
@@ -78,7 +85,7 @@ Our flagship MCP ACS Debugger is now available as a native VS Code extension, br
 
 ## 🎯 What We've Built: The Complete Solution
 
-The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** that give AI agents professional-grade capabilities:
+The **AI Capability Extension Suite** provides **5 comprehensive MCP servers** that give AI agents professional-grade capabilities, plus **Akira**:
 
 ### 🐛 **1. MCP ACS Debugger**
 
@@ -1634,3 +1641,117 @@ Kiro: *Shows tools from mcp-screenshot, mcp-process, and mcp-debugger*
 - Use absolute path to config file in mcp.json
 - Verify file exists: `ls -la ./mcp-process-config.json`
 - Check JSON syntax: `cat mcp-process-config.json | jq`
+
+---
+
+### 🎯 **Akira**
+
+**Spec-driven development powered by GitHub Copilot and MCP**
+
+**Repository:** [Akira](https://github.com/Digital-Defiance/akira)
+
+**The Problem:** Traditional AI-assisted development lacks structure—requirements are vague, designs are inconsistent, and implementation happens without proper planning. AI agents generate code without understanding the full context or ensuring correctness.
+
+**The Solution:** Akira brings **professional software engineering methodology** to AI-assisted development. Using the Easy Approach to Requirements Syntax (EARS) and INCOSE quality rules, Akira guides AI through a structured workflow: Requirements → Design → Tasks → Execution. With Model Context Protocol (MCP) integration, specifications persist across chat sessions, ensuring consistency and enabling property-based testing.
+
+#### 🎨 Key Features
+
+**Structured Spec-Driven Workflow:**
+
+- **Requirements Phase** - Generate EARS-compliant requirements with INCOSE validation
+- **Design Phase** - Create technical designs with correctness properties
+- **Tasks Phase** - Generate actionable implementation plans with proper hierarchy
+- **Execution Phase** - Execute tasks with full context from requirements and design
+
+**Advanced Requirements Engineering:**
+
+- **EARS Compliance** - All requirements follow one of six EARS patterns
+- **INCOSE Quality Rules** - Automatic validation against semantic quality standards
+- **Glossary Management** - Automatic extraction and definition of technical terms
+- **User Story Structure** - Consistent format with 2-5 acceptance criteria per requirement
+
+**Property-Based Testing Integration:**
+
+- **Correctness Properties** - Generate testable properties from acceptance criteria
+- **Universal Quantification** - Properties formatted with explicit "For any" statements
+- **Round-Trip Properties** - Automatic detection for parsing/serialization requirements
+- **Test Library Integration** - Support for fast-check and other PBT libraries
+
+**Model Context Protocol (MCP) Integration:**
+
+- **Persistent Context** - Spec documents remain accessible across chat sessions
+- **Structured Tools** - Programmatic access to spec operations via MCP tools
+- **State Management** - Track workflow progress and task completion
+- **File Operations** - Read, write, and update spec documents through MCP
+
+#### 🛠️ Workflow Phases
+
+1. **Requirements** - Generate user stories with EARS patterns and INCOSE validation
+2. **Design** - Create technical design with correctness properties for PBT
+3. **Tasks** - Generate actionable implementation plan with 2-level hierarchy
+4. **Execution** - Execute tasks with full context loading and status tracking
+
+#### 🎯 Revolutionary Use Cases
+
+**"AI, create a spec for user authentication"**
+
+```
+You: "@spec create user-authentication"
+AI: *Generates EARS-compliant requirements*
+AI: "Created spec with 8 requirements (5 ubiquitous, 2 event-driven, 1 state-driven).
+     All requirements validated against INCOSE rules. Ready for design phase."
+```
+
+**"AI, generate correctness properties"**
+
+```
+You: "@spec approve requirements user-auth"
+AI: *Moves to design phase, extracts properties*
+AI: "Generated 12 correctness properties:
+     - For any valid credentials, login succeeds
+     - For any expired token, re-authentication required
+     - For any user, password hash is irreversible
+     Ready for implementation."
+```
+
+**"AI, execute the implementation plan"**
+
+```
+You: "@spec execute user-auth"
+AI: *Loads full context, executes tasks*
+AI: "Executing task 1.1: Implement password hashing...
+     ✅ Implemented with bcrypt
+     ✅ Added property test: password hashing is one-way
+     Moving to task 1.2..."
+```
+
+#### 🚀 Get Started
+
+**Install from VS Code:**
+
+1. Search "Akira" in VS Code Extensions
+2. Or visit: [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.akira) _(Coming Soon)_
+
+**Usage with GitHub Copilot:**
+
+```
+# Create a new spec
+@spec create feature-name
+
+# List all specs
+@spec list
+
+# Execute tasks
+@spec execute feature-name
+
+# Approve workflow phases
+@spec approve requirements feature-name
+@spec approve design feature-name
+@spec approve tasks feature-name
+```
+
+📚 **Documentation:**
+
+- 👉 **[Akira Documentation](https://github.com/Digital-Defiance/akira)**
+- 👉 **[EARS Patterns Guide](https://github.com/Digital-Defiance/akira/blob/main/docs/ears-patterns.md)**
+- 👉 **[Workflow Guide](https://github.com/Digital-Defiance/akira/blob/main/docs/workflow.md)**
