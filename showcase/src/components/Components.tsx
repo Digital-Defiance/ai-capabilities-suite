@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FaGithub, FaStar, FaCode, FaDocker } from "react-icons/fa";
+import {
+  FaGithub,
+  FaStar,
+  FaCode,
+  FaDocker,
+  FaExternalLinkAlt,
+  FaBook,
+} from "react-icons/fa";
 import { SiNpm } from "react-icons/si";
 import { VscCode } from "react-icons/vsc";
 import "./Components.css";
@@ -11,6 +18,8 @@ interface Component {
   icon: string;
   tech: string[];
   github: string;
+  projectUrl?: string;
+  docUrl?: string;
   vsCode?: string;
   npm?: string;
   docker?: string;
@@ -145,6 +154,7 @@ const components: Component[] = [
       "Spec-driven development for GitHub Copilot using EARS requirements syntax with MCP integration and property-based testing.",
     tech: ["TypeScript", "VS Code API", "MCP", "EARS", "fast-check"],
     github: "https://github.com/Digital-Defiance/akira",
+    projectUrl: "https://digital-defiance.github.io/Akira/",
     category: "Active",
     highlights: [
       "EARS-compliant requirements engineering",
@@ -336,6 +346,28 @@ const Components = () => {
                   <FaGithub />
                   GitHub
                 </a>
+                {component.projectUrl && (
+                  <a
+                    href={component.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="component-link"
+                  >
+                    <FaExternalLinkAlt />
+                    Project Site
+                  </a>
+                )}
+                {component.docUrl && (
+                  <a
+                    href={component.docUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="component-link"
+                  >
+                    <FaBook />
+                    Documentation
+                  </a>
+                )}
                 {component.vsCode && (
                   <a
                     href={component.vsCode}
