@@ -66,7 +66,7 @@ const components: Component[] = [
       "Transform AI agents into visual UI experts with screenshot capture, PII masking, and cross-platform support.",
     tech: ["TypeScript", "Tesseract OCR", "X11", "Wayland", "Windows API"],
     github: "https://github.com/Digital-Defiance/mcp-screenshot",
-    projectUrl: "https://digital-defiance.github.io/vscode-mcp-acs-screenshot",
+    projectUrl: "https://digital-defiance.github.io/vscode-mcp-screenshot",
     vsCode:
       "https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot",
     npm: "https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot",
