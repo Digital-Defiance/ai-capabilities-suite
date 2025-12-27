@@ -40,6 +40,7 @@ const components: Component[] = [
       "The most comprehensive debugging interface for AI agents with 25+ professional tools, performance profiling, and hang detection.",
     tech: ["TypeScript", "Chrome DevTools Protocol", "VS Code DAP", "Jest"],
     github: "https://github.com/Digital-Defiance/mcp-debugger-server",
+    projectUrl: "https://digital-defiance.github.io/vscode-mcp-debugger",
     vsCode:
       "https://marketplace.visualstudio.com/items?itemName=digitaldefiance.ts-mcp-debugger",
     npm: "https://www.npmjs.com/package/@ai-capabilities-suite/mcp-debugger-server",
@@ -65,6 +66,7 @@ const components: Component[] = [
       "Transform AI agents into visual UI experts with screenshot capture, PII masking, and cross-platform support.",
     tech: ["TypeScript", "Tesseract OCR", "X11", "Wayland", "Windows API"],
     github: "https://github.com/Digital-Defiance/mcp-screenshot",
+    projectUrl: "https://digital-defiance.github.io/vscode-mcp-acs-screenshot",
     vsCode:
       "https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-screenshot",
     npm: "https://www.npmjs.com/package/@ai-capabilities-suite/mcp-screenshot",
@@ -88,6 +90,7 @@ const components: Component[] = [
       "Enterprise-grade process management with strict security boundaries, resource monitoring, and service management.",
     tech: ["TypeScript", "Node.js", "Resource Monitoring", "Security"],
     github: "https://github.com/Digital-Defiance/mcp-process",
+    projectUrl: "https://digital-defiance.github.io/vscode-mcp-acs-process",
     vsCode:
       "https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-process",
     npm: "https://www.npmjs.com/package/@ai-capabilities-suite/mcp-process",
@@ -111,6 +114,7 @@ const components: Component[] = [
       "Advanced file operations with atomic transactions, directory watching, content indexing, and integrity verification.",
     tech: ["TypeScript", "Node.js", "File System", "Checksum"],
     github: "https://github.com/Digital-Defiance/mcp-filesystem",
+    projectUrl: "https://digital-defiance.github.io/vscode-mcp-acs-filesystem",
     vsCode:
       "https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-filesystem",
     npm: "https://www.npmjs.com/package/@ai-capabilities-suite/mcp-filesystem",
@@ -131,6 +135,7 @@ const components: Component[] = [
       "Enterprise-grade testing capabilities for AI agents with 25+ tools covering test execution, coverage analysis, debugging, and more.",
     tech: ["TypeScript", "Jest", "Mocha", "Pytest", "Vitest"],
     github: "https://github.com/Digital-Defiance/mcp-testing",
+    projectUrl: "https://digital-defiance.github.io/vscode-mcp-acs-testing",
     vsCode:
       "https://marketplace.visualstudio.com/items?itemName=DigitalDefiance.mcp-acs-testing",
     npm: "https://www.npmjs.com/package/@ai-capabilities-suite/mcp-testing",
