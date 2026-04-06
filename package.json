@@ -17,7 +17,7 @@
     "publish:debugger": "npm run publish:core && npm run publish:server",
     "publish:debugger:check": "npm run build && npm run test && npm run publish:debugger",
     "test:servers": "echo \"====  Debugger Core  ====\" && cd packages/mcp-debugger-core && yarn test echo \"====  Debugger Server  ====\" && cd ../mcp-debugger-server && yarn test echo \"====  Filesystem  ====\"  && cd ../mcp-filesystem && yarn test && echo \"====  Process  ====\" && cd ../mcp-process && yarn test && echo \"====  Screenshot  ====\" && cd ../mcp-screenshot && yarn test",
-    "test:extensions": "echo \"====  Debugger  ====\" && cd packages/vscode-mcp-debugger && yarn test && echo \"====  Filesystem  ====\" && cd ../vscode-mcp-acs-filesystem && yarn test && echo \"====  Process  ====\" && cd ../vscode-mcp-acs-process && yarn test && echo \"====  Screenshot  ====\" && cd ../vscode-mcp-screenshot && yarn test"
+    "test:extensions": "echo \"====  Debugger  ====\" && cd packages/vscode-mcp-debugger && yarn test && echo \"====  Filesystem  ====\" && cd ../vscode-mcp-acs-filesystem && yarn test && echo \"====  Process  ====\" && cd ../vscode-mcp-acs-process && yarn test && echo \"====  Screenshot  ====\" && cd ../vscode-mcp-screenshot && yarn test && echo \"====  Verdaccio  ====\" && cd ../vscode-mcp-acs-verdaccio && yarn test"
   },
   "repository": {
     "type": "git",
